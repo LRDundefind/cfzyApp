@@ -1,0 +1,163 @@
+.ub {
+	display: -webkit-box;
+	/*Chrome, Safari*/
+	display: -moz-box-shadow;
+	/*Firefox*/
+	display: -ms-flexbox;
+	/*IE*/
+	position: relative;
+}
+
+.ub-rev {
+	-ms-flex-direction: reverse;
+	-moz-box-direction: reverse;
+	-webkit-box-direction: reverse;
+	box-direction: reverse;
+}
+
+.ub-fh {
+	width: 100%;
+}
+
+.ub-fv {
+	height: 100%;
+}
+
+.ub-con {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+.ub-ac {
+	-ms-flex-align: center;
+	-moz-box-align: center;
+	-webkit-box-align: center;
+	box-align: center;
+}
+
+.ub-ae {
+	-ms-flex-align: end;
+	-moz-box-align: end;
+	-webkit-box-align: end;
+	box-align: end;
+}
+
+.ub-pc {
+	-moz-box-pack: center;
+	-ms-flex-pack: center;
+	-webkit-box-pack: center;
+	box-pack: center;
+}
+
+.ub-pe {
+	-moz-box-pack: end;
+	-ms-flex-pack: end;
+	-webkit-box-pack: end;
+	box-pack: end;
+}
+
+.ub-pj {
+	-moz-box-pack: justify;
+	-ms-flex-pack: justify;
+	-webkit-box-pack: justify;
+	box-pack: justify;
+}
+
+
+/*ie不支持*/
+
+.ub-ver {
+	-moz-box-orient: vertical;
+	-webkit-box-orient: vertical;
+	box-orient: vertical;
+}
+
+.ub-f1 {
+	position: relative;
+	-moz-box-flex: 1;
+	/* Firefox */
+	-webkit-box-flex: 1;
+	/* Safari and Chrome */
+	-ms-flex: 1;
+	/* Internet Explorer 10 */
+	box-flex: 1;
+	width: 0;
+}
+
+.ub-f2 {
+	position: relative;
+	-webkit-box-flex: 2;
+	box-flex: 2;
+	-ms-flex: 2;
+	-moz-box-flex: 2;
+	width: 0;
+}
+
+.ub-f3 {
+	position: relative;
+	-webkit-box-flex: 3;
+	box-flex: 3;
+	-ms-flex: 3;
+	-moz-box-flex: 3;
+	width: 0;
+}
+
+.ub-f4 {
+	position: relative;
+	-webkit-box-flex: 4;
+	box-flex: 4;
+	-ms-flex: 4;
+	-moz-box-flex: 4;
+	width: 0;
+}
+
+.ub-img {
+	-webkit-background-size: contain;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.ub-img1 {
+	-webkit-background-size: cover;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.ub-img2 {
+	background-repeat: repeat-x;
+	background-size: auto 100%
+}
+
+.ub-img3 {
+	background-repeat: repeat-y;
+	background-size: 100% auto
+}
+
+.ub-img4 {
+	-webkit-background-size: 100% auto;
+	background-size: 100% auto;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.ub-img5 {
+	-webkit-background-size: auto 100%;
+	background-size: auto 100%;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.ub-img6 {
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.ub-img7 {
+	-webkit-background-size: 100% 100%;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+	background-position: center;
+}

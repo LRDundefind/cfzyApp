@@ -1,0 +1,84 @@
+<template>
+
+    <div class="login">
+            <mt-header fixed title="手机号">
+                <router-link to="/login" slot="left">
+                    <mt-button icon="back"></mt-button>
+                </router-link>
+                <!-- <mt-button icon="more" slot="right"></mt-button> -->
+            </mt-header>
+
+            <div class="login_cont">
+               <div class="bg1">
+					<span class="usericonBg"></span>
+					<input v-model="phoneNumber" placeholder="手机号" class="usericon ">
+				</div>
+
+				<div  @click="loginBtn" class="findbtn">找回密码</div>
+                
+            </div>
+        
+    </div>
+
+</template>
+<style scoped lang='scss'>
+    .login_cont{
+        @include login_cont;
+        position: relative;
+        top: 2rem;
+    }
+    .bg1{
+		position: relative;
+	}
+	.bg1 .usericonBg{
+		@include login_input_icon;
+		background-image: url(../../assets/login/dl_yonghuming_icon.png);
+	}
+    .usericon{
+		@include login_input;
+    }
+    .findbtn{
+        width: 80% !important;
+        @include login_btn(fixed);
+        background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
+    }
+</style>
+<script>
+ import { Toast } from 'mint-ui';
+export default {
+    name: 'login',
+    data () {
+        return {
+          phoneNumber:''
+        }
+    },
+    mounted () {
+
+    },
+    methods: {
+       loginBtn(){
+           if(this.phoneNumber==''){
+					Toast({
+                        message: '手机号不可为空',
+                        position: 'middle',
+                        duration: 5000
+                        });
+				}
+				else if(!(new RegExp( /^1[3|4|5|7|8][0-9]{9}$/).test(this.phoneNumber))){
+					Toast({
+                        message: '手机号输入格式有误',
+                        position: 'middle',
+                        duration: 5000
+                        });
+				}
+				else{
+					this.$router.push({name:'yanzheng',params: { phone: this.phoneNumber }});
+					//调取接口
+					
+				}
+       }
+    }
+}
+</script>
+
+
