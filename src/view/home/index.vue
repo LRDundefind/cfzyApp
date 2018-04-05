@@ -40,7 +40,7 @@
                             </div>
                             <div class="name">货品入库</div>
                         </div>
-                        <div class="bd-r">
+                        <div class="bd-r" @click="goTemporaryOrderList">
                             <div>
                                 <img class="goods-image left-imge" src="../../assets/index/total_income_icon.png"/>
                             </div>
@@ -89,13 +89,9 @@
             goEarning(){
                 this.$router.push({name: 'earning'});
             },
-            //赊账账单
-            creditCustomer(){
-                this.$router.push({name: 'creditOrder'});
-            },
-            //跳转至支出列表
-            goPaylist(){
-                this.$router.push({name: 'pay'});
+            //跳转至暂存订单列表
+            goTemporaryOrderList(){
+                this.$router.push({name: 'temporaryOrderList'});
             },
             getList(){
             },

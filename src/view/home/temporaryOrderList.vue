@@ -1,8 +1,8 @@
 <template>
 	<div class="page-content">
-		<mt-header fixed  title="赊账客户订单">
-			<router-link :to="{name: 'creditOrder'}" slot="left">
-			    <mt-button icon="back"></mt-button>
+		<mt-header fixed  title="暂存订单">
+			<router-link to="/" slot="left">
+			    <mt-button icon="back" @click="$router.go(-1)"></mt-button>
 			</router-link>
 		</mt-header>
 		<!--订单列表-->
@@ -12,25 +12,10 @@
 				<li v-for="n in 4" @click="orderDetail(1)">
 					<div class="ub list-top">
 						<span class="ub-f1">订单号 F025689715224</span>
-						<i class="c-6">小张</i>
+						<i class="">陌上花开</i>
 					</div>
-					<div class="ub list-bottom">
-						<span class="ub-f1 c-6">2018-03-31 16:50</span>
-						<span>总价</span>
-						<span class="edu">￥330,000</span>
-						<span>已支付</span>						
-						<i>￥3,000</i>
-					</div>
-				</li>
-				<li @click="orderDetail(1)">
-					<div class="ub list-top">
-						<span class="ub-f1">订单号 F025689715224</span>
-						<i class="c-6">小张</i>
-					</div>
-					<div class="ub list-bottom">
-						<span class="ub-f1 c-6">2018-03-31 16:50</span>
-						<span class="c-6">未设置单价</span>
-					</div>
+					<div class="list-center">海淀区中关村南大街海淀区中关村南大街</div>
+					<div class="list-bottom">2018-03-31 16:50</div>
 				</li>
 			</ul>
 		</div>
@@ -54,7 +39,7 @@ export default {
 	    //跳转到订单详情
         orderDetail(id){
         	this.$router.push({
-        		name: 'orderList/orderDetail',
+        		name: 'temporaryOrderList/detail',
         		params: {
         			id:id
         		}
@@ -74,30 +59,27 @@ i{
 	li{
 		background: #fff;
 		margin-top: 0.2rem;
-		padding: 0.18rem 0.3rem;
+		padding: 0.15rem 0.3rem 0.2rem;
 		.list-top{
-			line-height: 0.53rem;
-			span,i{
+			line-height: 0.7rem;
+			i{
 				display: block;
+				font-size: 	0.26rem;
+				color: #4c4c4c;
 			}
 			span{
 				font-size: 0.3rem;
-			}
-		}
-		.list-bottom{
-			line-height: 0.48rem;			
-			span,i{
 				display: block;
 			}
-			i{
-				font-size: 0.28rem;
-				color: #49c98b;
-				margin-left: 0.05rem;
-			}
-			.edu{
-				font-size: 0.28rem;
-				margin: 0 0.1rem 0 0.05rem;
-			}
+		}
+		.list-center{
+			line-height: 0.5rem;
+			color: #4c4c4c;
+			font-size: 0.26rem;
+		}
+		.list-bottom{
+			color: #666;
+			line-height: 0.4rem;			
 		}
 	}
 }

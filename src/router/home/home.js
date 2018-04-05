@@ -1,8 +1,11 @@
 import home from '@/view/home/index'
 import blackList from '@/view/home/blackList'
 import ownerChoice from '@/view/home/ownerChoice'
-import creditOrder from '@/view/home/creditOrder'
-import creditOrderList from '@/view/home/creditOrderList'
+
+//暂存订单
+import temporaryOrderList from '@/view/home/temporaryOrderList'
+//暂存订单详情
+import temporaryOrderDetail from '@/view/home/temporaryOrderDetail'
 
 export default [{
 	path: 'home',
@@ -26,19 +29,19 @@ export default [{
         showFooter: false,
     }
 },{
-    path: 'creditOrder',
-    name: 'creditOrder',
+    path: 'temporaryOrderList',
+    name: 'temporaryOrderList',
     components: {
-        mainView: creditOrder
+        mainView: temporaryOrderList
     },
     meta: {
         showFooter: false,
     }
 },{
-    path: 'creditOrderList/:id',
-    name: 'creditOrderList',
+    path: 'temporaryOrderList/detail/:id',
+    name: 'temporaryOrderList/detail',
     components: {
-        mainView: creditOrderList
+        mainView: temporaryOrderDetail
     },
     meta: {
         showFooter: false,
