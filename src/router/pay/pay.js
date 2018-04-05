@@ -1,4 +1,4 @@
-import pay from '@/view/pay/index'
+import pay from '@/view/pay/payList'
 
 export default [{
 	path: 'pay',

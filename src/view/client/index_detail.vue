@@ -1,8 +1,8 @@
 <template>
 	<div class="page-content" id="client_detail">
 		<mt-header fixed  title="客 户">
-			<router-link to="/" slot="left">
-			    <mt-button icon="back" @click="$router.go(-1)">返回</mt-button>
+			<router-link :to="{name:'client'}" slot="left">
+			    <mt-button icon="back"></mt-button>
 			</router-link>
 		</mt-header>
 
@@ -36,7 +36,7 @@
 			</div>
 		</div>
 		<div class='update clearfix'>
-			<mt-button type="primary" size="large" class='f-l'>查看消费记录</mt-button>
+			<mt-button type="primary" size="large" class='f-l' @click="consumptionRecords(3)">查看消费记录</mt-button>
 			<mt-button type="primary" size="large" class='f-l' @click="goChange(10)">更新资料</mt-button>
 		</div>
 	</div>
@@ -56,9 +56,18 @@ export default {
     },
     methods: {
         getList(){},
-       goChange(n){
+        goChange(n){
 			this.$router.push({name:'index_change',params: { id: n }});
-		}
+		},
+        //跳转到消费记录
+        consumptionRecords(id){
+        	this.$router.push({
+        		name: 'orderPay_record',
+//      		params: {
+//      			id:id
+//      		}
+        	});
+        }
     }
 }
 </script>

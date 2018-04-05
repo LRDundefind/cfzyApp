@@ -2,20 +2,21 @@
     <div class="feedBack">
         <mt-header fixed title="意见反馈">
             <router-link to="/" slot="left">
-                <mt-button icon="back">返回</mt-button>
+                <mt-button icon="back" @click="$router.go(-1)"></mt-button>
             </router-link>
-            <!-- <mt-button icon="more" slot="right"></mt-button> -->
         </mt-header>
+
+        <div class="main-list">
+            <div class="remark c-9">
+                <textarea name="" id="" cols="30" rows="10" placeholder="请输入您的宝贵意见" v-model="message"></textarea>
+            </div>
+        </div>
+
         <div class="">
-            <textarea rows="10" cols="30" v-model="value" class="content">
-            </textarea>
+            <input v-model="phone" placeholder="请输入您的联系方式" class="phone ">
         </div>
-        <div class="">
-            <input v-model="phone" placeholder="手机号" class="phone ">
-        </div>
-        <div class="update">
-            <div  class="loginbtn">提交</div>
-        </div>
+
+        <div  class="findbtn">提交</div>
     </div>
 
 </template>
@@ -23,25 +24,30 @@
     .feedBack{
         width: 100%;
         display: block;
-        .content{
-            padding: 0.3rem;
-            font-size: 0.2rem;
-            width: 100%;
-            border: none;
+        .main-list{
+            background: #fff;
             margin-top: 0.2rem;
-            color: #666;
+            padding: 0.2rem;
+            font-size: 0.28rem;
+            line-height: 1rem;
+            .remark{
+                textarea{
+                    border: none;
+                    width: 100%;
+                }
+            }
         }
         .phone{
             width: 100%;
             border: none;
             padding: 0.3rem;
+            height: 0.48rem;
         }
-        .loginbtn{
-            @include login_btn;
+
+        .findbtn{
+            width: 80% !important;
+            @include login_btn(fixed);
             background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
-        }
-        .update{
-            margin: 4.5rem 1rem 0.5rem 1rem;
         }
     }
 </style>
@@ -51,7 +57,7 @@
         data () {
             return {
                 phone:'',
-                value:'我是一个好人',
+                message:'',
             }
         },
         mounted () {

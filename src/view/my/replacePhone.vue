@@ -2,8 +2,8 @@
 
     <div class="replacePhone">
         <mt-header fixed title="修改手机号">
-            <router-link to="/login" slot="left">
-                <mt-button icon="back"></mt-button>
+            <router-link to="/" slot="left">
+                <mt-button icon="back" @click="$router.go(-1)"></mt-button>
             </router-link>
         </mt-header>
 

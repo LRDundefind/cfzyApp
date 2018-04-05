@@ -1,5 +1,6 @@
 import owner from '@/view/owner/index'
 import ownerDetail from '@/view/owner/ownerDetail'
+import ownerUpdate from '@/view/owner/ownerUpdate'
 import record from '@/view/owner/record'
 import recordSend from '@/view/owner/recordSend'
 import recordRemit from '@/view/owner/recordRemit'
@@ -16,6 +17,12 @@ export default [{
 	name:'owner/ownerDetail',
 	components: {
 		mainView: ownerDetail
+	}
+},{
+	path:'owner/ownerUpdate',
+	name:'owner/ownerUpdate',
+	components: {
+		mainView: ownerUpdate
 	}
 },{
 	path:'owner/record',

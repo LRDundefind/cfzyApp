@@ -2,35 +2,44 @@
     <div class="rules">
         <mt-header fixed title="赊账规则">
             <router-link to="/" slot="left">
-                <mt-button icon="back">返回</mt-button>
+                <mt-button icon="back" @click="$router.go(-1)"></mt-button>
             </router-link>
             <!-- <mt-button icon="more" slot="right"></mt-button> -->
         </mt-header>
-        <div class="">
-            <textarea rows="10" cols="30" v-model="value" class="content">
-            </textarea>
+
+        <div class="main-list">
+            <div class="remark">
+                <textarea name="" id="" cols="30" rows="10" placeholder="请输入赊账规则" v-model="message"></textarea>
+            </div>
         </div>
-        <div class="update">
-            <div  class="loginbtn">更新赊账规则</div>
-        </div>
+
+        <div class="findbtn">更新赊账规则</div>
+
     </div>
 
 </template>
 <style scoped lang='scss'>
     .rules{
-        .content{
-            font-size: 0.2rem;
-            width: 100%;
-            border: none;
+        .main-list{
+            background: #fff;
             margin-top: 0.2rem;
-            color: #666;
+            padding: 0.2rem;
+            color: #333;
+            font-size: 0.28rem;
+            line-height: 1rem;
+            .remark{
+                color: #666;
+                textarea{
+                    border: none;
+                    width: 100%;
+                }
+            }
         }
-        .loginbtn{
-            @include login_btn;
+
+        .findbtn{
+            width: 80% !important;
+            @include login_btn(fixed);
             background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
-        }
-        .update{
-            margin: 5.5rem 1rem;
         }
     }
 </style>
@@ -39,7 +48,7 @@
         name: 'rules',
         data () {
             return {
-                value:'我是一个好人'
+                message:''
             }
         },
         mounted () {

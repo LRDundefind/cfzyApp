@@ -8,13 +8,18 @@ import replacePhone from '@/view/my/replacePhone'
 import verification from '@/view/my/verification'
 import about from '@/view/my/about'
 import rules from '@/view/my/rules'
+import personDetails from '@/view/my/personDetails'
 
 export default [{
-    path:'my',
+    path:'my/:id',
     name:'my',
     components: {
         mainView: my
     },
+    meta: {
+        showFooter: false,
+        showHeader:false,
+    }
     // redirect: 'owner/record/send',
     // children:[{
     //     path:'send',
@@ -35,24 +40,36 @@ export default [{
     components: {
         mainView: alterPassword
     },
+    meta: {
+        showFooter: false,
+    }
 },{
     path:'feedBack',
     name:'feedBack',
     components: {
         mainView: feedBack
     },
+    meta: {
+        showFooter: false,
+    }
 },{
     path:'replacePhone',
     name:'replacePhone',
     components: {
         mainView: replacePhone
     },
+    meta: {
+        showFooter: false,
+    }
 },{
-    path:'verification:phone',
+    path:'verification/:phone',
     name:'verification',
     components: {
         mainView: verification
     },
+    meta: {
+        showFooter: false,
+    }
 },{
     path:'about',
     name:'about',
@@ -65,5 +82,18 @@ export default [{
     components: {
         mainView: rules
     },
+    meta: {
+        showFooter: false,
+    }
+},{
+    path:'personDetails',
+    name:'personDetails',
+    components: {
+        mainView: personDetails
+    },
+    meta: {
+        showFooter: false,
+        showHeader:false,
+    }
 }
 ]

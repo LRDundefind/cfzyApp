@@ -33,7 +33,7 @@
 			<router-link :to="{ name: 'owner/record',params: {}}">
 			<mt-button type="primary" size="large" class='f-l'>往来记录</mt-button>
 			</router-link>
-			<mt-button type="primary" size="large" class='f-l'>更新资料</mt-button>
+			<mt-button type="primary" size="large" class='f-l' @click="update">更新资料</mt-button>
 		</div>
 	</div>
 </template>
@@ -50,8 +50,13 @@ export default {
 
     },
     methods: {
-        getList(){}
-            
+        getList(){},
+        update(){
+        	this.$router.push({
+                name: 'owner/ownerUpdate',
+                params: {}
+            })
+        }    
     }
 }
 </script>
@@ -60,22 +65,24 @@ export default {
 	.main-list{
 		background: #fff;
 		margin-top: 0.2rem;
-		padding: 0.2rem;
-		color: #333;
-		font-size: 0.4rem;
+		padding:0 0.3rem;
 		line-height: 1rem;
 		>p{	
+			font-size: $fons_size_28;
+			color: $main_color333;
 			border-top: 1px #f0f0f0 solid;
 			>span{
+				font-size: $fons_size_26;
 				float: right;
-				color: #666;
+				color: #4c4c4c;
 			}
 		}
 		>p:nth-child(1){
 			border:none;
 		}
 		.remark{
-			color: #666;
+			font-size: $fons_size_26;
+			color: #4c4c4c;
 		}
 	}
 	.update{
@@ -85,11 +92,13 @@ export default {
 			width: 41%;
 			color:#0f0;
 			margin:0 3%;
+			font-size: 0.3rem !important;
 		}
 		.mint-button--primary:nth-child(2){
 			background: url(../../assets/kehu_gengxinziliao_btn@2x.png) no-repeat center;
 			background-size:contain;
 			width: 50%;
+			font-size: 0.3rem !important;
 		}
 		padding:0.3rem 0 0.6rem 0;
 		button{

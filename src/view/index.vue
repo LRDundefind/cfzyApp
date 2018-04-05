@@ -1,6 +1,6 @@
 <template>
 
-    <div :class="[showFooter ? 'page_wrap' :'nopage_wrap']">
+    <div :class="mainClass">
         <mt-tab-container>
             <router-view name="mainView" />
             <!-- <mt-tab-container-item id="home">
@@ -22,23 +22,28 @@
         </mt-tab-container>
         <mt-tabbar fixed v-model="selected" v-if="showFooter">
             <mt-tab-item id="home">
-                <img slot="icon" src="../assets/kehu_shouye_icon@2x.png">
+                <img v-if="selected == 'home'" slot="icon" src="../assets/shouye_shouye_icon@2x.png">
+                <img v-else slot="icon" src="../assets/kehu_shouye_icon@2x.png">
                 首页
             </mt-tab-item>
             <mt-tab-item id="earning">
-                <img slot="icon" src="../assets/kehu_shouru_icon@2x.png">
+                <img v-if="selected == 'earning'" slot="icon" src="../assets/shouru_shouru_green_icon@2x.png">
+                <img v-else slot="icon" src="../assets/kehu_shouru_icon@2x.png">
                 收入
             </mt-tab-item>
             <mt-tab-item id="pay">
-                <img slot="icon" src="../assets/kehu_zhichu_icon@2x.png">
+                <img v-if="selected == 'pay'" slot="icon" src="../assets/zhichu_zhichu_icon@2x.png">
+                <img v-else slot="icon" src="../assets/kehu_zhichu_icon@2x.png">
                 支出
             </mt-tab-item>
             <mt-tab-item id="client">
-                <img slot="icon" src="../assets/logo.png">
+                <img v-if="selected == 'client'" slot="icon" src="../assets/kehu_kehu_icon@2x.png">
+                <img v-else slot="icon" src="../assets/shouru_kehu_icon@2x.png">
                 客户
             </mt-tab-item>
             <mt-tab-item id="owner">
-                <img slot="icon" src="../assets/kehu_huozhu_icon@2x.png">
+                <img v-if="selected == 'owner'" slot="icon" src="../assets/huozhu_huozhu_icon@2x.png">
+                <img v-else slot="icon" src="../assets/kehu_huozhu_icon@2x.png">
                 货主
             </mt-tab-item>
         </mt-tabbar>
@@ -53,6 +58,8 @@ export default {
     name: 'application',
     data () {
         return {
+            mainClass: 'page_wrap',
+            // showHeader: false,
             showFooter: true,
             selected:this.$route.name
         }
@@ -67,10 +74,20 @@ export default {
     methods: {
         //显示隐藏左侧菜单
 			fetchDate() {
-				this.showFooter =
-					this.$route.meta.showFooter !== undefined ?
-					this.$route.meta.showFooter :
-					true;
+                this.mainClass = 'page_wrap';
+                this.showFooter = true;
+                if (this.$route.meta.showFooter == false) {
+
+                    this.mainClass = 'nopage_wrap';
+                    this.showFooter = false;
+                }
+                if (this.$route.meta.showHeader == false){
+                    this.mainClass = 'noHeader_wrap'
+                }
+				// this.showFooter =
+				// 	this.$route.meta.showFooter !== undefined ?
+				// 	this.$route.meta.showFooter :
+				// 	true;
 			},
         getList(){
             // this.$http.post('http://www.runoob.com/try/ajax/getcustomer.php?q=APPLE')
@@ -93,18 +110,20 @@ export default {
             deep:true
         },
         '$route' (to, from) {
-				this.fetchDate()
-			}
-    }
+            this.selected=this.$route.name
+			this.fetchDate()
+		}
+}
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.page_wrap{
-    padding: 40px 0 55px 0;
+.mint-tabbar{
+    box-shadow: -4px -4px 5px #f0f0f0;
 }
-.nopage_wrap{
-    padding: 40px 0 20px 0;
+.mint-tabbar > .mint-tab-item.is-selected {
+    background: none;
+    color: #33d57c;
 }
 </style>

@@ -14,10 +14,10 @@
 			<div v-for="n in 20" :key='n' class="main-list">
 				<h3>名字</h3>
 				<ul class="clearfix">
-					<li class="f-l">待结算车次 5</li>
-					<li class="f-l">发货总数 8</li>
-					<li class="f-l">已结款 ￥1000</li>
-					<li class="f-l">尚欠款 ￥200</li>
+					<li class="f-l">未结算车次 <span>5</span></li>
+					<li class="f-l">发货总数 <span>8</span></li>
+					<li class="f-l">交易总金额 <span>￥1000</span></li>
+					<li class="f-l">待汇款 <span>￥200</span></li>
 				</ul>
 			</div>
 			</router-link>
@@ -44,50 +44,27 @@ export default {
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
 	
-	.searchBox{
-		padding: 0.2rem 0.5rem;
-		background: #fff;
-		input{
-		    display: block;
-		    width: 100%;
-		    height: 0.9rem;
-		    box-sizing: border-box;
-		    padding-left: 1rem;
-		    border-radius: 2em;
-		    font-size:  $fons_size_26;
-
-			background:#e1fcef url(../../assets/kehu_search_icon.png);
-			background-position: 0.3rem center;
-    		background-repeat: no-repeat;
-
-		}
-		.clearSearch{
-			top: 0.2rem;
-			right: 0.5rem;
-			width: 0.9rem;
-			height: 0.9rem;
-			background: url(../../assets/kehu_del_icon.png) center;
-			background-repeat: no-repeat;
-		}
-	}
-
-	
 	.main-list{
 		background: #fff;
 		margin-top: 0.2rem;
 		padding: 0.2rem;
 		color: #333;
 		h3{
-			font-size: 0.4rem;
-			border-bottom: 1px #f0f0f0 solid;
+			font-size: $fons_size_30;
+			color: $main_color333;
+			border-bottom: $main_border;
 			line-height: 0.8rem;
 		}
 		ul{
 
 			li{
 				width: 50%;
-				font-size: 0.3rem;
-				margin-top: 0.1rem;
+				font-size: $fons_size_24;
+				margin-top: 0.24rem;
+				color: $main_color666;
+				span{
+					font-size: $fons_size_28;
+				}
 			}
 			li:nth-child(2), li:nth-child(4)
 			{

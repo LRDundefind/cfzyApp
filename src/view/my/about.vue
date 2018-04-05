@@ -1,10 +1,9 @@
 <template>
     <div class="about" >
         <mt-header fixed title="服务协议">
-            <router-link to="/zhuce" slot="left">
-                <mt-button icon="back"></mt-button>
+            <router-link to="/" slot="left">
+                <mt-button icon="back" @click="$router.go(-1)"></mt-button>
             </router-link>
-            <!-- <mt-button icon="more" slot="right"></mt-button> -->
         </mt-header>
         <div class="about_cont">
             {{message}}
@@ -14,7 +13,7 @@
 <style scoped lang='scss'>
     .about_cont{
         font-size: $fons_size_26;
-        padding: 0.2rem;
+        padding: 0.3rem;
         top: 0.8rem;
         line-height: 0.48rem;
         color: #4c4c4c;

@@ -2,8 +2,8 @@
 
     <div class="login">
         <mt-header fixed title="验证码">
-            <router-link to="/login" slot="left">
-                <mt-button icon="back"></mt-button>
+            <router-link to="/" slot="left">
+                <mt-button icon="back" @click="$router.go(-1)"></mt-button>
             </router-link>
             <!-- <mt-button icon="more" slot="right"></mt-button> -->
         </mt-header>

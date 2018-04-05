@@ -54,7 +54,20 @@ export default {
 <style scoped rel="stylesheet/scss" lang="scss">
 .mint-navbar{
 	margin-top: 0.2rem;
+	.mint-tab-item{
+		color: #4c4c4c;
+		font-size: 0.28rem;  /*没有生效*/
+		.mint-tab-item-label{
+			font-size: 0.28rem;
+		}
+	}
+	.mint-tab-item.is-selected{
+		border-bottom: none;
+		color: #33d57c;
+		background: url(../../assets/huankuanjilu_line_btn@2x.png) no-repeat center 80%;
+		background-size: 1.4rem;
+	}
 }
 
-
 </style>
+

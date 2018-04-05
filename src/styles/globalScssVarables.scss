@@ -14,8 +14,11 @@ components varables define*/
   $main_color: #2faa33;
   $main_colorfff: #fff;
   $main_color333: #333;
+  $main_color666: #666;
   $main_color999999: #999999;
   $main_placeholder: #808080;
+  $main_colorNumber: #49c98b;
+  $main_colorGrey: #4c4c4c;
 
 
 /* 文字居中 靠左 靠右*/
@@ -30,6 +33,7 @@ $main_border: 1px solid #dedede;
   $fons_size_20: 0.2rem;
   $fons_size_24: 0.24rem;
   $fons_size_26: 0.26rem;
+  $fons_size_28: 0.28rem;
   $fons_size_30: 0.3rem;
 /*  登录以及修改密码的按钮样式 */
  @mixin login_btn($staticM:static){

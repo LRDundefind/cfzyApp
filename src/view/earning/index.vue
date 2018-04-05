@@ -9,21 +9,21 @@
 		<div class="page-main earning">
 			<!--筛选title-->
 			<div class="choose-title ub ub-pj">
-				<div @click="data">周期</div>
-				<div>货品</div>
-				<div>货主</div>
+				<div @click="cycleScreens" :class="cycleActive">周期</div>
+				<div @click="goodsScreens" :class="goodsActive">货品</div>
+				<div @click="ownerScreens" :class="ownerActive">货主</div>
 			</div>
 			<!--分类筛选 定位-->
-			<div class="earing-choose" v-if="isShow">
+			<div class="earing-choose" v-if="isScreen">
 				<!--货主筛选-->
 				<div class="type-owner">
-					<ul v-if="false">
+					<ul v-if="cycleScreen">
 						<li v-for="n in 15">这里不对</li>
 					</ul>
-					<ul>
+					<ul v-if="goodsScreen">
 						<li v-for="n in 15">苹果果</li>
 					</ul>
-					<ul v-if="false">
+					<ul v-if="ownerScreen">
 						<li v-for="n in 15">货主一</li>
 					</ul>
 					<div class="choose-btn">
@@ -38,7 +38,7 @@
 			    infinite-scroll-disabled="loading"
 			    infinite-scroll-distance="10"
 			    class="earing-ul"><!--v-infinite-scroll="loadMore"-->
-				<li v-for="item in list" class="earing-li">
+				<li v-for="item in list" class="earing-li" @click="orderList(item.id)">
 			  		<p>{{item.name}}</p>
 			  		<div class="ub term">
 			  			<div class="ub-f1"><i>贷款</i><b>{{item.daikuan}}</b></div>
@@ -65,7 +65,13 @@ import { InfiniteScroll } from 'mint-ui';
 export default {
     data () {
         return {
-        	isShow: false,
+        	isScreen: false,
+        	cycleScreen: false,
+        	goodsScreen: false,
+        	ownerScreen: false,
+        	cycleActive: '',
+        	goodsActive: '',
+        	ownerActive: '',
 			//列表数据
             list: [
         		{
@@ -93,16 +99,7 @@ export default {
         			slf: '￥2000',
         			heji: '￥33000'
         		},
-        		//筛选
-        		this.options = [
-        			{
-        				label:'货主1',
-        				value:'1'
-        			},{
-        				label:'货主1',
-        				value:'2'
-        			}
-        		]
+
         	],
         	
         }
@@ -113,17 +110,70 @@ export default {
     methods: {
         getList(){},
         //展开筛选
-        data: function(){
-        	this.isShow = !this.isShow;
+        cycleScreens: function(){
+			this.cycleActive = 'active';
+			this.goodsActive = '';
+			this.ownerActive = '';
+			
+        	this.goodsScreen = false;
+        	this.ownerScreen = false;
+        	this.cycleScreen = !this.cycleScreen;
+        	this.isScreen = this.cycleScreen;
+        },
+        goodsScreens: function(){
+			this.cycleActive = '';
+			this.goodsActive = 'active';
+			this.ownerActive = '';
+			
+        	this.cycleScreen = false;
+        	this.ownerScreen = false;
+        	this.goodsScreen = !this.goodsScreen;
+        	this.isScreen = this.goodsScreen;
+        	
+        },
+        ownerScreens: function(){
+			this.cycleActive = '';
+			this.goodsActive = '';
+			this.ownerActive = 'active';
+			
+        	this.cycleScreen = false;
+        	this.goodsScreen = false;
+        	this.ownerScreen = !this.ownerScreen;
+        	this.isScreen = this.ownerScreen;
+        	
         },
         //重置选择
         resetBtn: function(){
-        	this.isShow = false;
+        	this.cycleActive = '';
+			this.goodsActive = '';
+			this.ownerActive = '';
+			
+        	this.cycleScreen = false;
+        	this.goodsScreen = false;
+        	this.ownerScreen = false;
+        	this.isScreen = false;
         },
         //提交筛选
         submitBtn: function(){
-        	this.isShow = false;
+        	this.cycleActive = '';
+			this.goodsActive = '';
+			this.ownerActive = '';
+			
+        	this.cycleScreen = false;
+        	this.goodsScreen = false;
+        	this.ownerScreen = false;
+        	this.isScreen = false;
+        },
+        //跳转到订单列表
+        orderList(id){
+        	this.$router.push({
+        		name: 'earning/orderList',
+        		params: {
+        			id:id
+        		}
+        	});
         }
+
     }
 }
 </script>
@@ -143,12 +193,16 @@ body{
 	background: #fff;
 	line-height: 0.7rem;
 	padding: 0 0.3rem;
-	/*position: fixed;*/
-	/*top: 1.8rem;*/
+    width: 91.6%;
+	position: fixed;
+	top: 41px; /*header的height是40px*/
 	div{
 		width: 1rem;
 		background: url(../../assets/index/shouye_unfold_btn@2x.png) no-repeat 0.7rem center;
 		background-size: 0.25rem;
+	}
+	div.active{
+		color: #33d57c;
 	}
 }
 /*筛选*/
@@ -156,7 +210,7 @@ body{
 	font-size: 0.32rem;
 	height: 100%;
     position: fixed;
-    /*top: 1.63rem;*/
+   top: calc(40px + 0.9rem);
     background: rgba(0,0,0,.3);
     z-index: 99;
 
@@ -209,6 +263,7 @@ body{
 }
 /*收入列表*/
 .earning{
+	padding-top: 1.1rem;
 	.earing-ul{
 		color:#666;
 		.earing-li{

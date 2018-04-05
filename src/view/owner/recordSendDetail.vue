@@ -6,30 +6,30 @@
 			</router-link>
 		</mt-header>
 		<div class="title-sendDetail">
-			<div class="ub">
+			<div class="ub clearfix">
 				<div class="ub-f2">已售出金额</div>
-				<div class="ub-f2">￥5000</div>
+				<div class="ub-f2 number">￥5000</div>
 			</div>
 			<mt-button type="default" size="large">查看已售卖订单</mt-button>
 		</div>
 		<div class="main-list">
 			<div>支出信息</div>
 			<ul class="clearfix">
-				<li class="f-l">车费（2018-03-06）</li>
+				<li class="f-l">车费<span class="date">（2018-03-06）</span></li>
 				<li class="f-l">￥100</li>
 			</ul>
 			<ul class="clearfix">
-				<li class="f-l">卸车费（2018-03-06）</li>
+				<li class="f-l">卸车费<span class="date">（2018-03-06）</span></li>
 				<li class="f-l">￥100</li>
 			</ul>
 			<ul class="clearfix">
-				<li class="f-l">垫付其他费用（2018-03-06）</li>
+				<li class="f-l">垫付其他费用<span class="date">（2018-03-06）</span></li>
 				<li class="f-l">￥45</li>
 			</ul>
 		</div>
 
 		<div class="main-list">
-			<div class="clearfix">2018-03-20 里皮 车次89<span class="f-r">待结算</span></div>
+			<div class="clearfix">2018-03-20 里皮 车次89<span class="f-r status">待结算</span></div>
 		</div>
 
 		<div class="main-list">
@@ -44,7 +44,7 @@
 			<div class="ub">
 				<div class="ub-f4">品类</div><div class="ub-f4">入库数量</div><div class="ub-f4">售卖单位</div><div class="ub-f4">品销售均价</div>
 			</div>
-			<ul class="ub" v-for="n in 2" :key='n'>
+			<ul class="ub goodsList" v-for="n in 2" :key='n'>
 				<div class="ub-f4">大白菜A类</div><div class="ub-f4">20</div><div class="ub-f4">斤</div><div class="ub-f4">100</div>
 			</ul>
 		</div>
@@ -88,19 +88,34 @@ export default {
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
 .title-sendDetail{
-	font-size: 0.3rem;
+	font-size: $fons_size_28;
 	background-color: #fff;
 	margin-top: 0.2rem;
-	padding: 0.2rem;
+	padding:0.3rem;
 	line-height: 0.8rem;
+	.number{
+		text-align: right;
+		color: $main_colorNumber;
+		font-size: 0.32rem;
+	}
+	.mint-button--default{
+		background: #f2f2f2;
+		font-size: $fons_size_26;
+		color: $main_colorGrey;
+		height: 0.6rem;
+	}
 }
 .main-list{
-	font-size: 0.3rem;
+	font-size: $fons_size_28;
 	background-color: #fff;
 	margin-top: 0.2rem;
-	padding:0 0.2rem;
+	padding:0 0.3rem;
 	line-height: 0.8rem;
+	color:$main_color333;
 	ul{
+		li .date{
+			font-size: $fons_size_24;
+		}
 		border-top:1px #f0f0f0 solid;
 		li:nth-child(odd){
 			width: 60%
@@ -109,6 +124,14 @@ export default {
 			width: 40%;
 			text-align: right;
 		}
+	}
+	.goodsList{
+		color: $main_color666;
+		font-size: $fons_size_26;
+	}
+	.status{
+		color: $main_colorNumber;
+		font-size: $fons_size_26;
 	}
 }
 .main-list:last-child{
