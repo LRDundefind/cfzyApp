@@ -22,19 +22,10 @@
                 </p>
                 <p class="clearfix" @click="goPhone()">手机号<input type="text" v-model="phone" readonly></p>
             </div>
-            <div class="main-list">
-                <p class="clearfix">公司名称<input type="text" v-model="company"></p>
-                <p class="clearfix">营业执照<input type="text" v-model="business"></p>
-                <p class="clearfix">税号<input type="text" v-model="duty"></p>
-            </div>
 
-            <div class="main-list">
-                <p class="clearfix">经营范围<input type="text" v-model="scope"></p>
-                <p class="clearfix">公司宣传照<input type="text" v-model="publicity"></p>
-            </div>
         </div>
-        <div style="padding-left: 10%">
-            <div  class="findbtn">保存</div>
+        <div class="login_cont">
+            <div @click="goLogin" class="loginbtn">保存</div>
         </div>
     </div>
 </template>
@@ -105,10 +96,15 @@
             border:none;
         }
     }
-    .findbtn{
+    .loginbtn{
         width: 80% !important;
-        margin: 0.8rem 0 0.1rem !important;
-        @include login_btn(static);
+        @include login_btn(fixed);
         background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
+        margin: 0!important;
     }
+    .login_cont{
+        width: 5.5rem;
+        margin: 0 auto;
+    }
+    
 </style>
