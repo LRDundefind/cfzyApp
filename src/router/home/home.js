@@ -18,6 +18,9 @@ export default [{
     name: 'blackList',
     components: {
         mainView: blackList
+    },
+    meta: {
+        showFooter: false,
     }
 },{
     path: 'ownerChoice',
