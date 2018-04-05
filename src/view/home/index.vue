@@ -1,9 +1,17 @@
 <template>
     <div class="main">
         <mt-header fixed title="首页">
-            <router-link to="/ownerChoice" slot="left">
-                <span class="c-3 f-s-16">白云上档A</span>
-                <img class="header_img" src="../../assets/index/down_icon.png"/>
+            <router-link to="" slot="left">
+                <div class="ub p-re">
+                    <div @click="goOwnerChoice">
+                        <span class="c-3 f-s-16">白云上档A</span>
+                        <img class="header_img" src="../../assets/index/down_icon.png"/>
+                    </div>
+
+                    <div class="ub ub-pe personal" @click="goMy(5)">
+                        <img  src="../../assets/index/shouye_touxiang_img@2x.png"/>
+                    </div>
+                </div>
             </router-link>
         </mt-header>
 
@@ -82,6 +90,9 @@
             goMy(id){
                 this.$router.push({name: 'my', params: {id: id}});
             },
+            goOwnerChoice(){
+                this.$router.push({name: 'ownerChoice'});
+            },
             goBlack(id){
                 this.$router.push({name: 'blackList', params: {id: id}});
             },
@@ -107,6 +118,13 @@
         padding-top: 0.1rem;
         padding-left: 0.05rem;
     }
+    .personal{
+        position: absolute;
+        width: 0.68rem;
+        left: 6.2rem;
+        z-index: 100;
+        top: -0.15rem;
+    }
 
     .home {
         padding: 0.42rem 0.3rem 0.32rem;
@@ -120,36 +138,38 @@
             z-index: 100;
         }
     }
-    .today{
+
+    .today {
         background-color: white;
         margin: 0.22rem 0;
         padding: 0.32rem 0;
 
-        .number{
+        .number {
             font-size: 0.42rem;
             color: #33d57c;
             padding: 0 0.9rem;
         }
-        .words{
+        .words {
             font-size: 0.24rem;
             color: #666;
             padding-left: 0.8rem;
             padding-top: 0.24rem;
         }
     }
-    .goods{
+
+    .goods {
         background-color: white;
         padding: 0 0.56rem;
-        .goods-image{
+        .goods-image {
             width: 1.72rem;
             padding: 0.52rem 0.735rem 0 0.735rem;
         }
 
-        .name{
+        .name {
             font-size: 0.3rem;
             color: #333333;
             text-align: center;
-            padding: 0.32rem  0 0.52rem;
+            padding: 0.32rem 0 0.52rem;
         }
     }
 
