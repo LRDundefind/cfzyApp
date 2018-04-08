@@ -6,6 +6,10 @@ import ownerChoice from '@/view/home/ownerChoice'
 import temporaryOrderList from '@/view/home/temporaryOrderList'
 //暂存订单详情
 import temporaryOrderDetail from '@/view/home/temporaryOrderDetail'
+//车次列表
+import settlementList from '@/view/home/settlementList'
+//车次详情
+import settlementDetail from '@/view/home/settlementDetail'
 
 export default [{
 	path: 'home',
@@ -45,6 +49,24 @@ export default [{
     name: 'temporaryOrderList/detail',
     components: {
         mainView: temporaryOrderDetail
+    },
+    meta: {
+        showFooter: false,
+    }
+},{
+    path: 'settlementList',
+    name: 'settlementList',
+    components: {
+        mainView: settlementList
+    },
+    meta: {
+        showFooter: false,
+    }
+},{
+    path: 'settlementList/detail/:id',
+    name: 'settlementList/detail',
+    components: {
+        mainView: settlementDetail
     },
     meta: {
         showFooter: false,
