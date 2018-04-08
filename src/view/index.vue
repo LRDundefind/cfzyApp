@@ -26,26 +26,27 @@
                 <img v-else slot="icon" src="../assets/kehu_shouye_icon@2x.png">
                 首页
             </mt-tab-item>
-            <mt-tab-item id="earning">
-                <img v-if="selected == 'earning'" slot="icon" src="../assets/shouru_shouru_green_icon@2x.png">
+            <mt-tab-item id="order">
+                <img v-if="selected == 'order'" slot="icon" src="../assets/shouru_shouru_green_icon@2x.png">
                 <img v-else slot="icon" src="../assets/kehu_shouru_icon@2x.png">
-                收入
+                下单
             </mt-tab-item>
             <mt-tab-item id="pay">
                 <img v-if="selected == 'pay'" slot="icon" src="../assets/zhichu_zhichu_icon@2x.png">
                 <img v-else slot="icon" src="../assets/kehu_zhichu_icon@2x.png">
-                支出
+                订单
+            </mt-tab-item>
+            <mt-tab-item id="owner">
+                <img v-if="selected == 'owner'" slot="icon" src="../assets/huozhu_huozhu_icon@2x.png">
+                <img v-else slot="icon" src="../assets/kehu_huozhu_icon@2x.png">
+                物流
             </mt-tab-item>
             <mt-tab-item id="client">
                 <img v-if="selected == 'client'" slot="icon" src="../assets/kehu_kehu_icon@2x.png">
                 <img v-else slot="icon" src="../assets/shouru_kehu_icon@2x.png">
                 客户
             </mt-tab-item>
-            <mt-tab-item id="owner">
-                <img v-if="selected == 'owner'" slot="icon" src="../assets/huozhu_huozhu_icon@2x.png">
-                <img v-else slot="icon" src="../assets/kehu_huozhu_icon@2x.png">
-                货主
-            </mt-tab-item>
+            
         </mt-tabbar>
     </div>
 

@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import application from '@/view/index'
 import home from './home/home'
-import earning from './earning/earning'
+import order from './order/order'
 import pay from './pay/pay'
 import owner from './owner/owner'
 import client from './client/client'
@@ -62,7 +62,7 @@ const router = new Router({
             redirect: '/home',
             children: [
               ...home,
-              ...earning,
+              ...order,
               ...pay,
               ...owner,
               ...client,
