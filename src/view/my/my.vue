@@ -34,7 +34,9 @@
             <div class="row">
                 <div class=" p-re  content ub bd-b">
                     <span class="phone-icon"></span>
-                    <div class="title">联系我们</div>
+                    <div class="title">
+                        <a href="tel:18236911783">联系我们</a>
+                    </div>
                     <div class="">
                         <img src="../../assets/my/icon_right.png" class="my_icon"/>
                     </div>
@@ -137,7 +139,10 @@
             .content{
                 line-height: 0.96rem;
                 .title{
-                    padding-left: 0.87rem
+                    padding-left: 0.87rem;
+                    a{
+                        color: #333;
+                    }
                 }
                 .my_icon{
                     position: absolute;
