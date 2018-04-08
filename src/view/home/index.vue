@@ -52,7 +52,7 @@
                     </div>
                     <div class="ub-f1">
                         <div class="bd-b">
-                            <div class="">
+                            <div class="" @click="goDamage">
                                 <img class="goods-image right-img" src="../../assets/index/total_income_icon.png"/>
                             </div>
                             <div class="name">货品损坏</div>
@@ -112,7 +112,10 @@
             goStorage(){
                 this.$router.push({name: 'storage'});
             },
-
+            //跳转到货品损坏
+            goDamage(){
+                this.$router.push({name: 'damage'});
+            },
         }
     }
 </script>
