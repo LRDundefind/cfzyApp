@@ -58,7 +58,7 @@
                             <div class="name">货品损坏</div>
                         </div>
 
-                        <div class=" bd-b">
+                        <div class=" bd-b" @click="goSettlementList">
                             <div>
                                 <img class="goods-image right-img" src="../../assets/index/total_income_icon.png"/>
                             </div>
@@ -98,6 +98,10 @@
             //跳转至暂存订单列表
             goTemporaryOrderList(){
                 this.$router.push({name: 'temporaryOrderList'});
+            },
+            //跳转至车次列表
+            goSettlementList(){
+                this.$router.push({name: 'settlementList'});
             },
             getList(){
             },
