@@ -1,18 +1,13 @@
 <template>
     <div class="main">
         <mt-header fixed title="首页">
-            <router-link to="" slot="left">
-                <div class="ub p-re">
-                    <div @click="goOwnerChoice">
-                        <span class="c-3 f-s-16">白云上档A</span>
-                        <img class="header_img" src="../../assets/index/down_icon.png"/>
-                    </div>
-
-                    <div class="ub ub-pe personal" @click="goMy(5)">
-                        <img  src="../../assets/index/shouye_touxiang_img@2x.png"/>
-                    </div>
-                </div>
+            <router-link to="/ownerChoice" slot="left">
+                <span class="c-3 f-s-16">白云上档A</span>
+                <img class="header_img" src="../../assets/index/down_icon.png"/>
             </router-link>
+            <div class=" personal" @click="goMy(5)" slot="right">
+                <img src="../../assets/index/shouye_touxiang_img@2x.png"/>
+            </div>
         </mt-header>
 
         <div class="">
@@ -118,12 +113,10 @@
         padding-top: 0.1rem;
         padding-left: 0.05rem;
     }
-    .personal{
-        position: absolute;
+
+    .personal {
         width: 0.68rem;
-        left: 6.2rem;
-        z-index: 100;
-        top: -0.15rem;
+        padding-left: 50%;
     }
 
     .home {
