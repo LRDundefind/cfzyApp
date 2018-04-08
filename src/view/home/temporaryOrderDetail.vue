@@ -11,7 +11,7 @@
 			<div class="order-detail">
 				<div class="ub term">
 					<div class="ub-f1">订单号 1236548965</div>
-					<div>已完成</div>
+					<div class="zt">待支付</div>
 				</div>
 				<div class="ub ub-ac term customer-head" @click="customerDetail(1)">
 					<div class="ub-f1">客户</div>
@@ -29,6 +29,10 @@
 				<div class="ub term">
 					<div class="ub-f1">合计金额</div>
 					<div class="total">￥330,000</div>
+				</div>
+				<div class="ub term">
+					<div class="ub-f1">贷款</div>
+					<div class="edu">￥45</div>
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">包装费</div>
@@ -77,6 +81,15 @@
 							<td>600.00</td>
 							<td>20.00</td>
 						</tr>
+						<tr>
+							<td>大白菜<br />(1500)</td>
+							<td>100斤</td>
+							<td class="set-price" @click = "dialoags=true">
+								设置<br />单价
+							</td>
+							<td>600.00</td>
+							<td>20.00</td>
+						</tr>
 					</tbody>
 				</table>
 			</div>
@@ -96,8 +109,21 @@
 					<div class="edu">2018-02-06 15:00</div>
 				</div>
 			</div>
+			<mt-button type="primary" size="large" class="submit-btn" @click="preservation">保&nbsp;存</mt-button>
 		</div>
-		
+		<!-- 设置单价模态框 -->
+		<div class="dialoag" v-if="dialoags">
+			<div class="dialoag_cont">
+				<span>
+					<input type="text" :val="price" placeholder="请设置单价"/>
+				</span>
+				<div class="btn ub">
+					<div class="lefts" @click="dialoags = false ">取消</div>
+					<div class="center"></div>
+					<div class="rights" @click="setPrice">确定</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -107,7 +133,8 @@ export default {
 
     data () {
         return {
-            
+            dialoags: false,
+            price: '0'
         }
     },
     mounted () {
@@ -115,14 +142,19 @@ export default {
     },
     methods: {
 
-	    //跳转到客户详情
-        customerDetail(id){
+	    //保存
+        preservation(id){
         	this.$router.push({
-        		name: 'client_detail',
-        		params: {
-        			id:id
-        		}
+//      		name: "client_detail',
+//      		params: {
+//      			id:id
+//      		}
         	});
+        },
+        //设置单价-确定按钮
+        setPrice(){
+        	this.dialoags = false;
+        	alert('设置单价');
         }
             
     }
@@ -141,9 +173,9 @@ i{
 	.term{
 		line-height: 0.96rem;
 		border-bottom: 1px solid #dedede;
-		div:nth-child(2){
-			color: #4c4c4c;
-			font-size: 0.26rem;
+		div.zt{
+			color: #33d570;
+			font-size: 0.24rem;
 		}
 		div.total{
 			font-size: 0.32rem;
@@ -220,10 +252,92 @@ i{
 				td:first-child{
 					padding-left: 0.2rem;
 				}
+				td.set-price{
+					color: #33d570;
+					font-size: 0.26rem;
+				}
+			}
+			tr:last-child{
+				border-bottom: none;
 			}
 		}
 	}
 }
+.submit-btn{
+	width: 73%;
+	height: 0.9rem;
+	border-radius: 1rem;
+	background: -webkit-linear-gradient(left, #30b03e 0%,#33d57c 100%);
+	color: #fff;
+	font-size: 0.3rem;
+	font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+	margin: 0.45rem auto 0;
+}
+/*设置单价模态框*/
+.dialoag{
+	font-size: 0.26rem;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	left: 0;
+	top: 0;
+	background: rgba(0, 0, 0, 0.6);
+	z-index: 10001;
+	.dialoag_cont{
+		width: 80%;
+		margin: 3rem auto 0;
+		padding: 0.82rem 0;
+		background: #fff;
+		text-align: center;
+		color: #666;
+		span{
+			display: block;
+			margin: 0 auto 0.6rem;
+			width: 75%;
+			height: 0.7rem;
+			font-size: 0.26rem;
+		    border-radius: 1rem;
+   			overflow: hidden;
+			input{
+				width: 100%;
+				height: 100%;
+				background: #e1fcef;
+			    border-radius: 1rem;
+				text-align: center;
+			    box-sizing: border-box;
+			}
+			input::-webkit-input-placeholder{
+				color: #33d57c;
+				font-size: 0.26rem;
+			}
+		}
+		.btn{
+			padding: 0 0.42rem;
+		    box-sizing: border-box;
+			div{
+				height: 0.7rem;
+				line-height: 0.7rem;
+				font-size: 0.3rem;
+				text-align: center;
+				color: #fff;
+				border-radius: 1rem;
+			}
+			.lefts{
+				width: 42%;
+				background: #d0fde4;
+				color: #33d57c;
+				border: 1px solid #b5f1d0;
+			}
+			.center{
+				width: 6%;
+			}
+			.rights{
+				width: 52%;
+		        background: -webkit-linear-gradient(left, #30b03e 0%,#33d57c 100%);
+			}
+		}
 
+	}
+}
 
 </style>
