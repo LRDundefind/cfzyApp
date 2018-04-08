@@ -142,7 +142,7 @@ export default {
     },
     methods: {
 
-	    //跳转到客户详情
+	    //保存
         preservation(id){
         	this.$router.push({
 //      		name: "client_detail',
@@ -296,12 +296,19 @@ i{
 			width: 75%;
 			height: 0.7rem;
 			font-size: 0.26rem;
-			background: #e1fcef;
+		    border-radius: 1rem;
+   			overflow: hidden;
 			input{
-				/*width: 100%;*/
-				/*height: 100%;*/
-				/*background:#e1fcef;*/
-				/*border-radius: 1rem;*/
+				width: 100%;
+				height: 100%;
+				background: #e1fcef;
+			    border-radius: 1rem;
+				text-align: center;
+			    box-sizing: border-box;
+			}
+			input::-webkit-input-placeholder{
+				color: #33d57c;
+				font-size: 0.26rem;
 			}
 		}
 		.btn{
