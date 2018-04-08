@@ -1,8 +1,8 @@
 <template>
     <div class="page-content">
         <mt-header fixed title="货品信息">
-            <router-link :to="{ name: 'client_detail', params: { id: 1 }}" slot="left">
-                <mt-button icon="back"></mt-button>
+            <router-link to="/" slot="left">
+                <mt-button @click="$router.go(-1)" icon="back"></mt-button>
             </router-link>
         </mt-header>
         <!--还款记录列表-->

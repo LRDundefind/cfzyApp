@@ -37,7 +37,7 @@
             <div class="goods">
                 <div class="ub">
                     <div class="ub-f1">
-                        <div class="bd-r bd-b">
+                        <div class="bd-r bd-b" @click="goStorage">
                             <div>
                                 <img class="goods-image left-imge" src="../../assets/index/total_income_icon.png"/>
                             </div>
@@ -108,6 +108,11 @@
             goOrder(){
                 this.$router.push({name: 'order'});
             },
+            //跳转到货品入库
+            goStorage(){
+                this.$router.push({name: 'storage'});
+            },
+
         }
     }
 </script>

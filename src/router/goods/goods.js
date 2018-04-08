@@ -5,6 +5,16 @@ import goodsDetails from '@/view/goods/goodsDetails'
 
 export default [
     {
+        path: 'goodsDetails/:id',
+        name: 'goodsDetails',
+        components: {
+            mainView: goodsDetails
+        },
+        meta: {
+            showFooter: false
+        }
+    },
+    {
         //消费和还款记录
         path: 'storage',
         name: 'storage',
@@ -34,16 +44,7 @@ export default [
                 meta: {
                     showFooter: false
                 }
-            },{
-                path: 'details',
-                name: 'details',
-                components: {
-                    storageRouteView: goodsDetails
-                },
-                meta: {
-                    showFooter: false
-                }
-            }
+            },
         ]
     }
 ]

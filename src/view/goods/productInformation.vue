@@ -9,7 +9,7 @@
         <!--还款记录列表-->
         <div class="page-main">
             <div v-for="n in 20" :key='n' class="main-list">
-                <p class="clearfix">大白菜{{n}}类
+                <p @click="godetails(n)" class="clearfix">大白菜{{n}}类
                     <span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
                     <span>{{n+'00'}}公斤</span>
                 </p>
@@ -28,7 +28,12 @@
         mounted () {
 
         },
-        methods: {}
+        methods: {
+            //跳转到货品详情页
+            godetails(id){
+                this.$router.push({name: 'goodsDetails',params:{id:id}});
+            },
+        }
     }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
