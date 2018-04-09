@@ -22,8 +22,17 @@ export default [
 			showFooter: false
 		}
 	},{
-		path: 'index_change/:id',
-		name: 'index_change',
+        path: 'index_change/create',
+        name: 'index_change/create',
+        components: {
+            mainView: index_change
+        },
+        meta: {
+            showFooter: false
+        }
+    }, {
+		path: 'index_change/update/:id',
+		name: 'index_change/update',
 		components: {
 			mainView: index_change
 		},
