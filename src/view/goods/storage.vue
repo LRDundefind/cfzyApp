@@ -158,6 +158,7 @@
                 }
                 > input {
                     float: right;
+                    font-size: 0.26rem;
                     color: #4c4c4c;
                     text-align: right;
                     line-height: 0.98rem;

@@ -11,8 +11,7 @@ export default [
         meta: {
             showFooter: false
         }
-    },
-    {
+    }, {
         path: 'storage',
         name: 'storage',
         components: {
