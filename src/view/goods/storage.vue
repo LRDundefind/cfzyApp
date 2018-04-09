@@ -142,7 +142,7 @@
         .basic-list {
             background: #fff;
             margin-top: 0.2rem;
-            padding: 0 0.2rem;
+            padding: 0 0.3rem;
             color: #333;
             font-size: 0.28rem;
             line-height: 0.98rem;
