@@ -15,7 +15,7 @@
                 <!--<div class="ub ub-ac heade">-->
                     <!--<div class='ub-f1 ut-s'>设置</div>-->
                 <!--</div>-->
-                <div class="" @click="goRecord">
+                <div class="" @click="goRecordUpdate(n)">
                     <div class="ub ub-pj type">
                         <div class="ub-f1 category"><span>大白菜{{n}}类（公斤）</span></div>
                         <div class="ub-f1 number"><span class="count">数量</span> <span>20{{n}}</span></div>
@@ -46,8 +46,11 @@
         },
         methods: {
             getList(){},
+            goRecordUpdate(id){
+                this.$router.push({name:'damageRecord/update',params:{id:id}})
+            },
             goRecord(){
-                this.$router.push({name:'damageRecord'});
+                this.$router.push({name:'damageRecord/create'});
             }
 
         }

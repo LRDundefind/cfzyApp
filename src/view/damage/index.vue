@@ -41,7 +41,7 @@
             getList(){
             },
             goReport(n){
-                this.$router.push({name: 'damageReport', params: {id: n}});
+                this.$router.push({name: 'damageReport'});
             }
         }
     }
