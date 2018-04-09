@@ -43,7 +43,6 @@
             goReport(n){
                 this.$router.push({name: 'damageReport', params: {id: n}});
             }
-
         }
     }
 </script>

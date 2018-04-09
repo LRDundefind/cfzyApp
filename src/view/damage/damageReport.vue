@@ -1,6 +1,10 @@
 <template>
     <div class="">
-        <mt-header fixed  title="货品损坏"></mt-header>
+        <mt-header fixed title="货品损坏">
+            <router-link to="/" slot="left">
+                <mt-button @click="$router.go(-1)" icon="back"></mt-button>
+            </router-link>
+        </mt-header>
         <div class="page-main">
             <div class="information">
                 <span>2018-03-20</span>
@@ -24,7 +28,7 @@
         </div>
 
         <div class="login_cont">
-            <div class="loginbtn">记录货品损坏</div>
+            <div @click="goRecord" class="loginbtn">记录货品损坏</div>
         </div>
 
     </div>
@@ -42,8 +46,8 @@
         },
         methods: {
             getList(){},
-            goDetail(n){
-                this.$router.push({name:'client_detail',params: { id: n }});
+            goRecord(){
+                this.$router.push({name:'damageRecord'});
             }
 
         }
