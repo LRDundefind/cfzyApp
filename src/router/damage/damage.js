@@ -1,6 +1,7 @@
 import damage from '@/view/damage/index'
 import damageReport from '@/view/damage/damageReport'
 import damageRecord from '@/view/damage/damageRecord'
+import ownerList from '@/view/damage/ownerList'
 
 export default [
     {
@@ -30,7 +31,14 @@ export default [
         meta: {
             showFooter: false
         }
+    },{
+        path: 'ownerList',
+        name: 'ownerList',
+        components: {
+            mainView: ownerList
+        },
+        meta: {
+            showFooter: false
+        }
     },
-
-
 ]

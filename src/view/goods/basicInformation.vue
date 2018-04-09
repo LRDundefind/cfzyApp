@@ -8,10 +8,9 @@
         </mt-header>
         <!--消费记录列表-->
         <div class="">
-            <div class="main-list">
+            <div class="main-list" @click="goList">
                 <p class="clearfix">姓名
-                    <input type="text" v-model="name" readonly v-if="namehas">
-                    <!--<input type="text" v-model="nameWrite" v-else>-->
+                    <span class="name">马云<img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
                 </p>
             </div>
 
@@ -77,6 +76,12 @@
 
         },
         methods: {
+            //跳转到货主列表
+            goList(){
+                this.$router.push({
+                    name:'ownerList'
+                })
+            },
 
             //跳转到订单详情
             orderDetail(id){
@@ -104,6 +109,14 @@
         line-height: 0.98rem;
         >p{
             border-top: 1px #f0f0f0 solid;
+            .name{
+                float: right;
+            }
+            .right-icon {
+                width: 0.18rem;
+                padding-top: 0.3294rem;
+                padding-left: 0.24rem;
+            }
             >input{
                 float: right;
                 color: #4c4c4c;

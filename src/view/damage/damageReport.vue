@@ -11,14 +11,14 @@
                 <span>李小</span>
                 <span>车次89</span>
             </div>
-            <div v-for="n in 5" :key='n' class="main-list" @click="goDetail(10)">
+            <div v-for="n in 5" :key='n' class="main-list">
                 <!--<div class="ub ub-ac heade">-->
                     <!--<div class='ub-f1 ut-s'>设置</div>-->
                 <!--</div>-->
                 <ul class="">
                     <li class="ub ub-pj type">
                         <div class="ub-f1 category"><span>大白菜{{n}}类（公斤）</span></div>
-                        <div class="ub-f1 number"><span class="count">数量</span> <span>20</span></div>
+                        <div class="ub-f1 number"><span class="count">数量</span> <span>20{{n}}</span></div>
                     </li>
                     <li class="ub ub-pj reason">
                         <div class="ub-f1"><span>货品损坏原因</span></div>
