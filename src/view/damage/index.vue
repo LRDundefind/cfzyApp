@@ -7,7 +7,7 @@
         </mt-header>
         <div class="page-main">
             <div v-for="n in 20" :key='n' class="main-list">
-                <div class="ub clearfix">
+                <div class="ub clearfix" @click="goReport(n)">
                     <div class="ub-f5">
                         <div>
                             <span class="information">2018-03-{{n}}</span>
@@ -40,8 +40,8 @@
         methods: {
             getList(){
             },
-            goDetail(n){
-                this.$router.push({name: 'client_detail', params: {id: n}});
+            goReport(n){
+                this.$router.push({name: 'damageReport', params: {id: n}});
             }
 
         }
@@ -54,6 +54,9 @@
         padding: 0.3rem;
         color: #333;
         font-size: 0.3rem;
+        span{
+            padding-right: 0.1rem;
+        }
         .date{
             padding-top: 0.28rem;
             .time{
