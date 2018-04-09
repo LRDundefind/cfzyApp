@@ -40,11 +40,11 @@ export default [
 		meta: {
 			showFooter: false
 		},
-		redirect: 'orderPay_record/order',
+		redirect: 'orderPay_record/record',
 		children:[
 			{
-				path:'order',
-				name:'order',
+				path:'record',
+				name:'record',
 				components: {
 					orderpayRouteView: orderRecord
 				},

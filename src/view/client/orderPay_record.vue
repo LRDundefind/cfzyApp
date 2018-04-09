@@ -1,7 +1,7 @@
 <template>
 	<div class="page-content orderpay">
 		<mt-navbar v-model="selected">
-		  	<mt-tab-item id="order">查看消费记录</mt-tab-item>
+		  	<mt-tab-item id="record">查看消费记录</mt-tab-item>
 			<mt-tab-item id="pays">查看还款记录</mt-tab-item>
 		</mt-navbar>
 		<mt-tab-container>
