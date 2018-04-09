@@ -1,7 +1,7 @@
 <template>
     <div class="page-content">
         <mt-header fixed  title="消费记录">
-            <router-link :to="{ name: 'client_detail', params: { id: 1 }}" slot="left">
+            <router-link to="/home" slot="left">
                 <mt-button icon="back"></mt-button>
             </router-link>
             <mt-button slot="right" style="font-size: 0.32rem">确认入库</mt-button>

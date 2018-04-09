@@ -25,6 +25,11 @@
                 </p>
             </div>
 
+            <div class='update clearfix'>
+                <mt-button type="primary" size="large" class='f-l' @click="$router.go(-1)">删除</mt-button>
+                <mt-button type="primary" size="large" class='f-l' @click="$router.go(-1)">确定</mt-button>
+            </div>
+
         </div>
     </div>
 </template>
@@ -41,7 +46,14 @@
         mounted () {
 
         },
-        methods: {}
+        methods: {
+            //跳转到货品信息
+//            goGoods(){
+//               this.$router.push({
+//                   name:'goods'
+//               })
+//            },
+        }
     }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
@@ -74,6 +86,33 @@
                     padding-left: 0.24rem;
                 }
             }
+        }
+    }
+
+    .update{
+        .mint-button--primary:nth-child(1){
+            background: url(../../assets/kehu_chakanxiaofeijilu_btn@2x.png) no-repeat center;
+            background-size:contain;
+            width: 41%;
+            color:#0f0;
+            margin:0 3%;
+            font-size: 0.3rem !important;
+            position: fixed;
+            bottom: 0.5rem;
+        }
+        .mint-button--primary:nth-child(2){
+            background: url(../../assets/kehu_gengxinziliao_btn@2x.png) no-repeat center;
+            background-size:contain;
+            width: 50%;
+            font-size: 0.3rem !important;
+            position: fixed;
+            bottom: 0.5rem;
+            left: 47%;
+        }
+        padding:0.3rem 0 0rem 0;
+        button{
+            margin: 0 auto;
+            height: 1rem;
         }
     }
 

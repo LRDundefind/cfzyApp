@@ -1,10 +1,10 @@
 <template>
     <div class="page-content">
         <mt-header fixed title="货品入库">
-            <router-link :to="{ name: 'client_detail', params: { id: 1 }}" slot="left">
+            <router-link to="/home" slot="left">
                 <mt-button icon="back"></mt-button>
             </router-link>
-            <mt-button slot="right" style="font-size: 0.32rem">确认入库</mt-button>
+            <mt-button slot="right" style="font-size: 0.32rem" @click="goHome">确认入库</mt-button>
         </mt-header>
         <!--还款记录列表-->
         <div class="page-main">
@@ -32,6 +32,10 @@
             //跳转到货品详情页
             godetails(id){
                 this.$router.push({name: 'goodsDetails',params:{id:id}});
+            },
+            //跳转到首页
+            goHome(){
+                this.$router.push({name:'home'});
             },
         }
     }
