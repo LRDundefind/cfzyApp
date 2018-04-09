@@ -119,10 +119,10 @@
         font-size: 0.3rem;
 
         .type {
-            padding-bottom: 0.11rem;
+            padding-bottom: 0.22rem;
         }
         .unit {
-            padding-top: 0.11rem;
+            padding-top: 0.22rem;
         }
         .name {
             font-size: 0.3rem;
