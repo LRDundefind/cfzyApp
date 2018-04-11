@@ -11,7 +11,8 @@
 			<div class="order-detail">
 				<div class="ub term">
 					<div class="ub-f1">订单号 1236548965</div>
-					<div>已完成</div>
+					<div>已完成</div><!--已完成展示-->
+					<div v-if="hide" class="tobepaid">待支付</div><!--未完成展示-->	
 				</div>
 				<div class="ub ub-ac term customer-head" @click="customerDetail(1)">
 					<div class="ub-f1">客户</div>
@@ -96,6 +97,8 @@
 					<div class="edu">2018-02-06 15:00</div>
 				</div>
 			</div>
+			<!--取消订单-->  <!--未完成时展示-->
+			<mt-button type="primary" size="large" class="submit-btn" @click="cancelOrder">取消订单</mt-button>
 		</div>
 		
 	</div>
@@ -123,6 +126,10 @@ export default {
         			id:id
         		}
         	});
+        },
+        //取消订单
+        cancelOrder(){
+        	
         }
             
     }
@@ -148,6 +155,10 @@ i{
 		div.total{
 			font-size: 0.32rem;
 			color: #49c98b;
+		}
+		div.tobepaid{
+			font-size: 0.26rem;
+			color: #33d570;
 		}
 		.remarks{
 			font-size: 0.26rem;
@@ -227,6 +238,15 @@ i{
 		}
 	}
 }
-
+.submit-btn{
+	width: 73%;
+	height: 0.9rem;
+	border-radius: 1rem;
+	background: -webkit-linear-gradient(left, #30b03e 0%,#33d57c 100%);
+	color: #fff;
+	font-size: 0.3rem;
+	font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+	margin: 0.45rem auto 0;
+}
 
 </style>

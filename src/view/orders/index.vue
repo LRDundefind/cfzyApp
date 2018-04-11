@@ -36,8 +36,38 @@
 			    infinite-scroll-disabled="loading"
 			    infinite-scroll-distance="10"
 			    class="orders-ul"><!--v-infinite-scroll="loadMore"-->
-				<li v-for="n in 3" class="orders-li" @click="orderList(n)">
-			  		
+				<li v-for="n in 3" class="orders-li">
+			  		<div class="orders-t ub ub-ac" @click="orderList(n)">
+			  			<div>2015-08-05</div>
+			  			<div>你的名字</div>
+			  			<div class="ub-f1">车次65</div>
+			  			<div class="status">售卖中</div>
+			  		</div>
+			  		<div class="orders-c" @click="orderList(n)">京A323544</div>
+			  		<div class="orders-b ub ub-ac" @click="orderList(n)">
+			  			<div class="ub-f1">2018-05-09</div>
+			  			<div>销售总额</div>
+			  			<div class="edu">￥330,000</div>
+			  		</div>
+			  		<table class="orders-table">
+						<thead>
+							<tr>
+								<th>品名</th>
+								<th>销售量</th>
+								<th>库存量</th>
+								<th>销售金额</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-for="n in 5">
+								<td>大白菜</td>
+								<td>100斤</td>
+								<td>50斤</td>
+								<td>￥600.00</td>
+							</tr>
+						</tbody>
+			  		</table>
+			  		<div class="slide-btn" @click="sildeDown">展开</div>
 				</li>
 			</ul>
 			
@@ -130,6 +160,10 @@ export default {
         			id:id
         		}
         	});
+        },
+        //展开table表格
+        sildeDown(){
+        	
         }
 
     }
@@ -151,7 +185,79 @@ body{
 }
 /*订单车次列表*/
 .orders-ul{
+	font-size: 0.26rem;
+	color: #4c4c4c;
+	padding-top: 1.1rem;
+	.orders-li{
+		background: #fff;
+		margin: 0 0 0.2rem;
+		padding: 0 0.3rem 0.3rem;
+		.orders-t{
+			font-size: 0.3rem;
+			color: #333;
+			line-height: 0.52rem;
+			padding-top: 0.17rem;
+			.status{
+				font-size: 0.24rem;
+				color: #33d570;
+			}
+		}
+		.orders-c{
+			line-height: 0.5rem;
+			font-size: 0.24rem;
+			color: #666;
+		}
+		.orders-b{
+			line-height: 0.5rem;
+			font-size: 0.24rem;
+			color: #666;
+			padding-bottom: 0.19rem;
+			border-bottom: 1px solid #dedede;
+			.edu{
+				font-size: 0.32rem;
+				color: #49c98b;
+				margin-left: 0.1rem;
+			}
+		}
+		.orders-table{
+			margin-top: 0.3rem;
+			width: 100%;
+			border-top: 1px solid #dedede;
+			thead{
+				background: #f2f2f2;
+				line-height: 0.6rem;
+				tr{
+					th{
+						font-weight: normal;
+						text-align: left;
+					}
+					th:first-child{
 
+						padding-left: 0.3rem;
+					}			
+				}
+			}
+			tbody{
+				tr{
+					height: 0.96rem;
+					border-bottom: 1px solid #dedede;
+					td:first-child{
+						padding-left: 0.3rem;
+					}
+				}
+				tr:last-child{
+					border-bottom: none;
+				}
+			}
+		}
+		.slide-btn{
+			width: 100%;
+			height: 0.52rem;
+			line-height: 0.52rem;
+			text-align: center;
+			background: #f2f2f2;
+		}
+	}
 }
 
 
