@@ -3,8 +3,8 @@ import Router from 'vue-router'
 import application from '@/view/index'
 import home from './home/home'
 import order from './order/order'
-import pay from './pay/pay'
-import owner from './owner/owner'
+import orders from './orders/orders'
+import logistics from './logistics/logistics'
 import client from './client/client'
 import my from './my/my'
 import goods from './goods/goods'
@@ -64,8 +64,8 @@ const router = new Router({
             children: [
               ...home,
               ...order,
-              ...pay,
-              ...owner,
+              ...orders,
+              ...logistics,
               ...client,
               ...my,
               ...goods,

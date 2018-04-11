@@ -4,15 +4,15 @@
 			<router-link to="/ownerChoice" slot="left">
                 <span class="c-3 f-s-16">白云上档A</span>
                 <img class="header_img" src="../../assets/index/down_icon.png"/>
-           </router-link>
-           <router-link to="/" slot="right">
+            </router-link>
+            <router-link to="/" slot="right">
                 <span class="c-3 f-s-16">赊账规则</span>
-           </router-link>
+            </router-link>
 		</mt-header>
 		<!--下单-->
 		<div class="page-main">
 			<div class="order-detail">
-				<div class="ub ub-ac term no-border right-icon" @click="chooseLicenseNumber()">
+				<div class="ub ub-ac term no-border right-icon" @click="choosetrainNumber()">
 					<div>2018-03-31</div>
 					<div class="driver-name">小李</div>
 					<div class="ub-f1">车次89</div>
@@ -48,7 +48,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr v-for="n in 3">
+						<tr v-for="n in 3" @click="goodsInfo(2)">
 							<td>大白菜</td>
 							<td>100斤</td>
 							<td>4.55</td>
@@ -140,16 +140,23 @@ export default {
     },
     methods: {
 	    //选择车次
-        chooseLicenseNumber(){
-
+        choosetrainNumber(){
+            this.$router.push({name: 'trainList'});
         },
         //选择客户
         chooseCustomer(){
-
+            this.$router.push({name: 'client'});
+        },
+        //查看货品信息
+        goodsInfo(id){
+        	this.$router.push({
+        		name: 'goodsInformation',
+        		params: {id: id}
+        	});
         },
         //签名
         autograph(){
-        	
+            this.$router.push({name: 'autograph'});
         },
         //暂存订单
         stagingOrder(){

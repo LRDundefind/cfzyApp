@@ -1,35 +1,38 @@
 <template>
 	<div class="page-content">
-		<mt-header fixed  title="支出">
+		<mt-header fixed  title="签名">
 			<router-link to="/" slot="left">
-			    <mt-button icon="back"></mt-button>
+			    <mt-button icon="back" @click="$router.go(-1)"></mt-button>
 			</router-link>
-			<!-- <mt-button icon="more" slot="right"></mt-button> -->
 		</mt-header>
+		<!--签名-->
+		<div class="page-main autograph">
 
-		<div class="page-main">
-			
 		</div>
 	</div>
 </template>
 
 <script>
+
 export default {
+
     data () {
         return {
-            
         }
     },
     mounted () {
 
     },
     methods: {
-        getList(){}
             
     }
 }
 </script>
-<style scoped>
+<style scoped rel="stylesheet/scss" lang="scss">
+
+.goods{
+	
+}
 
 
 </style>

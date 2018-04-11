@@ -27,18 +27,18 @@
                 首页
             </mt-tab-item>
             <mt-tab-item id="order">
-                <img v-if="selected == 'order'" slot="icon" src="../assets/shouru_shouru_green_icon@2x.png">
-                <img v-else slot="icon" src="../assets/kehu_shouru_icon@2x.png">
+                <img v-if="selected == 'order'" slot="icon" src="../assets/order_green.png">
+                <img v-else slot="icon" src="../assets/order.png">
                 下单
             </mt-tab-item>
-            <mt-tab-item id="pay">
-                <img v-if="selected == 'pay'" slot="icon" src="../assets/zhichu_zhichu_icon@2x.png">
-                <img v-else slot="icon" src="../assets/kehu_zhichu_icon@2x.png">
+            <mt-tab-item id="orders">
+                <img v-if="selected == 'orders'" slot="icon" src="../assets/shouru_shouru_green_icon@2x.png">
+                <img v-else slot="icon" src="../assets/kehu_shouru_icon@2x.png">
                 订单
             </mt-tab-item>
-            <mt-tab-item id="owner">
-                <img v-if="selected == 'owner'" slot="icon" src="../assets/huozhu_huozhu_icon@2x.png">
-                <img v-else slot="icon" src="../assets/kehu_huozhu_icon@2x.png">
+            <mt-tab-item id="logistics">
+                <img v-if="selected == 'logistics'" slot="icon" src="../assets/wuliuicon_green.png">
+                <img v-else slot="icon" src="../assets/wuliuicon.png">
                 物流
             </mt-tab-item>
             <mt-tab-item id="client">
