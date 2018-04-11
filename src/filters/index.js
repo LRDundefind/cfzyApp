@@ -1,4 +1,5 @@
 export function format(num) {
+
     num = num.toString().replace(/\$|\,/g,'');
     if(isNaN(num))
         num = "0";
