@@ -14,3 +14,14 @@ export function format(num) {
                 num.substring(num.length-(4*i+3));
     return (((sign)?'':'-') + num + '.' + cents);
 }
+
+//售卖单位转换
+export function sellNnit(value) {
+    let unit = {
+        unit_jin:'斤',
+        unit_kg:'公斤',
+        unit_pie:'件',
+        unit_cbd:'公担'
+    }
+    return unit[value]
+}

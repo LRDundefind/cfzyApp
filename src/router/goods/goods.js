@@ -3,8 +3,17 @@ import goodsDetails from '@/view/goods/goodsDetails'
 
 export default [
     {
-        path: 'goodsDetails/:id',
-        name: 'goodsDetails',
+        path: 'goodsDetails/update/:id',
+        name: 'goodsDetails/update',
+        components: {
+            mainView: goodsDetails
+        },
+        meta: {
+            showFooter: false
+        }
+    }, {
+        path: 'goodsDetails/create',
+        name: 'goodsDetails/create',
         components: {
             mainView: goodsDetails
         },

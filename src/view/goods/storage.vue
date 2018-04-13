@@ -53,11 +53,14 @@
 
             </div>
             <div v-if="selected == 'goods'">
-                <div v-for="n in 20" :key='n' class="goods-list">
-                    <p @click="godetails(n)" class="clearfix">大白菜{{n}}类
+                <div v-for="n in 5" :key='n' class="goods-list">
+                    <p @click="editGoods(n)" class="clearfix">大白菜{{n}}类
                         <span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
                         <span>{{n + '00'}}公斤</span>
                     </p>
+                </div>
+                <div class="login_cont">
+                    <div @click="createGoods" class="loginbtn">添加货品</div>
                 </div>
             </div>
             <!--<router-view name="storageRouteView" />-->
@@ -106,10 +109,15 @@
                     }
                 });
             },
-            //跳转到货品详情页
-            godetails(id){
-                this.$router.push({name: 'goodsDetails', params: {id: id}});
+            //编辑货品
+            editGoods(id){
+                this.$router.push({name: 'goodsDetails/update', params: {id: id}});
             },
+            //添加货品
+            createGoods(){
+                this.$router.push({name: 'goodsDetails/create'});
+            },
+
             //跳转到首页
             goHome(){
                 this.$router.push({name: 'home'});
@@ -117,6 +125,8 @@
 
             getList(){
             },
+
+
 
         },
     }
@@ -199,6 +209,16 @@
                     }
                 }
             }
+        }
+        .login_cont{
+            width: 5.5rem;
+            margin: 0 auto;
+        }
+        .loginbtn{
+            width: 80% !important;
+            @include login_btn(fixed);
+            background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
+            margin: 0!important;
         }
     }
 
