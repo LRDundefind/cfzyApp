@@ -72,15 +72,28 @@
     </div>
 </template>
 
-<script>
+<script> 
+     import { home } from '@/services/apis/home.api'
     export default {
         data () {
             return {}
         },
         mounted () {
-
+            this.getlist()
         },
         methods: {
+
+            getlist(){
+                let params={}
+                home.index(params).then(resposed=>{
+
+                })
+            },
+
+
+
+
+
             //跳转到我的首页
             goMy(id){
                 this.$router.push({name: 'my', params: {id: id}});

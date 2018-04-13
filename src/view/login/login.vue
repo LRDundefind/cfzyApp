@@ -80,13 +80,20 @@
 </style>
 <script>
  import { Toast } from 'mint-ui';
+ import { login } from '@/services/apis/login'
+ import Cookies from 'js-cookie'
 export default {
     name: 'login',
     data () {
         return {
           userName:'',
           passWord:'',
-          passwordtype:'password'
+          passwordtype:'password',
+          form:{},
+          auth:{
+			        key:"MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJRqAC45zJt7CFWUuRQgA+mm", //加密的key
+			        randomKey:'' //生成签名的key
+			    },
         }
     },
     mounted () {
@@ -133,7 +140,28 @@ export default {
                         });
 				}
 				else{
-					this.$router.push({name:'forget'});
+                    let params = this.form;
+                    this.form.phone = this.userName;
+                    this.form.password = this.passWord;
+                    params = {
+                        'str': strEnc(JSON.stringify(this.form),this.auth.key,this.auth.key,this.auth.key)
+                        };
+                    
+                    login.auth(params).then(response => {
+                            let result = response.data.results;
+                            let gidOwnID_list=JSON.stringify(result.stalls_list);
+                             Cookies.set('Token', result.token);
+                             Cookies.set('randomKey', result.randomKey);
+                             Cookies.set('gidOwnID_lists', gidOwnID_list);                 //档位信息集合
+                             Cookies.set('roleId', result.roleId);          //身份区分，档主还是财务
+                             Cookies.set('sid', result.sid);                //登录用户ID
+                             Cookies.set('userName', result.userName);     //姓名
+                             Cookies.set('compayName', result.compayName); //公司名称
+
+                             this.$router.push({name:'home'});
+
+                    })
+					
 					//调取接口
 					
 				}

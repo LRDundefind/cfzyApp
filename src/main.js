@@ -4,7 +4,8 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
-
+import Cookies from 'js-cookie'
+let Base64 = require('js-base64').Base64;
 import Mint from 'mint-ui'
 import 'mint-ui/lib/style.css'
 
