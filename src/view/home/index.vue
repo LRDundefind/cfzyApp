@@ -20,15 +20,15 @@
             <!--当日入库-->
             <div class="ub today">
                 <div class="ub-f1 bd-r">
-                    <div class="number">480</div>
+                    <div class="number">{{storageData.trainNum}}</div>
                     <div class="words">当日入库</div>
                 </div>
                 <div class="ub-f1 bd-r">
-                    <div class="number">180</div>
+                    <div class="number">{{storageData.order_quantity}}</div>
                     <div class="words">当日下单</div>
                 </div>
                 <div class="ub-f1">
-                    <div class="number">80</div>
+                    <div class="number">{{storageData.deposit}}</div>
                     <div class="words">暂存下单</div>
                 </div>
             </div>
@@ -39,13 +39,14 @@
                     <div class="ub-f1">
                         <div class="bd-r bd-b" @click="goStorage">
                             <div>
-                                <img class="goods-image left-imge" src="../../assets/index/total_income_icon.png"/>
+                                <img class="goods-image left-imge" src="../../assets/index/goods_storage.png"/>
                             </div>
                             <div class="name">货品入库</div>
                         </div>
                         <div class="bd-r" @click="goTemporaryOrderList">
                             <div>
-                                <img class="goods-image left-imge" src="../../assets/index/total_income_icon.png"/>
+                                <img v-if="this.storageData.trainNum != 0" class="goods-image left-imge" src="../../assets/index/total_income_icon.png"/>
+                                <img v-else="this.storageData.trainNum == 0" class="goods-image left-imge" src="../../assets/index/dot_total_income_icon.png"/>
                             </div>
                             <div class="name">暂存订单</div>
                         </div>
@@ -53,14 +54,14 @@
                     <div class="ub-f1">
                         <div class="bd-b">
                             <div class="" @click="goDamage">
-                                <img class="goods-image right-img" src="../../assets/index/total_income_icon.png"/>
+                                <img class="goods-image right-img" src="../../assets/index/goods_damaged.png"/>
                             </div>
                             <div class="name">货品损坏</div>
                         </div>
 
                         <div class=" bd-b" @click="goSettlementList">
                             <div>
-                                <img class="goods-image right-img" src="../../assets/index/total_income_icon.png"/>
+                                <img class="goods-image right-img" src="../../assets/index/trips_computing.png"/>
                             </div>
                             <div class="name">车次计算</div>
                         </div>
@@ -76,7 +77,13 @@
      import { home } from '@/services/apis/home.api'
     export default {
         data () {
-            return {}
+            return {
+                storageData:{
+                    trainNum:'1',//当日入库量
+                    order_quantity:'1',//当日下单量
+                    deposit:'1',//暂存订单量
+                }
+            }
         },
         mounted () {
             this.getlist()
@@ -85,14 +92,12 @@
 
             getlist(){
                 let params={}
-                home.index(params).then(resposed=>{
+                home.index(params).then(response=>{
+                    this.storageData = response.data.results;
+                    console.log(response.data.results);
 
                 })
             },
-
-
-
-
 
             //跳转到我的首页
             goMy(id){
@@ -165,7 +170,7 @@
         .number {
             font-size: 0.42rem;
             color: #33d57c;
-            padding: 0 0.9rem;
+            text-align: center;
         }
         .words {
             font-size: 0.24rem;
