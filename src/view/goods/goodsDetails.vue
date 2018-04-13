@@ -50,19 +50,31 @@
 </template>
 
 <script>
+    import { damage } from '@/services/apis/damage.api'
 
     export default {
-
         data () {
             return {
+                goodsListParams:{
+                    page_size:'10',
+                    current_page:'1',
+                },
                 number: '1000',
                 type:false,
             }
         },
         mounted () {
-
+            this.getlist()
         },
         methods: {
+            //初始化数据--获取档位货品列表
+            getlist(){
+                damage.goodsList(this.goodsListParams).then(response=>{
+//                    this.ownerData = response.data.results;
+//                    this.storageData = response.data.results;
+                    console.log(response.data.results);
+                })
+            },
             showType(){
                 this.type = true;
             },

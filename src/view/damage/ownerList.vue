@@ -9,13 +9,28 @@
         <div class="page-main">
             <search-box ref="search"/>
             <div v-for="item in ownerData" :key='ownerData.sid' class="main-list">
-                <h3>{{item.shipName}}</h3>
-                <ul class="clearfix">
-                    <li class="f-l">未结算车次 <span>{{item.unsettlement}}</span></li>
-                    <li class="f-l">发货总数 <span>{{item.trainsNum}}</span></li>
-                    <li class="f-l">交易总金额 <span>{{item.tradeAmount}}</span></li>
-                    <li class="f-l">待汇款 <span>{{item.notPayAmount}}</span></li>
-                </ul>
+                <div class="name">{{item.shipName}}</div>
+                <div class="ub car">
+                    <div class="ub ub-f2">
+                        <div>待结算车次</div>
+                        <div class="number">{{item.unsettlement}}</div>
+                    </div>
+                    <div class="ub ub-f1">
+                        <div>发货总次数</div>
+                        <div class="number">{{item.trainsNum}}</div>
+                    </div>
+                </div>
+
+                <div class="ub">
+                    <div class="ub ub-f2">
+                        <div>已结算</div>
+                        <div class="number">{{item.tradeAmount}}</div>
+                    </div>
+                    <div class="ub ub-f1">
+                        <div>尚欠款</div>
+                        <div class="number pay">{{item.notPayAmount}}</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -52,7 +67,6 @@
             getlist(){
                 damage.ownerList(this.blacklistParams).then(response=>{
                     this.ownerData = response.data.results;
-                    this.storageData = response.data.results;
                     console.log(this.ownerData);
 
                 })
@@ -65,29 +79,27 @@
     .main-list {
         background: #fff;
         margin-top: 0.2rem;
-        padding: 0.2rem;
-        color: #333;
-        h3 {
+        padding: 0.3rem;
+        color: #666;
+        font-size: 0.24rem;
+        .name {
             font-size: $fons_size_30;
             color: $main_color333;
             border-bottom: $main_border;
             line-height: 0.8rem;
         }
-        ul {
-
-            li {
-                width: 50%;
-                font-size: $fons_size_24;
-                margin-top: 0.24rem;
-                color: $main_color666;
-                span {
-                    font-size: $fons_size_28;
-                }
-            }
-            li:nth-child(2), li:nth-child(4) {
-                text-align: right;
-            }
+        .number{
+            padding-left: 0.2rem;
+            font-size: 0.28rem;
         }
+        .pay{
+            color: #49c98b;
+        }
+        .car{
+            padding: 0.2rem 0 0.22rem 0;
+
+        }
+
     }
 
 </style>

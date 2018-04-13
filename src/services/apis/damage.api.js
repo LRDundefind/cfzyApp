@@ -12,5 +12,14 @@ export const damage = {
             data: serverMoudle(params) || {}
         });
     },
+    //获取档位货品列表
+    goodsList(params) {
+        return axios({
+            url: 'rest/CHENGFENG_GET_SELEMAN_GOOD',
+            method: 'post',
+            data: serverMoudle(params) || {}
+        });
+    },
+
 
 };
