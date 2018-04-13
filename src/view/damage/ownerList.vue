@@ -8,13 +8,13 @@
 
         <div class="page-main">
             <search-box ref="search"/>
-            <div v-for="n in 20" :key='n' class="main-list">
-                <h3>小马{{n}}号</h3>
+            <div v-for="item in ownerData" :key='ownerData.sid' class="main-list">
+                <h3>{{item.shipName}}</h3>
                 <ul class="clearfix">
-                    <li class="f-l">未结算车次 <span>{{n}}</span></li>
-                    <li class="f-l">发货总数 <span>8</span></li>
-                    <li class="f-l">交易总金额 <span>￥1000</span></li>
-                    <li class="f-l">待汇款 <span>￥200</span></li>
+                    <li class="f-l">未结算车次 <span>{{item.unsettlement}}</span></li>
+                    <li class="f-l">发货总数 <span>{{item.trainsNum}}</span></li>
+                    <li class="f-l">交易总金额 <span>{{item.tradeAmount}}</span></li>
+                    <li class="f-l">待汇款 <span>{{item.notPayAmount}}</span></li>
                 </ul>
             </div>
         </div>
@@ -23,17 +23,41 @@
 
 <script>
     import searchBox from '@/components/searchBox/search'
+    import { damage } from '@/services/apis/damage.api'
+
     export default {
         components: {searchBox},
         data () {
             return {
+                ownerData:{
+                    shipName:'',//货主名称
+                    trainsNum:'',//进货车次总数
+                    unsettlement:'',//未结算车次总数
+                    tradeAmount:'',//交易总金额
+                    notPayAmount:'',//待汇款总金额
+                },
+                blacklistParams:{
+                    search:'',
+                    page_size:'10',
+                    current_page:'1',
+                },
                 //searchValue:this.$refs.search.searchValue
             }
         },
         mounted () {
-
+            this.getlist()
         },
-        methods: {}
+        methods: {
+            //初始化数据--获取货主列表
+            getlist(){
+                damage.ownerList(this.blacklistParams).then(response=>{
+                    this.ownerData = response.data.results;
+                    this.storageData = response.data.results;
+                    console.log(this.ownerData);
+
+                })
+            },
+        }
     }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
