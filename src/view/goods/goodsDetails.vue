@@ -40,7 +40,7 @@
                         </div>
                         <div class=" ub unit">
                             <div class="name ub-f5">入库单位</div>
-                            <div class="date ub-f1">{{item.sellUnit}}</div>
+                            <div class="date ub-f1">{{item.sellUnit |sellNnit}}</div>
                         </div>
                     </div>
                 </div>
