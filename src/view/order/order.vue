@@ -11,16 +11,14 @@
 		</mt-header>
 		<!--下单-->
 		<div class="page-main">
-			<div class="order-detail">
+			<div class="order-detail" v-if="trainInfo">
 				<div class="ub ub-ac term no-border right-icon" @click="choosetrainNumber()">
-					<div>2018-03-31</div>
-					<div class="driver-name">小李</div>
-					<div class="ub-f1">车次89</div>
+					<div class="ub-f1">{{trainsNum}}</div>
 					<span class="c-3 F26C4c">京A 45698</span>
 					<img src="../../assets/my/icon_right.png" class="icon">
 				</div>
 			</div>
-			<div class="order-detail">
+			<div class="order-detail" v-if="otherInfo">
 				<div class="ub ub-ac term right-icon input-choose" @click="chooseCustomer()">
 					<input id="kh" type="radio" name="choose" checked="checked">
 					<label for="kh" class="customer"></label>
@@ -35,31 +33,31 @@
 				</div>
 			</div>
 			<!--货品信息-->
-			<div class="order-detail item-table">
+			<div class="order-detail item-table" v-if="otherInfo">
 				<table>
 					<thead>
 						<tr>
 							<th>品名</th>
 							<th>重量</th>
 							<th>单价</th>
-							<th>金额</th>
 							<th>件数</th>
+							<th>金额</th>
 							<th>包装费</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr v-for="n in 3" @click="goodsInfo(2)">
-							<td>大白菜</td>
-							<td>100斤</td>
-							<td>4.55</td>
-							<td>600.00</td>
-							<td>20</td>
-							<td>20.00</td>
+						<tr v-for="goods in goodsInfo" @click="goodsInfoSet(goods.goodId, goods.goodName, goods.sellUnit)">
+							<td>{{goods.goodName}}</td>
+							<td>{{goods.surplusNum}}</td>
+							<td>?</td>
+							<td>?</td>
+							<td>?</td>
+							<td>?</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
-			<div class="order-detail">
+			<div class="order-detail" v-if="otherInfo">
 				<div class="ub term">
 					<div class="ub-f1">贷款费用</div>
 					<div class="edu">￥45</div>
@@ -86,7 +84,7 @@
 				</div>
 			</div>
 			<!--付款方式-->
-			<div class="order-detail">
+			<div class="order-detail" v-if="otherInfo">
 				<div class="ub ub-ac term right-icon input-choose">
 					<input id="xj" type="radio" name="choosetype" checked="checked">
 					<label for="xj" class="individual"></label>
@@ -101,7 +99,7 @@
 				</div>
 			</div>
 			<!--备注信息-->
-			<div class="order-detail">
+			<div class="order-detail" v-if="otherInfo">
 				<div class="term">
 					<div class="">备注</div>
 				</div>
@@ -109,13 +107,14 @@
 					<textarea class="" placeholder="备注信息"></textarea>
 				</div>
 			</div>
-			<div class="order-detail">
+			<!--签名-->
+			<div class="order-detail" v-if="autographInfo">
 				<div class="ub ub-ac term no-border right-icon" @click="autograph()">
 					<div class="ub-f1">签名</div>
 					<img src="../../assets/my/icon_right.png" class="icon">
 				</div>
 			</div> 
-			<div class="orderBtn ub">
+			<div class="orderBtn ub" v-if="otherInfo">
 				<div class="lefts" @click="stagingOrder">暂存</div>
 				<div class="center"></div>
 				<div class="rights" @click="submitOrder">下单</div>
@@ -127,16 +126,20 @@
 </template>
 
 <script>
-
+import {order} from '@/services/apis/order.js'
 export default {
 
     data () {
         return {
-            
+			trainInfo: true,//车次信息
+			otherInfo: false,//其他信息
+			autographInfo: false,//签名
+			goodsInfo: [],
+			trainsNum: '点击选择车次'
         }
     },
     mounted () {
-
+    	this.getTrainInfor();
     },
     methods: {
 	    //选择车次
@@ -150,13 +153,49 @@ export default {
 				params: {type: 'order'}
             });
         },
-        //查看货品信息
-        goodsInfo(id){
+        //选择完车次后获取车次货品详细信息
+        getTrainInfor(){ 
+        	if(this.$route.params.tid){
+        		this.trainsNum = this.$route.params.trainsNum;
+        		
+        		this.otherInfo = true;//其他信息
+				this.autographInfo = true;//签名
+				this.getTrain(this.$route.params.tid);
+        	}else{
+        		console.log('没有选择车次')
+        	}
+        	
+        },
+		//获取车次货品详细信息
+		getTrain(tid){
+			var params = {
+				tid: tid
+			};
+			order.getTrainInfo(params)
+				.then(response => {
+					
+					//货品详细信息
+					this.goodsInfo = response.data.results;
+					
+					if(response.data.error_code == '204'){
+						this.otherInfo = false;//其他信息
+						this.autographInfo = false;//签名
+						console.log(response.data.error_msg);
+					}
+				})
+				.catch(function (response) {
+					console.log(response);
+				});
+		},
+
+		//设置货品重量件数信息
+        goodsInfoSet(id, name, unit){
         	this.$router.push({
         		name: 'goodsInformation',
-        		params: {id: id}
+        		params: {goodId: id, goodName: name, sellUnit:unit }
         	});
         },
+        
         //签名
         autograph(){
             this.$router.push({name: 'autograph'});
@@ -194,9 +233,9 @@ i{
 			font-size: 0.32rem;
 			color: #49c98b;
 		}
-		.driver-name{
+		/*.driver-name{
 			margin: 0 0.15rem;
-		}
+		}*/
 		.remarks{
 			font-size: 0.26rem;
 			color: #666;

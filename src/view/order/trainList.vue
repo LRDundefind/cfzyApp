@@ -7,18 +7,17 @@
 		</mt-header>
 		<!--车次列表-->
 		<div class="page-main">
-
 			<ul class="order-list">
-				<li v-for="n in 4">
+				<li v-for="list in trainList" @click="chooseTrain(list.tid, list.trainsNum)">
 					<div class="ub ub-ac list-top">
-						<div>2018-06-05</div>
-						<div class="list-name">我是谁</div>
-						<div class="ub-f1">车次05</div>
+						<div>{{list.trainsNum}}</div>
+						<!--<div class="list-name">我是谁</div>-->
+						<!--<div class="ub-f1">车次05</div>-->
 					</div>
 					<div class="list-bottom ub ub-ac">
 						<div class="list-bl">到达时间</div>
-						<div class="ub-f1">16:50</div>
-						<div>京A45662</div>
+						<div class="ub-f1">{{list.putStorageTime}}</div>
+						<div>{{list.plateNum}}</div>
 					</div>
 				</li>
 			</ul>
@@ -27,19 +26,40 @@
 </template>
 
 <script>
-
+import {order} from '@/services/apis/order.js'
 export default {
-
+	
     data () {
         return {
-            
+        	trainList: [],
         }
     },
     mounted () {
-
+		this.getList();
     },
     methods: {
-            
+		//获取支出类型列表
+		getList(){
+			var params = {
+				current_page: '1',
+				page_size: '50'
+			};
+			order.getTrainList(params)
+				.then(response => {
+					this.trainList = response.data.results;
+				})
+				.catch(function (response) {
+					console.log(response);
+				});
+		},
+		//选择车次
+		chooseTrain(tid, trainsNum){
+            this.$router.push({
+            	name: 'order',
+				params: {tid: tid, trainsNum: trainsNum}
+            });
+		},
+
     }
 }
 </script>
@@ -57,9 +77,9 @@ i{
 		.list-top{
 			font-size: 0.3rem;
 			line-height: 0.55rem;
-			.list-name{
+			/*.list-name{
 				margin: 0 0.2rem;
-			}
+			}*/
 		}
 		.list-bottom{
 			color: #666;
