@@ -145,7 +145,10 @@ export default {
         },
         //选择客户
         chooseCustomer(){
-            this.$router.push({name: 'client'});
+            this.$router.push({
+            	name: 'client',
+				params: {type: 'order'}
+            });
         },
         //查看货品信息
         goodsInfo(id){
