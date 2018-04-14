@@ -25,5 +25,12 @@ export const login = {
             method: 'get',
             params: params || {}
         });
+    },
+    findpass(params){
+    	return axios({
+            url: '/rest/CHENGFENG_LOSE_LOGIN',
+            method: 'get',
+            params: params || {}
+        });
     }
 }

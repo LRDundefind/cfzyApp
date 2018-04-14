@@ -9,11 +9,18 @@
             </mt-header>
 
             <div class="login_cont">
-               <div class="bg1">
+                <div class="bg1">
 					<span class="usericonBg"></span>
 					<input v-model="phoneNumber" placeholder="手机号" class="usericon ">
 				</div>
-
+                <div class="bg1">
+					<span class="usericonBg2"></span>
+					<input type="password" v-model="passwordnew1" placeholder="新密码" class="usericon ">
+				</div>
+                <div class="bg1">
+					<span class="usericonBg2"></span>
+					<input type="password" v-model="passwordnew2" placeholder="确认新密码" class="usericon ">
+				</div>
 				<div  @click="loginBtn" class="findbtn">找回密码</div>
                 
             </div>
@@ -34,6 +41,10 @@
 		@include login_input_icon;
 		background-image: url(../../assets/login/dl_yonghuming_icon.png);
 	}
+    .bg1 .usericonBg2{
+        @include login_input_icon;
+        background-image: url(../../assets/login/dl_mima_icon.png);
+    }
     .usericon{
 		@include login_input;
     }
@@ -45,11 +56,14 @@
 </style>
 <script>
  import { Toast } from 'mint-ui';
+ import Cookies from 'js-cookie'
 export default {
     name: 'login',
     data () {
         return {
-          phoneNumber:''
+          phoneNumber:'',
+          passwordnew1:'',
+          passwordnew2:''
         }
     },
     mounted () {
@@ -72,7 +86,9 @@ export default {
                         });
 				}
 				else{
-					this.$router.push({name:'yanzheng',params: { phone: this.phoneNumber }});
+                    Cookies.set('Fpassword',this.passwordnew2);
+                    Cookies.set('Fphone',this.phoneNumber);
+					this.$router.push({name:'yanzheng',params: { phone: this.phoneNumber,firstlogin:'N' }});
 					//调取接口
 					
 				}

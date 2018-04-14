@@ -72,6 +72,7 @@
 <script>
  import { Toast } from 'mint-ui';
  import { login } from '@/services/apis/login'
+  import Cookies from 'js-cookie'
 const TIME_COUNT = 60;
 export default {
     name: 'login',
@@ -148,17 +149,42 @@ export default {
                 userName:Cookies.get('Zname'),
                 phone:Cookies.get('Zphone'),
                 password:Cookies.get('Zpassword'),
-                code:yanzhengma
+                verCode:yanzhengma
             };
-            params = {
+            let params = {
                 'str': strEnc(JSON.stringify(datalist),this.auth.key,this.auth.key,this.auth.key)
                 };
             login.zhuce(params).then(response=>{
-                  
+                    Cookies.remove('Zname');
+                    Cookies.remove('Zphone');
+                    Cookies.remove('Zpassword');
+                  if(response.data.error_code=='200'){
+                      this.$router.push({name:'login'});
+                  }
+                  else{
+                      this.$router.push({name:'zhuce'});
+                  }
             })
        },
        change(yanzhengma){
-           
+            let datalist = {
+                phone:Cookies.get('Fpassword'),
+                password:Cookies.get('Fphone'),
+                verCode:yanzhengma
+            };
+            let params = {
+                'str': strEnc(JSON.stringify(datalist),this.auth.key,this.auth.key,this.auth.key)
+                };
+            login.findpass(params).then(response=>{
+                    Cookies.remove('Fpassword');
+                    Cookies.remove('Fphone');
+                  if(response.data.error_code=='200'){
+                      this.$router.push({name:'login'});
+                  }
+                  else{
+                      this.$router.push({name:'forget'});
+                  }
+            })
        },
        // 倒计时函数
 			daojishi(){
