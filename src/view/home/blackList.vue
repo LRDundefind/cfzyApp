@@ -7,22 +7,21 @@
         </mt-header>
         <search-box ref="search"/>
         <div class="page-main">
-            <div v-for="n in 20" :key='n' class="main-list" @click="goDetail(10)">
+            <div v-for="item in blacklistData" :key='item.cid' class="main-list" @click="goDetail(item.cid)">
                 <ul class="ub">
                     <li class="ub-f1">
-                        <img class="black-img" src="../../assets/index/shouye_touxiang_img@2x.png"/>
+                        <img class="black-img" :src="item.headImg"/>
                     </li>
-                    <li class="ub-f5">
-                        <div class="name">宇文护</div>
-                        <div class="reason">加入黑名单理由或详细情况，欠款</div>
+                    <li class="ub-f4">
+                        <div class="name">{{item.cusName}}</div>
+                        <div class="reason">{{item.blockingReason}}</div>
                     </li>
                     <li class="ub-f2 ub ub-pe">
                         <div>
-                            <div class="date">2017-04-27</div>
+                            <div class="date">{{item.createTime}}</div>
                         </div>
                     </li>
                 </ul>
-                
             </div>
         </div>
     </div>
@@ -30,22 +29,41 @@
 
 <script>
     import searchBox from '@/components/searchBox/search'
+    import { home } from '@/services/apis/home.api'
+
     export default {
         data () {
             return {
+                blacklistParams:{
+                    search:'',
+                },
+                blacklistData:{
+                    headImg:'',//头像
+                    cusName:'',//名字
+                    blockingReason:'',//拉黑原因
+                    createTime:'', //日期
+                },
 
             }
         },
+        mounted () {
+            this.getlist()
+        },
+
         components:{
             searchBox
         },
-        mounted () {
 
-        },
         methods: {
-            getList(){},
-            goDetail(n){
-                this.$router.push({name:'client_detail',params: { id: n }});
+            getlist(){
+                home.blacklist(this.blacklistParams).then(response=>{
+                    this.blacklistData = response.data.results;
+                    console.log(this.blacklistData);
+                })
+            },
+
+            goDetail(cid){
+                this.$router.push({name:'client_detail',params: { id: cid }});
             }
 
         }
@@ -83,12 +101,12 @@
                 .name{
                     font-size: 0.3rem;
                     color: #333333;
-                    padding: 0 0 0.15rem 0.22rem;
+                    padding: 0 0 0.22rem 0.26rem;
                 }
                 .reason{
                     font-size: 0.22rem;
                     color: #808080;
-                    padding-left: 0.22rem;
+                    padding-left: 0.26rem;
                 }
                 .date{
                     font-size: 0.22rem;

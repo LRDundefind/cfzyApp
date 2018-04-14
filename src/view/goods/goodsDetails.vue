@@ -32,15 +32,15 @@
                 </div>
             </div>
             <div class="" v-if="type == true">
-                <div v-for="n in 20" :key='n' class="type-list">
+                <div v-for="item in goodsData" :key='item.gid' class="type-list">
                     <div class="" @click="hideType">
                         <div class="ub type bd-b">
                             <div class="name ub-f5">蔬菜分类</div>
-                            <div class="date ub-f1">蔬菜{{n}}类</div>
+                            <div class="date ub-f1">{{item.goodName}}</div>
                         </div>
                         <div class=" ub unit">
                             <div class="name ub-f5">入库单位</div>
-                            <div class="date ub-f1">公斤{{n}}</div>
+                            <div class="date ub-f1">{{item.sellUnit |sellNnit}}</div>
                         </div>
                     </div>
                 </div>
@@ -50,19 +50,35 @@
 </template>
 
 <script>
+    import { damage } from '@/services/apis/damage.api'
 
     export default {
-
         data () {
             return {
+                goodsData:{
+                    goodName:'',
+                    sellUnit:'',
+                },
+                goodsListParams:{
+                    page_size:'10',
+                    current_page:'1',
+                },
                 number: '1000',
                 type:false,
             }
         },
         mounted () {
-
+            this.getlist()
         },
         methods: {
+            //初始化数据--获取档位货品列表
+            getlist(){
+                damage.goodsList(this.goodsListParams).then(response=>{
+                    this.goodsData = response.data.results;
+//                    this.storageData = response.data.results;
+                    console.log(response.data.results);
+                })
+            },
             showType(){
                 this.type = true;
             },

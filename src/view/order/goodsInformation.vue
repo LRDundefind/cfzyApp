@@ -9,30 +9,37 @@
 		<div class="page-main goods">
 			<div class="goods-name ub">
 				<div class="ub-f1">货品</div>
-				<div>大白菜</div>
+				<div>{{goodName}}</div>
 			</div>
 			<div class="goods-info">
 				<div class="goods-item ub">
-					<div class="ub-f1">单价</div>
-					<mt-field label="" placeholder="请输入" type="number" v-model="price"></mt-field>
-					<div>公斤</div>
+					<div class="ub-f1">单价（下单必填）</div>
+					<mt-field label="" placeholder="请输入" type="number" v-model="goodsunit"></mt-field>
+					<div>元 / {{goodsUnit}}</div>
 				</div>
 				<div class="goods-item ub">
-					<div class="ub-f1">件数</div>
-					<mt-field label="" placeholder="请输入" type="number" v-model="num"></mt-field>
-					<div>件</div>
+					<div class="ub-f1">数量（必填）</div>
+					<mt-field label="" placeholder="请输入" type="number" v-model="goodsnum"></mt-field>
+					<div>{{goodsUnit}}</div>
 				</div>
 				<div class="goods-item ub">
-					<div class="ub-f1">重量</div>
-					<mt-field label="" placeholder="请输入" type="number" v-model="weight"></mt-field>
-					<div>件</div>
+					<div class="ub-f1">重量（必填）</div>
+					<mt-field label="" placeholder="请输入" type="number" v-model="goodsweight"></mt-field>
+					
+					<div v-if="sellUnit == 'unit_pie'">{{goodsUnit}}</div>
+					<select v-if="sellUnit != 'unit_pie' ">
+						<option selected="true" value="1">斤</option>
+						<option selected="true" value="2">公斤</option>
+					</select>
+					
 				</div>
 				<div class="goods-item ub">
-					<div class="ub-f1">平板重</div>
-					<mt-field label="" placeholder="请输入" type="number" v-model="weight2"></mt-field>
-					<div>件</div>
+					<div class="ub-f1">平板重（必填）</div>
+					<mt-field label="" placeholder="请输入" type="number" v-model="pbweight"></mt-field>
+					<div>{{goodsUnit}}</div>
 				</div>
 			</div>
+			<mt-button type="primary" size="large" class="submit-btn" @click="submitGoodsInfo">确定</mt-button>
 		</div>
 	</div>
 </template>
@@ -43,18 +50,42 @@ export default {
 
     data () {
         return {
-        	price: '',
-            num:'',
-            weight: '',
-            other: '',
-            weight2: ''
+        	goodsunit: '',//设置货品单价
+            goodsnum:'',//设置货品数量
+            goodsweight: '',//设置货品重量
+            pbweight: '',//设置平板重
+            
+            
+            goodName: '',//货品名称
+            goodId: '',//货品id
+            sellUnit: '', //货品售卖单位
+            goodsUnit: '', //货品售卖单位转换
         }
     },
     mounted () {
-
+		this.goodsInformation();
     },
     methods: {
-            
+    	goodsInformation(){
+    		this.goodName = this.$route.params.goodName; //获取货品名称
+			this.goodId = this.$route.params.goodId; //获取货品id
+			this.sellUnit = this.$route.params.sellUnit; // 获取货品售卖单位
+			if(this.sellUnit == 'unit_jin'){
+				this.goodsUnit = '斤';
+			}else if(this.sellUnit == 'unit_kg'){
+				this.goodsUnit = '公斤';
+			}else{
+				//unit_pie 件
+				this.goodsUnit = '件';
+			}
+
+
+    	},
+    	
+    	submitGoodsInfo(){
+    		
+    	},
+		
     }
 }
 </script>
@@ -81,7 +112,7 @@ input::-webkit-input-placeholder{
 			line-height: 0.95rem;
 			border-bottom: 1px solid #dedede;
 			div:last-child{
-				min-width: 0.65rem;
+				min-width: 1.05rem;
 				padding-left: 0.1rem;
 				text-align: right;
 			}
@@ -93,6 +124,16 @@ input::-webkit-input-placeholder{
 				}
 			}
 		}
+	}
+	.submit-btn{
+		width: 73%;
+		height: 0.9rem;
+		border-radius: 1rem;
+		background: -webkit-linear-gradient(left, #30b03e 0%,#33d57c 100%);
+		color: #fff;
+		font-size: 0.3rem;
+		font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+		margin: 0.45rem auto 0;
 	}
 }
 
