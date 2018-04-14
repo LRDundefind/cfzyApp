@@ -110,6 +110,8 @@
         }
 </style>
 <script>
+ import Cookies from 'js-cookie'
+  import { Toast } from 'mint-ui';
 export default {
     name: 'login',
     data () {
@@ -134,7 +136,41 @@ export default {
            
        },
        loginBtn(){
-
+           if(this.userName==''){
+					 Toast({
+                        message: '账号不可为空',
+                        position: 'middle',
+                        duration: 5000
+                        });
+				}
+				// else if(!(new RegExp( /^1[3|4|5|7|8][0-9]{9}$/).test(this.userName))){
+				// 	Toast({
+                //         message: '账号输入有误',
+                //         position: 'middle',
+                //         duration: 5000
+                //         });
+                // }
+                else if(this.phone==''){
+					Toast({
+                        message: '账号输入有误',
+                        position: 'middle',
+                        duration: 5000
+                        });
+				}
+				else if(this.passWord=='' || this.passwordtype==''){
+					Toast({
+                        message: '密码不可为空',
+                        position: 'middle',
+                        duration: 5000
+                        });
+				}
+                else{
+                     Cookies.set('Zname',this.userName);
+                     Cookies.set('Zphone',this.phone);
+                     Cookies.set('Zpassword',this.passwordtype || this.passWord);
+                    this.$router.push({name:'yanzheng',params: { phone: this.phone }});
+                }
+           
        }
     }
 }

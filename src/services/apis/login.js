@@ -10,6 +10,7 @@ export const login = {
             params: params || {}
         });
     },
+    // 获取短信验证码
     getmessname(params){
     	return axios({
             url: '/rest/CHENGFENG_GET_SMS',
@@ -17,6 +18,7 @@ export const login = {
             params: params || {}
         });
     },
+    //注册
     zhuce(params){
     	return axios({
             url: '/rest/CHENGFENG_SET_NEWUSER',

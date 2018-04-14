@@ -71,43 +71,55 @@
 </style>
 <script>
  import { Toast } from 'mint-ui';
+ import { login } from '@/services/apis/login'
 const TIME_COUNT = 60;
 export default {
     name: 'login',
     data () {
         return {
-          phoneNumber:'',
+          logintime:this.$route.params.firstlogin,
+          phoneNumber:this.$route.params.phone,
           phoneNumber1:'',
           phoneNumber2:'',
           phoneNumber3:'',
           phoneNumber4:'',
           show: false,
           count: '',
-          timer: null
+          timer: null,
+          auth:{
+                    key:"MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJRqAC45zJt7CFWUuRQgA+mm", //加密的key
+                    randomKey:'' //生成签名的key
+                },
         }
     },
     mounted () {
 
     },
     created() {
-        this.getRouterPar();
+        this.getmessage();
         this.daojishi();
 
         },
     methods: {
-         getRouterPar(){
-//           获取路由参数
-                this.phoneNumber = this.$route.params.phone;
-            },
+        getmessage(){
+            // 获取短信验证码
+            let params = {
+                    'str': strEnc(JSON.stringify(this.phoneNumber),this.auth.key,this.auth.key,this.auth.key)
+                    };
+            login.getmessname(params).then(response=>{
+                  
+            })
+        },
         getphoneNumber(){
-            
-            alert(this.phoneNumber)
+            // 重新获取短信验证码
             this.phoneNumber1='';
             this.phoneNumber2='';
             this.phoneNumber3='';
             this.phoneNumber4='';
+            this.getmessage();
         },
        loginBtn(){
+        //    确定按钮进行验证
            if(this.phoneNumber4==''){
                Toast({
                     message: '请输入完整验证码',
@@ -117,9 +129,35 @@ export default {
            }
            else{
                let yanNumber=this.phoneNumber1+this.phoneNumber2+this.phoneNumber3+this.phoneNumber4;
-                alert(yanNumber)
+               
+                if(this.logintime=='Y'){
+                    // 注册
+                    this.zhuce(yanNumber);
+                }
+                else{
+                    // 修改密码
+                    this.change(yanNumber);
+                }
+                
                 
            }
+           
+       },
+       zhuce(yanzhengma){
+            let datalist = {
+                userName:Cookies.get('Zname'),
+                phone:Cookies.get('Zphone'),
+                password:Cookies.get('Zpassword'),
+                code:yanzhengma
+            };
+            params = {
+                'str': strEnc(JSON.stringify(datalist),this.auth.key,this.auth.key,this.auth.key)
+                };
+            login.zhuce(params).then(response=>{
+                  
+            })
+       },
+       change(yanzhengma){
            
        },
        // 倒计时函数
