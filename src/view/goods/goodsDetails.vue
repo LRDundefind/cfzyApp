@@ -50,6 +50,7 @@
 </template>
 
 <script>
+    import { Toast } from 'mint-ui';
     import { damage } from '@/services/apis/damage.api'
     import { keyValue } from '@/services/apis/key-value';
 
@@ -76,6 +77,7 @@
             }
         },
         created(){
+            console.log(this.$parent.editItem);
 //            if(this.$parent.editItem !=''){
 //                this.goods = this.$parent.editItem;
 //                console.log(this.goods);
@@ -92,7 +94,7 @@
                 damage.goodsList(this.goodsListParams).then(response=>{
                     this.goodsData = response.data.results;
 //                    this.storageData = response.data.results;
-                    console.log(response.data.results);
+//                    console.log(response.data.results);
                 })
             },
             showType(){
@@ -100,8 +102,13 @@
             },
             //添加货品列表
             addGoods(){
-                this.$emit('addGoods',this.goods);
-
+                if(this.goods.goodName && this.goods.numUnit &&this.goods.goodNum){
+                    this.$emit('addGoods',this.goods);
+                }else {
+                    console.log(123);
+                    Toast('请完善信息');
+                    return false;
+                }
             },
 
             hideType(item){

@@ -144,7 +144,7 @@
             },
             //编辑货品
             editGoods(item){
-                console.log(item);
+//                console.log(item);
                 this.editItem = item;
                 this.selected = false;
                 this.goodsDetails = true;
