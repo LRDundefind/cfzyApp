@@ -10,19 +10,19 @@
             <div class="" v-show="type==false">
                 <div class="main-list" @click="showType">
                     <p class="clearfix">大白菜类
-                        <span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
-                        <span>大白菜A类</span>
+                        <!--<span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>-->
+                        <span class="name">{{goods.goodName}}<img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
                     </p>
                 </div>
 
                 <div class="main-list">
                     <p class="clearfix">数量
-                        <input type="text" v-model="number">
+                        <input type="text" v-model="goods.goodNum">
                     </p>
 
                     <p class="clearfix">入库单位
                         <span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
-                        <span>公斤</span>
+                        <span>{{goods.numUnit | sellNnit}}</span>
                     </p>
                 </div>
 
@@ -32,8 +32,8 @@
                 </div>
             </div>
             <div class="" v-if="type == true">
-                <div v-for="item in goodsData" :key='item.gid' class="type-list">
-                    <div class="" @click="hideType">
+                <div v-for="item in goodsData" :key='item.id' class="type-list">
+                    <div class="" @click="hideType(item)">
                         <div class="ub type bd-b">
                             <div class="name ub-f5">蔬菜分类</div>
                             <div class="date ub-f1">{{item.goodName}}</div>
@@ -51,10 +51,17 @@
 
 <script>
     import { damage } from '@/services/apis/damage.api'
+    import { keyValue } from '@/services/apis/key-value';
 
     export default {
         data () {
             return {
+                goods:{
+                    goodId:'',
+                    goodName:'请选择',//货品名称
+                    numUnit:'',//货品入库单位
+                    goodNum:'',//入库量
+                },
                 goodsData:{
                     goodName:'',
                     sellUnit:'',
@@ -67,6 +74,10 @@
                 type:false,
             }
         },
+        created(){
+
+        },
+
         mounted () {
             this.getlist()
         },
@@ -82,7 +93,11 @@
             showType(){
                 this.type = true;
             },
-            hideType(){
+            hideType(item){
+                this.goods.goodId = item.goodId;
+                this.goods.goodName = item.goodName;
+                this.goods.numUnit = item.sellUnit
+                console.log(item);
                 this.type = false;
             }
             //跳转到货品信息
