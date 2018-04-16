@@ -71,6 +71,10 @@
             <div v-if="ownerList">
                 <owner-list ref="owner" @choiceOwner="oNchoiceOwner"></owner-list>
             </div>
+            <!--入库货品信息-->
+            <div v-if="goodsDetails">
+                <goods-details></goods-details>
+            </div>
 
         </mt-tab-container>
     </div>
@@ -78,6 +82,7 @@
 
 <script>
     import ownerList from '@/view/damage/ownerList'
+    import goodsDetails from '@/view/goods/goodsDetails'
     export default {
         data () {
             return {
@@ -105,12 +110,13 @@
                     goods:'',//货品信息
                 },
 
-
+                goodsDetails:false,//货品列表详情
                 ownerList:false,//货主列表
             }
         },
         components:{
             'owner-list': ownerList,
+            'goods-details': goodsDetails,
         },
         mounted () {
 
@@ -145,7 +151,9 @@
             },
             //添加货品
             createGoods(){
-                this.$router.push({name: 'goodsDetails/create'});
+
+                this.selected = false;
+                this.goodsDetails = true;
             },
 
             //跳转到首页
