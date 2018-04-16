@@ -2,8 +2,8 @@
 
     <div class="login">
             <div class="login_header">
-                <img src="../../assets/logo.png" alt="">
-                <h2>产品文字介绍</h2>
+                <img src="../../assets/login/logo.png" alt="">
+                <h2>果蔬批发进销存系统，让记账对账不再难</h2>
             </div>
 
             <div class="login_cont">
