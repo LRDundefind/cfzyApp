@@ -4,9 +4,9 @@
             <router-link to="/home" slot="left">
                 <mt-button icon="back"></mt-button>
             </router-link>
-            <mt-button slot="right" style="font-size: 0.32rem">确认入库</mt-button>
+            <mt-button slot="right" style="font-size: 0.32rem" :disabled="selected == 'basic'">确认入库</mt-button>
         </mt-header>
-        <mt-navbar v-model="selected">
+        <mt-navbar v-model="selected" >
             <mt-tab-item id="basic">基本信息</mt-tab-item>
             <mt-tab-item id="goods">货品信息</mt-tab-item>
         </mt-navbar>

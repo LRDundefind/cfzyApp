@@ -43,7 +43,7 @@ export const routerControl = [
         component: xieyi
     },
     {
-        path: '/yanzheng/:phone',
+        path: '/yanzheng/:phone/:firstlogin',
         name: 'yanzheng',
         component: yanzheng
     },
@@ -60,7 +60,7 @@ const router = new Router({
             path: '/',
             name: 'application',
             component: application,
-            redirect: '/home',
+            redirect: '/login',
             children: [
               ...home,
               ...order,
