@@ -3,7 +3,7 @@
     <div class="login">
             <div class="login_header">
                 <img src="../../assets/login/logo.png" alt="">
-                <h2>果蔬批发进销存系统，让记账对账不再难</h2>
+                <h2>果蔬批发进销存系统<br>让记账对账不再难</h2>
             </div>
 
             <div class="login_cont">
@@ -39,6 +39,9 @@
             font-size: $fons_size_24;
             padding:0.2rem 0 1rem;
             color: $main_color333;
+            width: 2.6rem;
+            margin-left: -0.3rem;
+            text-align: center;
         }
         @include textAgain_center;
     }
