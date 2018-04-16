@@ -19,7 +19,14 @@ export const order = {
             data: serverMoudle(data)
         });
     },
-
+	//计算订单货品价格
+    goodsCost(data) {
+        return axios({
+            url: '/rest/CHENGFENG_GET_SELEMAN_GOODCOST',
+            method: 'post',
+            data: serverMoudle(data)
+        });
+    },
 
 }
 
