@@ -48,9 +48,9 @@
 					<tbody>
 						<tr v-for="goods in goodsInfo" @click="goodsInfoSet(goods.goodId, goods.goodName, goods.sellUnit, goods.tid, trainsNum)">
 							<td>{{goods.goodName}}</td>
-							<td>{{goodsweight}}</td>
-							<td>{{goodsunit}}</td>
-							<td>{{goodsnum}}</td>
+							<td>0</td>
+							<td>0</td>
+							<td>0</td>
 							<td>0</td>
 							<td>0</td>
 						</tr>
@@ -60,27 +60,27 @@
 			<div class="order-detail" v-if="otherInfo">
 				<div class="ub term">
 					<div class="ub-f1">贷款费用</div>
-					<div class="edu">￥45</div>
+					<div class="edu">￥{{totalCost.totalAmount}}</div>
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">包装费</div>
-					<div class="edu">￥45</div>
+					<div class="edu">￥{{totalCost.totalPack}}</div>
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">过磅费</div>
-					<div class="edu">￥45</div>
+					<div class="edu">￥{{totalCost.totalWeigh}}</div>
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">三轮费</div>
-					<div class="edu">￥45</div>
+					<div class="edu">￥？</div>
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">车号</div>
-					<div class="F26C4c">京A12356</div>
+					<div class="F26C4c">{{plateNum}}</div>
 				</div>
 				<div class="ub term no-border">
 					<div class="ub-f1">合计金额</div>
-					<div class="total">￥330,000</div>
+					<div class="total">￥{{totalCost.tatol}}</div>
 				</div>
 			</div>
 			<!--付款方式-->
@@ -137,6 +137,7 @@ export default {
 			otherInfo: false,//其他模块
 			autographInfo: false,//签名
 			goodsInfo: [], //货品信息
+			allGoodsNum: 0, //货品类别数量
 			goodsid: '',
 			
 			trainsNum: '点击选择车次', //车次信息展示
@@ -153,9 +154,13 @@ export default {
 			numUnit_1:'',
 			sellUnit_1:'',
 			
-			goodsData: [
-				{goodsunit: '', goodsnum: '', goodsweight: '', pbweight: ''}
-			],
+			//费用总和
+			totalCost: {
+				totalAmount: 0,  //贷款费用-金额总和
+				totalPack: 0,  //包装费
+				totalWeigh: 0,  //过磅费
+				total: 0,
+			},
         }
     },
     mounted () {
@@ -177,7 +182,7 @@ export default {
 				this.autographInfo = true;//签名
 				this.getTrain(this.tid);
 				
-				this.getGoodsInformation(); //-----------------------------暂且在此处获取cookie 获得所设置的货品的信息
+				this.getGoodsInformation(); //-----------------------------暂且在此处获取cookie（设置完货品信息跳转页面后获取） 获得所设置的货品的信息
         	}else{
         		console.log('没有选择车次')
         	}
@@ -192,6 +197,9 @@ export default {
 					
 					//货品详细信息
 					this.goodsInfo = response.data.results;
+					//货品类别数量
+					this.allGoodsNum = response.data.results.length;
+					
 					//单个货品id
 					this.goodsid_1 = response.data.results[0].goodId;
 					//重量单位
@@ -213,6 +221,12 @@ export default {
 
 		//跳转至设置货品重量件数信息页面
         goodsInfoSet(id, name, unit, tid, trainsNum){
+        	
+        	Cookies.remove('goodsunit');
+        	Cookies.remove('goodsnum');
+        	Cookies.remove('goodsweight');
+        	Cookies.remove('pbweight');
+        	
         	this.$router.push({
         		name: 'goodsInformation',
         		params: {goodId: id, goodName: name, sellUnit:unit, tid:tid, trainsNum:trainsNum}
@@ -220,28 +234,39 @@ export default {
         },
         //获取cookie 获得所设置的货品的信息
         getGoodsInformation(){
-        	this.goodsunit = Cookies.get('goodsunit') || ''; //获得单价
-        	this.goodsnum = Cookies.get('goodsnum') || '';  //获得数量
-        	this.goodsweight = Cookies.get('goodsweight') || '';  //获得重量
+        	this.goodsunit = JSON.stringify(Cookies.get('goodsunit')); //获得单价
+        	this.goodsnum = JSON.stringify(Cookies.get('goodsnum'));  //获得数量
+        	this.goodsweight = JSON.stringify(Cookies.get('goodsweight'));  //获得重量
         	this.pbweight = Cookies.get('pbweight') || '';  //获得平板重
-        	console.log(this.goodsunit+','+this.goodsnum+','+this.goodsweight+','+this.pbweight);
-        	console.log(this.goodsid_1+','+this.numUnit_1+','+this.sellUnit_1)
+ 			
+ 			let goods = [];
+ 			let goodsArr = [];
+        	goods.push(this.goodsunit, this.goodsnum, this.goodsweight);
+        	goodsArr.push(goods);
+        	this.goodsData = goodsArr;
         	
-        	//计算货品价格的接口
+        	console.log(goodsArr);
+         
+         
+        	//获取单件货品价格的接口
 			var params = {
-				goodId: '1921111qwe124er',//单个货品id 测试
-				price: this.goodsunit,
-				goodNum: this.goodsnum,
-				weight: this.goodsweight,
-				weight_util: 'unit_jin',//重量单位 numUnit 若按重量售卖，则重量单位为售卖单位
-				sellUnit: 'unit_jin',//售卖单位 sellUnit
-				slabWeight: this.pbweight,//平板重
+				goodId: '1111qwe124er',//单个货品id --接口有问题，后它提供给的暂时可用的参数
+				price: '3',
+				goodNum: '6',
+				weight: '100',
+				weight_util: 'unit_jin',//重量单位 
+				sellUnit: 'unit_jin',//售卖单位 
+				slabWeight: '2',//平板重
 			};
 			order.goodsCost(params)
 				.then(response => {
 					//货品价格计算返回数据
 					this.goodsCosts = response.data.results;
-					console.log(this.goodsCosts)
+					console.log('包装费：'+this.goodsCosts.packCost+'，'+'金额：'+this.goodsCosts.goodAmount+'，'+' 过磅费：' + this.goodsCosts.weighCost);
+					this.totalCost.totalAmount = this.goodsCosts.goodAmount; //待修改，这是单次的
+					this.totalCost.totalPack = this.goodsCosts.packCost;//待修改，这是单次的
+					this.totalCost.totalWeigh = this.goodsCosts.weighCost;//待修改，这是单次的
+					this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh;//待修改，这是单次的
 				})
 				.catch(function (response) {
 					console.log(response);
