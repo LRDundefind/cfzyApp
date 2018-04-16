@@ -10,6 +10,8 @@
                     </div>
                     <div class="ub ub-pc">
                         <div>
+                             <div class="picture" :style="'backgroundImage:url('+headerImage+')'"></div>
+                            <input type="file" id="upload" accept="image" @change="upload1">
                             <img class="header-img" src="../../assets/my/my_head.png"/>
                         </div>
                     </div>
@@ -32,6 +34,7 @@
 
 <script>
     import { MessageBox } from 'mint-ui';
+    import Exif from 'exif-js'
     export default {
         data () {
             return {
@@ -42,16 +45,63 @@
                 duty:'1111111',
                 scope:'支付宝',
                 publicity:'',
+                headerImage:'',
+                picValue:''
             }
         },
         mounted () {
 
         },
         methods: {
+            upload1 (e) {  
+            let files = e.target.files || e.dataTransfer.files;  
+            if (!files.length) return;  
+            this.picValue = files[0];  
+            this.imgPreview(this.picValue);  
+            }, 
+            imgPreview (file) {  
+                let self = this;  
+                let Orientation;  
+                //去获取拍照时的信息，解决拍出来的照片旋转问题  
+                Exif.getData(file, function(){  
+                    Orientation = Exif.getTag(this, 'Orientation');  
+                });  
+                // 看支持不支持FileReader  
+                if (!file || !window.FileReader) return;  
+            
+                if (/^image/.test(file.type)) {  
+                    // 创建一个reader  
+                    let reader = new FileReader();  
+                    // 将图片2将转成 base64 格式  
+                    reader.readAsDataURL(file);  
+                    // 读取成功后的回调  
+                    reader.onloadend = function () {  
+                        let result = this.result;  
+                        let img = new Image();  
+                        img.src = result;  
+                        //判断图片是否大于100K,是就直接上传，反之压缩图片  
+                        if (this.result.length <= (100 * 1024)) {  
+                        self.headerImage = this.result;  
+                        self.postImg();  
+                        }else {  
+                        img.onload = function () {  
+                            let data = self.compress(img,Orientation);  
+                            self.headerImage = data;  
+                            console.log(self.headerImage)
+                            self.postImg();  
+                        }  
+                        }  
+                    }   
+                    }  
+            },
+            postImg(){
+                console.log(this.headerImage)
+            },
             goPhone(){
                 this.$router.push({ name: 'replacePhone'})
 
             },
+            goLogin(){},
             getList(){},
             handleSave(){
 
@@ -60,6 +110,14 @@
     }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
+.picture {  
+  width: 2rem;  
+  height: 2rem;  
+  overflow: hidden;  
+  background-position: center center;  
+  background-repeat: no-repeat;  
+  background-size: cover;   
+} 
     .top{
         background-image: url("../../assets/my/my_top.png");
         background-repeat: no-repeat;
