@@ -18,6 +18,7 @@
             <mt-tab-item id="goods" >货品信息</mt-tab-item>
         </mt-navbar>
         <mt-tab-container>
+            <!--基本信息-->
             <div v-if="selected == 'basic'">
                 <div class="">
                     <div class="basic-list" @click="goList">
@@ -54,8 +55,9 @@
                 </div>
 
             </div>
+            <!--货品信息-->
             <div v-if="selected == 'goods'">
-                <div v-for="n in 5" :key='n' class="goods-list">
+                <div v-for="n in 2" :key='n' class="goods-list">
                     <p @click="editGoods(n)" class="clearfix">大白菜{{n}}类
                         <span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
                         <span>{{n + '00'}}公斤</span>
@@ -65,7 +67,7 @@
                     <div @click="createGoods" class="loginbtn">添加货品</div>
                 </div>
             </div>
-
+            <!--货主列表-->
             <div v-if="ownerList">
                 <owner-list ref="owner" @choiceOwner="oNchoiceOwner"></owner-list>
             </div>
@@ -116,22 +118,18 @@
         methods: {
             //选择货主
             oNchoiceOwner(item){
-//                console.log(item);
                 this.stall.name = item.shipName;
                 this.stall.good_sid = item.sid;
                 this.ownerList = false;
                 this.selected = 'basic';
             },
-
-            //跳转到货主列表
+            //显示货主列表
             goList(){
                 this.ownerList = true;
                 this.selected = false;
-
-//                this.$router.push({
-//                    name: 'ownerList'
-//                })
             },
+
+
             //跳转到订单详情
             orderDetail(id){
                 this.$router.push({

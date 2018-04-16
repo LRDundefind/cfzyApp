@@ -40,14 +40,5 @@ export default [
         meta: {
             showFooter: false
         }
-    },{
-        path: 'ownerList',
-        name: 'ownerList',
-        components: {
-            mainView: ownerList
-        },
-        meta: {
-            showFooter: false
-        }
     },
 ]
