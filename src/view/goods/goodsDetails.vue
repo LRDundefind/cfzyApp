@@ -9,31 +9,31 @@
         <div class="page-main">
             <div class="" v-show="type==false">
                 <div class="main-list" @click="showType">
-                    <p class="clearfix">大白菜类
-                        <span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
-                        <span>大白菜A类</span>
+                    <p class="clearfix">货品分类
+                        <!--<span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>-->
+                        <span class="name">{{goods.goodName}}<img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
                     </p>
                 </div>
 
                 <div class="main-list">
                     <p class="clearfix">数量
-                        <input type="text" v-model="number">
+                        <input type="text" placeholder="请输入数量" v-model="goods.goodNum">
                     </p>
 
                     <p class="clearfix">入库单位
                         <span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
-                        <span>公斤</span>
+                        <span>{{goods.numUnit | sellNnit}}</span>
                     </p>
                 </div>
 
                 <div class='update clearfix'>
                     <mt-button type="primary" size="large" class='f-l' @click="$router.go(-1)">删除</mt-button>
-                    <mt-button type="primary" size="large" class='f-l' @click="$router.go(-1)">确定</mt-button>
+                    <mt-button type="primary" size="large" class='f-l' @click="addGoods">确定</mt-button>
                 </div>
             </div>
             <div class="" v-if="type == true">
-                <div v-for="item in goodsData" :key='item.gid' class="type-list">
-                    <div class="" @click="hideType">
+                <div v-for="item in goodsData" :key='item.id' class="type-list">
+                    <div class="" @click="hideType(item)">
                         <div class="ub type bd-b">
                             <div class="name ub-f5">蔬菜分类</div>
                             <div class="date ub-f1">{{item.goodName}}</div>
@@ -50,11 +50,20 @@
 </template>
 
 <script>
+    import { Toast } from 'mint-ui';
     import { damage } from '@/services/apis/damage.api'
+    import { keyValue } from '@/services/apis/key-value';
 
     export default {
+        name:'news',
         data () {
             return {
+                goods:{
+                    goodId:'',
+                    goodName:'',//货品名称
+                    numUnit:'',//货品入库单位
+                    goodNum:'',//入库量
+                },
                 goodsData:{
                     goodName:'',
                     sellUnit:'',
@@ -67,6 +76,15 @@
                 type:false,
             }
         },
+        created(){
+            console.log(this.$parent.editItem);
+//            if(this.$parent.editItem !=''){
+//                this.goods = this.$parent.editItem;
+//                console.log(this.goods);
+//            }
+
+        },
+
         mounted () {
             this.getlist()
         },
@@ -76,13 +94,28 @@
                 damage.goodsList(this.goodsListParams).then(response=>{
                     this.goodsData = response.data.results;
 //                    this.storageData = response.data.results;
-                    console.log(response.data.results);
+//                    console.log(response.data.results);
                 })
             },
             showType(){
                 this.type = true;
             },
-            hideType(){
+            //添加货品列表
+            addGoods(){
+                if(this.goods.goodName && this.goods.numUnit &&this.goods.goodNum){
+                    this.$emit('addGoods',this.goods);
+                }else {
+                    console.log(123);
+                    Toast('请完善信息');
+                    return false;
+                }
+            },
+
+            hideType(item){
+                this.goods.goodId = item.goodId;
+                this.goods.goodName = item.goodName;
+                this.goods.numUnit = item.sellUnit;
+                console.log(item);
                 this.type = false;
             }
             //跳转到货品信息
@@ -179,5 +212,6 @@
             height: 1rem;
         }
     }
+
 
 </style>

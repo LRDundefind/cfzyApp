@@ -9,26 +9,28 @@
         <div class="page-main">
             <search-box ref="search"/>
             <div v-for="item in ownerData" :key='ownerData.sid' class="main-list">
-                <div class="name">{{item.shipName}}</div>
-                <div class="ub car">
-                    <div class="ub ub-f2">
-                        <div>待结算车次</div>
-                        <div class="number">{{item.unsettlement}}</div>
+                <div @click="choiceOwner(item)">
+                    <div class="name">{{item.shipName}}</div>
+                    <div class="ub car">
+                        <div class="ub ub-f2">
+                            <div>待结算车次</div>
+                            <div class="number">{{item.unsettlement}}</div>
+                        </div>
+                        <div class="ub ub-f1">
+                            <div>发货总次数</div>
+                            <div class="number">{{item.trainsNum}}</div>
+                        </div>
                     </div>
-                    <div class="ub ub-f1">
-                        <div>发货总次数</div>
-                        <div class="number">{{item.trainsNum}}</div>
-                    </div>
-                </div>
 
-                <div class="ub">
-                    <div class="ub ub-f2">
-                        <div>已结算</div>
-                        <div class="number">{{item.tradeAmount}}</div>
-                    </div>
-                    <div class="ub ub-f1">
-                        <div>尚欠款</div>
-                        <div class="number pay">{{item.notPayAmount}}</div>
+                    <div class="ub">
+                        <div class="ub ub-f2">
+                            <div>已结算</div>
+                            <div class="number">{{item.tradeAmount}}</div>
+                        </div>
+                        <div class="ub ub-f1">
+                            <div>尚欠款</div>
+                            <div class="number pay">{{item.notPayAmount}}</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -38,23 +40,24 @@
 
 <script>
     import searchBox from '@/components/searchBox/search'
-    import { damage } from '@/services/apis/damage.api'
+    import {damage} from '@/services/apis/damage.api'
 
     export default {
         components: {searchBox},
+        name:'owner',
         data () {
             return {
-                ownerData:{
-                    shipName:'',//货主名称
-                    trainsNum:'',//进货车次总数
-                    unsettlement:'',//未结算车次总数
-                    tradeAmount:'',//交易总金额
-                    notPayAmount:'',//待汇款总金额
+                ownerData: {
+                    shipName: '',//货主名称
+                    trainsNum: '',//进货车次总数
+                    unsettlement: '',//未结算车次总数
+                    tradeAmount: '',//交易总金额
+                    notPayAmount: '',//待汇款总金额
                 },
-                blacklistParams:{
-                    search:'',
-                    page_size:'10',
-                    current_page:'1',
+                blacklistParams: {
+                    search: '',
+                    page_size: '10',
+                    current_page: '1',
                 },
                 //searchValue:this.$refs.search.searchValue
             }
@@ -65,11 +68,14 @@
         methods: {
             //初始化数据--获取货主列表
             getlist(){
-                damage.ownerList(this.blacklistParams).then(response=>{
+                damage.ownerList(this.blacklistParams).then(response => {
                     this.ownerData = response.data.results;
                     console.log(this.ownerData);
-
                 })
+            },
+            //选择货主
+            choiceOwner(item){
+                this.$emit('choiceOwner',item);
             },
         }
     }
@@ -88,14 +94,14 @@
             border-bottom: $main_border;
             line-height: 0.8rem;
         }
-        .number{
+        .number {
             padding-left: 0.2rem;
             font-size: 0.28rem;
         }
-        .pay{
+        .pay {
             color: #49c98b;
         }
-        .car{
+        .car {
             padding: 0.2rem 0 0.22rem 0;
 
         }
