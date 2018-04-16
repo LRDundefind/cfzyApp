@@ -9,7 +9,7 @@
         <div class="page-main">
             <div class="" v-show="type==false">
                 <div class="main-list" @click="showType">
-                    <p class="clearfix">大白菜类
+                    <p class="clearfix">货品分类
                         <!--<span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>-->
                         <span class="name">{{goods.goodName}}<img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
                     </p>
@@ -17,7 +17,7 @@
 
                 <div class="main-list">
                     <p class="clearfix">数量
-                        <input type="text" v-model="goods.goodNum">
+                        <input type="text" placeholder="请输入数量" v-model="goods.goodNum">
                     </p>
 
                     <p class="clearfix">入库单位
@@ -28,7 +28,7 @@
 
                 <div class='update clearfix'>
                     <mt-button type="primary" size="large" class='f-l' @click="$router.go(-1)">删除</mt-button>
-                    <mt-button type="primary" size="large" class='f-l' @click="$router.go(-1)">确定</mt-button>
+                    <mt-button type="primary" size="large" class='f-l' @click="addGoods">确定</mt-button>
                 </div>
             </div>
             <div class="" v-if="type == true">
@@ -54,11 +54,12 @@
     import { keyValue } from '@/services/apis/key-value';
 
     export default {
+        name:'news',
         data () {
             return {
                 goods:{
                     goodId:'',
-                    goodName:'请选择',//货品名称
+                    goodName:'',//货品名称
                     numUnit:'',//货品入库单位
                     goodNum:'',//入库量
                 },
@@ -75,6 +76,10 @@
             }
         },
         created(){
+//            if(this.$parent.editItem !=''){
+//                this.goods = this.$parent.editItem;
+//                console.log(this.goods);
+//            }
 
         },
 
@@ -93,10 +98,16 @@
             showType(){
                 this.type = true;
             },
+            //添加货品列表
+            addGoods(){
+                this.$emit('addGoods',this.goods);
+
+            },
+
             hideType(item){
                 this.goods.goodId = item.goodId;
                 this.goods.goodName = item.goodName;
-                this.goods.numUnit = item.sellUnit
+                this.goods.numUnit = item.sellUnit;
                 console.log(item);
                 this.type = false;
             }
@@ -194,5 +205,6 @@
             height: 1rem;
         }
     }
+
 
 </style>
