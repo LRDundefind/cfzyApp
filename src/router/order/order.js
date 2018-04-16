@@ -9,7 +9,7 @@ import autograph from '@/view/order/autograph'
 
 export default [
 	{
-		path:'order/:tid/:trainsNum',
+		path:'order/:tid/:trainsNum/:plateNum',
 		name:'order',
 		components: {
 			mainView: order
@@ -24,7 +24,7 @@ export default [
 			showFooter: false
 		}
 	},{
-		path:'goodsInformation/:goodId/:goodName/:sellUnit',
+		path:'goodsInformation/:goodId/:goodName/:sellUnit/:tid/:trainsNum',
 		name:'goodsInformation',
 		components: {
 			mainView: goodsInformation

@@ -14,11 +14,11 @@
 			<div class="order-detail" v-if="trainInfo">
 				<div class="ub ub-ac term no-border right-icon" @click="choosetrainNumber()">
 					<div class="ub-f1">{{trainsNum}}</div>
-					<span class="c-3 F26C4c">京A 45698</span>
+					<span class="c-3 F26C4c">{{plateNum}}</span>
 					<img src="../../assets/my/icon_right.png" class="icon">
 				</div>
 			</div>
-			<div class="order-detail" v-if="otherInfo">
+			<div class="order-detail" v-if="trainInfo">
 				<div class="ub ub-ac term right-icon input-choose" @click="chooseCustomer()">
 					<input id="kh" type="radio" name="choose" checked="checked">
 					<label for="kh" class="customer"></label>
@@ -46,13 +46,13 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr v-for="goods in goodsInfo" @click="goodsInfoSet(goods.goodId, goods.goodName, goods.sellUnit)">
+						<tr v-for="goods in goodsInfo" @click="goodsInfoSet(goods.goodId, goods.goodName, goods.sellUnit, goods.tid, trainsNum)">
 							<td>{{goods.goodName}}</td>
-							<td>{{goods.surplusNum}}</td>
-							<td>?</td>
-							<td>?</td>
-							<td>?</td>
-							<td>?</td>
+							<td>{{goodsweight}}</td>
+							<td>{{goodsunit}}</td>
+							<td>{{goodsnum}}</td>
+							<td>0</td>
+							<td>0</td>
 						</tr>
 					</tbody>
 				</table>
@@ -127,15 +127,35 @@
 
 <script>
 import {order} from '@/services/apis/order.js'
+import Cookies from 'js-cookie'
+//import Router from 'vue-router'
 export default {
 
     data () {
         return {
-			trainInfo: true,//车次信息
-			otherInfo: false,//其他信息
+			trainInfo: true,//车次模块
+			otherInfo: false,//其他模块
 			autographInfo: false,//签名
-			goodsInfo: [],
-			trainsNum: '点击选择车次'
+			goodsInfo: [], //货品信息
+			goodsid: '',
+			
+			trainsNum: '点击选择车次', //车次信息展示
+			plateNum: '获取车牌号',
+			tid:'',//车次id
+			//手动输入的每项货品的信息
+			goodsunit: '', //单价
+			goodsnum: '',  //数量
+			goodsweight: '',  //重量
+			pbweight: '',  //平板重
+			
+			goodsCosts: [], //货品价格计算返回数据
+			goodsid_1:'',
+			numUnit_1:'',
+			sellUnit_1:'',
+			
+			goodsData: [
+				{goodsunit: '', goodsnum: '', goodsweight: '', pbweight: ''}
+			],
         }
     },
     mounted () {
@@ -146,25 +166,21 @@ export default {
         choosetrainNumber(){
             this.$router.push({name: 'trainList'});
         },
-        //选择客户
-        chooseCustomer(){
-            this.$router.push({
-            	name: 'client',
-				params: {type: 'order'}
-            });
-        },
+        
         //选择完车次后获取车次货品详细信息
         getTrainInfor(){ 
-        	if(this.$route.params.tid){
+        	this.tid = this.$route.params.tid //车次id
+        	if(this.tid){
         		this.trainsNum = this.$route.params.trainsNum;
-        		
+        		this.plateNum = this.$route.params.plateNum;
         		this.otherInfo = true;//其他信息
 				this.autographInfo = true;//签名
-				this.getTrain(this.$route.params.tid);
+				this.getTrain(this.tid);
+				
+				this.getGoodsInformation(); //-----------------------------暂且在此处获取cookie 获得所设置的货品的信息
         	}else{
         		console.log('没有选择车次')
         	}
-        	
         },
 		//获取车次货品详细信息
 		getTrain(tid){
@@ -176,6 +192,13 @@ export default {
 					
 					//货品详细信息
 					this.goodsInfo = response.data.results;
+					//单个货品id
+					this.goodsid_1 = response.data.results[0].goodId;
+					//重量单位
+					this.numUnit_1 = response.data.results[0].numUnit;
+					//售卖单位
+					this.sellUnit_1 = response.data.results[0].sellUnit;
+					
 					
 					if(response.data.error_code == '204'){
 						this.otherInfo = false;//其他信息
@@ -188,14 +211,51 @@ export default {
 				});
 		},
 
-		//设置货品重量件数信息
-        goodsInfoSet(id, name, unit){
+		//跳转至设置货品重量件数信息页面
+        goodsInfoSet(id, name, unit, tid, trainsNum){
         	this.$router.push({
         		name: 'goodsInformation',
-        		params: {goodId: id, goodName: name, sellUnit:unit }
+        		params: {goodId: id, goodName: name, sellUnit:unit, tid:tid, trainsNum:trainsNum}
         	});
         },
+        //获取cookie 获得所设置的货品的信息
+        getGoodsInformation(){
+        	this.goodsunit = Cookies.get('goodsunit') || ''; //获得单价
+        	this.goodsnum = Cookies.get('goodsnum') || '';  //获得数量
+        	this.goodsweight = Cookies.get('goodsweight') || '';  //获得重量
+        	this.pbweight = Cookies.get('pbweight') || '';  //获得平板重
+        	console.log(this.goodsunit+','+this.goodsnum+','+this.goodsweight+','+this.pbweight);
+        	console.log(this.goodsid_1+','+this.numUnit_1+','+this.sellUnit_1)
+        	
+        	//计算货品价格的接口
+			var params = {
+				goodId: '1921111qwe124er',//单个货品id 测试
+				price: this.goodsunit,
+				goodNum: this.goodsnum,
+				weight: this.goodsweight,
+				weight_util: 'unit_jin',//重量单位 numUnit 若按重量售卖，则重量单位为售卖单位
+				sellUnit: 'unit_jin',//售卖单位 sellUnit
+				slabWeight: this.pbweight,//平板重
+			};
+			order.goodsCost(params)
+				.then(response => {
+					//货品价格计算返回数据
+					this.goodsCosts = response.data.results;
+					console.log(this.goodsCosts)
+				})
+				.catch(function (response) {
+					console.log(response);
+				});
+        },
         
+        
+		//选择客户
+        chooseCustomer(){
+            this.$router.push({
+            	name: 'client',
+				params: {type: 'order'}
+            });
+        },
         //签名
         autograph(){
             this.$router.push({name: 'autograph'});
@@ -208,7 +268,12 @@ export default {
         submitOrder(){
         	
         },
-    }
+    },
+    watch: {
+        '$route'(to, from) {
+			console.log(to)
+		}
+    },
 }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">

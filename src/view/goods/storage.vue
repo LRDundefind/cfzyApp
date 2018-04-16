@@ -1,59 +1,63 @@
 <template>
     <div class="page-content storage">
-        <mt-header fixed title="消费记录">
+        <mt-header fixed title="货品入库" v-if="selected">
             <router-link to="/home" slot="left">
                 <mt-button icon="back"></mt-button>
             </router-link>
-            <mt-button slot="right" style="font-size: 0.32rem">确认入库</mt-button>
+            <mt-button slot="right" style="font-size: 0.32rem" :disabled="selected == 'basic'">确认入库</mt-button>
         </mt-header>
-        <mt-navbar v-model="selected">
-            <mt-tab-item id="basic">基本信息</mt-tab-item>
-            <mt-tab-item id="goods">货品信息</mt-tab-item>
+        <mt-header fixed title="货主列表" v-if="ownerList">
+            <router-link to="/home" slot="left">
+                <mt-button icon="back"></mt-button>
+            </router-link>
+            <mt-button slot="right" style="font-size: 0.32rem" :disabled="selected == 'basic'">确认入库</mt-button>
+        </mt-header>
+
+        <mt-navbar v-model="selected" v-if="selected">
+            <mt-tab-item id="basic" >基本信息</mt-tab-item>
+            <mt-tab-item id="goods" >货品信息</mt-tab-item>
         </mt-navbar>
         <mt-tab-container>
+            <!--基本信息-->
             <div v-if="selected == 'basic'">
                 <div class="">
                     <div class="basic-list" @click="goList">
                         <p class="clearfix">姓名
-                            <span class="name">马云<img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
+                            <span class="name">{{stall.name}}<img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
                         </p>
                     </div>
 
                     <div class="basic-list">
-                        <p class="clearfix">司机姓名<input type="text" v-model="driverName"></p>
-                        <p class="clearfix">司机电话<input type="text" v-model="driverPhone"></p>
+                        <p class="clearfix">司机姓名<input type="text" v-model="stall.driverName"></p>
+                        <p class="clearfix">司机电话<input type="text" v-model="stall.driverPhone"></p>
                     </div>
 
                     <div class="basic-list">
-                        <p class="clearfix">公司<input type="text" v-model="company"></p>
-                        <p class="clearfix">地址<input type="text" v-model="address"></p>
+                        <p class="clearfix">车牌号<input type="text" v-model="stall.plateNum"></p>
+                        <p class="clearfix">发货地点<input type="text" v-model="stall.startAddress"></p>
                     </div>
 
                     <div class="basic-list">
-                        <p class="clearfix">车牌号<input type="text" v-model="numberPlate"></p>
-                        <p class="clearfix">发货地点<input type="text" v-model="deliveryPlace"></p>
-                    </div>
-
-                    <div class="basic-list">
-                        <p class="clearfix">产地<input type="text" v-model="origin"></p>
+                        <p class="clearfix">产地<input type="text" v-model="stall.origin"></p>
                         <p class="clearfix">产地证明
-                            <input type="text" v-model="certificateOrigin">
+                            <input type="text" v-model="stall.originProveName">
                         </p>
-                        <p class="clearfix">检验证明<input type="text" v-model="testCertificate"></p>
-                        <p class="clearfix">承运合同<input type="text" v-model="contractCarriage"></p>
+                        <p class="clearfix">检验证明<input type="text" v-model="stall.checkProveName"></p>
+                        <p class="clearfix">承运合同<input type="text" v-model="stall.carrierContractName"></p>
                     </div>
 
                     <div class="basic-list">
                         <p class="clearfix">备注</p>
                         <div class="remark">
-                            <textarea name="" id="" cols="30" rows="3" placeholder="备注信息" v-model="message"></textarea>
+                            <textarea name="" id="" cols="30" rows="3" placeholder="备注信息" v-model="stall.remark"></textarea>
                         </div>
                     </div>
                 </div>
 
             </div>
+            <!--货品信息-->
             <div v-if="selected == 'goods'">
-                <div v-for="n in 5" :key='n' class="goods-list">
+                <div v-for="n in 2" :key='n' class="goods-list">
                     <p @click="editGoods(n)" class="clearfix">大白菜{{n}}类
                         <span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
                         <span>{{n + '00'}}公斤</span>
@@ -63,43 +67,69 @@
                     <div @click="createGoods" class="loginbtn">添加货品</div>
                 </div>
             </div>
-            <!--<router-view name="storageRouteView" />-->
+            <!--货主列表-->
+            <div v-if="ownerList">
+                <owner-list ref="owner" @choiceOwner="oNchoiceOwner"></owner-list>
+            </div>
+
         </mt-tab-container>
     </div>
 </template>
 
 <script>
-
+    import ownerList from '@/view/damage/ownerList'
     export default {
         data () {
             return {
                 selected: 'basic',
-                name: '小马云',
-                driverName: '东东强',
-                driverPhone: '18236911783',
-                company: '阿里巴巴',
-                address: '北京市海淀区魏公村',
-                numberPlate: '京A666666',
-                deliveryPlace: '阿富汗石油广场',
-                origin: '北京',
-                certificateOrigin: '已经上传',
-                testCertificate: '已经上传',
-                contractCarriage: '已经上传',
-                message: '我是备注信息',
-                nameWrite: '',
-                namehas: true,
+                stall:{
+                    name: '请选择',
+                    good_sid:'',
+                    driverName: '东东强',
+                    driverPhone: '18236911783',
+                    plateNum:'123456',//车牌号
+                    company: '阿里巴巴',
+                    startAddress: '北京市海淀区魏公村',
+                    origin:'产地',
+
+                    originProveName:'',//产地证明名称
+                    originProveUrl:'',//产地证明图片地址
+
+                    checkProveName:'',//检验证明图片名称
+                    checkProveUrl:'',//检验证明图片地址
+
+                    carrierContractName:'',//承运合同图片名称
+                    carrierContractUrl:'',//承运合同图片地址
+
+                    remark:'',//备注
+                    goods:'',//货品信息
+                },
+
+
+                ownerList:false,//货主列表
             }
+        },
+        components:{
+            'owner-list': ownerList,
         },
         mounted () {
 
         },
         methods: {
-            //跳转到货主列表
-            goList(){
-                this.$router.push({
-                    name: 'ownerList'
-                })
+            //选择货主
+            oNchoiceOwner(item){
+                this.stall.name = item.shipName;
+                this.stall.good_sid = item.sid;
+                this.ownerList = false;
+                this.selected = 'basic';
             },
+            //显示货主列表
+            goList(){
+                this.ownerList = true;
+                this.selected = false;
+            },
+
+
             //跳转到订单详情
             orderDetail(id){
                 this.$router.push({

@@ -8,7 +8,7 @@
 		<!--车次列表-->
 		<div class="page-main">
 			<ul class="order-list">
-				<li v-for="list in trainList" @click="chooseTrain(list.tid, list.trainsNum)">
+				<li v-for="list in trainList" @click="chooseTrain(list.tid, list.trainsNum, list.plateNum)">
 					<div class="ub ub-ac list-top">
 						<div>{{list.trainsNum}}</div>
 						<!--<div class="list-name">我是谁</div>-->
@@ -53,10 +53,10 @@ export default {
 				});
 		},
 		//选择车次
-		chooseTrain(tid, trainsNum){
+		chooseTrain(tid, trainsNum, plateNum){
             this.$router.push({
             	name: 'order',
-				params: {tid: tid, trainsNum: trainsNum}
+				params: {tid: tid, trainsNum: trainsNum, plateNum: plateNum}
             });
 		},
 

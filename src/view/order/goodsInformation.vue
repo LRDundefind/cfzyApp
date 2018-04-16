@@ -28,7 +28,7 @@
 					
 					<div v-if="sellUnit == 'unit_pie'">{{goodsUnit}}</div>
 					<select v-if="sellUnit != 'unit_pie' ">
-						<option selected="true" value="1">斤</option>
+						<option selected="false" value="1">斤</option>
 						<option selected="true" value="2">公斤</option>
 					</select>
 					
@@ -36,7 +36,11 @@
 				<div class="goods-item ub">
 					<div class="ub-f1">平板重（必填）</div>
 					<mt-field label="" placeholder="请输入" type="number" v-model="pbweight"></mt-field>
-					<div>{{goodsUnit}}</div>
+					<div v-if="sellUnit == 'unit_pie'">{{goodsUnit}}</div>
+					<select v-if="sellUnit != 'unit_pie' ">
+						<option value="1">斤</option>
+						<option value="2">公斤</option>
+					</select>
 				</div>
 			</div>
 			<mt-button type="primary" size="large" class="submit-btn" @click="submitGoodsInfo">确定</mt-button>
@@ -45,7 +49,8 @@
 </template>
 
 <script>
-
+import { Toast } from 'mint-ui'
+import Cookies from 'js-cookie'
 export default {
 
     data () {
@@ -54,7 +59,6 @@ export default {
             goodsnum:'',//设置货品数量
             goodsweight: '',//设置货品重量
             pbweight: '',//设置平板重
-            
             
             goodName: '',//货品名称
             goodId: '',//货品id
@@ -78,14 +82,75 @@ export default {
 				//unit_pie 件
 				this.goodsUnit = '件';
 			}
-
-
     	},
-    	
+    	//货品信息录入
     	submitGoodsInfo(){
-    		
+    		if(this.goodsnum == '' ){
+    			Toast({
+					message: '请完善购买信息',
+					position: 'middle',
+					duration: 1000
+    			});
+    		}else if(!(new RegExp(/([0-9]+\.[0-9]{2})[0-9]*/).test(this.goodsnum))){
+    			Toast({
+					message: '请保留小数点后两位数字',
+					position: 'middle',
+					duration: 1000
+    			});
+    		}else if(this.goodsweight == '' ){
+    			Toast({
+					message: '请完善购买信息',
+					position: 'middle',
+					duration: 1000
+    			});
+    		}else if(!(new RegExp(/([0-9]+\.[0-9]{2})[0-9]*/).test(this.goodsweight))){
+    			Toast({
+					message: '请保留小数点后两位数字',
+					position: 'middle',
+					duration: 1000
+    			});
+    		}else if(this.pbweight == '' ){
+    			Toast({
+					message: '请完善购买信息',
+					position: 'middle',
+					duration: 1000
+    			});
+    		}else if(!(new RegExp(/([0-9]+\.[0-9]{2})[0-9]*/).test(this.pbweight))){
+    			Toast({
+					message: '请保留小数点后两位数字',
+					position: 'middle',
+					duration: 1000
+    			});
+    		}else{
+    			if(this.goodsunit != ''){
+	    			if(!(new RegExp(/([0-9]+\.[0-9]{2})[0-9]*/).test(this.goodsunit))){
+		    			Toast({
+							message: '请保留小数点后两位数字',
+							position: 'middle',
+							duration: 1000
+		    			});
+	    			}else{
+	    				this.submitInfo();
+	    			}
+	    		}else{
+    				this.submitInfo();
+	    		}
+    			
+    		}
     	},
-		
+		//货品信息录入完成提交
+		submitInfo(){
+			console.log(this.$route.params.tid,  '---'+this.$route.params.trainsNum)
+            Cookies.set('goodsunit', this.goodsunit);
+            Cookies.set('goodsnum', this.goodsnum);
+            Cookies.set('goodsweight', this.goodsweight);
+            Cookies.set('pbweight', this.pbweight);
+
+	        this.$router.push({
+	        	name: 'order',
+	        	params: {tid: this.$route.params.tid, trainsNum: this.$route.params.trainsNum }
+	        });
+		},
     }
 }
 </script>
@@ -122,6 +187,11 @@ input::-webkit-input-placeholder{
 					background: none !important;  /*不生效*/
 					
 				}
+			}
+			select{
+				border: none;
+				font-size: 0.28rem;
+    			color: #333;
 			}
 		}
 	}
