@@ -145,7 +145,7 @@ export default {
             Cookies.set('goodsnum', this.goodsnum);
             Cookies.set('goodsweight', this.goodsweight);
             Cookies.set('pbweight', this.pbweight);
-
+            
 	        this.$router.push({
 	        	name: 'order',
 	        	params: {tid: this.$route.params.tid, trainsNum: this.$route.params.trainsNum }
