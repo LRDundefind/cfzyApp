@@ -20,6 +20,14 @@ export const damage = {
             data: serverMoudle(params) || {}
         });
     },
+    //提交货品入库
+    submitGoods(params) {
+        return axios({
+            url: 'rest/CHENGFENG_SET_SELEMAN_TRAIN',
+            method: 'post',
+            data: serverMoudle(params) || {}
+        });
+    },
 
 
 };
