@@ -57,10 +57,10 @@
             </div>
             <!--货品信息-->
             <div v-if="selected == 'goods'">
-                <div v-for="n in 2" :key='n' class="goods-list">
-                    <p @click="editGoods(n)" class="clearfix">大白菜{{n}}类
+                <div v-for="item in goods" :key='item.goodId' class="goods-list">
+                    <p @click="editGoods(item)" class="clearfix">{{item.goodName}}
                         <span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
-                        <span>{{n + '00'}}公斤</span>
+                        <span>{{item.goodNum}} {{item.numUnit | sellNnit}}</span>
                     </p>
                 </div>
                 <div class="login_cont">
@@ -73,7 +73,7 @@
             </div>
             <!--入库货品信息-->
             <div v-if="goodsDetails">
-                <goods-details></goods-details>
+                <goods-details ref="news" @addGoods="onAddGoods"></goods-details>
             </div>
 
         </mt-tab-container>
@@ -86,6 +86,8 @@
     export default {
         data () {
             return {
+                editItem:[],
+                goods:[],
                 selected: 'basic',
                 stall:{
                     name: '请选择',
@@ -124,11 +126,31 @@
         methods: {
             //选择货主
             oNchoiceOwner(item){
+                console.log(132);
+                console.log(this.$refs.owner.ownerData);
                 this.stall.name = item.shipName;
                 this.stall.good_sid = item.sid;
                 this.ownerList = false;
                 this.selected = 'basic';
             },
+            //添加货品信息列表
+            onAddGoods(){
+                console.log(123);
+                let info =this.$refs.news.goods;
+                this.goods.splice(0,0,info);
+                console.log(this.goods);
+                this.goodsDetails = false;
+                this.selected = 'goods';
+            },
+            //编辑货品
+            editGoods(item){
+                console.log(item);
+                this.editItem = item;
+                this.selected = false;
+                this.goodsDetails = true;
+            },
+
+
             //显示货主列表
             goList(){
                 this.ownerList = true;
@@ -145,13 +167,9 @@
                     }
                 });
             },
-            //编辑货品
-            editGoods(id){
-                this.$router.push({name: 'goodsDetails/update', params: {id: id}});
-            },
+
             //添加货品
             createGoods(){
-
                 this.selected = false;
                 this.goodsDetails = true;
             },
