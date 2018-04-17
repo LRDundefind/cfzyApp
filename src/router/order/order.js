@@ -6,6 +6,8 @@ import trainList from '@/view/order/trainList'
 import goodsInformation from '@/view/order/goodsInformation'
 //签名
 import autograph from '@/view/order/autograph'
+//赊账规则
+import creditRules from '@/view/order/creditRules'
 
 export default [
 	{
@@ -39,6 +41,15 @@ export default [
 		name:'autograph',
 		components: {
 			mainView: autograph
+		},
+		meta: {
+			showFooter: false
+		}
+	},{
+		path:'creditRules',
+		name:'creditRules',
+		components: {
+			mainView: creditRules
 		},
 		meta: {
 			showFooter: false

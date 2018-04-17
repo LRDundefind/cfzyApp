@@ -5,7 +5,7 @@
                 <span class="c-3 f-s-16">白云上档A</span>
                 <img class="header_img" src="../../assets/index/down_icon.png"/>
             </router-link>
-            <router-link to="/" slot="right">
+            <router-link to="/creditRules" slot="right">
                 <span class="c-3 f-s-16">赊账规则</span>
             </router-link>
 		</mt-header>
