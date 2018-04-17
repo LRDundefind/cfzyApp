@@ -7,11 +7,12 @@
         </mt-header>
         <!--还款记录列表-->
         <div class="page-main">
-            <div class="" v-show="type==false">
+            <div class="" v-show="showList==false">
                 <div class="main-list" @click="showType">
                     <p class="clearfix">货品分类
                         <!--<span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>-->
-                        <span class="name">{{goods.goodName}}<img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
+                        <span class="name">{{goods.goodName}}<img class="right-icon"
+                                                                  src="../../assets/index/gray-right-icon.png"/></span>
                     </p>
                 </div>
 
@@ -31,7 +32,7 @@
                     <mt-button type="primary" size="large" class='f-l' @click="addGoods">确定</mt-button>
                 </div>
             </div>
-            <div class="" v-if="type == true">
+            <div class="" v-if="showList == true">
                 <div v-for="item in goodsData" :key='item.id' class="type-list">
                     <div class="" @click="hideType(item)">
                         <div class="ub type bd-b">
@@ -40,7 +41,7 @@
                         </div>
                         <div class=" ub unit">
                             <div class="name ub-f5">入库单位</div>
-                            <div class="date ub-f1">{{item.sellUnit |sellNnit}}</div>
+                            <div class="date ub-f1">{{item.sellUnit | sellNnit}}</div>
                         </div>
                     </div>
                 </div>
@@ -50,12 +51,12 @@
 </template>
 
 <script>
-    import { Toast } from 'mint-ui';
-    import { damage } from '@/services/apis/damage.api'
-    import { keyValue } from '@/services/apis/key-value';
+    import {Toast} from 'mint-ui';
+    import {damage} from '@/services/apis/damage.api'
+    import {keyValue} from '@/services/apis/key-value';
 
     export default {
-        name:'news',
+        name: 'news',
         props: {
             edit: {
                 type: Object,
@@ -64,68 +65,63 @@
         },
         data () {
             return {
-                goods:{
-                    goodId:'',
-                    goodName:'',//货品名称
-                    numUnit:'',//货品入库单位
-                    goodNum:'',//入库量
+                goods: {
+                    goodId: '',
+                    goodName: '',//货品名称
+                    numUnit: '',//货品入库单位
+                    goodNum: '',//入库量
                 },
-                goodsData:{
-                    goodName:'',
-                    sellUnit:'',
+                goodsData: {
+                    goodName: '',
+                    sellUnit: '',
                 },
-                goodsListParams:{
-                    page_size:'10',
-                    current_page:'1',
+                goodsListParams: {
+                    page_size: '10',
+                    current_page: '1',
                 },
                 number: '1000',
-                type:false,
+                showList: false,
             }
         },
         created(){
+            if (typeof(this.edit.goodId) != "undefined" && this.edit.goodId != '') {
+                this.goods = this.edit;
+            }
         },
 
         mounted () {
-            console.log(this.edit);
-            console.log(456);
             this.getlist()
         },
         methods: {
             //初始化数据--获取档位货品列表
             getlist(){
-                damage.goodsList(this.goodsListParams).then(response=>{
+                damage.goodsList(this.goodsListParams).then(response => {
                     this.goodsData = response.data.results;
 //                    this.storageData = response.data.results;
-//                    console.log(response.data.results);
                 })
             },
             showType(){
-                this.type = true;
+                this.showList = true;
             },
             //添加货品列表
             addGoods(){
-                if(this.goods.goodName && this.goods.numUnit &&this.goods.goodNum){
-                    this.$emit('addGoods',this.goods);
-                }else {
+                if (this.goods.goodName && this.goods.numUnit && this.goods.goodNum) {
+                    this.$emit('addGoods', this.goods);
+                } else {
                     console.log(123);
                     Toast('请完善信息');
                     return false;
                 }
             },
-
+            //隐藏货品列表
             hideType(item){
                 this.goods.goodId = item.goodId;
                 this.goods.goodName = item.goodName;
                 this.goods.numUnit = item.sellUnit;
                 console.log(item);
-                this.type = false;
-            }
-            //跳转到货品信息
-//            goGoods(){
-//               this.$router.push({
-//                   name:'goods'
-//               })
-//            },
+                this.showList = false;
+            },
+
         }
     }
 </script>
