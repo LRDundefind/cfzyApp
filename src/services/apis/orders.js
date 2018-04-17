@@ -4,9 +4,9 @@ import { serverMoudle } from '@/util/fetch'
 //订单
 export const orders = {
     //车次日销售列表
-    getTrainList(data) {
+    getTrainSaleList(data) {
         return axios({
-            url: '/rest/CHENGFENG_GET_SELEMAN_TRAIN',
+            url: '/rest/CHENGFENG_GET_SELEMAN_TRAINSELL,
             method: 'post',
             data: serverMoudle(data)
         });
