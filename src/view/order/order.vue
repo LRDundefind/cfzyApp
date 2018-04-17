@@ -59,7 +59,7 @@
 						</tr>
 					</tbody>
 				</table> -->
-				<ul>
+				<ul class="deffore">
 					<li>
 						<span>品名</span>
 						<span>重量</span>
@@ -68,15 +68,15 @@
 						<span>金额</span>
 						<span>包装费</span>
 					</li>
-					<li  v-for=" (goods,index) in goodsInfo" @click="goodsInfoSet(goods.goodId, goods.goodName, goods.sellUnit, goods.tid, trainsNum)" :key="goods.id">
+					<li  v-for=" (goods,index) in goodsInfo" @click="goodsInfoSet(index,goods.goodId, goods.goodName, goods.sellUnit, goods.tid, trainsNum)" :key="goods.id">
 						<span>{{goods.goodName}}</span>
-						<span v-for="a in goodsarr" :key="a.id">
-								<span>{{a.goodsweight}}</span>
-								<span>{{a.goodsunit}}</span>
-								<span>{{a.goodsnum}}</span>
-						</span>
-						<span></span>
-						<span></span>
+						
+						<span>{{goods.goodsweight}}</span>
+						<span>{{goods.goodsunit}}</span>
+						<span>{{goods.goodsnum}}</span>
+						
+						<span>{{goods.packCost}}</span>
+						<span>{{goods.goodAmount}}</span>
 					</li>
 				</ul>
 			</div>
@@ -196,7 +196,7 @@ export default {
 
     data () {
         return {
-        	
+        	numberNum:null,   //点击获取索引
 			trainInfo: true,//车次模块--是否展示
 			otherInfo: false,//其他模块--是否展示
 			autographInfo: false,//签名--是否展示
@@ -279,6 +279,15 @@ export default {
 				.then(response => {
 					//货品详细信息
 					this.goodsInfo = response.data.results;
+                    for(var i=0,len = this.goodsInfo.length; i<this.goodsInfo.length;i++){
+
+						this.goodsInfo[i]['goodsunit']= 0; 
+						this.goodsInfo[i]['goodsnum']= 0; 
+						this.goodsInfo[i]['goodsweight']= 0; 
+                        this.goodsInfo[i]['packCost']=0;
+						this.goodsInfo[i]['goodAmount']=0;
+
+                    }
 					//货品类别数量
 					this.allGoodsNum = response.data.results.length;
 					
@@ -301,7 +310,8 @@ export default {
 		},
 
 		//设置货品重量件数信息的弹框
-        goodsInfoSet(id, name, unit, tid, trainsNum){
+        goodsInfoSet(i,id, name, unit, tid, trainsNum){
+			this.numberNum=i;
         	this.dialoags = true;
         	this.goodName = name;
         	this.sellUnit = unit;
@@ -362,7 +372,6 @@ export default {
 							duration: 1000
 		    			});
 	    			}else{
-						//this.bus();
 						this.dialoags = false;
 	    				this.getGoodsInformation();
 	    			}
@@ -376,14 +385,11 @@ export default {
         
         //单件货品信息录入提交
         getGoodsInformation(){
- 			let goods = [{
-						 goodsunit:this.goodsunit,
-						 goodnum:this.goodsnum,
-						 goodsweight:this.goodsweight
-					 }];
 			
-        	this.goodsarr.push(...goods);
-         	console.log(this.goodsarr)
+						this.goodsInfo[this.numberNum].goodsweight = this.goodsweight
+						this.goodsInfo[this.numberNum].goodsunit = this.goodsunit
+						this.goodsInfo[this.numberNum].goodsnum = this.goodsnum
+			 
         	//获取当前所设置货品的金额和包装费的接口
 			var params = {
 				goodId: '1111qwe124er',//单个货品id --接口有问题，后它提供给的暂时可用的参数
@@ -396,6 +402,8 @@ export default {
 			};
 			order.goodsCost(params)
 				.then(response => {
+					this.goodsInfo[this.numberNum].packCost = response.data.results.packCost;
+					this.goodsInfo[this.numberNum].goodAmount = response.data.results.goodAmount;
 					//货品价格计算返回数据
 					this.goodsCosts = response.data.results;
 					console.log('包装费：'+this.goodsCosts.packCost+'，'+'金额：'+this.goodsCosts.goodAmount+'，'+' 过磅费：' + this.goodsCosts.weighCost);
@@ -405,6 +413,9 @@ export default {
 					this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh;//待修改，这是单次的
 					
 					this.resetPriceNum();
+
+					
+					console.log(this.goodsInfo)
 				})
 				.catch(function (response) {
 					console.log(response);
@@ -441,6 +452,21 @@ export default {
 <style scoped rel="stylesheet/scss" lang="scss">
 i{
 	font-style: normal;
+}
+.deffore{
+	width: 100%;
+	display: table;
+}
+.deffore li{
+	display: table;
+	width: 100%;
+}
+.deffore span{
+	width: 16%;
+	display: block;
+	height: 1rem;
+	float: left;
+	text-align: center;
 }
 .header_img{
     width: 0.32rem;
