@@ -27,6 +27,14 @@ export const order = {
             data: serverMoudle(data)
         });
     },
+    //赊账规则
+    creditRules(data) {
+        return axios({
+            url: '/rest/CHENGFENG_GET_SELEMAN_RULES',
+            method: 'post',
+            data: serverMoudle(data)
+        });
+    },
 
 }
 
