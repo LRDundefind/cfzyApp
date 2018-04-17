@@ -73,7 +73,7 @@
             </div>
             <!--入库货品信息-->
             <div v-if="goodsDetails">
-                <goods-details  @addGoods="onAddGoods"></goods-details>
+                <goods-details :edit="editItem" @addGoods="onAddGoods"></goods-details>
             </div>
 
         </mt-tab-container>
@@ -88,7 +88,8 @@
     export default {
         data () {
             return {
-                editItem:[],
+
+                editItem:{},
                 goods:[],
                 selected: 'basic',
                 stall:{
@@ -138,7 +139,7 @@
             //添加货品信息列表
             onAddGoods(goods){
                 this.goods.splice(0,0,goods);
-                console.log(this.goods);
+//                console.log(this.goods);
                 this.goodsDetails = false;
                 this.selected = 'goods';
             },

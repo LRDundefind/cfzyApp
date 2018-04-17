@@ -56,6 +56,12 @@
 
     export default {
         name:'news',
+        props: {
+            edit: {
+                type: Object,
+                required: false
+            }
+        },
         data () {
             return {
                 goods:{
@@ -77,15 +83,11 @@
             }
         },
         created(){
-            console.log(this.$parent.editItem);
-//            if(this.$parent.editItem !=''){
-//                this.goods = this.$parent.editItem;
-//                console.log(this.goods);
-//            }
-
         },
 
         mounted () {
+            console.log(this.edit);
+            console.log(456);
             this.getlist()
         },
         methods: {
