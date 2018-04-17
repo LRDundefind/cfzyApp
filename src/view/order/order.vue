@@ -402,8 +402,15 @@ export default {
 			};
 			order.goodsCost(params)
 				.then(response => {
-					this.goodsInfo[this.numberNum].packCost = response.data.results.packCost;
-					this.goodsInfo[this.numberNum].goodAmount = response.data.results.goodAmount;
+					// var q = this.goodsInfo[this.numberNum];
+					//  	q['packCost'] = response.data.results.packCost;
+					// 	q['goodAmount'] = response.data.results.goodAmount;
+					this.$set(this.goodsInfo,this.numberNum,{goodName:this.goodName,goodsweight:this.goodsweight,goodsunit:this.goodsunit,goodsnum:this.goodsnum,packCost:response.data.results.packCost, goodAmount:response.data.results.goodAmount,});
+					// this.$set(this.goodsInfo[this.numberNum],'packCost',response.data.results.packCost);
+					// this.$set(this.goodsInfo[this.numberNum],'goodAmount',response.data.results.goodAmount);
+					//  vm.$set(vm.goodsInfo.packCost, this.numberNum, response.data.results.packCost);
+					// this.set(this.goodsInfo[this.numberNum],'packCost', response.data.results.packCost);
+					// this.set(this.goodsInfo[this.numberNum],'goodAmount', response.data.results.goodAmount);
 					//货品价格计算返回数据
 					this.goodsCosts = response.data.results;
 					console.log('包装费：'+this.goodsCosts.packCost+'，'+'金额：'+this.goodsCosts.goodAmount+'，'+' 过磅费：' + this.goodsCosts.weighCost);
