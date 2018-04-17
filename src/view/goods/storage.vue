@@ -4,7 +4,9 @@
             <router-link to="/home" slot="left">
                 <mt-button icon="back"></mt-button>
             </router-link>
-            <mt-button slot="right" style="font-size: 0.32rem" :disabled="selected == 'basic'" @click="confirmStorage">确认入库</mt-button>
+            <mt-button slot="right" style="font-size: 0.32rem" :disabled="selected == 'basic'" @click="confirmStorage">
+                确认入库
+            </mt-button>
         </mt-header>
         <mt-header fixed title="货主列表" v-if="ownerList">
             <router-link to="/home" slot="left">
@@ -14,8 +16,8 @@
         </mt-header>
 
         <mt-navbar v-model="selected" v-if="selected">
-            <mt-tab-item id="basic" >基本信息</mt-tab-item>
-            <mt-tab-item id="goods" >货品信息</mt-tab-item>
+            <mt-tab-item id="basic">基本信息</mt-tab-item>
+            <mt-tab-item id="goods">货品信息</mt-tab-item>
         </mt-navbar>
         <mt-tab-container>
             <!--基本信息-->
@@ -23,7 +25,8 @@
                 <div class="">
                     <div class="basic-list" @click="goList">
                         <p class="clearfix">姓名
-                            <span class="name">{{stall.name}}<img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
+                            <span class="name">{{stall.name}}<img class="right-icon"
+                                                                  src="../../assets/index/gray-right-icon.png"/></span>
                         </p>
                     </div>
 
@@ -49,7 +52,8 @@
                     <div class="basic-list">
                         <p class="clearfix">备注</p>
                         <div class="remark">
-                            <textarea name="" id="" cols="30" rows="3" placeholder="备注信息" v-model="stall.remark"></textarea>
+                            <textarea name="" id="" cols="30" rows="3" placeholder="备注信息"
+                                      v-model="stall.remark"></textarea>
                         </div>
                     </div>
                 </div>
@@ -73,7 +77,7 @@
             </div>
             <!--入库货品信息-->
             <div v-if="goodsDetails">
-                <goods-details ref="news" @addGoods="onAddGoods"></goods-details>
+                <goods-details :edit="editItem" @addGoods="onAddGoods"></goods-details>
             </div>
 
         </mt-tab-container>
@@ -83,42 +87,43 @@
 <script>
     import ownerList from '@/view/damage/ownerList'
     import goodsDetails from '@/view/goods/goodsDetails'
-    import { damage } from '@/services/apis/damage.api'
+    import {damage} from '@/services/apis/damage.api'
 
     export default {
         data () {
             return {
-                editItem:[],
-                goods:[],
+
+                editItem: {},
+                goods: [],
                 selected: 'basic',
-                stall:{
+                stall: {
                     name: '请选择',
-                    good_sid:'',
+                    good_sid: '',
                     driverName: '东东强',
                     driverPhone: '18236911783',
-                    plateNum:'123456',//车牌号
+                    plateNum: '123456',//车牌号
                     company: '阿里巴巴',
                     startAddress: '北京市海淀区魏公村',
-                    origin:'产地',
+                    origin: '产地',
 
-                    originProveName:'',//产地证明名称
-                    originProveUrl:'',//产地证明图片地址
+                    originProveName: '',//产地证明名称
+                    originProveUrl: '',//产地证明图片地址
 
-                    checkProveName:'',//检验证明图片名称
-                    checkProveUrl:'',//检验证明图片地址
+                    checkProveName: '',//检验证明图片名称
+                    checkProveUrl: '',//检验证明图片地址
 
-                    carrierContractName:'',//承运合同图片名称
-                    carrierContractUrl:'',//承运合同图片地址
+                    carrierContractName: '',//承运合同图片名称
+                    carrierContractUrl: '',//承运合同图片地址
 
-                    remark:'',//备注
-                    goods:'',//货品信息
+                    remark: '',//备注
+                    goods: '',//货品信息
                 },
 
-                goodsDetails:false,//货品列表详情
-                ownerList:false,//货主列表
+                goodsDetails: false,//货品列表详情
+                ownerList: false,//货主列表
             }
         },
-        components:{
+        components: {
             'owner-list': ownerList,
             'goods-details': goodsDetails,
         },
@@ -136,11 +141,20 @@
                 this.selected = 'basic';
             },
             //添加货品信息列表
-            onAddGoods(){
-                console.log(123);
-                let info =this.$refs.news.goods;
-                this.goods.splice(0,0,info);
-                console.log(this.goods);
+            onAddGoods(goods){
+                if (typeof(this.editItem.goodId) != "undefined" && this.editItem.goodId != '') {
+                    let q = this.goods;
+                    q.forEach(function (value) {
+                        console.log(goods);
+                        console.log(goods.goodId);
+                        if (value.goodId == goods.goodId) {
+                            value = goods;
+                        }
+                    });
+                } else {
+                    this.goods.splice(0, 0, goods);
+                }
+//                console.log(this.goods);
                 this.goodsDetails = false;
                 this.selected = 'goods';
             },
@@ -151,7 +165,6 @@
                 this.selected = false;
                 this.goodsDetails = true;
             },
-
 
             //显示货主列表
             goList(){
@@ -186,7 +199,7 @@
                 const data = this.stall;
                 data.goods = this.goods;
                 console.log(data);
-                damage.submitGoods(data).then(response=>{
+                damage.submitGoods(data).then(response => {
                     console.log(response);
                 })
             },
@@ -194,7 +207,6 @@
 
             getList(){
             },
-
 
 
         },
@@ -279,15 +291,15 @@
                 }
             }
         }
-        .login_cont{
+        .login_cont {
             width: 5.5rem;
             margin: 0 auto;
         }
-        .loginbtn{
+        .loginbtn {
             width: 80% !important;
             @include login_btn(fixed);
             background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
-            margin: 0!important;
+            margin: 0 !important;
         }
     }
 
