@@ -23,16 +23,18 @@ export default [
 		meta: {
 			showFooter: false
 		}
-	},{
-		path:'goodsInformation/:goodId/:goodName/:sellUnit/:tid/:trainsNum',
-		name:'goodsInformation',
-		components: {
-			mainView: goodsInformation
-		},
-		meta: {
-			showFooter: false
-		}
-	},{
+	},
+//	{
+//		path:'goodsInformation/:goodId/:goodName/:sellUnit/:tid/:trainsNum',
+//		name:'goodsInformation',
+//		components: {
+//			mainView: goodsInformation
+//		},
+//		meta: {
+//			showFooter: false
+//		}
+//	},
+	{
 		path:'autograph',
 		name:'autograph',
 		components: {

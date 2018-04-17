@@ -39,9 +39,7 @@ export default {
 		this.getList();
     },
     methods: {
-		bus () {
-			Bus.$emit('msg', '我要传给兄弟组件们，你收到没有')
-		},
+		
 		//获取支出类型列表
 		getList(){
 			var params = {
