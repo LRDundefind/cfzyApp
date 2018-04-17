@@ -28,8 +28,8 @@
                 </div>
 
                 <div class='update clearfix'>
-                    <mt-button type="primary" size="large" class='f-l' @click="$router.go(-1)">删除</mt-button>
-                    <mt-button type="primary" size="large" class='f-l' @click="addGoods">确定</mt-button>
+                    <mt-button type="primary" size="large" class='f-l' @click="addGoods('delete')">删除</mt-button>
+                    <mt-button type="primary" size="large" class='f-l' @click="addGoods('add')">确定</mt-button>
                 </div>
             </div>
             <div class="" v-if="showList == true">
@@ -65,6 +65,7 @@
         },
         data () {
             return {
+                type:'delete',
                 goods: {
                     goodId: '',
                     goodName: '',//货品名称
@@ -104,14 +105,22 @@
                 this.showList = true;
             },
             //添加货品列表
-            addGoods(){
-                if (this.goods.goodName && this.goods.numUnit && this.goods.goodNum) {
-                    this.$emit('addGoods', this.goods);
-                } else {
-                    console.log(123);
-                    Toast('请完善信息');
-                    return false;
+            addGoods(type){
+                console.log(type);
+                if(type == 'add'){
+                    if (this.goods.goodName && this.goods.numUnit && this.goods.goodNum) {
+                        this.$emit('addGoods', this.goods);
+                    } else {
+                        console.log(123);
+                        Toast('请完善信息');
+                        return false;
+                    }
                 }
+                if(type=='delete'){
+                    this.goods.goodName = '';
+                    this.$emit('addGoods', this.goods);
+                }
+
             },
             //隐藏货品列表
             hideType(item){
