@@ -46,11 +46,14 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr v-for="goods in goodsInfo" @click="goodsInfoSet(goods.goodId, goods.goodName, goods.sellUnit, goods.tid, trainsNum)">
+						<tr>{{message}}</tr>
+						<tr v-for="goods in goodsInfo" @click="goodsInfoSet(goods.goodId, goods.goodName, goods.sellUnit, goods.tid, trainsNum)" :key="goods.id">
 							<td>{{goods.goodName}}</td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
+							<td v-for="a in message" :key="a.id">
+								<span>{{a.goodsnum}}</span>
+								<span>{{a.goodsunit}}</span>
+								<span>{{a.goodsweight}}</span>
+							</td>
 							<td>0</td>
 							<td>0</td>
 						</tr>
@@ -126,6 +129,7 @@
 </template>
 
 <script>
+ import Bus from '@/components/bus.js'
 import {order} from '@/services/apis/order.js'
 import Cookies from 'js-cookie'
 //import Router from 'vue-router'
@@ -161,12 +165,23 @@ export default {
 				totalWeigh: 0,  //过磅费
 				total: 0,
 			},
+			message:[]
         }
     },
     mounted () {
-    	this.getTrainInfor();
-    },
+		this.getTrainInfor();
+		 
+	},
+	created(){
+		this.asd()
+	},
     methods: {
+		asd(){
+			Bus.$on('msg', (e) => {
+					console.log(e)
+				this.message.push(...e) ;
+			})
+		},
 	    //选择车次
         choosetrainNumber(){
             this.$router.push({name: 'trainList'});

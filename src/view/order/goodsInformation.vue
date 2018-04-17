@@ -50,6 +50,7 @@
 
 <script>
 import { Toast } from 'mint-ui'
+ import Bus from '@/components/bus.js'
 import Cookies from 'js-cookie'
 export default {
 
@@ -63,13 +64,26 @@ export default {
             goodName: '',//货品名称
             goodId: '',//货品id
             sellUnit: '', //货品售卖单位
-            goodsUnit: '', //货品售卖单位转换
+			goodsUnit: '', //货品售卖单位转换
+			listDatd:[]
         }
     },
     mounted () {
 		this.goodsInformation();
     },
     methods: {
+		bus () {
+			let listdemo=[{
+				goodsunit: this.goodsunit,//设置货品单价
+				goodsnum:this.goodsnum,//设置货品数量
+				goodsweight: this.goodsweight,//设置货品重量
+				pbweight: this.pbweight//设置平板重
+			}]
+			this.listDatd=[
+				...listdemo
+			]
+			Bus.$emit('msg', this.listDatd)
+		},
     	goodsInformation(){
     		this.goodName = this.$route.params.goodName; //获取货品名称
 			this.goodId = this.$route.params.goodId; //获取货品id
@@ -130,6 +144,7 @@ export default {
 							duration: 1000
 		    			});
 	    			}else{
+						this.bus();
 	    				this.submitInfo();
 	    			}
 	    		}else{
