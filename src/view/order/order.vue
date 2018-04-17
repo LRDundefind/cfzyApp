@@ -34,31 +34,6 @@
 			</div>
 			<!--货品信息-->
 			<div class="order-detail item-table" v-if="otherInfo">
-				<!-- <table>
-					<thead>
-						<tr>
-							<th>品名</th>
-							<th>重量</th>
-							<th>单价</th>
-							<th>件数</th>
-							<th>金额</th>
-							<th>包装费</th>
-						</tr>
-					</thead>
-					<tbody>
-						
-						<tr v-for="goods in goodsInfo" @click="goodsInfoSet(goods.goodId, goods.goodName, goods.sellUnit, goods.tid, trainsNum)" :key="goods.id">
-							<td>{{goods.goodName}}</td>
-							<td v-for="a in goodsarr" :key="a.id">
-								<span>{{a.goodsweight}}</span>
-								<span>{{a.goodsunit}}</span>
-								<span>{{a.goodsnum}}</span>
-							</td>
-							<td>0</td>
-							<td>0</td>
-						</tr>
-					</tbody>
-				</table> -->
 				<ul class="deffore">
 					<li>
 						<span>品名</span>
@@ -202,7 +177,6 @@ export default {
 			autographInfo: false,//签名--是否展示
 			
 			goodsInfo: [], //当前车次下的货品信息
-			allGoodsNum: 0, //当前车次下的货品类别数量
 			goodsid: '',
 
 			trainsNum: '点击选择车次', //车次信息展示
@@ -279,17 +253,14 @@ export default {
 				.then(response => {
 					//货品详细信息
 					this.goodsInfo = response.data.results;
-                    for(var i=0,len = this.goodsInfo.length; i<this.goodsInfo.length;i++){
-
-						this.goodsInfo[i]['goodsunit']= 0; 
-						this.goodsInfo[i]['goodsnum']= 0; 
-						this.goodsInfo[i]['goodsweight']= 0; 
-                        this.goodsInfo[i]['packCost']=0;
-						this.goodsInfo[i]['goodAmount']=0;
-
+                    for(var i = 0, len = this.goodsInfo.length; i < this.goodsInfo.length; i ++){
+						this.goodsInfo[i]['goodsunit'] = 0; 
+						this.goodsInfo[i]['goodsnum'] = 0; 
+						this.goodsInfo[i]['goodsweight'] = 0; 
+                        this.goodsInfo[i]['packCost'] = 0;
+						this.goodsInfo[i]['goodAmount'] = 0;
+						this.goodsInfo[i]['weighCost'] = 0; //过磅费，表格里不展示，下方列表展示
                     }
-					//货品类别数量
-					this.allGoodsNum = response.data.results.length;
 					
 					//单个货品id
 					this.goodsid_1 = response.data.results[0].goodId;
@@ -386,9 +357,9 @@ export default {
         //单件货品信息录入提交
         getGoodsInformation(){
 			
-						this.goodsInfo[this.numberNum].goodsweight = this.goodsweight
-						this.goodsInfo[this.numberNum].goodsunit = this.goodsunit
-						this.goodsInfo[this.numberNum].goodsnum = this.goodsnum
+			this.goodsInfo[this.numberNum].goodsweight = this.goodsweight;
+			this.goodsInfo[this.numberNum].goodsunit = this.goodsunit;
+			this.goodsInfo[this.numberNum].goodsnum = this.goodsnum;
 			 
         	//获取当前所设置货品的金额和包装费的接口
 			var params = {
@@ -402,27 +373,36 @@ export default {
 			};
 			order.goodsCost(params)
 				.then(response => {
-					// var q = this.goodsInfo[this.numberNum];
-					//  	q['packCost'] = response.data.results.packCost;
-					// 	q['goodAmount'] = response.data.results.goodAmount;
-					this.$set(this.goodsInfo,this.numberNum,{goodName:this.goodName,goodsweight:this.goodsweight,goodsunit:this.goodsunit,goodsnum:this.goodsnum,packCost:response.data.results.packCost, goodAmount:response.data.results.goodAmount,});
-					// this.$set(this.goodsInfo[this.numberNum],'packCost',response.data.results.packCost);
-					// this.$set(this.goodsInfo[this.numberNum],'goodAmount',response.data.results.goodAmount);
-					//  vm.$set(vm.goodsInfo.packCost, this.numberNum, response.data.results.packCost);
-					// this.set(this.goodsInfo[this.numberNum],'packCost', response.data.results.packCost);
-					// this.set(this.goodsInfo[this.numberNum],'goodAmount', response.data.results.goodAmount);
+					
 					//货品价格计算返回数据
 					this.goodsCosts = response.data.results;
-					console.log('包装费：'+this.goodsCosts.packCost+'，'+'金额：'+this.goodsCosts.goodAmount+'，'+' 过磅费：' + this.goodsCosts.weighCost);
-					this.totalCost.totalAmount = this.goodsCosts.goodAmount; //待修改，这是单次的
-					this.totalCost.totalPack = this.goodsCosts.packCost;//待修改，这是单次的
-					this.totalCost.totalWeigh = this.goodsCosts.weighCost;//待修改，这是单次的
-					this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh;//待修改，这是单次的
+					//console.log('包装费：'+this.goodsCosts.packCost+'， '+'金额：'+this.goodsCosts.goodAmount+'， '+' 过磅费：' + this.goodsCosts.weighCost);
+		
+					this.$set(this.goodsInfo,this.numberNum,
+						    {	goodName:this.goodName,
+						     	goodsweight:this.goodsweight,
+						     	goodsunit:this.goodsunit,
+						     	goodsnum:this.goodsnum,
+						     	packCost:response.data.results.packCost, 
+						     	goodAmount:response.data.results.goodAmount,
+						     	weighCost:response.data.results.weighCost,
+						    });
+						    
+				    //根据返回数据计算总和
+					this.totalCost.totalAmount = 0; //总贷款费用
+					this.totalCost.totalPack = 0; //总包装费
+					this.totalCost.totalWeigh = 0; //总过磅费
+					this.totalCost.tatol = 0; //合计费用
+                    for(var i=0,len = this.goodsInfo.length; i<this.goodsInfo.length;i++){
+						this.totalCost.totalAmount += this.goodsInfo[i]['goodAmount'];
+						this.totalCost.totalPack += this.goodsInfo[i]['packCost'];
+						this.totalCost.totalWeigh += this.goodsInfo[i]['weighCost'];
+						console.log(this.goodsInfo[i]['weighCost'])
+						this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh;
+                    }
 					
 					this.resetPriceNum();
 
-					
-					console.log(this.goodsInfo)
 				})
 				.catch(function (response) {
 					console.log(response);
