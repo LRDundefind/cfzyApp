@@ -4,7 +4,7 @@
             <router-link to="/home" slot="left">
                 <mt-button icon="back"></mt-button>
             </router-link>
-            <mt-button slot="right" style="font-size: 0.32rem" :disabled="selected == 'basic'">确认入库</mt-button>
+            <mt-button slot="right" style="font-size: 0.32rem" :disabled="selected == 'basic'" @click="confirmStorage">确认入库</mt-button>
         </mt-header>
         <mt-header fixed title="货主列表" v-if="ownerList">
             <router-link to="/home" slot="left">
@@ -83,6 +83,8 @@
 <script>
     import ownerList from '@/view/damage/ownerList'
     import goodsDetails from '@/view/goods/goodsDetails'
+    import { damage } from '@/services/apis/damage.api'
+
     export default {
         data () {
             return {
@@ -178,6 +180,17 @@
             goHome(){
                 this.$router.push({name: 'home'});
             },
+
+            //确认入库
+            confirmStorage(){
+                const data = this.stall;
+                data.goods = this.goods;
+                console.log(data);
+                damage.submitGoods(data).then(response=>{
+                    console.log(response);
+                })
+            },
+
 
             getList(){
             },
