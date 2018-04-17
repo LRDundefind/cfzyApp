@@ -28,7 +28,7 @@
                 </div>
 
                 <div class='update clearfix'>
-                    <mt-button type="primary" size="large" class='f-l' @click="addGoods('delete')">删除</mt-button>
+                    <mt-button type="primary" :disabled="deleteDisabled == 'edit'" size="large" class='f-l' @click="addGoods('delete')">删除</mt-button>
                     <mt-button type="primary" size="large" class='f-l' @click="addGoods('add')">确定</mt-button>
                 </div>
             </div>
@@ -65,7 +65,7 @@
         },
         data () {
             return {
-                type:'delete',
+                deleteDisabled:'',
                 goods: {
                     goodId: '',
                     goodName: '',//货品名称
@@ -87,6 +87,9 @@
         created(){
             if (typeof(this.edit.goodId) != "undefined" && this.edit.goodId != '') {
                 this.goods = this.edit;
+                this.deleteDisabled = 'delete'
+            }else{
+                this.deleteDisabled = 'edit'
             }
         },
 
