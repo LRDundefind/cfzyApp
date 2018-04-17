@@ -73,7 +73,7 @@
             </div>
             <!--入库货品信息-->
             <div v-if="goodsDetails">
-                <goods-details ref="news" @addGoods="onAddGoods"></goods-details>
+                <goods-details  @addGoods="onAddGoods"></goods-details>
             </div>
 
         </mt-tab-container>
@@ -136,10 +136,8 @@
                 this.selected = 'basic';
             },
             //添加货品信息列表
-            onAddGoods(){
-                console.log(123);
-                let info =this.$refs.news.goods;
-                this.goods.splice(0,0,info);
+            onAddGoods(goods){
+                this.goods.splice(0,0,goods);
                 console.log(this.goods);
                 this.goodsDetails = false;
                 this.selected = 'goods';
