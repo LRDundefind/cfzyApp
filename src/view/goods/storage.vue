@@ -92,6 +92,7 @@
     export default {
         data () {
             return {
+                index: '',
 
                 editItem: {},
                 goods: [],
@@ -143,18 +144,27 @@
             //添加货品信息列表
             onAddGoods(goods){
                 if (typeof(this.editItem.goodId) != "undefined" && this.editItem.goodId != '') {
-                    let q = this.goods;
-                    q.forEach(function (value) {
-                        console.log(goods);
-                        console.log(goods.goodId);
-                        if (value.goodId == goods.goodId) {
-                            value = goods;
+                    if (goods.goodName != '') {
+                        let q = this.goods;
+                        q.forEach(function (value) {
+                            console.log(goods);
+                            console.log(goods.goodId);
+                            if (value.goodId == goods.goodId) {
+                                value = goods;
+                            }
+                        });
+                    } else {
+                        var s = this.goods;
+                        for (var i = 0; i < s.length; i++) {
+                            if (goods.goodId == s[i].goodId) {
+                                this.index = i;
+                            }
                         }
-                    });
+                        s.splice(this.index, 1);
+                    }
                 } else {
                     this.goods.splice(0, 0, goods);
                 }
-//                console.log(this.goods);
                 this.goodsDetails = false;
                 this.selected = 'goods';
             },
@@ -185,6 +195,7 @@
 
             //添加货品
             createGoods(){
+                this.editItem = {};
                 this.selected = false;
                 this.goodsDetails = true;
             },

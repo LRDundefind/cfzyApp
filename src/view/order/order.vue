@@ -34,7 +34,7 @@
 			</div>
 			<!--货品信息-->
 			<div class="order-detail item-table" v-if="otherInfo">
-				<table>
+				<!-- <table>
 					<thead>
 						<tr>
 							<th>品名</th>
@@ -46,19 +46,39 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>{{message}}</tr>
+						
 						<tr v-for="goods in goodsInfo" @click="goodsInfoSet(goods.goodId, goods.goodName, goods.sellUnit, goods.tid, trainsNum)" :key="goods.id">
 							<td>{{goods.goodName}}</td>
-							<td v-for="a in message" :key="a.id">
-								<span>{{a.goodsnum}}</span>
-								<span>{{a.goodsunit}}</span>
+							<td v-for="a in goodsarr" :key="a.id">
 								<span>{{a.goodsweight}}</span>
+								<span>{{a.goodsunit}}</span>
+								<span>{{a.goodsnum}}</span>
 							</td>
 							<td>0</td>
 							<td>0</td>
 						</tr>
 					</tbody>
-				</table>
+				</table> -->
+				<ul>
+					<li>
+						<span>品名</span>
+						<span>重量</span>
+						<span>单价</span>
+						<span>件数</span>
+						<span>金额</span>
+						<span>包装费</span>
+					</li>
+					<li  v-for=" (goods,index) in goodsInfo" @click="goodsInfoSet(goods.goodId, goods.goodName, goods.sellUnit, goods.tid, trainsNum)" :key="goods.id">
+						<span>{{goods.goodName}}</span>
+						<span v-for="a in goodsarr" :key="a.id">
+								<span>{{a.goodsweight}}</span>
+								<span>{{a.goodsunit}}</span>
+								<span>{{a.goodsnum}}</span>
+						</span>
+						<span></span>
+						<span></span>
+					</li>
+				</ul>
 			</div>
 			<div class="order-detail" v-if="otherInfo">
 				<div class="ub term">
@@ -214,7 +234,7 @@ export default {
 				totalWeigh: 0,  //过磅费总和
 				total: 0,  //合计金额
 			},
-			message:[],
+			goodsarr:[],
 			
 
         }
@@ -223,15 +243,9 @@ export default {
 		this.getTrainInfor();
 	},
 	created(){
-		this.asd()
+		
 	},
     methods: {
-		asd(){
-			Bus.$on('msg', (e) => {
-					console.log(e)
-				this.message.push(...e) ;
-			})
-		},
 		//重置单件货品下单数量和其他数据
 		resetPriceNum(){
 			this.goodsunit = '';
@@ -362,13 +376,14 @@ export default {
         
         //单件货品信息录入提交
         getGoodsInformation(){
- 			let goods = [];
- 			let goodsArr = [];
-        	goods.push(this.goodsunit, this.goodsnum, this.goodsweight);
-        	goodsArr.push(goods);
-        	this.goodsData = goodsArr;
-        	console.log(goodsArr);
-         
+ 			let goods = [{
+						 goodsunit:this.goodsunit,
+						 goodnum:this.goodsnum,
+						 goodsweight:this.goodsweight
+					 }];
+			
+        	this.goodsarr.push(...goods);
+         	console.log(this.goodsarr)
         	//获取当前所设置货品的金额和包装费的接口
 			var params = {
 				goodId: '1111qwe124er',//单个货品id --接口有问题，后它提供给的暂时可用的参数
