@@ -8,7 +8,7 @@
 		<!--车次列表-->
 		<div class="page-main">
 			<ul class="order-list">
-				<li v-for="list in trainList" @click="chooseTrain(list.tid, list.trainsNum, list.plateNum)">
+				<li v-for="list in trainList" @click="chooseTrain(list.tid, list.trainsNum, list.plateNum)" :key="list.id">
 					<div class="ub ub-ac list-top">
 						<div>{{list.trainsNum}}</div>
 						<!--<div class="list-name">我是谁</div>-->
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+ import Bus from '@/components/bus.js'
 import {order} from '@/services/apis/order.js'
 export default {
 	
@@ -38,6 +39,9 @@ export default {
 		this.getList();
     },
     methods: {
+		bus () {
+			Bus.$emit('msg', '我要传给兄弟组件们，你收到没有')
+		},
 		//获取支出类型列表
 		getList(){
 			var params = {
