@@ -1,11 +1,5 @@
 <template>
     <div class="page-content">
-        <mt-header fixed title="货 主">
-            <router-link to="/" slot="left">
-                <mt-button @click="$router.go(-1)" icon="back"></mt-button>
-            </router-link>
-        </mt-header>
-
         <div class="page-main">
             <search-box ref="search"/>
             <div v-for="item in ownerData" :key='ownerData.sid' class="main-list">
