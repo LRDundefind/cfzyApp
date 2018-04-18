@@ -35,6 +35,14 @@ export const order = {
             data: serverMoudle(data)
         });
     },
+    //提交订单
+    submitorder(data) {
+        return axios({
+            url: '/rest/CHENGFENG_COMMIT_ORDER',
+            method: 'post',
+            data: serverMoudle(data)
+        });
+    },
 
 }
 
