@@ -39,7 +39,7 @@ export const login = {
         return axios({
             url: '/rest/CHENGFENG_GET_SELEMAN_GEAR',
             method: 'post',
-            params: params || {}
+            params: serverMoudle(params) || {}
         });
     }
 }
