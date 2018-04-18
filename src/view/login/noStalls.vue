@@ -1,13 +1,13 @@
 <template>
     <div class="main">
         <mt-header fixed title="首页">
-            <div class=" personal" @click="goMy(5)" slot="right">
+            <div class=" personal" slot="right">
                 <img src="../../assets/index/shouye_touxiang_img@2x.png"/>
             </div>
         </mt-header>
 
         <div class="">
-            <div class="home" @click="goBlack(5)">
+            <div class="home">
                 <span class="black-title">黑名单</span>
                 <img class="p-re" src="../../assets/index/black_img.png"/>
             </div>
@@ -25,6 +25,8 @@
 
 <script>
     import { login } from '@/services/apis/login'
+    import Cookies from 'js-cookie'
+
     export default {
         data () {
             return {
@@ -36,14 +38,18 @@
             }
         },
         mounted () {
-//            this.getlist()
+
         },
         methods: {
             getlist(){
                 login.stalls().then(response => {
-                    console.log(response.data);
-//                    this.storageData = response.data.results;
-//                    console.log(response.data.results);
+                    if(response.data.results == ''){
+//                        console.log(123);
+                    }else {
+                        let gidOwnID_list=JSON.stringify(response.data.results);
+                        Cookies.set('gidOwnID_lists', gidOwnID_list);                 //档位信息集合
+                        this.$router.push({name:'home'});
+                    }
                 })
             },
         }
