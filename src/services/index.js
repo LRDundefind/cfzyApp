@@ -7,9 +7,9 @@ import { serverMoudle } from '@/util/fetch'
 
 
 let instance = axios.create({
-    // baseURL: process.env.baseURL,
+    baseURL: process.env.BASE_API,
     timeout: 5000,
-    withCredentials: true, //加了这段就可以跨域了
+    withCredentials: false, //加了这段就可以跨域了
     // transformRequest: [function (data) { // 只能用在 'PUT', 'POST' 和 'PATCH' 这几个请求方法
     //             data = qs.stringify(data)
     //             return data
