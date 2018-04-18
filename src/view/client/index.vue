@@ -1,10 +1,10 @@
 <template>
     <div class="page-content">
         <mt-header fixed title="客 户">
-            <router-link to="/home" slot="left" v-if="type=='order'">
-                <mt-button icon="back" @click="$router.go(-1)"></mt-button>
+            <router-link :to="{name:'order'}" slot="left" v-if="type=='order'">
+                <mt-button icon="back"></mt-button>
             </router-link>
-            <span @click="addCustomer"  style="font-size: 0.32rem" slot="right">添加客户</span>
+            <span @click="addCustomer" style="font-size: 0.32rem" slot="right" v-if="type != 'order'">添加客户</span>
         </mt-header>
         <search-box ref="search"/>
         <div class="page-main">
@@ -42,7 +42,7 @@
     export default {
         data () {
             return {
-                type:'',
+                type: '',
             }
         },
         components: {
@@ -57,12 +57,12 @@
             },
             //跳转到添加客户
             addCustomer(){
-                this.$router.push({name:'index_change/create',params:{type:'create'}})
+                this.$router.push({name: 'index_change/create', params: {type: 'create'}})
             },
             goDetail(id){
-                if(this.type == 'order'){
+                if (this.type == 'order') {
                     this.$router.push({name: 'order', params: {id: id}});
-                }else{
+                } else {
                     this.$router.push({name: 'client_detail', params: {id: id}});
                 }
             }
