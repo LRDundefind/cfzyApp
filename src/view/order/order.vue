@@ -414,7 +414,7 @@ export default {
 		//选择客户
         chooseCustomer(){
             this.$router.push({
-            	name: 'client',
+            	name: 'client_order',
 				params: {type: 'order'}
             });
         },
