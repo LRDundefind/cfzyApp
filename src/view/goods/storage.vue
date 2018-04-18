@@ -8,9 +8,9 @@
                 确认入库
             </mt-button>
         </mt-header>
-        <mt-header fixed title="货主列表" v-if="ownerList">
-            <router-link to="/home" slot="left">
-                <mt-button icon="back"></mt-button>
+        <mt-header fixed title="货主" v-if="ownerList">
+            <router-link to="/" slot="left">
+                <mt-button icon="back" @click=""></mt-button>
             </router-link>
             <mt-button slot="right" style="font-size: 0.32rem" :disabled="selected == 'basic'">确认入库</mt-button>
         </mt-header>

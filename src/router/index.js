@@ -17,6 +17,7 @@ import zhuce from '@/view/login/zhuce'
 import xieyi from '@/view/login/xieyi'
 import yanzheng from '@/view/login/yanzheng'
 import setNewword from '@/view/login/setNewword'
+import noStalls from '@/view/login/noStalls'
 
 
 Vue.use(Router)
@@ -51,6 +52,11 @@ export const routerControl = [
         path: '/setNewword',
         name: 'setNewword',
         component: setNewword
+    },
+    {
+        path: '/noStalls',
+        name: 'noStalls',
+        component: noStalls
     }
 ]
 
