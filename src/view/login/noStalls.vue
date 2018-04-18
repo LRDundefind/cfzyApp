@@ -14,8 +14,7 @@
 
             <div class="stalls">
                 <div>
-                    <img class="stalls_pic" src="../../assets/index/no_Stalls.png"/>
-
+                    <img @click="getlist" class="stalls_pic" src="../../assets/index/no_Stalls.png"/>
                 </div>
                 <div class="word">您还没有关联档位</div>
                 <div class="word">请联系档位管理员</div>
@@ -25,7 +24,7 @@
 </template>
 
 <script>
-    import {home} from '@/services/apis/home.api'
+    import { login } from '@/services/apis/login'
     export default {
         data () {
             return {
@@ -37,15 +36,14 @@
             }
         },
         mounted () {
-            this.getlist()
+//            this.getlist()
         },
         methods: {
             getlist(){
-                let params = {}
-                home.index(params).then(response => {
-                    this.storageData = response.data.results;
-                    console.log(response.data.results);
-
+                login.stalls().then(response => {
+                    console.log(response.data);
+//                    this.storageData = response.data.results;
+//                    console.log(response.data.results);
                 })
             },
         }
