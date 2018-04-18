@@ -151,18 +151,37 @@ export default {
                         };
                     
                     login.auth(params).then(response => {
+                        if(response.data.status=='Y'){
                             let result = response.data.results;
-                            let gidOwnID_list=JSON.stringify(result.stalls_list);
-                             Cookies.set('Token', result.token);
-                             Cookies.set('randomKey', result.randomKey);
-                             Cookies.set('gidOwnID_lists', gidOwnID_list);                 //档位信息集合
+                            Cookies.set('Token', result.token);
+                            Cookies.set('randomKey', result.randomKey);
+                             
                              Cookies.set('roleId', result.roleId);          //身份区分，档主还是财务
                              Cookies.set('sid', result.sid);                //登录用户ID
                              Cookies.set('userName', result.userName);     //姓名
                              Cookies.set('compayName', result.compayName); //公司名称
+                            if(result.stalls_list.length==0){
+                                this.$router.push({name:'noStalls'});
+                            }
+                            else{
+                                let gidOwnID_list=JSON.stringify(result.stalls_list);
+                                Cookies.set('gidOwnID_lists', gidOwnID_list);                 //档位信息集合
+                                this.$router.push({name:'home'});
+                            }
+                            
+                            
+                             
+                            
 
-                             this.$router.push({name:'home'});
-
+                             
+                        }
+                        else{
+                            Toast({
+                                message: response.data.error_msg,
+                                position: 'middle',
+                                duration: 5000
+                                });
+                        }
                     })
 					
 					//调取接口

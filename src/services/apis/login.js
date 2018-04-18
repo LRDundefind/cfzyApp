@@ -32,5 +32,14 @@ export const login = {
             method: 'get',
             params: params || {}
         });
+    },
+
+    //获取档位列表
+    stalls(params){
+        return axios({
+            url: '/rest/CHENGFENG_GET_SELEMAN_GEAR',
+            method: 'post',
+            params: params || {}
+        });
     }
 }

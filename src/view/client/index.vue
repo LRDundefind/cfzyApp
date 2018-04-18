@@ -1,11 +1,14 @@
 <template>
     <div class="page-content">
         <mt-header fixed title="客 户">
-            <span @click="addCustomer"  style="font-size: 0.32rem" slot="right">添加客户</span>
+            <router-link :to="{name:'order'}" slot="left" v-if="type=='order'">
+                <mt-button icon="back"></mt-button>
+            </router-link>
+            <span @click="addCustomer" style="font-size: 0.32rem" slot="right" v-if="type != 'order'">添加客户</span>
         </mt-header>
         <search-box ref="search"/>
         <div class="page-main">
-            <div v-for="n in 20" :key='n' class="main-list" @click="goDetail(10)">
+            <div v-for="n in 20" :key='n' class="main-list" @click="goDetail('customer1')">
                 <div class="ub ub-ac heade">
                     <div class='lis-icon ub-img im'></div>
                     <div class='ub-f1 ut-s'>设置</div>
@@ -38,25 +41,31 @@
     import searchBox from '@/components/searchBox/search'
     export default {
         data () {
-            return {}
+            return {
+                type: '',
+            }
         },
         components: {
             searchBox
         },
         mounted () {
-
+            this.type = this.$route.params.type || false;
+//            console.log(this.type);
         },
         methods: {
             getList(){
             },
             //跳转到添加客户
             addCustomer(){
-                this.$router.push({name:'index_change/create',params:{type:'create'}})
+                this.$router.push({name: 'index_change/create', params: {type: 'create'}})
             },
-            goDetail(n){
-                this.$router.push({name: 'client_detail', params: {id: n}});
+            goDetail(id){
+                if (this.type == 'order') {
+                    this.$router.push({name: 'order', params: {id: id}});
+                } else {
+                    this.$router.push({name: 'client_detail', params: {id: id}});
+                }
             }
-
         }
     }
 </script>
