@@ -34,5 +34,13 @@ export const home = {
             data: serverMoudle(params) || {}
         });
     },
+    //首页暂存列表
+    temporaryOrderList(params) {
+        return axios({
+            url: 'rest/CHENGFENG_GET_SELEMAN_DEPOSIT',
+            method: 'post',
+            data: serverMoudle(params) || {}
+        });
+    },
 
 };

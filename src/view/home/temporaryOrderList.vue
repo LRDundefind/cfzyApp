@@ -24,17 +24,34 @@
 
 <script>
 import searchBox from '@/components/searchBox/search'
+import { home } from '@/services/apis/home.api'
 export default {
 	components: { searchBox },
     data () {
         return {
-            
+            temporaryList: [],
         }
     },
     mounted () {
 
     },
     methods: {
+		//暂存订单列表
+		getTrain(tid){
+			var params = {};
+			home.temporaryOrderList(params)
+				.then(response => {
+					//货品详细信息
+					this.temporaryList = response.data.results;
+				})
+				.catch(function (response) {
+					console.log(response);
+				});
+		},
+
+
+
+
 
 	    //跳转到订单详情
         orderDetail(id){
@@ -44,7 +61,7 @@ export default {
         			id:id
         		}
         	});
-        }
+        },
             
     }
 }
