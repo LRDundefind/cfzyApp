@@ -9,13 +9,13 @@
             </mt-button>
         </mt-header>
 
-
         <mt-header fixed title="货主" v-if="ownerList">
             <router-link to="" slot="left">
                 <mt-button icon="back" @click="ownerBack"></mt-button>
             </router-link>
-            <mt-button slot="right" style="font-size: 0.32rem" :disabled="selected == 'basic'">确认入库</mt-button>
         </mt-header>
+
+
 
         <mt-navbar v-model="selected" v-if="selected">
             <mt-tab-item id="basic">基本信息</mt-tab-item>
