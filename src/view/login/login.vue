@@ -151,6 +151,7 @@ export default {
                         };
                     
                     login.auth(params).then(response => {
+                        if(response.data.status=='Y'){
                             let result = response.data.results;
                             let gidOwnID_list=JSON.stringify(result.stalls_list);
                              Cookies.set('Token', result.token);
@@ -162,7 +163,14 @@ export default {
                              Cookies.set('compayName', result.compayName); //公司名称
 
                              this.$router.push({name:'home'});
-
+                        }
+                        else{
+                            Toast({
+                                message: response.data.error_msg,
+                                position: 'middle',
+                                duration: 5000
+                                });
+                        }
                     })
 					
 					//调取接口
