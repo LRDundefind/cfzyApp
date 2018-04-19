@@ -152,11 +152,18 @@ export default {
                 // }
                 else if(this.phone==''){
 					Toast({
-                        message: '账号输入有误',
+                        message: '请输入手机号',
                         position: 'middle',
                         duration: 5000
                         });
-				}
+                }
+                else if(!new RegExp(/^1[3|4|5|7|8][0-9]{9}$/).test(this.phone)){
+                    Toast({
+                        message: '手机号格式输入有误',
+                        position: 'middle',
+                        duration: 5000
+                        });
+                }
 				else if(this.passWord=='' || this.passwordtype==''){
 					Toast({
                         message: '密码不可为空',
@@ -167,7 +174,7 @@ export default {
                 else{
                      Cookies.set('Zname',this.userName);
                      Cookies.set('Zphone',this.phone);
-                     Cookies.set('Zpassword',this.passwordtype || this.passWord);
+                     Cookies.set('Zpassword', this.passWord);
                     this.$router.push({name:'yanzheng',params: { phone: this.phone,firstlogin:'Y' }});
                 }
            

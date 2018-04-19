@@ -32,7 +32,7 @@
             <div v-if="selected == 'basic'">
                 <div class="">
                     <div class="basic-list" @click="goList">
-                        <p class="clearfix">姓名
+                        <p class="clearfix">货主
                             <span class="name">{{stall.name}}<img class="right-icon"
                                                                   src="../../assets/index/gray-right-icon.png"/></span>
                         </p>
@@ -51,10 +51,17 @@
                     <div class="basic-list">
                         <p class="clearfix">产地<input type="text" v-model="stall.origin"></p>
                         <p class="clearfix">产地证明
-                            <input type="text" v-model="stall.originProveName">
+                            <span class="upload">点击上传<img class="right-icon"
+                                                                  src="../../assets/index/gray-right-icon.png"/></span>
                         </p>
-                        <p class="clearfix">检验证明<input type="text" v-model="stall.checkProveName"></p>
-                        <p class="clearfix">承运合同<input type="text" v-model="stall.carrierContractName"></p>
+                        <p class="clearfix">检验证明
+                            <span class="name">已经上传<img class="right-icon"
+                                                          src="../../assets/index/gray-right-icon.png"/></span>
+                        </p>
+                        <p class="clearfix">承运合同
+                            <span class="upload">点击上传<img class="right-icon"
+                                                          src="../../assets/index/gray-right-icon.png"/></span>
+                        </p>
                     </div>
 
                     <div class="basic-list">
@@ -108,12 +115,12 @@
                 stall: {
                     name: '请选择',
                     good_sid: '',
-                    driverName: '东东强',
-                    driverPhone: '18236911783',
-                    plateNum: '123456',//车牌号
-                    company: '阿里巴巴',
-                    startAddress: '北京市海淀区魏公村',
-                    origin: '产地',
+                    driverName: '',
+                    driverPhone: '',
+                    plateNum: '',//车牌号
+                    company: '',
+                    startAddress: '',
+                    origin: '',
 
                     originProveName: '',//产地证明名称
                     originProveUrl: '',//产地证明图片地址
@@ -283,6 +290,10 @@
                     color: #4c4c4c;
                     text-align: right;
                     line-height: 0.98rem;
+                }
+                .upload{
+                    color: #33d570;
+                    float: right;
                 }
             }
             > p:nth-child(1) {

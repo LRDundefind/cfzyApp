@@ -8,14 +8,14 @@
         </mt-header>
         <search-box ref="search"/>
         <div class="page-main">
-            <div v-for="n in listdata" :key='n.id' class="main-list" @click="goDetail('customer1')">
+            <div v-for="n in listdata" :key='n.id' class="main-list" @click="goDetail(n.cid)">
                 <div class="ub ub-ac heade">
-                    <div class='lis-icon ub-img im' v-bind:style="{backgroundImage: 'url(' + n.headImg + ')'}"></div>
+                    <div class='lis-icon ub-img im'><img :src="n.headImg" ></div>
                     <div class='ub-f1 ut-s'>{{n.nickname}}</div>
                     <!-- 正常客户状态 -->
-                    <div class='res8 lis-sw ub-img im2' v-show="n.status=='Y'"></div>
+                    <div class=' res8 lis-sw ub-img im2' v-show="n.status=='Y'"></div>
                     <!-- 平台状态 -->
-                    <div class='res8 lis-sw ub-img im3' v-show="n.sys_status=='Y'"></div>
+                    <div class=' res8 lis-sw ub-img im3' v-show="n.sys_status=='Y'"></div>
                 </div>
                 <ul class="">
                     <li class="ub ub-pj">
@@ -43,6 +43,7 @@
 <script>
     import searchBox from '@/components/searchBox/search'
     import { client } from '@/services/apis/client'
+    import Cookies from 'js-cookie' 
     export default {
         data () {
             return {
@@ -80,9 +81,12 @@
             },
             goDetail(id){
                 if (this.type == 'order') {
-                    this.$router.push({name: 'order', params: {id: id}});
+                    Cookies.set('chooseCustomer',id)
+                    //下单
+                    this.$router.push({name: 'order'});
                 } else {
-                    this.$router.push({name: 'client_detail', params: {id: id}});
+                    // 客户详情
+                    this.$router.push({name: 'client_detail', params: {ids: id}});
                 }
             }
         }
@@ -97,9 +101,13 @@
         margin-right: 0.2rem;
     }
     .im2 {
+      width: 1.2rem;
+      height: 0.8rem;
       background-image: url(../../assets/client/kehu_zidingyi_img.png);
     }
     .im3 {
+      width: 1.2rem;
+      height: 0.8rem;
       background-image: url(../../assets/client/kehu_pingtai_img.png);
     }
     .main-list {

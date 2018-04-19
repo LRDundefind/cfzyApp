@@ -1,39 +1,47 @@
 <template>
     <div class="page-content" id="client_detail">
-        <mt-header fixed title="客 户">
-            <router-link :to="{name:'client'}" slot="left">
-                <mt-button icon="back"></mt-button>
-            </router-link>
-        </mt-header>
+        <div style="height:4rem">
+            <mt-header fixed title="客 户">
+                <router-link :to="{name:'client'}" slot="left">
+                    <mt-button icon="back"></mt-button>
+                </router-link>
+            </mt-header>
+            <div class="blackbg">
+                <div><img :src="listdata.headImg"></div>
+                <h2 v-if="listdata.sys_status=='Y'">已被系统加入黑名单请谨慎合作</h2>
+                <h2 v-else>{{listdata.cusName}}</h2>>
+            </div>
+        </div>
+        
 
         <div class="page-main">
             <div class="main-list">
-                <p class="clearfix">消费次数<span>15</span></p>
+                <p class="clearfix">消费次数<span>{{listdata.consum_num}}</span></p>
                 <p class="clearfix">最后消费时间<span>无</span></p>
             </div>
 
             <div class="main-list">
-                <p class="clearfix">赊账总金额<span>无</span></p>
-                <p class="clearfix">赊账最长时间<span>无</span></p>
+                <p class="clearfix">赊账总金额<span>{{listdata.notPayAmount}}</span></p>
+                <p class="clearfix">赊账最长时间<span>{{listdata.creditTime}}</span></p>
             </div>
 
             <div class="main-list">
-                <p class="clearfix">姓名<span></span></p>
-                <p class="clearfix">昵称<span>无</span></p>
-                <p class="clearfix">电话<span>无</span></p>
-                <p class="clearfix">身份证号<span>210781199202120012</span></p>
+                <p class="clearfix">姓名<span>{{listdata.cusName}}</span></p>
+                <p class="clearfix">昵称<span>{{listdata.nickname}}</span></p>
+                <p class="clearfix">电话<span>{{listdata.phone}}</span></p>
+                <p class="clearfix">身份证号<span>{{listdata.idCard}}</span></p>
                 <p style="border:none;text-align: right;line-height: 0.3rem;font-size:0.22rem;color:#808080;">
                     "身份证号"首次编辑后将无法修改</p>
             </div>
 
             <div class="main-list">
-                <p class="clearfix">公司<span>无</span></p>
-                <p class="clearfix">地址<span>无</span></p>
+                <p class="clearfix">公司<span>{{listdata.company}}</span></p>
+                <p class="clearfix">地址<span>{{listdata.address}}</span></p>
             </div>
 
             <div class="main-list">
                 <p class="clearfix">备注</p>
-                <div class="remark">备注信息</div>
+                <div class="remark">{{listdata.remark}}</div>
             </div>
         </div>
         <div class='update clearfix'>
@@ -44,19 +52,34 @@
 </template>
 
 <script>
-
+    import { client } from '@/services/apis/client'
     export default {
         name: 'client_detail',
         data () {
             return {
-                value: ''
+                value: '',
+                listdata:null,
+                cid:this.$route.params.ids
             }
         },
         mounted () {
 
+        }, 
+        created(){
+            this.getList();
         },
         methods: {
-            getList(){
+             getList(){
+                let params = {
+                    cid:this.cid
+                };
+                client.Listmessage(params)
+                    .then(response => {
+                        this.listdata=response.data.results;
+                    })
+                    .catch(function (response) {
+                        console.log(response);
+                    });
             },
             goChange(n){
                 this.$router.push({name: 'index_change/update', params: {id: n, type: 'update'}});
@@ -74,7 +97,11 @@
     }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
-
+    .blackbg{
+        height: 4rem;
+        background: url(../../assets/client/kehu_kehuxiangqing.png) no-repeat;
+        background-size: cover;
+    }
     .main-list {
         background: #fff;
         margin-top: 0.2rem;

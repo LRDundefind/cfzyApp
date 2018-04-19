@@ -25,7 +25,7 @@ export default [
     },
 
     {
-        path: 'client_detail/:id',
+        path: 'client_detail/:ids',
         name: 'client_detail',
         components: {
             mainView: client_detail
