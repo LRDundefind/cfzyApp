@@ -13,7 +13,9 @@
 
                 <div class="main-list">
                     <p class="clearfix">数量
-                        <input type="text" placeholder="请输入数量" v-model="goods.goodNum">
+                        <input type="text" placeholder="请输入数量" v-model="goods.goodNum" readonly
+                               v-if="goods.goodName ==''">
+                        <input type="text" placeholder="请输入数量" v-model="goods.goodNum" v-else>
                     </p>
 
                     <p class="clearfix">入库单位
@@ -109,9 +111,16 @@
                 console.log(type);
                 if (type == 'add') {
                     if (this.goods.goodName && this.goods.numUnit && this.goods.goodNum) {
-                        this.$emit('addGoods', this.goods);
+                        if (!(new RegExp(/^\+?(\d*\.\d{2})$/).test(this.goods.goodNum))) {
+                            Toast({
+                                message: '请保留小数点后两位数字',
+                                position: 'middle',
+                                duration: 1000
+                            });
+                        } else {
+                            this.$emit('addGoods', this.goods);
+                        }
                     } else {
-                        console.log(123);
                         Toast('请完善信息');
                         return false;
                     }
