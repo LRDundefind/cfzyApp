@@ -39,6 +39,8 @@
 
 <script>
     import searchBox from '@/components/searchBox/search'
+	import Cookies from 'js-cookie'
+    
     export default {
         data () {
             return {
@@ -61,6 +63,7 @@
             },
             goDetail(id){
                 if (this.type == 'order') {
+                	Cookies.set('chooseCustomer',id);
                     this.$router.push({name: 'order', params: {id: id}});
                 } else {
                     this.$router.push({name: 'client_detail', params: {id: id}});
