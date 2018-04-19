@@ -80,6 +80,7 @@ export default {
         return {
           logintime:this.$route.params.firstlogin,
           phoneNumber:this.$route.params.phone,
+          form:{},
           phoneNumber1:'',
           phoneNumber2:'',
           phoneNumber3:'',
@@ -103,9 +104,18 @@ export default {
         },
     methods: {
         getmessage(){
+            if(this.logintime=='Y'){
+                this.verCodeName='Register'
+            }
+            else{
+                this.verCodeName='Forget'
+            }
+            let params = this.form;
+            this.form.phone = this.phoneNumber;
+            this.form.verCodeName = this.verCodeName;
             // 获取短信验证码
-            let params = {
-                    'str': strEnc(JSON.stringify(this.phoneNumber),this.auth.key,this.auth.key,this.auth.key)
+            params = {
+                    'str': strEnc(JSON.stringify(this.form),this.auth.key,this.auth.key,this.auth.key)
                     };
             login.getmessname(params).then(response=>{
                   

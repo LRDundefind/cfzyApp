@@ -79,9 +79,9 @@
         data () {
             return {
                 storageData:{
-                    trainNum:'1',//当日入库量
-                    order_quantity:'1',//当日下单量
-                    deposit:'1',//暂存订单量
+                    trainNum:'',//当日入库量
+                    order_quantity:'',//当日下单量
+                    deposit:'',//暂存订单量
                 }
             }
         },
