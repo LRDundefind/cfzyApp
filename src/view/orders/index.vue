@@ -77,7 +77,7 @@
 
 <script>
 import { InfiniteScroll } from 'mint-ui';
-
+import { orders } from '@/services/apis/orders.js'
 export default {
     data () {
         return {
@@ -88,15 +88,31 @@ export default {
         	cycleActive: '',
         	goodsActive: '',
         	ownerActive: '',
-			//列表数据
-
+			//车次销售列表数据
+			listdata: [],
         }
     },
     mounted () {
-
+		this.getList();
     },
+	created(){
+		
+	},
     methods: {
-        getList(){},
+    	//车次销售列表数据
+        getList(){
+            let params = {
+                page_size: 10,
+                current_page: 1,
+            };
+            orders.getTrainSaleList(params)
+                .then(response => {
+                    this.listdata = response.data.results;
+                })
+                .catch(function (response) {
+                    console.log(response);
+                });
+        },
         //展开筛选
         cycleScreens: function(){
 			this.cycleActive = 'active';

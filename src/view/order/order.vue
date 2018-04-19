@@ -391,11 +391,12 @@ export default {
 					     	goodNum:this.goodsnum,
 					     	slabWeight:this.pbweight, //提交订单所需，列表不展示
 					     	goodId:this.goodId, //提交订单所需，列表不展示
-					     	weight_util:this.numUnit,
+					     	weight_util:this.numUnit,  //提交订单所需，列表不展示
 					     	sellUnit:this.sellUnit,//提交订单所需，列表不展示
 					     	goodAmount: 0, //货品金额
 					     	packCost: 0, //货品打包费
 					     	weighCost: 0, //货品过磅费
+						
 					    });
 			    this.resetPriceNum();
 			}else{
@@ -509,7 +510,7 @@ export default {
 				buyNum += this.goodsInfo[index].goodNum;
 			}
 			//现结+赊账 至少有一项货品填写了下单信息
-			if(buyNum <= 0){
+			if(buyNum <= 0 || buyNum == ''){
 				Toast({
 					message: '请完善货品购买量信息',
 					position: 'middle',
@@ -540,7 +541,7 @@ export default {
     			tricycleNo: this.plateNum,//车号
     			orderType: this.orderType,//订单类型  order_knot：现结订单 order_credit：赊账订单
     			remark: this.beizhu,//备注
-    			deposit: '',//赊账订单传入此参数  Y暂存 N普通
+    			deposit: 'N',//是否暂存 Y暂存 N普通
     			goods: this.goodsInfo,//货品信息
     			signature_name: 'qianming',//电子签名图片名称
     			signImg: 'qianming',//电子签名图片
