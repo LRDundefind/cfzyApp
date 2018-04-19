@@ -174,7 +174,7 @@ export default {
                 else{
                      Cookies.set('Zname',this.userName);
                      Cookies.set('Zphone',this.phone);
-                     Cookies.set('Zpassword',this.passwordtype || this.passWord);
+                     Cookies.set('Zpassword', this.passWord);
                     this.$router.push({name:'yanzheng',params: { phone: this.phone,firstlogin:'Y' }});
                 }
            
