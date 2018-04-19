@@ -391,11 +391,12 @@ export default {
 					     	goodNum:this.goodsnum,
 					     	slabWeight:this.pbweight, //提交订单所需，列表不展示
 					     	goodId:this.goodId, //提交订单所需，列表不展示
-					     	weight_util:this.numUnit,
+					     	weight_util:this.numUnit,  //提交订单所需，列表不展示
 					     	sellUnit:this.sellUnit,//提交订单所需，列表不展示
 					     	goodAmount: 0, //货品金额
 					     	packCost: 0, //货品打包费
 					     	weighCost: 0, //货品过磅费
+						
 					    });
 			    this.resetPriceNum();
 			}else{
@@ -509,7 +510,7 @@ export default {
 				buyNum += this.goodsInfo[index].goodNum;
 			}
 			//现结+赊账 至少有一项货品填写了下单信息
-			if(buyNum <= 0){
+			if(buyNum <= 0 || buyNum == ''){
 				Toast({
 					message: '请完善货品购买量信息',
 					position: 'middle',
