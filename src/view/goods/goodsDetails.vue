@@ -34,13 +34,11 @@
             <div class="" v-if="showList == true">
                 <div v-for="item in goodsData" :key='item.id' class="type-list">
                     <div class="" @click="hideType(item)">
-                        <div class="ub type bd-b">
-                            <div class="name ub-f5">蔬菜分类</div>
-                            <div class="date ub-f1">{{item.goodName}}</div>
+                        <div class="ub ">
+                            <div class=" ub-f3">{{item.goodName}}</div>
                         </div>
-                        <div class=" ub unit">
-                            <div class="name ub-f5">入库单位</div>
-                            <div class="date ub-f1">{{item.sellUnit | sellNnit}}</div>
+                        <div class=" ub ">
+                            <div class="unit ub-f3">{{item.sellUnit | sellNnit}}</div>
                         </div>
                     </div>
                 </div>
@@ -179,21 +177,15 @@
     .type-list {
         background: #fff;
         margin-top: 0.2rem;
-        padding: 0.3rem;
+        padding: 0.2rem 0.3rem;
         color: #333;
         font-size: 0.3rem;
 
-        .type {
-            padding-bottom: 0.22rem;
-        }
         .unit {
-            padding-top: 0.22rem;
+            font-size: 0.26rem;
+            color: #666666;
+            padding-top: 0.1rem;
         }
-        .name {
-            font-size: 0.3rem;
-            color: #333333;
-        }
-
         .date {
             font-size: 0.28rem;
             color: #808080;
