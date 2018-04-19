@@ -8,28 +8,31 @@
         </mt-header>
         <search-box ref="search"/>
         <div class="page-main">
-            <div v-for="n in 20" :key='n' class="main-list" @click="goDetail('customer1')">
+            <div v-for="n in listdata" :key='n.id' class="main-list" @click="goDetail(n.cid)">
                 <div class="ub ub-ac heade">
-                    <div class='lis-icon ub-img im'></div>
-                    <div class='ub-f1 ut-s'>设置</div>
-                    <div class='res8 lis-sw ub-img'></div>
+                    <div class='lis-icon ub-img im'><img :src="n.headImg" ></div>
+                    <div class='ub-f1 ut-s'>{{n.nickname}}</div>
+                    <!-- 正常客户状态 -->
+                    <div class=' res8 lis-sw ub-img im2' v-show="n.status=='Y'"></div>
+                    <!-- 平台状态 -->
+                    <div class=' res8 lis-sw ub-img im3' v-show="n.sys_status=='Y'"></div>
                 </div>
                 <ul class="">
                     <li class="ub ub-pj">
                         <div class="ub-f1">消费次数</div>
-                        <div class="ub-f1">8</div>
+                        <div class="ub-f1">{{n.consum_num}}次</div>
                     </li>
                     <li class="ub ub-pj">
                         <div class="ub-f1">最后消费时间</div>
-                        <div class="ub-f1">2018-12-23</div>
+                        <div class="ub-f1">{{n.consum_ltime}}</div>
                     </li>
                     <li class="ub ub-pj">
                         <div class="ub-f1">赊账总金额</div>
-                        <div class="ub-f1">1231</div>
+                        <div class="ub-f1">{{n.notPayAmount}}元</div>
                     </li>
                     <li class="ub ub-pc">
                         <div class="ub-f1">赊账最长时间</div>
-                        <div class="ub-f1">90次</div>
+                        <div class="ub-f1">{{n.creditTime}}</div>
                     </li>
                 </ul>
             </div>
@@ -39,10 +42,13 @@
 
 <script>
     import searchBox from '@/components/searchBox/search'
+    import { client } from '@/services/apis/client'
+    import Cookies from 'js-cookie' 
     export default {
         data () {
             return {
                 type: '',
+                listdata:null
             }
         },
         components: {
@@ -52,8 +58,22 @@
             this.type = this.$route.params.type || false;
 //            console.log(this.type);
         },
+        created(){
+            this.getList();
+        },
         methods: {
             getList(){
+                let params = {
+                    page_size: 10,
+                    current_page: 1,
+                };
+                client.dataList(params)
+                    .then(response => {
+                        this.listdata=response.data.results;
+                    })
+                    .catch(function (response) {
+                        console.log(response);
+                    });
             },
             //跳转到添加客户
             addCustomer(){
@@ -61,9 +81,12 @@
             },
             goDetail(id){
                 if (this.type == 'order') {
-                    this.$router.push({name: 'order', params: {id: id}});
+                    Cookies.set('chooseCustomer',id)
+                    //下单
+                    this.$router.push({name: 'order'});
                 } else {
-                    this.$router.push({name: 'client_detail', params: {id: id}});
+                    // 客户详情
+                    this.$router.push({name: 'client_detail', params: {ids: id}});
                 }
             }
         }
@@ -75,9 +98,18 @@
         height: 0.8rem;
         border-radius: 50%;
         overflow: hidden;
-        background-image: url(../../assets/kehu_gengxinziliao_btn@2x.png)
+        margin-right: 0.2rem;
     }
-
+    .im2 {
+      width: 1.2rem;
+      height: 0.8rem;
+      background-image: url(../../assets/client/kehu_zidingyi_img.png);
+    }
+    .im3 {
+      width: 1.2rem;
+      height: 0.8rem;
+      background-image: url(../../assets/client/kehu_pingtai_img.png);
+    }
     .main-list {
         background: #fff;
         margin-top: 0.2rem;
@@ -86,6 +118,7 @@
         .heade {
             font-size: 0.4rem;
             border-bottom: 1px #f0f0f0 solid;
+            padding-bottom: 0.2rem;
         }
         h3 {
             font-size: 0.4rem;
@@ -97,6 +130,7 @@
             li {
                 font-size: 0.3rem;
                 margin-top: 0.1rem;
+                padding-bottom: 0.1rem;
                 div:last-child {
                     text-align: right;
                 }
