@@ -46,24 +46,24 @@
 					</li>
 					<li class="con" v-for=" (goods,index) in goodsInfo" @click="goodsInfoSet(index,goods.goodId, goods.goodName, goods.sellUnit, goods.numUnit, goods.tid, trainsNum)" :key="goods.id">
 						<span>{{goods.goodName}}</span>
-						<span>{{goods.goodsweight}}</span>
-						<span>{{goods.goodsunit}}</span>
-						<span>{{goods.goodsnum}}</span>
-						<span>{{goods.packCost}}</span>
+						<span>{{goods.Weight}}</span>
+						<span>{{goods.price}}</span>
+						<span>{{goods.goodNum}}</span>
 						<span>{{goods.goodAmount}}</span>
+						<span>{{goods.packCost}}</span>
 					</li>
 				</ul>
 			</div>
 			<div class="order-detail" v-if="otherInfo">
-				<div class="ub term">
+				<div class="ub term" v-if="have_goodsunit"><!--待修改-----------、、、、、、、、、、、-->
 					<div class="ub-f1">贷款费用</div>
 					<div class="edu">￥{{totalCost.totalAmount}}</div>
 				</div>
-				<div class="ub term">
+				<div class="ub term" v-if="have_goodsunit">
 					<div class="ub-f1">包装费</div>
 					<div class="edu">￥{{totalCost.totalPack}}</div>
 				</div>
-				<div class="ub term">
+				<div class="ub term" v-if="have_goodsunit">
 					<div class="ub-f1">过磅费</div>
 					<div class="edu">￥{{totalCost.totalWeigh}}</div>
 				</div>
@@ -75,7 +75,7 @@
 					<div class="ub-f1">车号</div>
 					<div class="F26C4c">{{plateNum}}</div>
 				</div>
-				<div class="ub term no-border">
+				<div class="ub term no-border" v-if="have_goodsunit">
 					<div class="ub-f1">合计金额</div>
 					<div class="total">￥{{totalCost.tatol}}</div>
 				</div>
@@ -190,6 +190,7 @@ export default {
 			autographInfo: false,//签名--是否展示
 			
 			goodsInfo: [], //当前车次下的货品信息
+			goodsInfoLength: null, //当前车次下的货品件数
 
 			trainsNum: '点击选择车次', //车次信息展示
 			plateNum: '获取车牌号',
@@ -206,8 +207,9 @@ export default {
 			goodsnum: '',  //设置货品价格-数量
 			goodsweight: '',  //设置货品价格-重量
 			pbweight: '',  //设置货品价格-平板重, 提交订单所需
-			goodid: '',//货品id, 提交订单所需
+			goodId: '',//货品id, 提交订单所需
 			numUnit: '',//重量单位, 提交订单所需
+			have_goodsunit: true, //默认为false,用来判断每项货品是否填写了单价  -------------待修改
 			
 			//当前所设置货品的金额和包装费 
 			goodsCosts: [], //货品价格计算返回数据
@@ -277,13 +279,14 @@ export default {
 				.then(response => {
 					//货品详细信息
 					this.goodsInfo = response.data.results;
+					this.goodsInfoLength = response.data.results.length;
                     for(var i = 0, len = this.goodsInfo.length; i < this.goodsInfo.length; i ++){
                     	//列表中展示的项 非设置全部goodsInfo，部分题啊交订单所需项在货品设置弹框关闭后set添加
-						this.goodsInfo[i]['goodsunit'] = 0; 
-						this.goodsInfo[i]['goodsnum'] = 0; 
-						this.goodsInfo[i]['goodsweight'] = 0; 
-                        this.goodsInfo[i]['packCost'] = 0;
+						this.goodsInfo[i]['price'] = 0; 
+						this.goodsInfo[i]['goodNum'] = 0; 
+						this.goodsInfo[i]['Weight'] = 0; 
 						this.goodsInfo[i]['goodAmount'] = 0;
+                        this.goodsInfo[i]['packCost'] = 0;
 						this.goodsInfo[i]['weighCost'] = 0; //过磅费，表格里不展示，下方列表展示
                     }
 					if(response.data.error_code == '204'){
@@ -301,7 +304,7 @@ export default {
         goodsInfoSet(i,id, name, unit, numUnit, tid, trainsNum){
 			this.numberNum=i;
         	this.dialoags = true;
-        	this.goodid = id;//货品id 提交订单传参所需
+        	this.goodId = id;//货品id 提交订单传参所需
         	this.goodName = name;
         	this.sellUnit = unit;//提交订单传参所需 售卖单位
         	this.numUnit = numUnit;//提交订单传参所需  重量单位
@@ -376,58 +379,92 @@ export default {
         
         //单件货品信息录入提交 
         getGoodsInformation(){
-			 
-        	//获取当前所设置货品的金额和包装费的接口
-			var params = {
-				goodId: '1111qwe124er',//单个货品id --接口有问题，后它提供给的暂时可用的参数
-				price: '3',
-				goodNum: '6',
-				weight: '100',
-				weight_util: 'unit_jin',//重量单位 
-				sellUnit: 'unit_jin',//售卖单位 
-				slabWeight: '2',//平板重
-			};
-			order.goodsCost(params)
-				.then(response => {
-					
-					//货品价格计算返回数据
-					this.goodsCosts = response.data.results;
-					//console.log('包装费：'+this.goodsCosts.packCost+'， '+'金额：'+this.goodsCosts.goodAmount+'， '+' 过磅费：' + this.goodsCosts.weighCost);
-		
-					this.$set(this.goodsInfo,this.numberNum,
-						    {	goodName:this.goodName,
-						     	goodsweight:this.goodsweight,
-						     	goodsunit:this.goodsunit,
-						     	goodsnum:this.goodsnum,
-						     	pbweight:this.pbweight, //提交订单所需，列表不展示
-						     	goodid:this.goodid, //提交订单所需，列表不展示
-						     	numUnit:this.numUnit,
-						     	sellUnit:this.sellUnit,//提交订单所需，列表不展示
-						     	packCost:response.data.results.packCost, 
-						     	goodAmount:response.data.results.goodAmount,
-						     	weighCost:response.data.results.weighCost,
-						    });
-						    
-				    //根据返回数据计算总和
-					this.totalCost.totalAmount = 0; //总贷款费用
-					this.totalCost.totalPack = 0; //总包装费
-					this.totalCost.totalWeigh = 0; //总过磅费
-					this.totalCost.tatol = 0; //合计费用
-                    for(var i=0,len = this.goodsInfo.length; i<this.goodsInfo.length;i++){
-						this.totalCost.totalAmount += this.goodsInfo[i]['goodAmount'];
-						this.totalCost.totalPack += this.goodsInfo[i]['packCost'];
-						this.totalCost.totalWeigh += this.goodsInfo[i]['weighCost'];
-						this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost;
-                    }
-					this.resetPriceNum();
-				})
-				.catch(function (response) {
-					console.log(response);
-				});
+        	
+			if(this.goodsunit == '' ){ 
+				this.have_goodsunit = true; //false未填写单价则隐藏总贷款、包装、过磅、合计金额费用----------------待修改，逻辑不太对，只能判定最后一个
+				
+				//未填写单价则不调6.3接口（计算总贷款费用 和 合计费用的）,但是还要 
+				this.$set(this.goodsInfo,this.numberNum,
+					    {	goodName:this.goodName,
+					     	Weight:this.goodsweight,
+					     	price:this.goodsunit,
+					     	goodNum:this.goodsnum,
+					     	slabWeight:this.pbweight, //提交订单所需，列表不展示
+					     	goodId:this.goodId, //提交订单所需，列表不展示
+					     	weight_util:this.numUnit,
+					     	sellUnit:this.sellUnit,//提交订单所需，列表不展示
+					     	goodAmount: 0, //货品金额
+					     	packCost: 0, //货品打包费
+					     	weighCost: 0, //货品过磅费
+					    });
+			    this.resetPriceNum();
+			}else{
+				this.have_goodsunit = true;
+	        	//获取当前所设置货品的金额和包装费的接口
+				var params = {
+					goodId: this.goodId,//单个货品id
+					price: this.goodsunit,//单价
+					goodNum: this.goodsnum,//件数
+					weight: this.goodsweight,//重量
+					weight_util: this.numUnit,//重量单位 
+					sellUnit: this.sellUnit,//售卖单位 
+					slabWeight: this.pbweight,//平板重
+				};
+				order.goodsCost(params)
+					.then(response => {
+						//货品价格计算返回数据
+						this.goodsCosts = response.data.results;
+						//console.log('包装费：'+this.goodsCosts.packCost+'， '+'金额：'+this.goodsCosts.goodAmount+'， '+' 过磅费：' + this.goodsCosts.weighCost);
+						
+						//		this.goodsInfo中下单所需货品参数 左：获取 ，右： 传参名
+						//		this.goodId  货品id  goodId
+						//		this.goodName 货品名称 goodName 
+						//		this.goodsunit 货品单价 price
+						//		this.goodsnum 货品件数 goodNum
+						//		this.goodsweight 货品重量 Weight
+						//		this.numUnit  重量单位 weight_util
+						//		this.sellUnit  售卖单位  sellUnit
+						//		this.pbweight 平板重  slabWeight						
+						
+						this.$set(this.goodsInfo,this.numberNum,
+							    {	goodName:this.goodName,
+							     	Weight:this.goodsweight,
+							     	price:this.goodsunit,
+							     	goodNum:this.goodsnum,
+							     	slabWeight:this.pbweight, //提交订单所需，列表不展示
+							     	goodId:this.goodId, //提交订单所需，列表不展示
+							     	weight_util:this.numUnit,
+							     	sellUnit:this.sellUnit,//提交订单所需，列表不展示
+							     	goodAmount:response.data.results.goodAmount, //货品金额
+							     	packCost:response.data.results.packCost, //货品打包费
+							     	weighCost:response.data.results.weighCost, //货品过磅费
+							    });
+		    			//根据返回数据计算总和
+	                    for(var i=0,len = this.goodsInfo.length; i<this.goodsInfo.length;i++){
+							this.totalCost.totalAmount += this.goodsInfo[i]['goodAmount']; //总贷款费用
+							this.totalCost.totalPack += this.goodsInfo[i]['packCost']; //总包装费
+							this.totalCost.totalWeigh += this.goodsInfo[i]['weighCost']; //总过磅费
+							this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost; //合计费用
+	                    }
+	                    console.log(this.goodsInfo)
+						this.resetPriceNum();
+					})
+					.catch(function (response) {
+						console.log(response);
+					});
+			}
         },
         
         //设置三轮费-确定按钮
         setSanlunfei(){
+    		if(!(new RegExp(/^[0-9]*$/).test(this.deliveryCost))){
+				Toast({
+					message: '请输入数字',  //这里弹框的层级有问题  -------待修改
+					position: 'middle',
+					duration: 1000
+    			});
+    			return false;
+    		}
         	this.sanlunfei = false;
         	this.totalCost.deliveryCost = Number(this.deliveryCost);
 			this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost;
@@ -445,17 +482,6 @@ export default {
         autograph(){
             this.$router.push({name: 'autograph'});
         },
-        
-
-//		下单所需货品参数
-//		odid  货品id -------获取 
-//		goodName 货品名称 -------获取 
-//		goodsunit 货品单价
-//		goodsnum 货品件数
-//		goodsweight 货品重量
-//		numUnit  重量单位 -------获取 
-//		sellUnit  售卖单位 -------获取 
-//		pbweight 平板重
 		
         //下单
         submitOrder(szType){
@@ -466,15 +492,45 @@ export default {
         		//客户id为''
         		this.customerId = ''
         	}
-        	
-//      	console.log(this.tid)
-//      	console.log(this.customerId)
-//      	console.log(this.totalCost.deliveryCost)
-//      	console.log(this.plateNum)
-//      	console.log(this.orderType)
-//      	console.log(this.beizhu)
-//      	console.log(JSON.stringify(this.goodsInfo))
-        	
+        	//现结（下单）和赊账（暂存、下单）验证三轮车费
+			if(this.totalCost.deliveryCost == '' || this.totalCost.deliveryCost == null){
+    			Toast({
+					message: '请输入三轮车费',  //输入的时候做是否为数字的验证，此处不需要了
+					position: 'middle',
+					duration: 1000
+    			});
+    			return false;
+    		}
+			
+
+
+			var buyNum = 0; //填写的购买货品的总件数 以此判断至少有一项货品填写了下单信息
+			for(var index in this.goodsInfo){
+				buyNum += this.goodsInfo[index].goodNum;
+			}
+			//现结+赊账 至少有一项货品填写了下单信息
+			if(buyNum <= 0){
+				Toast({
+					message: '请完善货品购买量信息',
+					position: 'middle',
+					duration: 1000
+    			});
+    			return false;
+			}else{
+    			//非 赊账暂存(szType != 'Y')时，判断填写了购买量的货品都填写了单价
+    			if(szType != 'Y'){
+    				
+    				if('判断 填过的货品都输入了价格'){
+    					Toast({
+							message: '请完善货品单价',
+							position: 'middle',
+							duration: 1000
+		    			});
+    				}
+					
+    			}
+			}
+
         	var params = {
     			tid: this.tid,//车次if
     			cid: this.customerId,//客户id
@@ -488,9 +544,8 @@ export default {
     			signImg: 'qianming',//电子签名图片
         	};
         	if(this.orderType == 'order_knot'){
-	        	//现结-下单 不传deposit
-        		delete params.deposit;
-        	}else if(this.orderType == 'order_credit'){
+        		delete params.deposit; //现结-下单 不传deposit
+			}else if(this.orderType == 'order_credit'){
 	        	//赊账-下单  【deposit 赊账订单传入此参数  Y暂存, N普通】
         		params.deposit = szType;
         	};
