@@ -544,7 +544,7 @@ export default {
     			tricycleNo: this.plateNum,//车号
     			orderType: this.orderType,//订单类型  order_knot：现结订单 order_credit：赊账订单
     			remark: this.beizhu,//备注
-    			deposit: '',//赊账订单传入此参数  Y暂存 N普通
+    			deposit: 'N',//是否暂存 Y暂存 N普通
     			goods: this.goodsInfo,//货品信息
     			signature_name: 'qianming',//电子签名图片名称
     			signImg: 'qianming',//电子签名图片
