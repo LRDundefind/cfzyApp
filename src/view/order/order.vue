@@ -473,7 +473,7 @@ export default {
     			orderType: 'order_knot',//订单类型  order_knot：现结订单 order_credit：赊账订单
     			remark: this.beizhu,//备注
     			deposit: 'N',//是否暂存 Y暂存 N普通
-    			goods: JSON.stringify(this.goodsInfo),//货品信息
+    			goods: this.goodsInfo,//货品信息
     			signature_name: 'qianming',//电子签名图片名称
     			signature: 'qianming',//电子签名图片
         	};
