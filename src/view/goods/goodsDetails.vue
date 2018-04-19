@@ -1,10 +1,5 @@
 <template>
     <div class="page-content">
-        <mt-header fixed title="货品信息">
-            <router-link to="/" slot="left">
-                <mt-button @click="$router.go(-1)" icon="back"></mt-button>
-            </router-link>
-        </mt-header>
         <!--还款记录列表-->
         <div class="page-main">
             <div class="" v-show="showList==false">
@@ -28,7 +23,9 @@
                 </div>
 
                 <div class='update clearfix'>
-                    <mt-button type="primary" :disabled="deleteDisabled == 'edit'" size="large" class='f-l' @click="addGoods('delete')">删除</mt-button>
+                    <mt-button type="primary" :disabled="deleteDisabled == 'edit'" size="large" class='f-l'
+                               @click="addGoods('delete')">删除
+                    </mt-button>
                     <mt-button type="primary" size="large" class='f-l' @click="addGoods('add')">确定</mt-button>
                 </div>
             </div>
@@ -65,7 +62,7 @@
         },
         data () {
             return {
-                deleteDisabled:'',
+                deleteDisabled: '',
                 goods: {
                     goodId: '',
                     goodName: '',//货品名称
@@ -88,7 +85,7 @@
             if (typeof(this.edit.goodId) != "undefined" && this.edit.goodId != '') {
                 this.goods = this.edit;
                 this.deleteDisabled = 'delete'
-            }else{
+            } else {
                 this.deleteDisabled = 'edit'
             }
         },
@@ -110,7 +107,7 @@
             //添加货品列表
             addGoods(type){
                 console.log(type);
-                if(type == 'add'){
+                if (type == 'add') {
                     if (this.goods.goodName && this.goods.numUnit && this.goods.goodNum) {
                         this.$emit('addGoods', this.goods);
                     } else {
@@ -119,7 +116,7 @@
                         return false;
                     }
                 }
-                if(type=='delete'){
+                if (type == 'delete') {
                     this.goods.goodName = '';
                     this.$emit('addGoods', this.goods);
                 }
