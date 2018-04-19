@@ -502,20 +502,24 @@ export default {
     			return false;
     		}
 			
-			
-            this.goodsInfo.forEach(function (value, index) {
-            	console.log(value)
-            });
+
+
+			var buyNum = 0; //填写的购买货品的总件数 以此判断至少有一项货品填写了下单信息
+			for(var index in this.goodsInfo){
+				buyNum += this.goodsInfo[index].goodNum;
+			}
 			//现结+赊账 至少有一项货品填写了下单信息
-			if('判断整个表格是否都为空'){
+			if(buyNum <= 0){
 				Toast({
 					message: '请完善货品购买量信息',
 					position: 'middle',
 					duration: 1000
     			});
+    			return false;
 			}else{
     			//非 赊账暂存(szType != 'Y')时，判断填写了购买量的货品都填写了单价
     			if(szType != 'Y'){
+    				
     				if('判断 填过的货品都输入了价格'){
     					Toast({
 							message: '请完善货品单价',
