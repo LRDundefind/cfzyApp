@@ -115,7 +115,7 @@ export default {
             this.form.verCodeName = this.verCodeName;
             // 获取短信验证码
             params = {
-                    'str': strEnc(JSON.stringify(this.phoneNumber),this.auth.key,this.auth.key,this.auth.key)
+                    'str': strEnc(JSON.stringify(this.form),this.auth.key,this.auth.key,this.auth.key)
                     };
             login.getmessname(params).then(response=>{
                   
