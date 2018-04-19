@@ -32,7 +32,7 @@
             <div v-if="selected == 'basic'">
                 <div class="">
                     <div class="basic-list" @click="goList">
-                        <p class="clearfix">姓名
+                        <p class="clearfix">货主
                             <span class="name">{{stall.name}}<img class="right-icon"
                                                                   src="../../assets/index/gray-right-icon.png"/></span>
                         </p>
@@ -108,12 +108,12 @@
                 stall: {
                     name: '请选择',
                     good_sid: '',
-                    driverName: '东东强',
-                    driverPhone: '18236911783',
-                    plateNum: '123456',//车牌号
-                    company: '阿里巴巴',
-                    startAddress: '北京市海淀区魏公村',
-                    origin: '产地',
+                    driverName: '',
+                    driverPhone: '',
+                    plateNum: '',//车牌号
+                    company: '',
+                    startAddress: '',
+                    origin: '',
 
                     originProveName: '',//产地证明名称
                     originProveUrl: '',//产地证明图片地址

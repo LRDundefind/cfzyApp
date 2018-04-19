@@ -13,7 +13,9 @@
 
                 <div class="main-list">
                     <p class="clearfix">数量
-                        <input type="text" placeholder="请输入数量" v-model="goods.goodNum">
+                        <input type="text" placeholder="请输入数量" v-model="goods.goodNum" readonly
+                               v-if="goods.goodName ==''">
+                        <input type="text" placeholder="请输入数量" v-model="goods.goodNum" v-else>
                     </p>
 
                     <p class="clearfix">入库单位
@@ -32,13 +34,11 @@
             <div class="" v-if="showList == true">
                 <div v-for="item in goodsData" :key='item.id' class="type-list">
                     <div class="" @click="hideType(item)">
-                        <div class="ub type bd-b">
-                            <div class="name ub-f5">蔬菜分类</div>
-                            <div class="date ub-f1">{{item.goodName}}</div>
+                        <div class="ub ">
+                            <div class=" ub-f3">{{item.goodName}}</div>
                         </div>
-                        <div class=" ub unit">
-                            <div class="name ub-f5">入库单位</div>
-                            <div class="date ub-f1">{{item.sellUnit | sellNnit}}</div>
+                        <div class=" ub ">
+                            <div class="unit ub-f3">{{item.sellUnit | sellNnit}}</div>
                         </div>
                     </div>
                 </div>
@@ -109,9 +109,16 @@
                 console.log(type);
                 if (type == 'add') {
                     if (this.goods.goodName && this.goods.numUnit && this.goods.goodNum) {
-                        this.$emit('addGoods', this.goods);
+                        if (!(new RegExp(/^\+?(\d*\.\d{2})$/).test(this.goods.goodNum))) {
+                            Toast({
+                                message: '请保留小数点后两位数字',
+                                position: 'middle',
+                                duration: 1000
+                            });
+                        } else {
+                            this.$emit('addGoods', this.goods);
+                        }
                     } else {
-                        console.log(123);
                         Toast('请完善信息');
                         return false;
                     }
@@ -170,21 +177,15 @@
     .type-list {
         background: #fff;
         margin-top: 0.2rem;
-        padding: 0.3rem;
+        padding: 0.2rem 0.3rem;
         color: #333;
         font-size: 0.3rem;
 
-        .type {
-            padding-bottom: 0.22rem;
-        }
         .unit {
-            padding-top: 0.22rem;
+            font-size: 0.26rem;
+            color: #666666;
+            padding-top: 0.1rem;
         }
-        .name {
-            font-size: 0.3rem;
-            color: #333333;
-        }
-
         .date {
             font-size: 0.28rem;
             color: #808080;
