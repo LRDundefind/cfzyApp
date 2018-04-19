@@ -46,9 +46,9 @@
 					</li>
 					<li class="con" v-for=" (goods,index) in goodsInfo" @click="goodsInfoSet(index,goods.goodId, goods.goodName, goods.sellUnit, goods.numUnit, goods.tid, trainsNum)" :key="goods.id">
 						<span>{{goods.goodName}}</span>
-						<span>{{goods.goodsweight}}</span>
-						<span>{{goods.goodsunit}}</span>
-						<span>{{goods.goodsnum}}</span>
+						<span>{{goods.Weight}}</span>
+						<span>{{goods.price}}</span>
+						<span>{{goods.goodNum}}</span>
 						<span>{{goods.goodAmount}}</span>
 						<span>{{goods.packCost}}</span>
 					</li>
@@ -207,7 +207,7 @@ export default {
 			goodsnum: '',  //设置货品价格-数量
 			goodsweight: '',  //设置货品价格-重量
 			pbweight: '',  //设置货品价格-平板重, 提交订单所需
-			goodid: '',//货品id, 提交订单所需
+			goodId: '',//货品id, 提交订单所需
 			numUnit: '',//重量单位, 提交订单所需
 			have_goodsunit: true, //默认为false,用来判断每项货品是否填写了单价  -------------待修改
 			
@@ -282,9 +282,9 @@ export default {
 					this.goodsInfoLength = response.data.results.length;
                     for(var i = 0, len = this.goodsInfo.length; i < this.goodsInfo.length; i ++){
                     	//列表中展示的项 非设置全部goodsInfo，部分题啊交订单所需项在货品设置弹框关闭后set添加
-						this.goodsInfo[i]['goodsunit'] = 0; 
-						this.goodsInfo[i]['goodsnum'] = 0; 
-						this.goodsInfo[i]['goodsweight'] = 0; 
+						this.goodsInfo[i]['price'] = 0; 
+						this.goodsInfo[i]['goodNum'] = 0; 
+						this.goodsInfo[i]['Weight'] = 0; 
 						this.goodsInfo[i]['goodAmount'] = 0;
                         this.goodsInfo[i]['packCost'] = 0;
 						this.goodsInfo[i]['weighCost'] = 0; //过磅费，表格里不展示，下方列表展示
@@ -304,7 +304,7 @@ export default {
         goodsInfoSet(i,id, name, unit, numUnit, tid, trainsNum){
 			this.numberNum=i;
         	this.dialoags = true;
-        	this.goodid = id;//货品id 提交订单传参所需
+        	this.goodId = id;//货品id 提交订单传参所需
         	this.goodName = name;
         	this.sellUnit = unit;//提交订单传参所需 售卖单位
         	this.numUnit = numUnit;//提交订单传参所需  重量单位
@@ -386,12 +386,12 @@ export default {
 				//未填写单价则不调6.3接口（计算总贷款费用 和 合计费用的）,但是还要 
 				this.$set(this.goodsInfo,this.numberNum,
 					    {	goodName:this.goodName,
-					     	goodsweight:this.goodsweight,
-					     	goodsunit:this.goodsunit,
-					     	goodsnum:this.goodsnum,
-					     	pbweight:this.pbweight, //提交订单所需，列表不展示
-					     	goodid:this.goodid, //提交订单所需，列表不展示
-					     	numUnit:this.numUnit,
+					     	Weight:this.goodsweight,
+					     	price:this.goodsunit,
+					     	goodNum:this.goodsnum,
+					     	slabWeight:this.pbweight, //提交订单所需，列表不展示
+					     	goodId:this.goodId, //提交订单所需，列表不展示
+					     	weight_util:this.numUnit,
 					     	sellUnit:this.sellUnit,//提交订单所需，列表不展示
 					     	goodAmount: 0, //货品金额
 					     	packCost: 0, //货品打包费
@@ -402,28 +402,38 @@ export default {
 				this.have_goodsunit = true;
 	        	//获取当前所设置货品的金额和包装费的接口
 				var params = {
-					goodId: '1111qwe124er',//单个货品id --接口有问题，后它提供给的暂时可用的参数
-					price: '3',
-					goodNum: '6',
-					weight: '100',
-					weight_util: 'unit_jin',//重量单位 
-					sellUnit: 'unit_jin',//售卖单位 
-					slabWeight: '2',//平板重
+					goodId: this.goodId,//单个货品id
+					price: this.goodsunit,//单价
+					goodNum: this.goodsnum,//件数
+					weight: this.goodsweight,//重量
+					weight_util: this.numUnit,//重量单位 
+					sellUnit: this.sellUnit,//售卖单位 
+					slabWeight: this.pbweight,//平板重
 				};
 				order.goodsCost(params)
 					.then(response => {
-						
 						//货品价格计算返回数据
 						this.goodsCosts = response.data.results;
 						//console.log('包装费：'+this.goodsCosts.packCost+'， '+'金额：'+this.goodsCosts.goodAmount+'， '+' 过磅费：' + this.goodsCosts.weighCost);
+						
+						//		this.goodsInfo中下单所需货品参数 左：获取 ，右： 传参名
+						//		this.goodId  货品id  goodId
+						//		this.goodName 货品名称 goodName 
+						//		this.goodsunit 货品单价 price
+						//		this.goodsnum 货品件数 goodNum
+						//		this.goodsweight 货品重量 Weight
+						//		this.numUnit  重量单位 weight_util
+						//		this.sellUnit  售卖单位  sellUnit
+						//		this.pbweight 平板重  slabWeight						
+						
 						this.$set(this.goodsInfo,this.numberNum,
 							    {	goodName:this.goodName,
-							     	goodsweight:this.goodsweight,
-							     	goodsunit:this.goodsunit,
-							     	goodsnum:this.goodsnum,
-							     	pbweight:this.pbweight, //提交订单所需，列表不展示
-							     	goodid:this.goodid, //提交订单所需，列表不展示
-							     	numUnit:this.numUnit,
+							     	Weight:this.goodsweight,
+							     	price:this.goodsunit,
+							     	goodNum:this.goodsnum,
+							     	slabWeight:this.pbweight, //提交订单所需，列表不展示
+							     	goodId:this.goodId, //提交订单所需，列表不展示
+							     	weight_util:this.numUnit,
 							     	sellUnit:this.sellUnit,//提交订单所需，列表不展示
 							     	goodAmount:response.data.results.goodAmount, //货品金额
 							     	packCost:response.data.results.packCost, //货品打包费
@@ -436,6 +446,7 @@ export default {
 							this.totalCost.totalWeigh += this.goodsInfo[i]['weighCost']; //总过磅费
 							this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost; //合计费用
 	                    }
+	                    console.log(this.goodsInfo)
 						this.resetPriceNum();
 					})
 					.catch(function (response) {
@@ -471,17 +482,6 @@ export default {
         autograph(){
             this.$router.push({name: 'autograph'});
         },
-        
-
-//		下单所需货品参数
-//		odid  货品id -------获取 
-//		goodName 货品名称 -------获取 
-//		goodsunit 货品单价
-//		goodsnum 货品件数
-//		goodsweight 货品重量
-//		numUnit  重量单位 -------获取 
-//		sellUnit  售卖单位 -------获取 
-//		pbweight 平板重
 		
         //下单
         submitOrder(szType){
