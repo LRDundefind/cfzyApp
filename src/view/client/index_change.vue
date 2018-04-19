@@ -10,14 +10,12 @@
         <div class="page-main">
             <div class="main-list">
                 <p class="clearfix">姓名
-                    <input type="text" v-model="nameRead" readonly v-if="namehas">
-                    <input type="text" v-model="nameWrite" v-else>
+                    <input type="text" v-model="nameRead" >
                 </p>
                 <p class="clearfix">昵称<input type="text" v-model="nicheng"></p>
                 <p class="clearfix">电话<input type="text" v-model="phone"></p>
                 <p class="clearfix">身份证号
-                    <input type="text" v-model="IdcardRead" readonly v-if="idcardhas">
-                    <input type="text" v-model="IdcardWrite" v-else>
+                    <input type="text" v-model="IdcardRead">
                 </p>
                 <p style="border:none;text-align: right;line-height: 0.3rem;font-size:0.22rem;color:#808080;">
                     "身份证号"首次编辑后将无法修改</p>
@@ -57,21 +55,22 @@
 
 <script>
     import {MessageBox} from 'mint-ui';
+    import { client } from '@/services/apis/client'
     export default {
         data () {
             return {
                 value: '',
-                nameRead: '王欣宇',
+                nameRead: '',
                 nameWrite: '',
                 namehas: true,
                 nicheng: '',
                 phone: '',
-                IdcardRead: '210781199308300031',
+                IdcardRead: '',
                 IdcardWrite: '',
                 idcardhas: true,
                 gongsi: '',
                 address: '',
-                message: '我是备注信息',
+                message: '',
                 dialoags: false,
                 id: '',
                 type: '',
@@ -89,13 +88,31 @@
         },
         methods: {
             getData(){
-                console.log(this.id);
-                console.log(this.type);
+               
             },
             getList(){
             },
             handleSave(){
-
+                let params = {
+                    phone:this.phone
+                };
+                client.getXTmessage(params)
+                    .then(response => {
+                        this.listdata=response.data.results;
+                    })
+                
+            },
+            send(){
+                 let params = {
+                    cid:this.cid
+                };
+                client.Listmessage(params)
+                    .then(response => {
+                        this.listdata=response.data.results;
+                    })
+                    .catch(function (response) {
+                        console.log(response);
+                    });
             },
             badList(){
                 MessageBox({

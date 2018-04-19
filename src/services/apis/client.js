@@ -4,14 +4,36 @@ import { serverMoudle } from '@/util/fetch'
 
 // 接口要求参数加密处理进行封装方法  auth:王欣宇 2018-04-04
 export const client = {
-    //货主列表
+    //客户列表
     dataList(params) {
         return axios({
             url: 'rest/CHENGFENG_GET_SELEMAN_CUSTOMER',
             method: 'post',
             data: serverMoudle(params) || {}
         });
-    }
-
+    },
+    //客户详情
+    Listmessage(params) {
+        return axios({
+            url: 'rest/CHENGFENG_GET_SELEMAN_CUSTOMERINFO',
+            method: 'post',
+            data: serverMoudle(params) || {}
+        });
+    },
+    //新增客户
+    addC(params) {
+        return axios({
+            url: 'rest/CHENGFENG_ADD_SELEMAN_CUSTOMERINFO',
+            method: 'post',
+            data: serverMoudle(params) || {}
+        });
+    },
+    getXTmessage(params) {
+        return axios({
+            url: 'rest/CHENGFENG_GET_SAAS_CUSTOMERINFO',
+            method: 'post',
+            data: serverMoudle(params) || {}
+        });
+    },
 
 };
