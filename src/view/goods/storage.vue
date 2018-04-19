@@ -8,12 +8,20 @@
                 确认入库
             </mt-button>
         </mt-header>
+
         <mt-header fixed title="货主" v-if="ownerList">
-            <router-link to="/" slot="left">
-                <mt-button icon="back" @click=""></mt-button>
+            <router-link to="" slot="left">
+                <mt-button icon="back" @click="ownerBack"></mt-button>
             </router-link>
-            <mt-button slot="right" style="font-size: 0.32rem" :disabled="selected == 'basic'">确认入库</mt-button>
         </mt-header>
+
+
+        <mt-header fixed title="货品信息" v-if="goodsDetails">
+            <router-link to="" slot="left">
+                <mt-button icon="back" @click="goodsBack"></mt-button>
+            </router-link>
+        </mt-header>
+
 
         <mt-navbar v-model="selected" v-if="selected">
             <mt-tab-item id="basic">基本信息</mt-tab-item>
@@ -132,6 +140,17 @@
 
         },
         methods: {
+            //货主列表返回
+            ownerBack(){
+                this.ownerList = false;
+                this.selected = 'basic';
+            },
+            //货品信息返回
+            goodsBack(){
+                this.goodsDetails = false;
+                this.selected = 'goods';
+            },
+
             //选择货主
             oNchoiceOwner(item){
                 console.log(132);

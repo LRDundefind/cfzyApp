@@ -45,8 +45,8 @@
                         </div>
                         <div class="bd-r" @click="goTemporaryOrderList">
                             <div>
-                                <img v-if="this.storageData.trainNum == 0" class="goods-image left-imge" src="../../assets/index/no_dot_total_income_icon.png"/>
-                                <img v-else="this.storageData.trainNum != 0" class="goods-image left-imge" src="../../assets/index/dot_total_income_icon.png"/>
+                                <img v-if="this.storageData.deposit == 0" class="goods-image left-imge" src="../../assets/index/no_dot_total_income_icon.png"/>
+                                <img v-else="this.storageData.deposit != 0" class="goods-image left-imge" src="../../assets/index/dot_total_income_icon.png"/>
                             </div>
                             <div class="name">暂存订单</div>
                         </div>
@@ -63,7 +63,7 @@
                             <div>
                                 <img class="goods-image right-img" src="../../assets/index/trips_computing.png"/>
                             </div>
-                            <div class="name">车次计算</div>
+                            <div class="name">车次结算</div>
                         </div>
                     </div>
                 </div>
@@ -91,11 +91,10 @@
         methods: {
 
             getlist(){
-                let params={}
+                let params={};
                 home.index(params).then(response=>{
                     this.storageData = response.data.results;
                     console.log(response.data.results);
-
                 })
             },
 
@@ -171,6 +170,7 @@
             font-size: 0.42rem;
             color: #33d57c;
             text-align: center;
+            min-height: 0.48rem;
         }
         .words {
             font-size: 0.24rem;
