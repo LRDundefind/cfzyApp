@@ -6,7 +6,7 @@ export const orders = {
     //车次日销售列表
     getTrainSaleList(data) {
         return axios({
-            url: '/rest/CHENGFENG_GET_SELEMAN_TRAINSELL,
+            url: '/rest/CHENGFENG_GET_SELEMAN_TRAINSELL',
             method: 'post',
             data: serverMoudle(data)
         });

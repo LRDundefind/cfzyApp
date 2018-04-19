@@ -391,11 +391,12 @@ export default {
 					     	goodNum:this.goodsnum,
 					     	slabWeight:this.pbweight, //提交订单所需，列表不展示
 					     	goodId:this.goodId, //提交订单所需，列表不展示
-					     	weight_util:this.numUnit,
+					     	weight_util:this.numUnit,  //提交订单所需，列表不展示
 					     	sellUnit:this.sellUnit,//提交订单所需，列表不展示
 					     	goodAmount: 0, //货品金额
 					     	packCost: 0, //货品打包费
 					     	weighCost: 0, //货品过磅费
+						
 					    });
 			    this.resetPriceNum();
 			}else{
@@ -509,7 +510,7 @@ export default {
 				buyNum += this.goodsInfo[index].goodNum;
 			}
 			//现结+赊账 至少有一项货品填写了下单信息
-			if(buyNum <= 0){
+			if(buyNum <= 0 || buyNum == ''){
 				Toast({
 					message: '请完善货品购买量信息',
 					position: 'middle',
@@ -519,7 +520,9 @@ export default {
 			}else{
     			//非 赊账暂存(szType != 'Y')时，判断填写了购买量的货品都填写了单价
     			if(szType != 'Y'){
-    				
+    				console.log(this.goodsInfo)
+					let s=null
+                    this.goodsInfo.filter(function(item){ if(item.Weight != ''&& item.price!=''){return s='y'}})
     				if('判断 填过的货品都输入了价格'){
     					Toast({
 							message: '请完善货品单价',
@@ -530,7 +533,7 @@ export default {
 					
     			}
 			}
-
+			debugger
         	var params = {
     			tid: this.tid,//车次if
     			cid: this.customerId,//客户id
@@ -538,7 +541,7 @@ export default {
     			tricycleNo: this.plateNum,//车号
     			orderType: this.orderType,//订单类型  order_knot：现结订单 order_credit：赊账订单
     			remark: this.beizhu,//备注
-    			deposit: '',//赊账订单传入此参数  Y暂存 N普通
+    			deposit: 'N',//是否暂存 Y暂存 N普通
     			goods: this.goodsInfo,//货品信息
     			signature_name: 'qianming',//电子签名图片名称
     			signImg: 'qianming',//电子签名图片
