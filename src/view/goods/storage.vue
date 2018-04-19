@@ -16,6 +16,12 @@
         </mt-header>
 
 
+        <mt-header fixed title="货品信息" v-if="goodsDetails">
+            <router-link to="" slot="left">
+                <mt-button icon="back" @click="goodsBack"></mt-button>
+            </router-link>
+        </mt-header>
+
 
         <mt-navbar v-model="selected" v-if="selected">
             <mt-tab-item id="basic">基本信息</mt-tab-item>
@@ -138,6 +144,11 @@
             ownerBack(){
                 this.ownerList = false;
                 this.selected = 'basic';
+            },
+            //货品信息返回
+            goodsBack(){
+                this.goodsDetails = false;
+                this.selected = 'goods';
             },
 
             //选择货主
