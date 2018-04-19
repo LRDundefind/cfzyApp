@@ -50,13 +50,13 @@
 
                     <div class="basic-list">
                         <p class="clearfix">产地<input type="text" v-model="stall.origin"></p>
-                        <p class="clearfix">产地证明
+                        <p class="clearfix" @change="upload1">产地证明
                             <span class="upload">点击上传<img class="right-icon"
-                                                                  src="../../assets/index/gray-right-icon.png"/></span>
+                                                          src="../../assets/index/gray-right-icon.png"/></span>
                         </p>
                         <p class="clearfix">检验证明
                             <span class="name">已经上传<img class="right-icon"
-                                                          src="../../assets/index/gray-right-icon.png"/></span>
+                                                        src="../../assets/index/gray-right-icon.png"/></span>
                         </p>
                         <p class="clearfix">承运合同
                             <span class="upload">点击上传<img class="right-icon"
@@ -103,6 +103,7 @@
     import ownerList from '@/view/damage/ownerList'
     import goodsDetails from '@/view/goods/goodsDetails'
     import {damage} from '@/services/apis/damage.api'
+    import {Toast} from 'mint-ui';
 
     export default {
         data () {
@@ -237,8 +238,62 @@
                 data.goods = this.goods;
                 console.log(data);
                 damage.submitGoods(data).then(response => {
-                    console.log(response);
+                    if (response.data.status == 'Y') {
+                        this.$router.push({name: 'home'});
+                    } else if (response.data.status == 'N') {
+                        Toast({
+                            message: response.data.results,
+                            position: 'middle',
+                            duration: 1000
+                        });
+                    }
+                    console.log(response.data.results);
                 })
+            },
+
+            upload1 (e) {
+                let files = e.target.files || e.dataTransfer.files;
+                if (!files.length) return;
+                this.picValue = files[0];
+                this.imgPreview(this.picValue);
+            },
+            imgPreview (file) {
+                let self = this;
+                let Orientation;
+                //去获取拍照时的信息，解决拍出来的照片旋转问题
+                Exif.getData(file, function () {
+                    Orientation = Exif.getTag(this, 'Orientation');
+                });
+                // 看支持不支持FileReader
+                if (!file || !window.FileReader) return;
+
+                if (/^image/.test(file.type)) {
+                    // 创建一个reader
+                    let reader = new FileReader();
+                    // 将图片2将转成 base64 格式
+                    reader.readAsDataURL(file);
+                    // 读取成功后的回调
+                    reader.onloadend = function () {
+                        let result = this.result;
+                        let img = new Image();
+                        img.src = result;
+                        //判断图片是否大于100K,是就直接上传，反之压缩图片
+                        if (this.result.length <= (100 * 1024)) {
+                            self.headerImage = this.result;
+                            self.postImg();
+                        } else {
+                            img.onload = function () {
+                                let data = self.compress(img, Orientation);
+                                self.headerImage = data;
+                                console.log(self.headerImage)
+                                self.postImg();
+                            }
+                        }
+                    }
+                }
+            },
+            postImg(){
+                console.log(this.headerImage)
             },
 
 
@@ -291,7 +346,7 @@
                     text-align: right;
                     line-height: 0.98rem;
                 }
-                .upload{
+                .upload {
                     color: #33d570;
                     float: right;
                 }

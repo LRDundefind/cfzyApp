@@ -520,7 +520,9 @@ export default {
 			}else{
     			//非 赊账暂存(szType != 'Y')时，判断填写了购买量的货品都填写了单价
     			if(szType != 'Y'){
-    				
+    				console.log(this.goodsInfo)
+					let s=null
+                    this.goodsInfo.filter(function(item){ if(item.Weight != ''&& item.price!=''){return s='y'}})
     				if('判断 填过的货品都输入了价格'){
     					Toast({
 							message: '请完善货品单价',
@@ -531,7 +533,7 @@ export default {
 					
     			}
 			}
-
+			debugger
         	var params = {
     			tid: this.tid,//车次if
     			cid: this.customerId,//客户id
