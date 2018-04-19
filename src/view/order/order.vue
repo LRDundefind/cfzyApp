@@ -18,20 +18,21 @@
 					<img src="../../assets/my/icon_right.png" class="icon">
 				</div>
 			</div>
-			<div class="order-detail" v-if="trainInfo">
-				<div class="ub ub-ac term right-icon input-choose" @click="chooseCustomer()">
-					<input id="kh" type="radio" name="choose" checked="checked">
+			<div class="order-detail" v-if="trainInfo" id="chooseCustomer">
+				<div class="ub ub-ac term right-icon input-choose">
+					<input id="kh" type="radio" name="choose" value="Nottemporary" v-model="customerType">
 					<label for="kh" class="customer"></label>
 					<div class="ub-f1">客户</div>
-					<span>小李</span>
-					<img src="../../assets/my/icon_right.png" class="icon">
+					<span @click="chooseCustomer()">小李</span>
+					<img src="../../assets/my/icon_right.png" class="icon" @click="chooseCustomer()">
 				</div>
 				<div class="ub ub-ac term no-border input-choose">
-					<input id="sk" type="radio" name="choose">
+					<input id="sk" type="radio" name="choose" value="temporary" v-model="customerType">
 					<label for="sk" class="individual"></label>
 					<div class="ub-f1">临时客户</div>					
 				</div>
 			</div>
+			
 			<!--货品信息-->
 			<div class="order-detail item-table" v-if="otherInfo">
 				<ul class="table-ul">
@@ -79,16 +80,16 @@
 					<div class="total">￥{{totalCost.tatol}}</div>
 				</div>
 			</div>
-			<!--付款方式-->
+			<!--付款方式  order_knot现结  order_credit赊账-->
 			<div class="order-detail" v-if="otherInfo" id="orderTypes">
 				<div class="ub ub-ac term right-icon input-choose">
-					<input id="xj" type="radio" name="choosetype" v-model="orderType">
+					<input id="xj" type="radio" name="choosetype" value="order_knot" v-model="orderType">
 					<label for="xj" class="individual"></label>
 					<div class="ub-f1"></div>					
 					<div>现结</div>					
 				</div>
 				<div class="ub ub-ac term no-border input-choose">
-					<input id="sz" type="radio" name="choosetype" v-model="orderType">
+					<input id="sz" type="radio" name="choosetype" value="order_credit" v-model="orderType">
 					<label for="sz" class="individual"></label>
 					<div class="ub-f1"></div>					
 					<div>赊账</div>					
@@ -111,9 +112,9 @@
 				</div>
 			</div> 
 			<div class="orderBtn ub" v-if="otherInfo">
-				<div class="lefts" @click="stagingOrder">暂存</div>
-				<div class="center"></div>
-				<div class="rights" @click="submitOrder">下单</div>
+				<div class="lefts ub-f1" @click="submitOrder('Y')" v-if="orderType == 'order_credit' ">暂存</div>  <!--选择为赊账的时候才展示暂存按钮-->
+				<div class="center" v-if="orderType == 'order_credit' "></div>
+				<div class="rights ub-f1" @click="submitOrder('N')">下单</div> <!--选择为现结的时候只展示下单按钮-->
 			</div>
 
 		</div>
@@ -176,6 +177,7 @@
 import { Toast } from 'mint-ui'
 import Bus from '@/components/bus.js'
 import {order} from '@/services/apis/order.js'
+import Cookies from 'js-cookie'
 
 //import Router from 'vue-router'
 export default {
@@ -206,8 +208,6 @@ export default {
 			pbweight: '',  //设置货品价格-平板重, 提交订单所需
 			goodid: '',//货品id, 提交订单所需
 			numUnit: '',//重量单位, 提交订单所需
-
-		
 			
 			//当前所设置货品的金额和包装费 
 			goodsCosts: [], //货品价格计算返回数据
@@ -225,12 +225,15 @@ export default {
 				tatol: 0,  //合计金额
 			},
 			
+			//选择客户
+			customerType: 'Nottemporary', //客户类型  默认为非临时客户
+			customerId: null, //客户id 
+			
 			//判断现结、暂存订单
-			orderType: '',
+			orderType: 'order_knot', //默认为现结
 			
 			//备注信息
 			beizhu: '',
-			
 
         }
     },
@@ -428,12 +431,11 @@ export default {
         	this.sanlunfei = false;
         	this.totalCost.deliveryCost = Number(this.deliveryCost);
 			this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost;
-
         },
-        
         
 		//选择客户
         chooseCustomer(){
+        	Cookies.remove('chooseCustomer'); //应该写在选择客户不做选择直接返回时候的方法里-------------------------待修改
             this.$router.push({
             	name: 'client_order',
 				params: {type: 'order'}
@@ -443,39 +445,54 @@ export default {
         autograph(){
             this.$router.push({name: 'autograph'});
         },
-        //暂存订单
-        stagingOrder(){
-        	
-        },
+        
 
+//		下单所需货品参数
 //		odid  货品id -------获取 
 //		goodName 货品名称 -------获取 
 //		goodsunit 货品单价
 //		goodsnum 货品件数
 //		goodsweight 货品重量
-//		numUnit  重量单位?numUnit -------获取 
-//		sellUnit  售卖单位?sellUnit -------获取 
-//		pbweight 平板重?pbweight
+//		numUnit  重量单位 -------获取 
+//		sellUnit  售卖单位 -------获取 
+//		pbweight 平板重
 		
         //下单
-        submitOrder(){
-        	console.log( JSON.stringify(this.goodsInfo))
-        	console.log(this.tid)
-        	console.log(this.totalCost.deliveryCost)
-        	console.log(this.plateNum)
-        	console.log(this.beizhu)
-
+        submitOrder(szType){
+        	if(this.customerType == 'Nottemporary'){
+        		//非临时客户，赋值客户id 路由获取
+        		this.customerId = Cookies.get('chooseCustomer');
+        	}else if(this.customerType == 'temporary'){
+        		//客户id为''
+        		this.customerId = ''
+        	}
+        	
+//      	console.log(this.tid)
+//      	console.log(this.customerId)
+//      	console.log(this.totalCost.deliveryCost)
+//      	console.log(this.plateNum)
+//      	console.log(this.orderType)
+//      	console.log(this.beizhu)
+//      	console.log(JSON.stringify(this.goodsInfo))
+        	
         	var params = {
     			tid: this.tid,//车次if
-    			cid: '',//客户id
+    			cid: this.customerId,//客户id
     			deliveryCost: this.totalCost.deliveryCost,//三轮车费
     			tricycleNo: this.plateNum,//车号
-    			orderType: 'order_knot',//订单类型  order_knot：现结订单 order_credit：赊账订单
+    			orderType: this.orderType,//订单类型  order_knot：现结订单 order_credit：赊账订单
     			remark: this.beizhu,//备注
-    			deposit: 'N',//是否暂存 Y暂存 N普通
-    			goods: JSON.stringify(this.goodsInfo),//货品信息
+    			deposit: '',//赊账订单传入此参数  Y暂存 N普通
+    			goods: this.goodsInfo,//货品信息
     			signature_name: 'qianming',//电子签名图片名称
-    			signature: 'qianming',//电子签名图片
+    			signImg: 'qianming',//电子签名图片
+        	};
+        	if(this.orderType == 'order_knot'){
+	        	//现结-下单 不传deposit
+        		delete params.deposit;
+        	}else if(this.orderType == 'order_credit'){
+	        	//赊账-下单  【deposit 赊账订单传入此参数  Y暂存, N普通】
+        		params.deposit = szType;
         	};
         	order.submitorder(params)
         		.then(response => {
@@ -484,12 +501,12 @@ export default {
         		.catch(function (response) {
         			console.log(response);
         		});
-        },
+        }
         
     },
     watch: {
         '$route'(to, from) {
-			console.log(to)
+			alert('..')
 		}
     },
 }
@@ -622,6 +639,9 @@ i{
 			height: 0.7rem;
 			line-height: 0.7rem;
 			border-bottom: 1px solid #dedede;
+			span{
+				height: 0.7rem;
+			}
 		}
 		li:last-child{
 			border-bottom: none;
