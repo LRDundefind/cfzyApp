@@ -51,10 +51,17 @@
                     <div class="basic-list">
                         <p class="clearfix">产地<input type="text" v-model="stall.origin"></p>
                         <p class="clearfix">产地证明
-                            <input type="text" v-model="stall.originProveName">
+                            <span class="upload">点击上传<img class="right-icon"
+                                                                  src="../../assets/index/gray-right-icon.png"/></span>
                         </p>
-                        <p class="clearfix">检验证明<input type="text" v-model="stall.checkProveName"></p>
-                        <p class="clearfix">承运合同<input type="text" v-model="stall.carrierContractName"></p>
+                        <p class="clearfix">检验证明
+                            <span class="name">已经上传<img class="right-icon"
+                                                          src="../../assets/index/gray-right-icon.png"/></span>
+                        </p>
+                        <p class="clearfix">承运合同
+                            <span class="upload">点击上传<img class="right-icon"
+                                                          src="../../assets/index/gray-right-icon.png"/></span>
+                        </p>
                     </div>
 
                     <div class="basic-list">
@@ -283,6 +290,10 @@
                     color: #4c4c4c;
                     text-align: right;
                     line-height: 0.98rem;
+                }
+                .upload{
+                    color: #33d570;
+                    float: right;
                 }
             }
             > p:nth-child(1) {
