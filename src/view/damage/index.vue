@@ -6,17 +6,20 @@
             </router-link>
         </mt-header>
         <div class="page-main">
-            <div v-for="n in 20" :key='n' class="main-list">
+            <div v-for="item in damageData" :key='item.tid' class="main-list">
                 <div class="ub clearfix" @click="goReport(n)">
                     <div class="ub-f5">
                         <div>
-                            <span class="information">2018-03-{{n}}</span>
-                            <span class="information">张雄</span>
-                            <span class="information">车次56</span>
+                            <span class="information">
+                                {{item.trainsNum}}
+                            </span>
+                            <!--<span class="information">2018-03-{{n}}</span>-->
+                            <!--<span class="information">张雄</span>-->
+                            <!--<span class="information">车次56</span>-->
                         </div>
                         <div class="date">
                             <span class="time">到达时间</span>
-                            <span class="time">16:40</span>
+                            <span class="time">{{item.putStorageTime}}</span>
                         </div>
                     </div>
                     <div class="ub-f1">
@@ -29,16 +32,32 @@
 </template>
 
 <script>
+    import {damage} from '@/services/apis/damage.api'
+
     export default {
         data () {
-            return {}
+            return {
+                damageData:{
+                    trainsNum:'',//展示车次 入库日期 货主名称 次数
+                    putStorageTime:'',//入库时间
+                    tid:'',
+                }
+            }
         },
 
         mounted () {
-
+            this.trainList();
         },
         methods: {
-            getList(){
+            trainList(){
+                let data = {
+                    current_page: 1,
+                    page_size: 10,
+                };
+                damage.damageList(data).then(response => {
+                    this.damageData = response.data.results;
+                    console.log(response.data.results);
+                })
             },
             goReport(n){
                 this.$router.push({name: 'damageReport'});
@@ -53,12 +72,15 @@
         padding: 0.3rem;
         color: #333;
         font-size: 0.3rem;
-        span{
+        .information{
+            min-height: 0.34rem;
+        }
+        span {
             padding-right: 0.1rem;
         }
-        .date{
+        .date {
             padding-top: 0.28rem;
-            .time{
+            .time {
                 font-size: 0.24rem;
                 color: #666666;
                 padding-top: 0.28rem;
