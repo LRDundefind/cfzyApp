@@ -266,6 +266,7 @@ export default {
 		},
 	    //选择车次
         choosetrainNumber(){
+        	Cookies.remove('trainTid');//----------------------待修改
         	Cookies.remove('trainsNum');//----------------------待修改
         	Cookies.remove('plateNum');//----------------------待修改
             this.$router.push({name: 'trainList'});
