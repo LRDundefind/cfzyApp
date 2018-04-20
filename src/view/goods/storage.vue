@@ -115,22 +115,18 @@
                 selected: 'basic',
                 stall: {
                     name: '请选择',
-                    good_sid: '',
-                    driverName: '',
-                    driverPhone: '',
+                    good_sid: '',//货主id
+                    driverName: '',//司机姓名
+                    driverPhone: '',//司机电话
                     plateNum: '',//车牌号
-                    company: '',
-                    startAddress: '',
-                    origin: '',
+                    startAddress: '',//发货地点
+                    origin: '',//产地
 
-                    originProveName: '',//产地证明名称
-                    originProveUrl: '',//产地证明图片地址
+                    originProve: '',//产地证明图片地址
 
-                    checkProveName: '',//检验证明图片名称
-                    checkProveUrl: '',//检验证明图片地址
+                    checkProve: '',//检验证明图片地址
 
-                    carrierContractName: '',//承运合同图片名称
-                    carrierContractUrl: '',//承运合同图片地址
+                    carrierContract: '',//承运合同图片地址
 
                     remark: '',//备注
                     goods: '',//货品信息
@@ -236,19 +232,70 @@
             confirmStorage(){
                 const data = this.stall;
                 data.goods = this.goods;
-                console.log(data);
-                damage.submitGoods(data).then(response => {
-                    if (response.data.status == 'Y') {
-                        this.$router.push({name: 'home'});
-                    } else if (response.data.status == 'N') {
-                        Toast({
-                            message: response.data.results,
-                            position: 'middle',
-                            duration: 1000
-                        });
-                    }
-                    console.log(response.data.results);
-                })
+                delete data.name;
+                if (data.good_sid == '') {
+                    Toast({
+                        message: '货主不可为空',
+                        position: 'middle',
+                        duration: 2000
+                    });
+                } else if (data.driverName == '') {
+                    Toast({
+                        message: '司机姓名不可为空',
+                        position: 'middle',
+                        duration: 2000
+                    });
+                } else if (data.driverPhone == '') {
+                    Toast({
+                        message: '司机电话不可为空',
+                        position: 'middle',
+                        duration: 2000
+                    });
+                } else if (!(new RegExp(/^1[3|4|5|7|8][0-9]{9}$/).test(data.driverPhone))) {
+                    Toast({
+                        message: '司机电话输入有误',
+                        position: 'middle',
+                        duration: 2000
+                    });
+                } else if (data.plateNum == '') {
+                    Toast({
+                        message: '车牌号不能为空',
+                        position: 'middle',
+                        duration: 2000
+                    });
+                } else if (data.startAddress == '') {
+                    Toast({
+                        message: '发货地点不能为空',
+                        position: 'middle',
+                        duration: 2000
+                    });
+                } else if (data.origin == '') {
+                    Toast({
+                        message: '产地不能为空',
+                        position: 'middle',
+                        duration: 2000
+                    });
+                } else if (data.goods.length == 0) {
+                    Toast({
+                        message: '货品信息不能为空',
+                        position: 'middle',
+                        duration: 2000
+                    });
+                } else {
+                    console.log(data);
+                    damage.submitGoods(data).then(response => {
+                        if (response.data.status == 'Y') {
+                            this.$router.push({name: 'home'});
+                        } else if (response.data.status == 'N') {
+                            Toast({
+                                message: response.data.results,
+                                position: 'middle',
+                                duration: 1000
+                            });
+                        }
+                        console.log(response.data.results);
+                    })
+                }
             },
 
             upload1 (e) {
