@@ -125,6 +125,11 @@
                             data.tid = this.tid;
                             damage.submitDamage(data)
                                 .then(response => {
+                                    Toast({
+                                        message: response.data.results,
+                                        position: 'middle',
+                                        duration: 1000
+                                    });
                                     console.log(response);
                                 })
                                 .catch(function (response) {
