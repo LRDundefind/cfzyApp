@@ -10,7 +10,7 @@
                     </div>
                     <div class="ub ub-pc">
                         <div class="sc">
-                            <div class="picture" :style="'backgroundImage:url('+headerImage+')'"></div>
+                            <div style="opacity: 0" class="picture" :style="'backgroundImage:url('+headerImage+')'"></div>
                             <input type="file" id="upload" accept="image" @change="upload1" style="opacity: 0">
                             <img class="header-img" src="../../assets/my/my_head.png"/>
                         </div>
