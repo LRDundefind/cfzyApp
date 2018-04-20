@@ -121,7 +121,7 @@
 		<!-- 设置价格模态框 -->
 		<div class="dialoag" v-if="dialoags">
 			<div class="dialoag_cont goods">
-				<button @click="closeInfo">关闭</button>
+				<div @click="closeInfo" class="closeInfo">关闭</div>
 				<div class="goods-name ub ub-pc">{{goodName}}</div>
 				<div class="goods-info">
 					<div class="goods-item ub">
@@ -162,7 +162,7 @@
 		<div class="setSanlunfei" v-if="sanlunfei">
 			<div class="dialoag_cont">
 				<span>
-					<input type="text" v-model="deliveryCost" placeholder="请输入三轮费"/>
+					<mt-field label="" type="number" v-model="deliveryCost" placeholder="请输入三轮费"></mt-field>
 				</span>
 				<div class="btn ub">
 					<div class="lefts" @click="sanlunfei = false ">取消</div>
@@ -256,6 +256,13 @@ export default {
 			this.goodsweight = '';
 			this.pbweight = '';
 		},
+		//重置各项费用总和-关闭弹框调取单项货品接口计算价格时使用
+		resetTotalCost(){
+			this.totalCost.totalAmount = 0;
+			this.totalCost.totalPack = 0;
+			this.totalCost.totalWeigh = 0;
+			this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost; //合计费用
+		},
 	    //选择车次
         choosetrainNumber(){
         	Cookies.remove('trainsNum');//----------------------待修改
@@ -274,7 +281,6 @@ export default {
     		this.tid = Cookies.get('trainTid');
     		this.trainsNum = Cookies.get('trainsNum') || '点击选择车次';
     		this.plateNum = Cookies.get('plateNum') || '获取车牌号';
-        	console.log(this.tid)
         	if(this.tid){
         		this.otherInfo = true;//其他信息展示
 				this.autographInfo = true;//签名展示
@@ -282,7 +288,6 @@ export default {
         	}else{
         		console.log('没有选择车次')
         	}
-        	
         	//获取客户信息
         	this.customerName = Cookies.get('customerName')  || '选择客户';
         	this.customerId = Cookies.get('customerId');
@@ -311,7 +316,6 @@ export default {
                         this.goodsInfo[i]['sellUnit'] = this.goodsInfo[i].sellUnit ; //售卖单位，列表不展示
                         this.goodsInfo[i]['numUnit'] = this.goodsInfo[i].numUnit; //入库单位，列表不展示
                     }
-                    console.log(this.goodsInfo)
 					if(response.data.error_code == '204'){
 						this.otherInfo = false;//其他信息
 						this.autographInfo = false;//签名
@@ -420,14 +424,10 @@ export default {
 					     	sellUnit:this.sellUnit,  //售卖单位，提交订单所需，列表不展示
 					     	numUnit:this.numUnit,  //入库单位，列表不展示
 					    });
-			    this.resetPriceNum();
-			    
-    			//如果没有填写相应的单价，则各类总价格清空
-				this.totalCost.totalAmount = 0;
-				this.totalCost.totalPack = 0;
-				this.totalCost.totalWeigh = 0;
-				this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost; //合计费用
-	                    
+				//重置弹框数据
+			    this.resetPriceNum(); 
+			    //重置各项价格总和
+			    this.resetTotalCost();
 			}else{
 	        	//获取当前所设置货品的金额和包装费的接口
 				var params = {
@@ -441,6 +441,10 @@ export default {
 				};
 				order.goodsCost(params)
 					.then(response => {
+						
+						//重置各项价格总和
+						this.resetTotalCost();
+						
 						//货品价格计算返回数据
 						this.goodsCosts = response.data.results;
 						//console.log('包装费：'+this.goodsCosts.packCost+'， '+'金额：'+this.goodsCosts.goodAmount+'， '+' 过磅费：' + this.goodsCosts.weighCost);
@@ -471,12 +475,15 @@ export default {
 							    });
 		    			//根据返回数据计算总和
 	                    for(var i=0,len = this.goodsInfo.length; i<this.goodsInfo.length;i++){
+	                    	console.log('单次金额：'+ this.goodsInfo[i]['goodAmount'])
 							this.totalCost.totalAmount += this.goodsInfo[i]['goodAmount']; //总贷款费用
 							this.totalCost.totalPack += this.goodsInfo[i]['packCost']; //总包装费
 							this.totalCost.totalWeigh += this.goodsInfo[i]['weighCost']; //总过磅费
 							this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost; //合计费用
 	                    }
-	                    console.log(this.goodsInfo)
+						console.log('总金额：'+this.totalCost.totalAmount);
+						
+	                    //重置弹框数据
 						this.resetPriceNum();
 	                    
 						this.goodsInfo.filter(function(item){
@@ -496,19 +503,12 @@ export default {
         },
         //关闭输入信息的按钮
         closeInfo(){
+        	//重置弹框数据
 			this.resetPriceNum();
         	this.dialoags = false;
         },
         //设置三轮费-确定按钮
         setSanlunfei(){
-    		if(!(new RegExp(/^([1-9][0-9]*)+(.[0-9]{1,2})?$/).test(this.deliveryCost))){
-				Toast({
-					message: '请输入数字',  //这里弹框的层级有问题  -------待修改
-					position: 'middle',
-					duration: 1000
-    			});
-    			return false;
-    		}
         	this.sanlunfei = false;
         	this.totalCost.deliveryCost = Number(this.deliveryCost);
 			this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost;
@@ -554,24 +554,32 @@ export default {
 								position: 'middle',
 								duration: 1000
 			    			});
-	    					return false;
+							return false;
                     	}
-                    	
+    					return false;
                     })
-
 				}
 			}
-			
+				
         	//现结（下单）和赊账（暂存、下单）验证三轮车费
 			if(this.totalCost.deliveryCost == '' || this.totalCost.deliveryCost == null){
     			Toast({
-					message: '请输入三轮车费',  //输入的时候做是否为数字的验证，此处不需要了
+					message: '请输入三轮费',  //输入的时候做是否为数字的验证，此处不需要了
 					position: 'middle',
 					duration: 1000
     			});
     			return false;
-    		}
-			
+    		}else{
+				if(!(new RegExp(/^([1-9][0-9]*)+(.[0-9]{1,2})?$/).test(this.totalCost.deliveryCost))){
+					Toast({
+						message: '请正确输入三轮费',  //这里弹框的层级有问题  -------待修改
+						position: 'middle',
+						duration: 1000
+	    			});
+	    			return false;
+	    		}
+			}
+    		
         	var params = {
     			tid: this.tid,//车次if
     			cid: this.customerId,//客户id
@@ -794,8 +802,12 @@ i{
 		text-align: center;
 		color: #666;
 		font-size: 0.28rem;
-		
+		.closeInfo{
+			float: right;
+    		margin-right: 0.3rem;
+		}
 		.goods-name{
+			clear: both;
 			padding: 0 0.3rem;
 			margin: 0.2rem 0;
 			line-height: 0.95rem;
