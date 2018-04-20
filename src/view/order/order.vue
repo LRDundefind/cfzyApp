@@ -266,6 +266,7 @@ export default {
 		},
 	    //选择车次
         choosetrainNumber(){
+        	Cookies.remove('trainTid');//----------------------待修改
         	Cookies.remove('trainsNum');//----------------------待修改
         	Cookies.remove('plateNum');//----------------------待修改
             this.$router.push({name: 'trainList'});
@@ -361,25 +362,25 @@ export default {
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(this.goodsweight == '' ){
+    		}else if(this.goodsweight == '' && this.sellUnit != 'unit_pie'){
     			Toast({
 					message: '请完善购买信息',
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(!(new RegExp(/^([1-9][0-9]*)+(.[0-9]{1,2})?$/).test(this.goodsweight))){
+    		}else if(!(new RegExp(/^([1-9][0-9]*)+(.[0-9]{1,2})?$/).test(this.goodsweight)) && this.sellUnit != 'unit_pie'){
     			Toast({
 					message: '请正确输入重量',
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(this.pbweight == '' ){
+    		}else if(this.pbweight == '' && this.sellUnit != 'unit_pie'){
     			Toast({
 					message: '请完善购买信息',
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(!(new RegExp(/^([1-9][0-9]*)+(.[0-9]{1,2})?$/).test(this.pbweight))){
+    		}else if(!(new RegExp(/^([1-9][0-9]*)+(.[0-9]{1,2})?$/).test(this.pbweight)) && this.sellUnit != 'unit_pie'){
     			Toast({
 					message: '请正确输入平板重',
 					position: 'middle',
@@ -420,7 +421,16 @@ export default {
 			}else{
 				this.set_weight_util = this.sellUnit;
 			}
-				
+			
+			//售卖单位为件时，重量平板重是非必填 未填则设置为0
+    		if(this.goodsweight == '' && this.sellUnit == 'unit_pie'){
+    			this.goodsweight = 0;
+    		}
+    		if(this.pbweight == '' && this.sellUnit == 'unit_pie'){
+    			this.pbweight = 0;
+    		}
+			
+			//未填写单价，不计算当前所设置货品的贷款包装过磅费，不计算合计金额
 			if(this.goodsunit == '' ){ 
 				this.have_goodsunit = false;
 				//未填写单价则不调6.3接口（计算总贷款费用 和 合计费用的）,但是还是要set 
@@ -443,7 +453,7 @@ export default {
 			    //重置各项价格总和
 			    this.resetTotalCost();
 			}else{
-	        	//获取当前所设置货品的金额和包装费的接口
+	        	//填写单价，计算当前所设置货品的贷款包装过磅费， 
 				var params = {
 					goodId: this.goodId,//单个货品id
 					price: this.goodsunit,//单价
@@ -463,7 +473,7 @@ export default {
 						this.goodsCosts = response.data.results;
 						//console.log('包装费：'+this.goodsCosts.packCost+'， '+'金额：'+this.goodsCosts.goodAmount+'， '+' 过磅费：' + this.goodsCosts.weighCost);
 						
-						//		this.goodsInfo中下单所需货品参数 左：获取 ，右： 传参名
+						//		this.goodsInfo中下单所需货品参数对照表  勿删，，， 左：获取 ，右： 传参名
 						//		this.goodId  货品id  goodId
 						//		this.goodName 货品名称 goodName 
 						//		this.goodsunit 货品单价 price
@@ -489,14 +499,12 @@ export default {
 							    });
 		    			//根据返回数据计算总和
 	                    for(var i=0,len = this.goodsInfo.length; i<this.goodsInfo.length;i++){
-	                    	console.log('单次金额：'+ this.goodsInfo[i]['goodAmount'])
 							this.totalCost.totalAmount += this.goodsInfo[i]['goodAmount']; //总贷款费用
 							this.totalCost.totalPack += this.goodsInfo[i]['packCost']; //总包装费
 							this.totalCost.totalWeigh += this.goodsInfo[i]['weighCost']; //总过磅费
 							this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost; //合计费用
 	                    }
-						console.log('总金额：'+this.totalCost.totalAmount);
-						
+
 	                    //重置弹框数据
 						this.resetPriceNum();
 	                    
@@ -543,9 +551,8 @@ export default {
         		this.customerId = ''
         	}
 
-			
-
-			var buyNum = 0; //填写的购买货品的总件数 以此判断至少有一项货品填写了下单信息
+			//填写的购买货品的总件数 以此判断至少有一项货品填写了下单信息
+			var buyNum = 0; 
 			for(var index in this.goodsInfo){
 				buyNum += this.goodsInfo[index].goodNum;
 			}
@@ -560,7 +567,6 @@ export default {
 			}else{
     			//非 赊账暂存(szType != 'Y')时，判断填写了购买量的货品都填写了单价
     			if(szType != 'Y'){
-    				console.log(this.goodsInfo)
                     this.goodsInfo.filter(function(item){
                     	if(item.weight != '' && item.price == ''){
 							Toast({
@@ -574,7 +580,25 @@ export default {
                     })
 				}
 			}
-				
+			
+			//非 赊账暂存(szType != 'Y')时，【判断每件售卖单位为件的货品是否填写了重量和平板重】--售卖单位为件时，弹框不验证这两项
+			if(szType != 'Y'){
+                this.goodsInfo.filter(function(item){
+                	if(item.sellUnit == 'unit_pie' && item.goodNum != 0){
+                		if(item.weight == 0 || item.slabWeight == 0){
+	            			Toast({
+								message: '请填写正确的货品重量/平板重',
+								position: 'middle',
+								duration: 1000
+			    			});
+							return false;
+						}
+                		return false;
+                	}
+					return false;
+                })
+			}
+			
         	//现结（下单）和赊账（暂存、下单）验证三轮车费
 			if(this.totalCost.deliveryCost == '' || this.totalCost.deliveryCost == null){
     			Toast({
