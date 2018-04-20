@@ -104,9 +104,15 @@ export default {
         selected:{
             handler(val,oldval){
                 //console.log(oldval+'->'+val)
-                this.$router.push({
-                    name: val
-                })
+                if(val=='order'){
+                    this.$router.push({name:'order',params:{tid:0,trainsNum:0,plateNum:0}})
+                }
+                else{
+                    this.$router.push({
+                        name: val
+                    })
+                }
+                
             },
             deep:true
         },

@@ -1,9 +1,9 @@
 <template>
 	<div class="page-content">
 		<mt-header fixed  title="车次">
-			<router-link to="" slot="left">
-			    <mt-button icon="back" @click="$route.go(-1)"></mt-button>
-			</router-link>
+			
+			    <mt-button icon="back" @click="$router.go(-1)" slot="left"></mt-button>
+			
 		</mt-header>
 		<!--车次列表-->
 		<div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
