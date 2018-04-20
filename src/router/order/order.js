@@ -11,7 +11,7 @@ import creditRules from '@/view/order/creditRules'
 
 export default [
 	{
-		path:'order/:tid/:trainsNum/:plateNum',
+		path:'order',
 		name:'order',
 		components: {
 			mainView: order

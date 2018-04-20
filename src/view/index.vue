@@ -105,7 +105,7 @@ export default {
             handler(val,oldval){
                 //console.log(oldval+'->'+val)
                 if(val=='order'){
-                    this.$router.push({name:'order',params:{tid:0,trainsNum:0,plateNum:0}})
+                    this.$router.push({name:'order'})
                 }
                 else{
                     this.$router.push({
