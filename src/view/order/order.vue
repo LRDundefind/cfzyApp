@@ -137,21 +137,19 @@
 					<div class="goods-item ub">
 						<div class="ub-f1">重量</div>
 						<mt-field label="" placeholder="请输入" type="number" v-model="goodsweight"></mt-field>
-						
-						<div v-if="sellUnit == 'unit_pie'">{{goodsUnit}}</div>
-						<select v-if="sellUnit != 'unit_pie' ">
-							<option selected="false" value="1">斤</option>
-							<option selected="true" value="2">公斤</option>
+						<div v-if="sellUnit != 'unit_pie'">{{goodsUnit}}</div>
+						<select v-if="sellUnit == 'unit_pie' " v-model="sellUnitPie">
+							<option>斤</option>
+							<option>公斤</option>
 						</select>
-						
 					</div>
 					<div class="goods-item ub">
 						<div class="ub-f1">平板重</div>
 						<mt-field label="" placeholder="请输入" type="number" v-model="pbweight"></mt-field>
-						<div v-if="sellUnit == 'unit_pie'">{{goodsUnit}}</div>
-						<select v-if="sellUnit != 'unit_pie' ">
-							<option value="1">斤</option>
-							<option value="2">公斤</option>
+						<div v-if="sellUnit != 'unit_pie'">{{goodsUnit}}</div>
+						<select v-if="sellUnit == 'unit_pie' "  v-model="sellUnitPie">
+							<option>斤</option>
+							<option>公斤</option>
 						</select>
 					</div>
 				</div>
@@ -202,9 +200,11 @@ export default {
 			//设置价格弹框
 			dialoags: false,
 			goodName: '',//显示货品信息-货品名称
-            sellUnit: '', //显示货品信息-货品售卖单位, 提交订单所需,,
+            sellUnit: '', //显示货品信息-货品售卖单位, 提交订单所需,
 			goodsUnit: '', //显示货品信息-货品售卖单位转换
-
+			sellUnitPie: '斤',//显示货品信息-售卖单位为件时，设置重量单位和平板重单位
+			set_weight_util: 'unit_jin',//售卖单位为件时，设置重量单位和平板重单位，计算货品价格、提交订单所需
+			
 			//手动输入的每项货品的信息
 			goodsunit: '', //设置货品价格-单价
 			goodsnum: '',  //设置货品价格-件数
@@ -213,6 +213,7 @@ export default {
 			goodId: '',//货品id, 提交订单所需
 			numUnit: '',//重量单位, 提交订单所需
 			have_goodsunit: false, //默认为false,用来判断每项货品是否填写了单价
+
 			
 			//当前所设置货品的金额和包装费 
 			goodsCosts: [], //货品价格计算返回数据
@@ -328,13 +329,14 @@ export default {
 		},
 
 		//设置货品重量件数信息的弹框
-        goodsInfoSet(i, id, name, unit, numUnit, tid, trainsNum){
+        goodsInfoSet(i, id, name, sellunit, numUnit, tid, trainsNum){
 			this.numberNum = i;
         	this.dialoags = true;
         	this.goodId = id;//货品id 提交订单传参所需
         	this.goodName = name;
-        	this.sellUnit = unit;//提交订单传参所需 售卖单位
+        	this.sellUnit = sellunit;//提交订单传参所需 售卖单位
         	this.numUnit = numUnit;//提交订单传参所需  重量单位
+
 			if(this.sellUnit == 'unit_jin'){
 				this.goodsUnit = '斤';
 			}else if(this.sellUnit == 'unit_kg'){
@@ -407,9 +409,21 @@ export default {
         getGoodsInformation(){
         	//通过是否写入单价的情况 判断是否显示总贷款、包装、过磅、合计金额费用
 			this.have_goodsunit = true;
+			
+			//售卖单位为件时，设置重量单位和平板重单位
+			if(this.sellUnit == 'unit_pie'){
+				if(this.sellUnitPie == '斤'){
+					this.set_weight_util = 'unit_jin';
+				}else if(this.sellUnitPie == '公斤'){
+					this.set_weight_util = 'unit_kg';
+				}
+			}else{
+				this.set_weight_util = this.sellUnit;
+			}
+				
 			if(this.goodsunit == '' ){ 
 				this.have_goodsunit = false;
-				//未填写单价则不调6.3接口（计算总贷款费用 和 合计费用的）,但是还要 
+				//未填写单价则不调6.3接口（计算总贷款费用 和 合计费用的）,但是还是要set 
 				this.$set(this.goodsInfo,this.numberNum,
 					    {	goodName:this.goodName,
 					     	goodId:this.goodId, //提交订单所需，列表不展示
@@ -420,7 +434,7 @@ export default {
 					     	packCost: 0, //货品打包费
 					     	weighCost: 0, //货品过磅费 下方列表展示
 					     	slabWeight:this.pbweight, //提交订单所需，列表不展示
-					     	weight_util:this.sellUnit,  //重量单位，提交订单所需，列表不展示   //若按重量售卖，则重量单位为售卖单位????   待修改
+					     	weight_util:this.set_weight_util,  //重量单位，提交订单所需，列表不展示   //若按重量售卖，则重量单位为售卖单位????   待修改
 					     	sellUnit:this.sellUnit,  //售卖单位，提交订单所需，列表不展示
 					     	numUnit:this.numUnit,  //入库单位，列表不展示
 					    });
@@ -435,7 +449,7 @@ export default {
 					price: this.goodsunit,//单价
 					goodNum: this.goodsnum,//件数
 					weight: this.goodsweight,//重量
-					weight_util: this.numUnit,//重量单位 
+					weight_util: this.set_weight_util,//重量单位 
 					sellUnit: this.sellUnit,//售卖单位 
 					slabWeight: this.pbweight,//平板重
 				};
@@ -469,7 +483,7 @@ export default {
 							     	packCost:response.data.results.packCost, //货品打包费
 							     	weighCost:response.data.results.weighCost, //货品过磅费 下方列表展示
 							     	slabWeight:this.pbweight, //提交订单所需，列表不展示
-							     	weight_util:this.sellUnit,  //重量单位，提交订单所需，列表不展示   //若按重量售卖，则重量单位为售卖单位????   待修改
+							     	weight_util:this.set_weight_util,  //重量单位，提交订单所需，列表不展示   //若按重量售卖，则重量单位为售卖单位????   待修改
 							     	sellUnit:this.sellUnit,  //售卖单位，提交订单所需，列表不展示
 							     	numUnit:this.numUnit,  //入库单位，列表不展示
 							    });
@@ -510,7 +524,7 @@ export default {
         //设置三轮费-确定按钮
         setSanlunfei(){
         	this.sanlunfei = false;
-        	this.totalCost.deliveryCost = Number(this.deliveryCost);
+        	this.totalCost.deliveryCost = Number(this.deliveryCost) || '';
 			this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost;
         },
         
@@ -833,7 +847,7 @@ i{
 				select{
 					border: none;
 					font-size: 0.28rem;
-	    			color: #333;
+	    			color: #666;
 				}
 			}
 		}
