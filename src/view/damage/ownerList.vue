@@ -12,7 +12,7 @@
                         </div>
                         <div class="ub ub-f1">
                             <div>发货总次数</div>
-                            <div class="number">{{item.trainsNum}}</div>
+                            <div class="number">{{item.trainNum}}</div>
                         </div>
                     </div>
 
@@ -87,6 +87,7 @@
             color: $main_color333;
             border-bottom: $main_border;
             line-height: 0.8rem;
+            min-height: 0.8rem;
         }
         .number {
             padding-left: 0.2rem;
