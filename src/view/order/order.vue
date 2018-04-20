@@ -240,7 +240,7 @@ export default {
         }
     },
     mounted () {
-		//this.getTrainInfor();
+		this.getTrainInfor();
 	},
 	created(){
 		
