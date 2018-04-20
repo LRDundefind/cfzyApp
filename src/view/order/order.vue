@@ -23,7 +23,7 @@
 					<input id="kh" type="radio" name="choose" value="Nottemporary" v-model="customerType">
 					<label for="kh" class="customer"></label>
 					<div class="ub-f1">客户</div>
-					<span @click="chooseCustomer()">小李</span>
+					<span @click="chooseCustomer()">{{customerName}}</span>
 					<img src="../../assets/my/icon_right.png" class="icon" @click="chooseCustomer()">
 				</div>
 				<div class="ub ub-ac term no-border input-choose">
@@ -57,15 +57,15 @@
 			<div class="order-detail" v-if="otherInfo">
 				<div class="ub term" v-if="have_goodsunit">
 					<div class="ub-f1">贷款费用</div>
-					<div class="edu">￥{{totalCost.totalAmount}}</div>
+					<div class="edu">{{totalCost.totalAmount}}</div>
 				</div>
 				<div class="ub term" v-if="have_goodsunit">
 					<div class="ub-f1">包装费</div>
-					<div class="edu">￥{{totalCost.totalPack}}</div>
+					<div class="edu">{{totalCost.totalPack}}</div>
 				</div>
 				<div class="ub term" v-if="have_goodsunit">
 					<div class="ub-f1">过磅费</div>
-					<div class="edu">￥{{totalCost.totalWeigh}}</div>
+					<div class="edu">{{totalCost.totalWeigh}}</div>
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">三轮费</div>
@@ -77,7 +77,7 @@
 				</div>
 				<div class="ub term no-border" v-if="have_goodsunit">
 					<div class="ub-f1">合计金额</div>
-					<div class="total">￥{{totalCost.tatol}}</div>
+					<div class="total">{{totalCost.tatol}}</div>
 				</div>
 			</div>
 			<!--付款方式  order_knot现结  order_credit赊账-->
@@ -193,9 +193,11 @@ export default {
 			goodsInfo: [], //当前车次下的货品信息
 			goodsInfoLength: null, //当前车次下的货品件数
 
-			trainsNum: '点击选择车次', //车次信息展示
-			plateNum: '获取车牌号',
+			trainsNum: '', //车次信息展示
+			plateNum: '',
 			tid:'',//车次id
+			
+			customerName: '', //客户信息
 			
 			//设置价格弹框
 			dialoags: false,
@@ -205,7 +207,7 @@ export default {
 
 			//手动输入的每项货品的信息
 			goodsunit: '', //设置货品价格-单价
-			goodsnum: '',  //设置货品价格-数量
+			goodsnum: '',  //设置货品价格-件数
 			goodsweight: '',  //设置货品价格-重量
 			pbweight: '',  //设置货品价格-平板重, 提交订单所需
 			goodId: '',//货品id, 提交订单所需
@@ -241,13 +243,13 @@ export default {
         }
     },
     mounted () {
-		this.getTrainInfor();
+		this.getChooseType();
 	},
 	created(){
 		
 	},
     methods: {
-		//重置单件货品下单数量和其他数据
+		//重置单件货品下单件数和其他数据
 		resetPriceNum(){
 			this.goodsunit = '';
 			this.goodsnum = '';
@@ -256,20 +258,34 @@ export default {
 		},
 	    //选择车次
         choosetrainNumber(){
+        	Cookies.remove('trainsNum');//----------------------待修改
+        	Cookies.remove('plateNum');//----------------------待修改
             this.$router.push({name: 'trainList'});
         },
+		//选择客户
+        chooseCustomer(){
+        	Cookies.remove('customerName'); //----------------------待修改
+        	Cookies.remove('customerId'); //-----------------------待修改
+            this.$router.push({name: 'client_order', params: {type: 'order'}});
+        },
         //选择完车次后获取车次货品详细信息
-        getTrainInfor(){ 
-        	this.tid = this.$route.params.tid //车次id
+        getChooseType(){ 
+        	//获取车次信息
+    		this.tid = Cookies.get('trainTid');
+    		this.trainsNum = Cookies.get('trainsNum') || '点击选择车次';
+    		this.plateNum = Cookies.get('plateNum') || '获取车牌号';
+        	console.log(this.tid)
         	if(this.tid){
-        		this.trainsNum = this.$route.params.trainsNum;
-        		this.plateNum = this.$route.params.plateNum;
         		this.otherInfo = true;//其他信息展示
 				this.autographInfo = true;//签名展示
 				this.getTrain(this.tid);
         	}else{
         		console.log('没有选择车次')
         	}
+        	
+        	//获取客户信息
+        	this.customerName = Cookies.get('customerName')  || '选择客户';
+        	this.customerId = Cookies.get('customerId');
         },
 		//获取车次货品详细信息
 		getTrain(tid){
@@ -309,9 +325,7 @@ export default {
 
 		//设置货品重量件数信息的弹框
         goodsInfoSet(i, id, name, unit, numUnit, tid, trainsNum){
-        	console.log('弹框显示'+unit)
-        	
-			this.numberNum=i;
+			this.numberNum = i;
         	this.dialoags = true;
         	this.goodId = id;//货品id 提交订单传参所需
         	this.goodName = name;
@@ -328,7 +342,6 @@ export default {
         },
         
     	//单件货品信息录入验证和提交
-    	// 保留小数点后两位数字/([0-9]+\.[0-9]{2})[0-9]*/  保留小数点后两位数字且为正 /^(([1-9]+)|([0-9]+\.[0-9]{1,2}))$/
     	submitGoodsInfo(){
     		if(this.goodsnum == '' ){
     			Toast({
@@ -336,9 +349,9 @@ export default {
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(!(new RegExp(/([0-9]+\.[0-9]{2})[0-9]*/).test(this.goodsnum))){
+    		}else if(!(new RegExp(/^([1-9][0-9]*)+(.[0-9]{1,2})?$/).test(this.goodsnum))){
     			Toast({
-					message: '请保留小数点后两位数字',
+					message: '请正确输入件数',
 					position: 'middle',
 					duration: 1000
     			});
@@ -348,9 +361,9 @@ export default {
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(!(new RegExp(/([0-9]+\.[0-9]{2})[0-9]*/).test(this.goodsweight))){
+    		}else if(!(new RegExp(/^([1-9][0-9]*)+(.[0-9]{1,2})?$/).test(this.goodsweight))){
     			Toast({
-					message: '请保留小数点后两位数字',
+					message: '请正确输入重量',
 					position: 'middle',
 					duration: 1000
     			});
@@ -360,17 +373,17 @@ export default {
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(!(new RegExp(/([0-9]+\.[0-9]{2})[0-9]*/).test(this.pbweight))){
+    		}else if(!(new RegExp(/^([1-9][0-9]*)+(.[0-9]{1,2})?$/).test(this.pbweight))){
     			Toast({
-					message: '请保留小数点后两位数字',
+					message: '请正确输入平板重',
 					position: 'middle',
 					duration: 1000
     			});
     		}else{
     			if(this.goodsunit != ''){
-	    			if(!(new RegExp(/([0-9]+\.[0-9]{2})[0-9]*/).test(this.goodsunit))){
+	    			if(!(new RegExp(/^([1-9][0-9]*)+(.[0-9]{1,2})?$/).test(this.goodsunit))){
 		    			Toast({
-							message: '请保留小数点后两位数字',
+							message: '请正确输入单价',
 							position: 'middle',
 							duration: 1000
 		    			});
@@ -388,8 +401,6 @@ export default {
         
         //单件货品信息录入提交 
         getGoodsInformation(){
-        	console.log('提交'+this.sellUnit)
-        	
         	//通过是否写入单价的情况 判断是否显示总贷款、包装、过磅、合计金额费用
 			this.have_goodsunit = true;
 			if(this.goodsunit == '' ){ 
@@ -410,6 +421,13 @@ export default {
 					     	numUnit:this.numUnit,  //入库单位，列表不展示
 					    });
 			    this.resetPriceNum();
+			    
+    			//如果没有填写相应的单价，则各类总价格清空
+				this.totalCost.totalAmount = 0;
+				this.totalCost.totalPack = 0;
+				this.totalCost.totalWeigh = 0;
+				this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost; //合计费用
+	                    
 			}else{
 	        	//获取当前所设置货品的金额和包装费的接口
 				var params = {
@@ -439,16 +457,17 @@ export default {
 						
 						this.$set(this.goodsInfo,this.numberNum,
 							    {	goodName:this.goodName,
-							     	weight:this.goodsweight,
-							     	price:this.goodsunit,
-							     	goodNum:this.goodsnum,
-							     	slabWeight:this.pbweight, //提交订单所需，列表不展示
 							     	goodId:this.goodId, //提交订单所需，列表不展示
-							     	weight_util:this.numUnit,
-							     	sellUnit:this.sellUnit,//提交订单所需，列表不展示
+							    	price:this.goodsunit,
+							     	goodNum:this.goodsnum,
+							     	weight:this.goodsweight,
 							     	goodAmount:response.data.results.goodAmount, //货品金额
 							     	packCost:response.data.results.packCost, //货品打包费
-							     	weighCost:response.data.results.weighCost, //货品过磅费
+							     	weighCost:response.data.results.weighCost, //货品过磅费 下方列表展示
+							     	slabWeight:this.pbweight, //提交订单所需，列表不展示
+							     	weight_util:this.sellUnit,  //重量单位，提交订单所需，列表不展示   //若按重量售卖，则重量单位为售卖单位????   待修改
+							     	sellUnit:this.sellUnit,  //售卖单位，提交订单所需，列表不展示
+							     	numUnit:this.numUnit,  //入库单位，列表不展示
 							    });
 		    			//根据返回数据计算总和
 	                    for(var i=0,len = this.goodsInfo.length; i<this.goodsInfo.length;i++){
@@ -482,7 +501,7 @@ export default {
         },
         //设置三轮费-确定按钮
         setSanlunfei(){
-    		if(!(new RegExp(/^[0-9]*$/).test(this.deliveryCost))){
+    		if(!(new RegExp(/^([1-9][0-9]*)+(.[0-9]{1,2})?$/).test(this.deliveryCost))){
 				Toast({
 					message: '请输入数字',  //这里弹框的层级有问题  -------待修改
 					position: 'middle',
@@ -495,14 +514,6 @@ export default {
 			this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost;
         },
         
-		//选择客户
-        chooseCustomer(){
-        	Cookies.remove('chooseCustomer'); //应该写在选择客户不做选择直接返回时候的方法里-------------------------待修改
-            this.$router.push({
-            	name: 'client_order',
-				params: {type: 'order'}
-            });
-        },
         //签名
         autograph(){
             this.$router.push({name: 'autograph'});
@@ -512,7 +523,7 @@ export default {
         submitOrder(szType){
         	if(this.customerType == 'Nottemporary'){
         		//非临时客户，赋值客户id 路由获取
-        		this.customerId = Cookies.get('chooseCustomer');
+        		this.customerId = Cookies.get('customerId');
         	}else if(this.customerType == 'temporary'){
         		//客户id为''
         		this.customerId = ''
