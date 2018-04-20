@@ -109,9 +109,9 @@
                 console.log(type);
                 if (type == 'add') {
                     if (this.goods.goodName && this.goods.numUnit && this.goods.goodNum) {
-                        if (!(new RegExp(/^\+?(\d*\.\d{2})$/).test(this.goods.goodNum))) {
+                        if (!(new RegExp(/^\d+(?:.\d{1,2})?$/).test(this.goods.goodNum))) {
                             Toast({
-                                message: '请保留小数点后两位数字',
+                                message: '小数点后最多输入两位数字',
                                 position: 'middle',
                                 duration: 1000
                             });
