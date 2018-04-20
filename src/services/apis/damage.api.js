@@ -44,6 +44,15 @@ export const damage = {
             data: serverMoudle(params) || {}
         });
     },
+    //提交报损信息
+
+    submitDamage(params) {
+        return axios({
+            url: 'rest/CHENGFENG_SET_MAR_TRAIN',
+            method: 'post',
+            data: serverMoudle(params) || {}
+        });
+    },
 
 
 };
