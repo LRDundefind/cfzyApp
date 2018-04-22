@@ -51,7 +51,7 @@ import Bus from '@/components/bus.js'
 import {order} from '@/services/apis/order.js'
 import { Loadmore } from 'mint-ui'
 import { InfiniteScroll } from 'mint-ui'
-
+import Cookies from 'js-cookie'
 export default {
     data () {
         return {
@@ -101,9 +101,14 @@ export default {
 		},
 		//选择车次
 		chooseTrain(tid, trainsNum, plateNum){
+
+			Cookies.set('trainTid',tid);
+			Cookies.set('trainsNum',trainsNum);
+            Cookies.set('plateNum',plateNum);
+            
             this.$router.push({
             	name: 'order',
-				params: {tid: tid, trainsNum: trainsNum, plateNum: plateNum}
+				params: {}
             });
 		},
 		handleTopChange(status) {

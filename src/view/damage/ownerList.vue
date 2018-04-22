@@ -7,23 +7,27 @@
                     <div class="name">{{item.shipName}}</div>
                     <div class="ub car">
                         <div class="ub ub-f2">
-                            <div>待结算车次</div>
-                            <div class="number">{{item.unsettlement}}</div>
+                            <div>待结算车次
+                                <span class="number">{{item.unsettlement}}</span>
+                            </div>
                         </div>
                         <div class="ub ub-f1">
-                            <div>发货总次数</div>
-                            <div class="number">{{item.trainsNum}}</div>
+                            <div>发货总次数
+                                <span class="number">{{item.trainNum}}</span>
+                            </div>
                         </div>
                     </div>
 
                     <div class="ub">
                         <div class="ub ub-f2">
-                            <div>已结算</div>
-                            <div class="number">{{item.tradeAmount}}</div>
+                            <div>已结算
+                                <span class="number">{{item.tradeAmount}}</span>
+                            </div>
                         </div>
                         <div class="ub ub-f1">
-                            <div>尚欠款</div>
-                            <div class="number pay">{{item.notPayAmount}}</div>
+                            <div>尚欠款
+                                <span class="number pay">{{item.notPayAmount}}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -87,10 +91,10 @@
             color: $main_color333;
             border-bottom: $main_border;
             line-height: 0.8rem;
+            min-height: 0.8rem;
         }
         .number {
             padding-left: 0.2rem;
-            font-size: 0.28rem;
         }
         .pay {
             color: #49c98b;

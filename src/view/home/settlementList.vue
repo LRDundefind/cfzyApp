@@ -102,7 +102,7 @@ i{
 			.btn{
 				font-size: 0.3rem;
 				width: 1.88rem;
-				line-height: 0.86rem;
+				line-height: 0.68rem;
 				text-align: center;
 				color: #fff;
 	            background: -webkit-linear-gradient(left, #30b03e 0%,#33d57c 100%);
