@@ -45,7 +45,7 @@ export default [{
         showFooter: false,
     }
 },{
-    path: 'temporaryOrderList/detail/:id',
+    path: 'temporaryOrderList/detail/:oid',
     name: 'temporaryOrderList/detail',
     components: {
         mainView: temporaryOrderDetail

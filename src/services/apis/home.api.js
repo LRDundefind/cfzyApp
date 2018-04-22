@@ -34,10 +34,18 @@ export const home = {
             data: serverMoudle(params) || {}
         });
     },
-    //首页暂存列表
+    //首页暂存订单
     temporaryOrderList(params) {
         return axios({
             url: 'rest/CHENGFENG_GET_SELEMAN_DEPOSIT',
+            method: 'post',
+            data: serverMoudle(params) || {}
+        });
+    },
+    //首页暂存订单-详情 设定价格
+    temporarySetPrice(params) {
+        return axios({
+            url: 'rest/CHENGFENG_SET_SELEMAN_DEPOSIT',
             method: 'post',
             data: serverMoudle(params) || {}
         });

@@ -138,10 +138,23 @@ export default {
         }
     },
     mounted () {
-
+		this.setTemporaryPrice();
     },
     methods: {
-
+    	
+		//暂存订单-设定价格
+		setTemporaryPrice(){
+//			var params = {};
+//			home.temporarySetPrice(params)
+//				.then(response => {
+//					this.temporaryList = response.data.results;
+//				})
+//				.catch(function (response) {
+//					console.log(response);
+//				});
+		},
+		
+		
 	    //保存
         preservation(id){
         	this.$router.push({
