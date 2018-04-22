@@ -7,15 +7,12 @@
         </mt-header>
         <div class="page-main">
             <div v-for="item in damageData" :key='item.tid' class="main-list">
-                <div class="ub clearfix" @click="goReport(n)">
+                <div class="ub clearfix" @click="goReport(item)">
                     <div class="ub-f5">
                         <div>
                             <span class="information">
                                 {{item.trainsNum}}
                             </span>
-                            <!--<span class="information">2018-03-{{n}}</span>-->
-                            <!--<span class="information">张雄</span>-->
-                            <!--<span class="information">车次56</span>-->
                         </div>
                         <div class="date">
                             <span class="time">到达时间</span>
@@ -59,8 +56,8 @@
                     console.log(response.data.results);
                 })
             },
-            goReport(n){
-                this.$router.push({name: 'damageReport'});
+            goReport(item){
+                this.$router.push({name: 'damageReport',params:{tid:item.tid,trainsNum:item.trainsNum}});
             }
         }
     }
