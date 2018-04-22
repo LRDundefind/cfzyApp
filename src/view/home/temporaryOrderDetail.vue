@@ -10,18 +10,18 @@
 			<!--信息一-->
 			<div class="order-detail">
 				<div class="ub term">
-					<div class="ub-f1">订单号 1236548965</div>
-					<div class="zt">待支付</div>
+					<div class="ub-f1">订单号&nbsp;&nbsp;{{detailInfo.orderNo}}</div>
+					<div class="zt">{{orderStatus}}</div>
 				</div>
-				<div class="ub ub-ac term customer-head" @click="customerDetail(1)">
+				<div class="ub ub-ac term customer-head" @click="customerDetail(detailInfo.cid)">
 					<div class="ub-f1">客户</div>
-					<img src="../../assets/index/shouye_touxiang_img@2x.png" class="head">
-					<span>小李</span>
+					<!--<img src="../../assets/index/shouye_touxiang_img@2x.png" class="head">-->
+					<span>{{detailInfo.nickname}}</span>
 					<img src="../../assets/my/icon_right.png" class="icon">
 				</div>
 				<div class="ub term no-border">
 					<div class="ub-f1">卖手</div>
-					<div>小李</div>
+					<div>{{detailInfo.selName}}</div>
 				</div>
 			</div>
 			<!--信息二-->
@@ -32,36 +32,33 @@
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">贷款</div>
-					<div class="edu">￥45</div>
+					<div class="edu">{{detailInfo.salesAmount}}</div>
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">包装费</div>
-					<div class="edu">￥45</div>
+					<div class="edu">{{detailInfo.packCost}}</div>
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">过磅费</div>
-					<div class="edu">￥45</div>
+					<div class="edu">{{detailInfo.weighCost}}</div>
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">三轮费</div>
-					<div class="edu">￥45</div>
-				</div>
-				<div class="ub term">
-					<div class="ub-f1">支付方式</div>
-					<div>POS机</div>
+					<div class="edu">{{detailInfo.deliveryCost}}</div>
 				</div>
 				<div class="ub term no-border">
 					<div class="ub-f1">车号</div>
-					<div>京A12356</div>
+					<div>{{detailInfo.tricycleNo}}</div>
 				</div>
 			</div>
 			<!--货品信息-->
 			<div class="order-detail item-table">
 				<div class="ub term no-border">
-					<div class="ub-f1 c-3 infor">货品信息</div>
-					<div>2018-03-31</div>
+					<div class="ub-f1 c-3 infor">货品信息</div> 
+					<!--<div>2018-03-31</div>
 					<div class="driver-name">小李</div>
-					<div>车次89</div>
+					<div>车次89</div>-->
+					<div>2018-03-31 小李 车次89 ??</div>					
 				</div>
 				<table>
 					<thead>
@@ -74,22 +71,22 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr v-for="n in 5">
-							<td>大白菜<br />(1500)</td>
-							<td>100斤</td>
-							<td>4.55</td>
-							<td>600.00</td>
-							<td>20.00</td>
+						<tr v-for="goods in detailInfo.goods">
+							<td>{{goods.goodName}}<br />({{goods.goodNum}})</td>
+							<td>{{goods.weight}}</td>
+							<td class="set-price" @click = "dialoags=true">{{goods.price || '设置单价'}}</td>
+							<td>{{goods.goodAmount}}</td>
+							<td>{{goods.packCost}}</td>
 						</tr>
-						<tr>
+						<!--<tr>
 							<td>大白菜<br />(1500)</td>
 							<td>100斤</td>
-							<td class="set-price" @click = "dialoags=true">
+							<td class="set-price" >
 								设置<br />单价
 							</td>
 							<td>600.00</td>
 							<td>20.00</td>
-						</tr>
+						</tr>-->
 					</tbody>
 				</table>
 			</div>
@@ -99,14 +96,14 @@
 					<div class="">备注</div>
 				</div>
 				<div class="term no-border">
-					<div class="remarks">请准时送达，谢谢</div>
+					<div class="remarks">{{detailInfo.remark}}</div>
 				</div>
 			</div>
 			<!--下单时间-->
 			<div class="order-detail">
 				<div class="ub term no-border m-b-20">
 					<div class="ub-f1">下单时间</div>
-					<div class="edu">2018-02-06 15:00</div>
+					<div class="edu">{{detailInfo.placeOrderTime}}</div>
 				</div>
 			</div>
 			<mt-button type="primary" size="large" class="submit-btn" @click="preservation">保&nbsp;存</mt-button>
@@ -128,47 +125,69 @@
 </template>
 
 <script>
-
+import { home } from '@/services/apis/home.api'
 export default {
 
     data () {
         return {
-            dialoags: false,
-            price: '0'
+            dialoags: false, //设置价格的弹框
+            detailInfo: [], //暂存订单详情数据
+            orderStatus: '', //订单付款状态
+            
+            
+            
+            
+            price: '0',
         }
     },
     mounted () {
-		this.setTemporaryPrice();
+		this.getTemporaryOrderDetail();
     },
     methods: {
-    	
-		//暂存订单-设定价格
-		setTemporaryPrice(){
-//			var params = {};
-//			home.temporarySetPrice(params)
-//				.then(response => {
-//					this.temporaryList = response.data.results;
-//				})
-//				.catch(function (response) {
-//					console.log(response);
-//				});
+		//暂存订单-详情
+		getTemporaryOrderDetail(){
+			var params = {
+				oid: this.$route.params.oid,
+			};
+			home.temporaryOrderDetail(params)
+				.then(response => {
+					this.detailInfo = response.data.results;
+					this.transforSet();
+				})
+				.catch(function (response) {
+					console.log(response);
+				});
+		},
+		//界面数据渲染 部分字段对应文字
+		transforSet(){
+			switch(this.detailInfo.status){
+				case 'status_repay':
+					this.orderStatus = '待还款';
+					break;
+				case 'status_deposit':
+					this.orderStatus = '暂存';
+					break;
+				case 'status_complete':
+					this.orderStatus = '已完成';
+					break;
+			}
+		},
+		//跳转至客户详情
+		customerDetail(cid){
+			this.$router.push({name: 'client_detail', params: {ids: cid}});
 		},
 		
 		
-	    //保存
-        preservation(id){
-        	this.$router.push({
-//      		name: "client_detail',
-//      		params: {
-//      			id:id
-//      		}
-        	});
-        },
-        //设置单价-确定按钮
+		//设置单价-确定按钮
         setPrice(){
         	this.dialoags = false;
         	alert('设置单价');
-        }
+        },
+	    //保存
+        preservation(id){
+			
+        },
+        
             
     }
 }
