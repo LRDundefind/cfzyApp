@@ -1,8 +1,8 @@
 <template>
 	<div class="page-content">
 		<mt-header fixed  title="车次">
-			<router-link to="" slot="left">
-			    <mt-button icon="back" @click="$route.go(-1)"></mt-button>
+			<router-link to="/" slot="left">
+			    <mt-button icon="back" @click="$router.go(-1)"></mt-button>
 			</router-link>
 		</mt-header>
 		<!--车次列表-->
@@ -37,7 +37,7 @@
 		    <div slot="bottom" class="mint-loadmore-bottom">
 	          	<span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑</span>
 	          	<span v-show="bottomStatus === 'loading'">
-	            	<mt-spinner v-show="bottomStatus == 'loading'" color="#26a2ff"></mt-spinner>
+	            	<mt-spinner v-show="bottomStatus == 'loading'"></mt-spinner>
 	          	</span>
 	        </div>
 			</mt-loadmore>
