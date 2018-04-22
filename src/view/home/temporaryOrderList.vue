@@ -9,13 +9,13 @@
 		<div class="page-main">
 			<search-box ref="search"/>
 			<ul class="order-list">
-				<li v-for="n in 4" @click="orderDetail(1)">
+				<li v-for="temporary in temporaryList" @click="orderDetail(temporary.oid)" :key="temporary.oid">
 					<div class="ub list-top">
-						<span class="ub-f1">订单号 F025689715224</span>
-						<i class="">陌上花开</i>
+						<span class="ub-f1">订单号&nbsp;&nbsp;{{temporary.orderNo}}</span>
+						<i class="">{{temporary.nickname}}</i>
 					</div>
-					<div class="list-center">海淀区中关村南大街海淀区中关村南大街</div>
-					<div class="list-bottom">2018-03-31 16:50</div>
+					<div class="list-center">{{temporary.address}}</div>
+					<div class="list-bottom">{{temporary.placeOrderTime}}</div>
 				</li>
 			</ul>
 		</div>
@@ -30,35 +30,35 @@ export default {
     data () {
         return {
             temporaryList: [],
+            searchValue: '', //搜索
         }
     },
     mounted () {
-
+		this.getTemporaryList();
     },
     methods: {
-		//暂存订单列表
-		getTrain(tid){
-			var params = {};
+		//获取暂存订单列表
+		getTemporaryList(){
+			var params = {
+				search: this.searchValue
+			};
 			home.temporaryOrderList(params)
 				.then(response => {
-					//货品详细信息
 					this.temporaryList = response.data.results;
 				})
 				.catch(function (response) {
 					console.log(response);
 				});
 		},
-
-
-
-
-
+		searchChange(){
+			alert('ss')
+		},
 	    //跳转到订单详情
-        orderDetail(id){
+        orderDetail(oid){
         	this.$router.push({
         		name: 'temporaryOrderList/detail',
         		params: {
-        			id:id
+        			oid:oid
         		}
         	});
         },
