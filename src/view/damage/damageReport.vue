@@ -13,7 +13,7 @@
                 <!--<div class="ub ub-ac heade">-->
                 <!--<div class='ub-f1 ut-s'>设置</div>-->
                 <!--</div>-->
-                <div class="" @click="goRecordUpdate(item.tid)">
+                <div class="" @click="goRecordUpdate(item)">
                     <div class="ub ub-pj type">
                         <div class="ub-f1 category"><span>{{item.goodName}} ({{item.numUnit | sellNnit}}) </span></div>
                         <div class="ub-f1 number"><span class="count">数量</span> <span>{{item.lossNum}}</span></div>
@@ -71,8 +71,8 @@
                         console.log(response);
                     });
             },
-            goRecordUpdate(id){
-                this.$router.push({name: 'damageRecord/update', params: {id: id,type:'edit',trainsNum:this.trainsNum}})
+            goRecordUpdate(item){
+                this.$router.push({name: 'damageRecord/update', params: {id: item.tid,type:'edit',trainsNum:this.trainsNum,item:item}})
             },
             goRecord(){
                 this.$router.push({name: 'damageRecord/create', params: {id: this.tid, type: 'add',trainsNum:this.trainsNum}});

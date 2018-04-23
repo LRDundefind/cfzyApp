@@ -67,6 +67,7 @@
         },
         data () {
             return {
+                item:'',
                 trainsNum:'',
                 goodsType: '',
                 id: '',
@@ -91,6 +92,13 @@
         },
         created(){
             this.goodsType = this.$route.params.type || false;
+            if(this.goodsType =='edit'){
+                this.item = this.$route.params.item;
+                this.goods.goodId = this.item.goodId;
+                this.goods.goodName = this.item.goodName;
+                this.goods.lossRemark = this.item.lossRemark;
+                this.goods.quantity = this.item.lossNum;
+            }
             this.tid = this.$route.params.id || false;
         },
         mounted () {
