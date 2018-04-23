@@ -72,10 +72,10 @@
                     });
             },
             goRecordUpdate(id){
-                this.$router.push({name: 'damageRecord/update', params: {id: id,type:'edit'}})
+                this.$router.push({name: 'damageRecord/update', params: {id: id,type:'edit',trainsNum:this.trainsNum}})
             },
             goRecord(){
-                this.$router.push({name: 'damageRecord/create', params: {id: this.tid, type: 'add'}});
+                this.$router.push({name: 'damageRecord/create', params: {id: this.tid, type: 'add',trainsNum:this.trainsNum}});
             }
         }
     }
