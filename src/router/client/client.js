@@ -34,7 +34,8 @@ export default [
             showFooter: false
         }
     }, {
-        path: 'index_change/create',
+        //新增路由
+        path: 'index_change/create/:type',
         name: 'index_change/create',
         components: {
             mainView: index_change
@@ -43,7 +44,8 @@ export default [
             showFooter: false
         }
     }, {
-        path: 'index_change/update/:id',
+        // 修改路由
+        path: 'index_change/update/:id/:type',
         name: 'index_change/update',
         components: {
             mainView: index_change

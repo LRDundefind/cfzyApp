@@ -1,9 +1,9 @@
 <template>
 	<div class="searchBox pos-r">
 
-		<input v-model="searchValue" placeholder="请输入筛选内容" @input="searchChange"/>
+		<input v-model="searchValue"  placeholder="请输入筛选内容" @input="searchChange"/>
 		<div class="clearSearch pos-a" @click="clearSearch"></div>
-		<a class="searchBtn pos-a">搜索</a>
+		<a class="searchBtn pos-a" @click="searAll">搜索</a>
 	</div>
 </template>
 <script>
@@ -17,11 +17,14 @@ export default {
     },
     mounted () {
 
-    },
+	},
     methods: {
         clearSearch() {
         	this.searchValue = '';
-        },
+		},
+		 searAll() {
+			this.$emit('getSmeage',this.searchValue); //主动触发getSmeage方法，'this.searchValue'为向父组件传递的数据
+		},
         searchChange() {
         	console.log(this.searchValue)
         }   

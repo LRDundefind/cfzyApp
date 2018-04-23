@@ -7,9 +7,9 @@
                 </router-link>
             </mt-header>
             <div class="blackbg">
-                <div><img :src="listdata.headImg"></div>
-                <h2 v-if="listdata.sys_status=='Y'">已被系统加入黑名单请谨慎合作</h2>
-                <h2 v-else>{{listdata.cusName}}</h2>>
+                <div class="headimg"><img :src="imgpath+listdata.headImg" alt="图片" ></div> 
+                <h2 v-if="listdata.sys_status=='Y'" class="titstyle">已被系统加入黑名单<br>请谨慎合作</h2>
+                <h2 v-else>{{listdata.cusName}}</h2>
             </div>
         </div>
         
@@ -17,7 +17,7 @@
         <div class="page-main">
             <div class="main-list">
                 <p class="clearfix">消费次数<span>{{listdata.consum_num}}</span></p>
-                <p class="clearfix">最后消费时间<span>无</span></p>
+                <p class="clearfix">最后消费时间<span>{{listdata.sysCreateTime}}</span></p>
             </div>
 
             <div class="main-list">
@@ -46,7 +46,7 @@
         </div>
         <div class='update clearfix'>
             <mt-button type="primary" size="large" class='f-l' @click="consumptionRecords(3)">查看消费记录</mt-button>
-            <mt-button type="primary" size="large" class='f-l' @click="goChange(10)">更新资料</mt-button>
+            <mt-button type="primary" size="large" class='f-l' @click="goChange()">更新资料</mt-button>
         </div>
     </div>
 </template>
@@ -58,8 +58,9 @@
         data () {
             return {
                 value: '',
-                listdata:null,
-                cid:this.$route.params.ids
+                listdata:{},
+                cid:this.$route.params.ids,
+                imgpath:process.env.BASE_PATH
             }
         },
         mounted () {
@@ -75,14 +76,15 @@
                 };
                 client.Listmessage(params)
                     .then(response => {
+
                         this.listdata=response.data.results;
+
                     })
-                    .catch(function (response) {
-                        console.log(response);
-                    });
+
             },
             goChange(n){
-                this.$router.push({name: 'index_change/update', params: {id: n, type: 'update'}});
+                // 跳转到修改
+                this.$router.push({name: 'index_change/update', params: {id: this.cid, type: 'update'}});
             },
             //跳转到消费记录
             consumptionRecords(id){
@@ -101,7 +103,22 @@
         height: 4rem;
         background: url(../../assets/client/kehu_kehuxiangqing.png) no-repeat;
         background-size: cover;
+        text-align: center;
+        font-size: 0.2rem;
+        color: #fff;
     }
+    .headimg{
+        width: 1rem;
+        height: 1rem;
+        margin: 0 auto;
+        border-radius: 50%;
+        overflow: hidden;
+        padding: 1rem 0 0.5rem;
+    }
+   /* .titstyle{
+        
+       
+    }*/
     .main-list {
         background: #fff;
         margin-top: 0.2rem;

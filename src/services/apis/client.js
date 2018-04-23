@@ -28,6 +28,7 @@ export const client = {
             data: serverMoudle(params) || {}
         });
     },
+    //获取系统客户详情
     getXTmessage(params) {
         return axios({
             url: 'rest/CHENGFENG_GET_SAAS_CUSTOMERINFO',
@@ -35,5 +36,11 @@ export const client = {
             data: serverMoudle(params) || {}
         });
     },
-
+    Cgemessage(params) {
+        return axios({
+            url: 'rest/CHENGFENG_SET_SELEMAN_CUSTOMERINFO',
+            method: 'post',
+            data: serverMoudle(params) || {}
+        });
+    },
 };

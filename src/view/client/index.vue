@@ -6,37 +6,49 @@
             </router-link>
             <span @click="addCustomer" style="font-size: 0.32rem" slot="right" v-if="type != 'order'">添加客户</span>
         </mt-header>
-        <search-box ref="search"/>
-        <div class="page-main">
-            <div v-for="n in listdata" :key='n.id' class="main-list" @click="goDetail(n.cid, n.nickname)">
-                <div class="ub ub-ac heade">
-                    <div class='lis-icon ub-img im'><img :src="n.headImg" ></div>
-                    <div class='ub-f1 ut-s'>{{n.nickname}}</div>
-                    <!-- 正常客户状态 -->
-                    <div class=' res8 lis-sw ub-img im2' v-show="n.status=='Y'"></div>
-                    <!-- 平台状态 -->
-                    <div class=' res8 lis-sw ub-img im3' v-show="n.sys_status=='Y'"></div>
+        <search-box  @getSmeage="searchstart"  ref="search"/>
+        <div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }">
+
+            <mt-loadmore 
+				:auto-fill="false"
+				:top-method="loadTop" 
+				:bottom-method="loadBottom"
+				:bottom-all-loaded="allLoaded"
+				ref="loadmore">
+
+                <div v-for="n in listStore" :key='n.id' class="main-list" @click="goDetail(n.cid, n.nickname)">
+                    <div class="ub ub-ac heade">
+                        <div class='lis-icon ub-img im'><img :src="imgpath+n.headImg" ></div>
+                        <div class='ub-f1 ut-s'>{{n.nickname}}</div>
+                        <!-- 正常客户状态 -->
+                        <div class=' res8 lis-sw ub-img im2' v-show="n.status=='Y'"></div>
+                        <!-- 平台状态 -->
+                        <div class=' res8 lis-sw ub-img im3' v-show="n.sys_status=='Y'"></div>
+                    </div>
+                    <ul class="">
+                        <li class="ub ub-pj">
+                            <div class="ub-f1">消费次数</div>
+                            <div class="ub-f1">{{n.consum_num}}次</div>
+                        </li>
+                        <li class="ub ub-pj">
+                            <div class="ub-f1">最后消费时间</div>
+                            <div class="ub-f1">{{n.consum_ltime}}</div>
+                        </li>
+                        <li class="ub ub-pj">
+                            <div class="ub-f1">赊账总金额</div>
+                            <div class="ub-f1">{{n.notPayAmount}}元</div>
+                        </li>
+                        <li class="ub ub-pc">
+                            <div class="ub-f1">赊账最长时间</div>
+                            <div class="ub-f1">{{n.creditTime}}</div>
+                        </li>
+                    </ul>
                 </div>
-                <ul class="">
-                    <li class="ub ub-pj">
-                        <div class="ub-f1">消费次数</div>
-                        <div class="ub-f1">{{n.consum_num}}次</div>
-                    </li>
-                    <li class="ub ub-pj">
-                        <div class="ub-f1">最后消费时间</div>
-                        <div class="ub-f1">{{n.consum_ltime}}</div>
-                    </li>
-                    <li class="ub ub-pj">
-                        <div class="ub-f1">赊账总金额</div>
-                        <div class="ub-f1">{{n.notPayAmount}}元</div>
-                    </li>
-                    <li class="ub ub-pc">
-                        <div class="ub-f1">赊账最长时间</div>
-                        <div class="ub-f1">{{n.creditTime}}</div>
-                    </li>
-                </ul>
-            </div>
+                <div v-if="allLoaded" class="m-t-10" style="text-align:center;font-size: 0.18rem">没有更多数据了</div>
+		  
+			</mt-loadmore>
         </div>
+
     </div>
 </template>
 
@@ -44,36 +56,80 @@
     import searchBox from '@/components/searchBox/search'
     import { client } from '@/services/apis/client'
     import Cookies from 'js-cookie' 
+    import { Loadmore , Indicator} from 'mint-ui'
     export default {
         data () {
             return {
+                allLoaded: false,
+                msg:'',
+                wrapperHeight: 0,//容器高度
                 type: '',
-                listdata:null
+                listStore: [],
+                listdata:null,
+                params:{
+                    current_page: 1,
+                    page_size: 10,
+                    search:''
+                },
+                imgpath:process.env.BASE_PATH
             }
         },
         components: {
             searchBox
         },
         mounted () {
+            let windowWidth = document.documentElement.clientWidth;//获取屏幕高度
+            if(windowWidth>768){//这里根据自己的实际情况设置容器的高度
+                this.wrapperHeight = document.documentElement.clientHeight - 130;
+            }else{
+                this.wrapperHeight = document.documentElement.clientHeight - 110 + 55;
+            }
             this.type = this.$route.params.type || false;
-//            console.log(this.type);
         },
         created(){
             this.getList();
         },
         methods: {
+            searchstart(msg){
+                this.params.search=msg;
+                this.getList();
+            },
+            loadTop(){
+                Indicator.open({
+                    text: 'Loading...',
+                    spinnerType: 'fading-circle'
+                });
+                this.listStore = [];
+                this.params.current_page = 1;
+                this.getList();
+                this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
+                this.allLoaded = false;//下拉刷新时解除上拉加载的禁用
+            },
+            loadBottom() {
+                Indicator.open({
+                    text: 'Loading...',
+                    spinnerType: 'fading-circle'
+                });
+                this.getList();
+            },
             getList(){
-                let params = {
-                    page_size: 10,
-                    current_page: 1,
-                };
-                client.dataList(params)
+               
+                client.dataList(this.params)
                     .then(response => {
-                        this.listdata=response.data.results;
+                        this.listdata = response.data.results;
+                        if(this.listdata.length==this.params.page_size){  
+                            //判断是否应该加载下一页
+                            this.params.current_page+=1 ;
+                        }else{
+                            //禁用上拉加载
+                            this.allLoaded = true;
+                        }
+                        if (this.listdata) {
+                            this.listStore.push(...this.listdata)
+                        }
+                        Indicator.close();
                     })
-                    .catch(function (response) {
-                        console.log(response);
-                    });
+                    
             },
             //跳转到添加客户
             addCustomer(){
@@ -94,6 +150,9 @@
     }
 </script>
 <style scoped lang="scss">
+.page-loadmore-wrapper {
+    overflow: scroll
+}
     .im {
         width: 0.8rem;
         height: 0.8rem;

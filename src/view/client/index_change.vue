@@ -9,21 +9,33 @@
 
         <div class="page-main">
             <div class="main-list">
-                <p class="clearfix">姓名
-                    <input type="text" v-model="nameRead" >
-                </p>
-                <p class="clearfix">昵称<input type="text" v-model="nicheng"></p>
-                <p class="clearfix">电话<input type="text" v-model="phone"></p>
-                <p class="clearfix">身份证号
-                    <input type="text" v-model="IdcardRead">
-                </p>
+                <div>
+                     <!-- 接口无数据可编辑 -->
+                    <p class="clearfix" v-if="listdata.cusName=='' && xiTdata==''">姓名1 <input type="text" v-model="nameRead" placeholder="请输入"> </p>
+                    <!-- 接口有数据不可编辑（修改时有此可能） -->
+                    <p class="clearfix"  v-else>姓名2 <input type="text" v-model="nameRead" :disabled="true" > </p>
+                </div>
+               
+
+                <p class="clearfix">昵称<input type="text" v-model="nicheng" placeholder="请输入"></p>
+
+               
+                <p class="clearfix">电话<input type="text" v-model="phone" placeholder="请输入"></p>
+                
+                 <div style="border-top:1px #f0f0f0 solid">
+                    <!-- 接口无数据可编辑 -->
+                    <p class="clearfix" v-if="listdata.idCard==''&& xiTdata==''">身份证号 <input type="text" v-model="IdcardRead" placeholder="请输入"> </p>
+                    <!-- 接口有数据不可编辑（修改时有此可能） -->
+                    <p class="clearfix" v-else>身份证号 <input type="text" v-model="IdcardRead" :disabled="true"> </p>
+                
+                </div>
                 <p style="border:none;text-align: right;line-height: 0.3rem;font-size:0.22rem;color:#808080;">
                     "身份证号"首次编辑后将无法修改</p>
             </div>
 
             <div class="main-list">
-                <p class="clearfix">公司<input type="text" v-model="gongsi"></p>
-                <p class="clearfix">地址<input type="text" v-model="address"></p>
+                <p class="clearfix">公司<input type="text" v-model="gongsi" placeholder="请输入"></p>
+                <p class="clearfix">地址<input type="text" v-model="address" placeholder="请输入"></p>
             </div>
 
             <div class="main-list">
@@ -33,14 +45,14 @@
                 </div>
             </div>
         </div>
-        <div class="footer_btn" v-if="type=='update'">
+        <div class="footer_btn" v-if="typeW=='update'">
             <div class="ub ub-pc">
                 <div class="ub-f1 blackList" @click="dialoags = true ">加入黑名单</div>
                 <div class="ub-f1 bad" @click="badList">设置为坏账</div>
             </div>
         </div>
 
-        <!-- 模态框 -->
+        <!-- 修改的模态框 -->
         <div class="dialoag" v-show="dialoags">
             <div class="dialoag_cont">
                 <h3>黑名单</h3>
@@ -50,15 +62,27 @@
                 <div @click="dialoags = false ">取消</div>
             </div>
         </div>
+        <!-- 新增的模态框 -->
+        <div class="dialoag" v-show="addPerson">
+            <div class="dialoag_cont">
+                <h3>请输入手机号</h3>
+                <input type="text" v-model="phoneAdd" class="phonemobil">
+                <div @click="tipsQX">取消</div>
+                <div @click="showa">确定</div>
+            </div>
+        </div>
+
     </div>
 </template>
 
 <script>
-    import {MessageBox} from 'mint-ui';
+
+    import { MessageBox , Toast } from 'mint-ui';
     import { client } from '@/services/apis/client'
     export default {
         data () {
             return {
+                addPerson:false,
                 value: '',
                 nameRead: '',
                 nameWrite: '',
@@ -72,47 +96,160 @@
                 address: '',
                 message: '',
                 dialoags: false,
-                id: '',
-                type: '',
+                cid: '',    //需要的cid修改信息时使用
+                typeW: '',
+                phoneAdd:'', //新增客户的时候填写的手机号
+                listdata:{
+                    cusName:'',
+                    idCard:''
+                }, //接口获取的数据
+                xiTdata:''
             }
         },
         mounted () {
-            let type = this.$route.params.type || false;
-            this.type = type;
-            let id = this.$route.params.id || false;
-            if (id) {
-                this.id = id;
-                this.getData();
+           
+            //create添加  update是修改
+            this.typeW = this.$route.params.type || false;
+            this.cid = this.$route.params.id || false;
+            if (this.cid) {
+                // 根据客户ID修改
+                    this.getData();
+                    this.addPerson=false;
+            }
+            else{
+                // 根据手机号调取资源池数据，新增客户    
+                    this.addPerson=true;
             }
 
         },
         methods: {
+            tipsQX(){
+                // 新增的取消按钮
+                if(this.phoneAdd==''){
+					Toast({
+                        message: '请输入手机号',
+                        position: 'middle',
+                        duration: 3000
+                        });
+                }
+                else{
+                    Toast({
+                        message: '请点击确定按钮',
+                        position: 'middle',
+                        duration: 3000
+                        });
+                }
+            },
+            showa(){
+                //新增的确定按钮
+                if(this.phoneAdd==''){
+					Toast({
+                        message: '请输入手机号',
+                        position: 'middle',
+                        duration: 3000
+                        });
+                }
+                else if(!new RegExp(/^1[3|4|5|7|8][0-9]{9}$/).test(this.phoneAdd)){
+                    Toast({
+                        message: '手机号格式输入有误',
+                        position: 'middle',
+                        duration: 3000
+                        });
+                }
+                else{
+                    this.getList();
+                    this.addPerson = false;
+                }
+                
+                
+            },
             getData(){
-               
+                let params = {
+                    cid:this.cid
+                };
+                // 获取个人信息需要cid
+                client.Listmessage(params)
+                    .then(response => {
+                        let s=response.data.results
+                        this.listdata=response.data.results;
+
+
+                        this.nameRead=s.cusName;//姓名
+                        this.IdcardRead=s.idCard;//身份证号
+
+
+                        this.message=this.listdata.remark;//备注
+                        this.address=this.listdata.address;//地址
+                        this.gongsi=this.listdata.company;//公司
+                        this.phone=this.listdata.phone;//手机号
+                        this.nicheng=this.listdata.nickname;//昵称
+
+                       
+                    })
+                 
             },
             getList(){
-            },
-            handleSave(){
-                let params = {
-                    phone:this.phone
+                 let params = {
+                    phone:this.phoneAdd
                 };
+                //获取系统客户详情 只需要手机号
                 client.getXTmessage(params)
                     .then(response => {
-                        this.listdata=response.data.results;
+
+                        let s=response.data.results
+                        this.xiTdata=response.data.results;
+                        this.cid=s.cid;//cid
+                        this.nameRead=s.cusName;//姓名
+                        this.IdcardRead=s.idCard;//身份证号
+                        this.address=s.address;//地址
+                        this.gongsi=s.company;//公司
+                        this.phone=s.phone;//手机号
                     })
+            },
+            handleSave(){
+                if (this.cid) {
+                // 修改信息
+                   let params = {
+                        cid:this.cid,    //客户id
+                        cusName:this.nameRead, //姓名
+                        nickname:this.nicheng,
+                        phone:this.phone,
+                        idCard:this.IdcardRead,
+                        company:this.gongsi,
+                        address:this.address,
+                        remark:this.message
+                    };
+                    client.Cgemessage(params)
+                        .then(response => {
+                            if(response.data.status=='Y'){
+                                this.$router.push({name: 'client'});
+                            }
+                        })
+                }
+                else{
+                // 新增客户   
+                     let params = {
+                        cusName:this.nameRead,
+                        nickname:this.nicheng,
+                        phone:this.phone,
+                        idCard:this.IdcardRead,
+                        company:this.gongsi,
+                        address:this.address,
+                        remark:this.message,
+                        cid:this.cid
+                    };
+                client.addC(params)
+                    .then(response => {
+                        this.xiTdata=response.data.results;
+                        if(response.data.status=='Y'){
+                            this.$router.push({name: 'client'});
+                        }
+                    })
+                }
                 
             },
             send(){
-                 let params = {
-                    cid:this.cid
-                };
-                client.Listmessage(params)
-                    .then(response => {
-                        this.listdata=response.data.results;
-                    })
-                    .catch(function (response) {
-                        console.log(response);
-                    });
+                
             },
             badList(){
                 MessageBox({
@@ -128,7 +265,14 @@
     }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
-
+    .phonemobil{
+        border: 1px solid #dedede;
+        color: #4c4c4c;
+        line-height: 0.8rem;
+        margin-bottom: 0.5rem;
+        box-sizing: border-box;
+        padding-left: 2px;
+    }
     .main-list {
         background: #fff;
         margin-top: 0.2rem;
@@ -136,6 +280,17 @@
         color: #333;
         font-size: 0.28rem;
         line-height: 1rem;
+        div {
+            p{
+                input{
+                     float: right;
+                    color: #4c4c4c;
+                    text-align: right;
+                    line-height: 0.5rem;
+                    margin-top: 0.25rem;
+                }
+            }
+        }
         > p {
             border-top: 1px #f0f0f0 solid;
             > input {
@@ -184,7 +339,7 @@
         left: 0;
         top: 0;
         background: rgba(0, 0, 0, 0.6);
-        z-index: 10001;
+        z-index: 150;
         .dialoag_cont {
             width: 80%;
             border-radius: 5px;
