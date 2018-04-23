@@ -7,7 +7,8 @@
 		</mt-header>
 		<!--订单列表-->
 		<div class="page-main">
-			<search-box ref="search"/>
+			<!--子emit发送触发事件this.$emit('getSmeage',this.searchValue)  父监听getSmeage，并接收值-->
+			<search-box ref="search" @getSmeage="searchHandler"/>
 			<ul class="order-list">
 				<li v-for="temporary in temporaryList" @click="orderDetail(temporary.oid)" :key="temporary.oid">
 					<div class="ub list-top">
@@ -30,7 +31,7 @@ export default {
     data () {
         return {
             temporaryList: [],
-            searchValue: '', //搜索
+            val: '', //搜索
         }
     },
     mounted () {
@@ -38,9 +39,9 @@ export default {
     },
     methods: {
 		//获取暂存订单列表
-		getTemporaryList(){
+		getTemporaryList(val){
 			var params = {
-				search: this.searchValue
+				search: val
 			};
 			home.temporaryOrderList(params)
 				.then(response => {
@@ -50,8 +51,8 @@ export default {
 					console.log(response);
 				});
 		},
-		searchChange(){
-			alert('ss')
+		searchHandler(value){
+			this.getTemporaryList(value);
 		},
 	    //跳转到订单详情
         orderDetail(oid){
