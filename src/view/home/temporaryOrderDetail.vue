@@ -58,7 +58,7 @@
 					<!--<div>2018-03-31</div>
 					<div class="driver-name">小李</div>
 					<div>车次89</div>-->
-					<div>2018-03-31 小李 车次89 ??</div>					
+					<div>{{detailInfo.trainsNum}}</div>					
 				</div>
 				<table>
 					<thead>
@@ -78,15 +78,6 @@
 							<td>{{goods.goodAmount}}</td>
 							<td>{{goods.packCost}}</td>
 						</tr>
-						<!--<tr>
-							<td>大白菜<br />(1500)</td>
-							<td>100斤</td>
-							<td class="set-price" >
-								设置<br />单价
-							</td>
-							<td>600.00</td>
-							<td>20.00</td>
-						</tr>-->
 					</tbody>
 				</table>
 			</div>

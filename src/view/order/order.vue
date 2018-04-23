@@ -88,7 +88,7 @@
 					<div class="ub-f1"></div>					
 					<div>现结</div>					
 				</div>
-				<div class="ub ub-ac term no-border input-choose">
+				<div class="ub ub-ac term no-border input-choose" v-if="customerType == 'Nottemporary'"> <!--临时客户不可以赊账-->
 					<input id="sz" type="radio" name="choosetype" value="order_credit" v-model="orderType">
 					<label for="sz" class="individual"></label>
 					<div class="ub-f1"></div>					
@@ -307,13 +307,13 @@ export default {
                     for(var i = 0, len = this.goodsInfo.length; i < this.goodsInfo.length; i ++){
                     	//列表中展示的项 非设置全部goodsInfo，部分题啊交订单所需项在货品设置弹框关闭后set添加
                     	//初始不添加goodName,googId
-						this.goodsInfo[i]['price'] = 0; 
-						this.goodsInfo[i]['goodNum'] = 0; 
-						this.goodsInfo[i]['weight'] = 0; 
-						this.goodsInfo[i]['goodAmount'] = 0;
-                        this.goodsInfo[i]['packCost'] = 0;
-						this.goodsInfo[i]['weighCost'] = 0; //过磅费，表格里不展示，下方列表展示
-						this.goodsInfo[i]['slabWeight'] = 0; //平板重 提交订单所需，列表不展示
+						this.goodsInfo[i]['price'] = null; 
+						this.goodsInfo[i]['goodNum'] = null; 
+						this.goodsInfo[i]['weight'] = null; 
+						this.goodsInfo[i]['goodAmount'] = null;
+                        this.goodsInfo[i]['packCost'] = null;
+						this.goodsInfo[i]['weighCost'] = null; //过磅费，表格里不展示，下方列表展示
+						this.goodsInfo[i]['slabWeight'] = null; //平板重 提交订单所需，列表不展示
 						this.goodsInfo[i]['weight_util'] = this.goodsInfo[i].sellUnit; //重量单位，提交订单所需，列表不展示    //若按重量售卖，则重量单位为售卖单位????   待修改
                         this.goodsInfo[i]['sellUnit'] = this.goodsInfo[i].sellUnit ; //售卖单位，列表不展示
                         this.goodsInfo[i]['numUnit'] = this.goodsInfo[i].numUnit; //入库单位，列表不展示
@@ -356,31 +356,31 @@ export default {
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(!(new RegExp(/^([1-9][0-9]*)+(.[0-9]{1,2})?$/).test(this.goodsnum))){
+    		}else if(!(new RegExp(/^[0-9]+(.[0-9]+)?$/).test(this.goodsnum))){
     			Toast({
 					message: '请正确输入件数',
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(this.goodsweight == '' && this.sellUnit != 'unit_pie'){
+    		}else if(this.goodsweight == ''){
     			Toast({
 					message: '请完善购买信息',
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(!(new RegExp(/^([1-9][0-9]*)+(.[0-9]{1,2})?$/).test(this.goodsweight)) && this.sellUnit != 'unit_pie'){
+    		}else if(!(new RegExp(/^[0-9]+(.[0-9]+)?$/).test(this.goodsweight))){
     			Toast({
 					message: '请正确输入重量',
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(this.pbweight == '' && this.sellUnit != 'unit_pie'){
+    		}else if(this.pbweight == ''){
     			Toast({
 					message: '请完善购买信息',
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(!(new RegExp(/^([1-9][0-9]*)+(.[0-9]{1,2})?$/).test(this.pbweight)) && this.sellUnit != 'unit_pie'){
+    		}else if(!(new RegExp(/^[0-9]+(.[0-9]+)?$/).test(this.pbweight))){
     			Toast({
 					message: '请正确输入平板重',
 					position: 'middle',
@@ -388,7 +388,7 @@ export default {
     			});
     		}else{
     			if(this.goodsunit != ''){
-	    			if(!(new RegExp(/^([1-9][0-9]*)+(.[0-9]{1,2})?$/).test(this.goodsunit))){
+	    			if(!(new RegExp(/^[0-9]+(.[0-9]+)?$/).test(this.goodsunit))){
 		    			Toast({
 							message: '请正确输入单价',
 							position: 'middle',
@@ -440,14 +440,15 @@ export default {
 					     	price:this.goodsunit,
 					     	goodNum:this.goodsnum,
 					     	weight:this.goodsweight,
-					     	goodAmount: 0, //货品金额
-					     	packCost: 0, //货品打包费
-					     	weighCost: 0, //货品过磅费 下方列表展示
+					     	goodAmount: null, //货品金额
+					     	packCost: null, //货品打包费
+					     	weighCost: null, //货品过磅费 下方列表展示
 					     	slabWeight:this.pbweight, //提交订单所需，列表不展示
 					     	weight_util:this.set_weight_util,  //重量单位，提交订单所需，列表不展示   //若按重量售卖，则重量单位为售卖单位????   待修改
 					     	sellUnit:this.sellUnit,  //售卖单位，提交订单所需，列表不展示
 					     	numUnit:this.numUnit,  //入库单位，列表不展示
 					    });
+					    console.log(this.goodsInfo)
 				//重置弹框数据
 			    this.resetPriceNum(); 
 			    //重置各项价格总和
@@ -608,7 +609,7 @@ export default {
     			});
     			return false;
     		}else{
-				if(!(new RegExp(/^([1-9][0-9]*)+(.[0-9]{1,2})?$/).test(this.totalCost.deliveryCost))){
+				if(!(new RegExp(/^[0-9]+(.[0-9]+)?$/).test(this.totalCost.deliveryCost))){
 					Toast({
 						message: '请正确输入三轮费',  //这里弹框的层级有问题  -------待修改
 						position: 'middle',
