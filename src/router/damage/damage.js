@@ -14,7 +14,7 @@ export default [
             showFooter: false
         }
     }, {
-        path: 'damageReport',
+        path: 'damageReport/:tid',
         name: 'damageReport',
         components: {
             mainView: damageReport
@@ -23,7 +23,7 @@ export default [
             showFooter: false
         }
     },{
-        path: 'damageRecord/create',
+        path: 'damageRecord/create/:id',
         name: 'damageRecord/create',
         components: {
             mainView: damageRecord

@@ -8,7 +8,7 @@
         </mt-header>
         <search-box ref="search"/>
         <div class="page-main">
-            <div v-for="n in listdata" :key='n.id' class="main-list" @click="goDetail(n.cid)">
+            <div v-for="n in listdata" :key='n.id' class="main-list" @click="goDetail(n.cid, n.nickname)">
                 <div class="ub ub-ac heade">
                     <div class='lis-icon ub-img im'><img :src="imgpath+n.headImg" ></div>
                     <div class='ub-f1 ut-s'>{{n.nickname}}</div>
@@ -80,9 +80,10 @@
             addCustomer(){
                 this.$router.push({name: 'index_change/create', params: {type: 'create'}})
             },
-            goDetail(id){
+            goDetail(id, nickname){
                 if (this.type == 'order') {
-                    Cookies.set('chooseCustomer',id)
+                    Cookies.set('customerId',id);
+                    Cookies.set('customerName',nickname);
                     //下单
                     this.$router.push({name: 'order'});
                 } else {

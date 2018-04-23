@@ -1,9 +1,9 @@
 <template>
 	<div class="page-content">
 		<mt-header fixed  title="车次">
-			
-			    <mt-button icon="back" @click="$router.go(-1)" slot="left"></mt-button>
-			
+			<router-link to="/" slot="left">
+			    <mt-button icon="back" @click="$router.go(-1)"></mt-button>
+			</router-link>
 		</mt-header>
 		<!--车次列表-->
 		<div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
@@ -11,8 +11,6 @@
 				:auto-fill="false"
 				:top-method="loadTop" 
 				:bottom-method="loadBottom"
-				@top-status-change="handleTopChange" 
-				@bottom-status-change="handleBottomChange"
 				:bottom-all-loaded="allLoaded"
 				ref="loadmore">
 			<ul class="order-list">
@@ -29,17 +27,8 @@
 					</div>
 				</li>
 			</ul>
-			<div slot="top" class="mint-loadmore-top">
-		        <span v-show="topStatus !== 'loading'" :class="{ 'rotate': topStatus === 'drop' }">↓</span>
-		        <span v-show="topStatus === 'loading'">Loading...</span>
-		    </div>
 		    <div v-if="allLoaded" class="m-t-10" style="text-align:center;font-size: 0.18rem">没有更多数据了</div>
-		    <div slot="bottom" class="mint-loadmore-bottom">
-	          	<span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑</span>
-	          	<span v-show="bottomStatus === 'loading'">
-	            	<mt-spinner v-show="bottomStatus == 'loading'" color="#26a2ff"></mt-spinner>
-	          	</span>
-	        </div>
+		  
 			</mt-loadmore>
 		</div>
 	</div>
@@ -51,12 +40,10 @@ import Bus from '@/components/bus.js'
 import {order} from '@/services/apis/order.js'
 import { Loadmore } from 'mint-ui'
 import { InfiniteScroll } from 'mint-ui'
-
+import Cookies from 'js-cookie'
 export default {
     data () {
         return {
-        	topStatus: '',
-			bottomStatus: '',
         	allLoaded: false,
         	wrapperHeight: 0,//容器高度
         	listStore: [],
@@ -101,17 +88,16 @@ export default {
 		},
 		//选择车次
 		chooseTrain(tid, trainsNum, plateNum){
+
+			Cookies.set('trainTid',tid);
+			Cookies.set('trainsNum',trainsNum);
+            Cookies.set('plateNum',plateNum);
+            
             this.$router.push({
             	name: 'order',
-				params: {tid: tid, trainsNum: trainsNum, plateNum: plateNum}
+				params: {}
             });
 		},
-		handleTopChange(status) {
-	        this.topStatus = status;
-	    },
-	    handleBottomChange(status) {
-	        this.bottomStatus = status;
-	    },
 	    loadTop(){
 	    	this.listStore = [];
 	    	this.params.current_page = 1;
