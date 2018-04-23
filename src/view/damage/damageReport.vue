@@ -15,7 +15,7 @@
                 <!--</div>-->
                 <div class="" @click="goRecordUpdate(item.tid)">
                     <div class="ub ub-pj type">
-                        <div class="ub-f1 category"><span>{{item.goodName}} （{{item.numUnit | sellNnit}}） </span></div>
+                        <div class="ub-f1 category"><span>{{item.goodName}} ({{item.numUnit | sellNnit}}) </span></div>
                         <div class="ub-f1 number"><span class="count">数量</span> <span>{{item.lossNum}}</span></div>
                     </div>
                     <div class="ub ub-pj reason">

@@ -100,7 +100,10 @@
         methods: {
             //初始化数据--获取档位货品列表
             getlist(){
-                damage.goodsList(this.goodsListParams).then(response => {
+                let data = {
+                    tid: this.tid
+                };
+                damage.damageDetails(data).then(response => {
                     this.goodsData = response.data.results;
 //                    this.storageData = response.data.results;
                 })
