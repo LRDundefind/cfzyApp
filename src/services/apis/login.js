@@ -21,7 +21,7 @@ export const login = {
     //注册
     zhuce(params){
     	return axios({
-            url: '/rest/CHENGFENG_SET_NEWUSER',
+            url: '/rest/CHENGFENG_SET_SELEMAN_NEWUSER',
             method: 'get',
             params: params || {}
         });

@@ -10,7 +10,7 @@
         <div class="page-main">
             <div v-for="n in listdata" :key='n.id' class="main-list" @click="goDetail(n.cid)">
                 <div class="ub ub-ac heade">
-                    <div class='lis-icon ub-img im'><img :src="n.headImg" ></div>
+                    <div class='lis-icon ub-img im'><img :src="imgpath+n.headImg" ></div>
                     <div class='ub-f1 ut-s'>{{n.nickname}}</div>
                     <!-- 正常客户状态 -->
                     <div class=' res8 lis-sw ub-img im2' v-show="n.status=='Y'"></div>
@@ -48,7 +48,8 @@
         data () {
             return {
                 type: '',
-                listdata:null
+                listdata:null,
+                imgpath:process.env.BASE_PATH
             }
         },
         components: {
