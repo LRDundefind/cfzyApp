@@ -1,9 +1,7 @@
 <template>
     <div class="page-content">
         <mt-header fixed title="货品信息">
-            <router-link to="/" slot="left">
-                <mt-button @click="$router.go(-1)" icon="back"></mt-button>
-            </router-link>
+                <mt-button @click="goReport" icon="back" slot="left"></mt-button>
         </mt-header>
 
         <!--还款记录列表-->
@@ -69,6 +67,8 @@
         },
         data () {
             return {
+                item:'',
+                trainsNum:'',
                 goodsType: '',
                 id: '',
 //                deleteDisabled: '',
@@ -92,15 +92,34 @@
         },
         created(){
             this.goodsType = this.$route.params.type || false;
+            if(this.goodsType =='edit'){
+                this.item = this.$route.params.item;
+                this.goods.goodId = this.item.goodId;
+                this.goods.goodName = this.item.goodName;
+                this.goods.lossRemark = this.item.lossRemark;
+                this.goods.quantity = this.item.lossNum;
+            }
             this.tid = this.$route.params.id || false;
         },
         mounted () {
+            this.trainsNum = this.$route.params.trainsNum;
+            console.log(this.trainsNum);
             this.getlist()
         },
         methods: {
+            //跳转到车次列表页
+            goReport(){
+                console.log(1111);
+                this.$router.push({name: 'damageReport',params:{tid:this.tid,trainsNum:this.trainsNum}});
+                console.log(1111);
+
+            },
             //初始化数据--获取档位货品列表
             getlist(){
-                damage.goodsList(this.goodsListParams).then(response => {
+                let data = {
+                    tid: this.tid
+                };
+                damage.damageDetails(data).then(response => {
                     this.goodsData = response.data.results;
 //                    this.storageData = response.data.results;
                 })
@@ -125,12 +144,15 @@
                             data.tid = this.tid;
                             damage.submitDamage(data)
                                 .then(response => {
-                                    Toast({
-                                        message: response.data.results,
-                                        position: 'middle',
-                                        duration: 1000
-                                    });
-                                    console.log(response);
+                                    if(response.data.status == 'Y'){
+                                        this.goReport();
+                                    }else {
+                                        Toast({
+                                            message: response.data.results,
+                                            position: 'middle',
+                                            duration: 1000
+                                        });
+                                    }
                                 })
                                 .catch(function (response) {
                                     console.log(response);

@@ -1,8 +1,8 @@
 <template>
     <div class="">
         <mt-header fixed title="货品损坏">
-            <router-link to="/" slot="left">
-                <mt-button @click="$router.go(-1)" icon="back"></mt-button>
+            <router-link to="/damage" slot="left">
+                <mt-button icon="back"></mt-button>
             </router-link>
         </mt-header>
         <div class="page-main">
@@ -13,9 +13,9 @@
                 <!--<div class="ub ub-ac heade">-->
                 <!--<div class='ub-f1 ut-s'>设置</div>-->
                 <!--</div>-->
-                <div class="" @click="goRecordUpdate(item.tid)">
+                <div class="" @click="goRecordUpdate(item)">
                     <div class="ub ub-pj type">
-                        <div class="ub-f1 category"><span>{{item.goodName}} （{{item.numUnit | sellNnit}}） </span></div>
+                        <div class="ub-f1 category"><span>{{item.goodName}} ({{item.numUnit | sellNnit}}) </span></div>
                         <div class="ub-f1 number"><span class="count">数量</span> <span>{{item.lossNum}}</span></div>
                     </div>
                     <div class="ub ub-pj reason">
@@ -71,11 +71,11 @@
                         console.log(response);
                     });
             },
-            goRecordUpdate(id){
-                this.$router.push({name: 'damageRecord/update', params: {id: id,type:'edit'}})
+            goRecordUpdate(item){
+                this.$router.push({name: 'damageRecord/update', params: {id: item.tid,type:'edit',trainsNum:this.trainsNum,item:item}})
             },
             goRecord(){
-                this.$router.push({name: 'damageRecord/create', params: {id: this.tid, type: 'add'}});
+                this.$router.push({name: 'damageRecord/create', params: {id: this.tid, type: 'add',trainsNum:this.trainsNum}});
             }
         }
     }
