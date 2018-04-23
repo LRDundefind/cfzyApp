@@ -1,8 +1,8 @@
 <template>
     <div class="page-content">
         <mt-header fixed title="货品损坏">
-            <router-link to="/zhuce" slot="left">
-                <mt-button icon="back" @click="$router.go(-1)"></mt-button>
+            <router-link to="/home" slot="left">
+                <mt-button icon="back"></mt-button>
             </router-link>
         </mt-header>
         <div class="page-main">
