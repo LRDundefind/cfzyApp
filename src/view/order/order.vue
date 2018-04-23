@@ -105,7 +105,7 @@
 				</div>
 			</div>
 			<!--签名-->
-			<div class="order-detail" v-if="autographInfo">
+			<div class="order-detail" v-if="autographInfo && orderType == 'order_credit'">
 				<div class="ub ub-ac term no-border right-icon" @click="autograph()">
 					<div class="ub-f1">签名</div>
 					<img src="../../assets/my/icon_right.png" class="icon">
