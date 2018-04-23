@@ -2,7 +2,7 @@
     <div class="page-content">
         <div class="page-main">
             <search-box ref="search"/>
-            <div v-for="item in ownerData" :key='ownerData.sid' class="main-list">
+            <div v-for="item in ownerData" :key='item.id' class="main-list">
                 <div @click="choiceOwner(item)">
                     <div class="name">{{item.shipName}}</div>
                     <div class="ub car">

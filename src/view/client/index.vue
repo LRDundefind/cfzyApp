@@ -6,7 +6,7 @@
             </router-link>
             <span @click="addCustomer" style="font-size: 0.32rem" slot="right" v-if="type != 'order'">添加客户</span>
         </mt-header>
-        <search-box ref="search"/>
+        <search-box  @getSmeage="searchstart" :msg="msg" ref="search"/>
         <div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }">
 
             <mt-loadmore 
@@ -61,13 +61,15 @@
         data () {
             return {
                 allLoaded: false,
+                msg:'',
                 wrapperHeight: 0,//容器高度
                 type: '',
                 listStore: [],
                 listdata:null,
                 params:{
                     current_page: 1,
-                    page_size: 10
+                    page_size: 10,
+                    search:''
                 },
                 imgpath:process.env.BASE_PATH
             }
@@ -88,6 +90,10 @@
             this.getList();
         },
         methods: {
+            searchstart(msg){
+                this.params.search=msg;
+                this.getList();
+            },
             loadTop(){
                 Indicator.open({
                     text: 'Loading...',
