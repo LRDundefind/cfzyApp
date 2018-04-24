@@ -43,6 +43,7 @@
 </template>
 
 <script>
+    import {Toast} from 'mint-ui';
     import {damage} from '@/services/apis/damage.api'
 
     export default {
@@ -84,7 +85,26 @@
 
 	    //申请结算
         settlement(){
-        	
+            let data = {
+                tid: this.tid
+            };
+            damage.submitBus(data)
+                .then(response => {
+                    if(response.data.status == 'Y'){
+                        console.log(1111);
+                    }else {
+                        Toast({
+                            message: response.data.error_msg,
+                            position: 'middle',
+                            duration: 1000
+                        });
+                    }
+
+                    console.log(response);
+                })
+                .catch(function (response) {
+                    console.log(response);
+                });
         }
             
     }
