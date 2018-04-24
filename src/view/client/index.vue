@@ -82,7 +82,7 @@
             if(windowWidth>768){//这里根据自己的实际情况设置容器的高度
                 this.wrapperHeight = document.documentElement.clientHeight - 130;
             }else{
-                this.wrapperHeight = document.documentElement.clientHeight - 110 + 55;
+                this.wrapperHeight = document.documentElement.clientHeight - 110 + 105;
             }
             this.type = this.$route.params.type || false;
         },
@@ -92,6 +92,7 @@
         methods: {
             searchstart(msg){
                 this.params.search=msg;
+                this.listStore = [];
                 this.getList();
             },
             loadTop(){
