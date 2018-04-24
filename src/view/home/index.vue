@@ -12,7 +12,7 @@
 
         <div class="">
 
-            <div class="home" @click="goBlack(5)">
+            <div class="home" @click="goBlack">
                 <span class="black-title">黑名单</span>
                 <img class="p-re" src="../../assets/index/black_img.png"/>
             </div>
@@ -105,8 +105,8 @@
             goOwnerChoice(){
                 this.$router.push({name: 'ownerChoice'});
             },
-            goBlack(id){
-                this.$router.push({name: 'blackList', params: {id: id}});
+            goBlack(){
+                this.$router.push({name: 'blackList'});
             },
             //跳转至收入列表
             goEarning(){

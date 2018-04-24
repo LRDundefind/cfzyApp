@@ -5,18 +5,18 @@
                 <mt-button icon="back" @click="$router.go(-1)"></mt-button>
             </router-link>
         </mt-header>
-        <search-box ref="search"/>
+        <search-box @getSmeage="searchBlack" :msg="msg" ref="search"/>
         <div class="page-main">
             <div v-for="item in blacklistData" :key='item.cid' class="main-list" @click="goDetail(item.cid)">
                 <ul class="ub">
                     <li class="ub-f1">
                         <img class="black-img" :src="item.headImg"/>
                     </li>
-                    <li class="ub-f4">
+                    <li class="ub-f2">
                         <div class="name">{{item.cusName}}</div>
                         <div class="reason">{{item.blockingReason}}</div>
                     </li>
-                    <li class="ub-f2 ub ub-pe">
+                    <li class="ub-f3 ub ub-pe">
                         <div>
                             <div class="date">{{item.createTime}}</div>
                         </div>
@@ -34,6 +34,7 @@
     export default {
         data () {
             return {
+                msg:'',
                 blacklistParams:{
                     search:'',
                 },
@@ -55,6 +56,10 @@
         },
 
         methods: {
+            searchBlack(msg){
+                this.blacklistParams.search=msg;
+                this.getlist();
+            },
             getlist(){
                 home.blacklist(this.blacklistParams).then(response=>{
                     this.blacklistData = response.data.results;

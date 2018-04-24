@@ -178,8 +178,8 @@ export default {
        },
        change(yanzhengma){
             let datalist = {
-                phone:Cookies.get('Fpassword'),
-                password:Cookies.get('Fphone'),
+                password:Cookies.get('Fpassword'),
+                phone:Cookies.get('Fphone'),
                 verCode:yanzhengma
             };
             let params = {

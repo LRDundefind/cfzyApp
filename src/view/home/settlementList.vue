@@ -8,7 +8,7 @@
 		<!--车次结算列表-->
 		<div class="page-main">
 			<ul class="settlement-list">
-				<li v-for="item in damageData" :key='item.tid' @click="settlementDetail(item.tid)">
+				<li v-for="item in damageData" :key='item.tid' @click="settlementDetail(item)">
 					<div class="ub list-top">
 						<div class="ub-f3">{{item.trainsNum}}</div>
 						<div class="number ub-f2"><span class="carNumber">车牌号</span>{{item.plateNum}}</div>
@@ -50,11 +50,11 @@
         },
 
 	    //跳转到车次结算详情
-        settlementDetail(id){
+        settlementDetail(item){
         	this.$router.push({
         		name: 'settlementList/detail',
         		params: {
-        			id:id
+        			id:item.tid,item:item,
         		}
         	});
         }
