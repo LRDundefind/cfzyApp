@@ -91,7 +91,7 @@
             damage.submitBus(data)
                 .then(response => {
                     if(response.data.status == 'Y'){
-                        console.log(1111);
+                        this.$router.push({name: 'settlementList'});
                     }else {
                         Toast({
                             message: response.data.error_msg,
