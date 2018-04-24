@@ -7,16 +7,13 @@
 		</mt-header>
 		<!--车次结算详情-->
 		<div class="page-main settlement-detail">
-			<div class="ub detail-top">
-				<span class="">2018-02-03</span>
-				<span class="name">陌上花开</span>
-				<span class="ub-f1">车次20</span>
-				<span class="number">车号</span>
-				<span class="num">京A6565</span>
-			</div>
-			<div class="detail-center ub ub-ac">
-				<div class="ub-f1 time">到达时间</div>
-				<div class="">16:50</div>
+            <div class="ub detail-top">
+                <div class="ub-f3">{{trainsNum}}</div>
+                <div class="number ub-f2"><span class="carNumber">车牌号</span>{{plateNum}}</div>
+            </div>
+			<div class="detail-top ub ub-ac">
+				<div class="ub-f1 time">入库时间</div>
+				<div class="number">{{putStorageTime}}</div>
 			</div>
 			<div class="table-list">
 				<table>
@@ -29,35 +26,85 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr v-for="n in 3">
-							<td>大白菜</td>
-							<td>100</td>
-							<td>60</td>
-							<td>20</td>
+						<tr v-for="item in goodsList" :key='item.tid'>
+							<td>{{item.goodName}}</td>
+							<td>{{item.surplusNum}}</td>
+							<td>{{item.sell_quantity}}</td>
+							<td>{{item.lossNum}}</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
-			<mt-button type="primary" size="large" class="submit-btn" @click="settlement">申请结算</mt-button>
+            <div class="login_cont">
+                <div @click="settlement" class="loginbtn">申请结算</div>
+            </div>
 		</div>
 	</div>
 </template>
 
 <script>
-export default {
+    import {Toast} from 'mint-ui';
+    import {damage} from '@/services/apis/damage.api'
+
+    export default {
     data () {
         return {
-            
+            item:"",
+            tid:'',//车次id
+            trainsNum:'', //车次信息
+            plateNum:'',//车牌号
+            putStorageTime:'',//入库时间
+            goodsList:'',
         }
     },
     mounted () {
-
+        this.item = this.$route.params.item;
+        this.tid = this.item.tid;
+        this.trainsNum = this.item.trainsNum;
+        this.plateNum = this.item.plateNum;
+        this.putStorageTime = this.item.putStorageTime;
+        if(this.tid){
+            this.getList();
+        }
     },
     methods: {
+        getList(){
+            let data = {
+                tid: this.tid
+            };
+            damage.damageDetails(data)
+                .then(response => {
+                    this.goodsList = response.data.results;
+                    console.log(this.goodsList);
+                    console.log(1111);
+                })
+                .catch(function (response) {
+                    console.log(response);
+                });
+        },
 
 	    //申请结算
         settlement(){
-        	
+            let data = {
+                tid: this.tid
+            };
+            damage.submitBus(data)
+                .then(response => {
+                    if(response.data.status == 'Y'){
+                        this.$router.push({name: 'settlementList'});
+                    }else {
+                        Toast({
+                            message: response.data.error_msg,
+                            position: 'middle',
+                            duration: 1000
+                        });
+                    }
+
+                    console.log(response);
+                })
+                .catch(function (response) {
+                    console.log(response);
+                });
         }
             
     }
@@ -76,33 +123,18 @@ i{
 		margin-bottom: 0.2rem;
 		padding: 0 0.3rem;
 		background: #fff;
-		span{
-			font-size: 0.3rem;
-			color: #333;
-			display: block;
-		}
-		.name{
-			margin: 0 0.22rem;
-		}
-		.number,.num{
-			font-size: 0.24rem;
-			color: #4c4c4c;
-		}
-		.number{
-			margin-right: 0.12rem;
-		}
+        font-size: 0.3rem;
+        color: #333333;
+        .number{
+            font-size: 0.26rem;
+            color: #4c4c4c;
+            text-align: right;
+            .carNumber{
+                padding-right: 0.12rem;
+            }
+        }
 	}
-	.detail-center{
-		line-height: 0.98rem;
-		margin-bottom: 0.2rem;
-		padding: 0 0.3rem;
-		background: #fff;
-		margin-bottom: 0.2rem;
-		.time{
-			font-size: 0.3rem;
-			color: #333;
-		}
-	}
+
 	.table-list{
 		padding: 0.32rem 0.3rem 0;
 		background: #fff;
@@ -136,16 +168,18 @@ i{
 			}
 		}
 	}
-	.submit-btn{
-		width: 73%;
-		height: 0.9rem;
-		border-radius: 1rem;
-		background: -webkit-linear-gradient(left, #30b03e 0%,#33d57c 100%);
-		color: #fff;
-		font-size: 0.3rem;
-		font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
-		margin: 0.45rem auto 0;
-	}
+
+    .login_cont {
+        width: 5.5rem;
+        margin: 0 auto;
+    }
+
+    .loginbtn {
+        width: 80% !important;
+        @include login_btn(fixed);
+        background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
+        margin: 0 !important;
+    }
 }
 
 

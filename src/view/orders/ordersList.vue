@@ -7,59 +7,35 @@
 		</mt-header>
 		<!--订单列表-->
 		<div class="page-main">
-			<search-box ref="search"/>
+			<search-box ref="search" @getSmeage="searchHandler"/>
 			<ul class="order-list">
-				<li @click="ordersDetail(1)">
+				<li @click="ordersDetail(list.oid)" v-for="list in listdata" :key="list.oid">
 					<div class="ub list-top">
-						<span class="ub-f1">订单号 F025689715224</span>
-						<i class="c-6">已完成</i>  <!--------------需要合并的标注 状态--------------------->
+						<span class="ub-f1">订单号&nbsp;&nbsp;{{list.orderNo}}</span>
+						<!--以下四种为现结-->
+						<i class="c-6" v-if="list.status == 'status_topay'">待支付</i>
+						<i class="c-6" v-if="list.status == 'status_topick'">待提货</i>
+						<i class="c-6" v-if="list.status == 'status_complete'">已完成</i>
+						<i class="c-6" v-if="list.status == 'status_cancel'">已取消</i>
+						<!--以下三种为赊账-->
+						<i class="c-6" v-if="list.status == 'status_repay'">待还款</i>
+						<i class="c-6" v-if="list.status == 'status_deposit'">暂存</i>
+						<i class="c-6" v-if="list.status == 'status_complete'">已完成</i>
 					</div>
 					<div class="ub list-bottom">
-						<span class="ub-f1 c-6">2018-03-31 16:50</span>
-						<i>￥330,000</i>   <!--------------需要合并的标注  总价已还未设置--------------------->
-					</div>
-				</li>
-				<li @click="ordersDetail(1)">
-					<div class="ub list-top">
-						<span class="ub-f1">订单号 F025689715224</span>
-						<i class="c-6">待支付</i>
-					</div>
-					<div class="ub list-bottom">
-						<span class="ub-f1 c-6">2018-03-31 16:50</span>
-						<i>￥330,000</i>
-					</div>
-				</li>
-				<li @click="ordersDetail(1)">
-					<div class="ub list-top">
-						<span class="ub-f1">订单号 F025689715224</span>
-						<i class="c-6">待支付</i>
-					</div>
-					<div class="ub list-bottom">
-						<span class="ub-f1 c-6">2018-03-31 16:50</span>
-						<em>总价</em>
-						<i>￥330,000</i>
-						<em class="repaid">已还</em>
-						<em>￥0</em>
-					</div>
-				</li>
-				<li @click="ordersDetail(1)">
-					<div class="ub list-top">
-						<span class="ub-f1">订单号 F025689715224</span>
-						<i class="c-6">待支付</i>
-					</div>
-					<div class="ub list-bottom">
-						<span class="ub-f1 c-6">2018-03-31 16:50</span>
-						<i class="noset">未设置</i>
-					</div>
-				</li>
-				<li @click="ordersDetail(1)">
-					<div class="ub list-top">
-						<span class="ub-f1">订单号 F025689715224</span>
-						<i class="c-6">已取消</i>
-					</div>
-					<div class="ub list-bottom">
-						<span class="ub-f1 c-6">2018-03-31 16:50</span>
-						<i>￥330,000</i>
+						<span class="ub-f1 c-6">{{list.placeOrderTime}}</span>
+						<strong class="ub" v-if="list.orderType == 'order_knot'"><!--现结-->
+							<i>￥{{list.salesAmount}}</i>
+						</strong>
+						<strong class="ub" v-if="list.orderType == 'order_credit' && list.status != 'status_deposit'"><!--赊账 且 设置了单价（非暂存状态即为设置了单价）-->
+							<em>总价</em>
+							<i>￥{{list.salesAmount}}</i>
+							<em class="repaid">已还</em>
+							<em>￥{{list.returned}}</em>
+						</strong>
+						<strong v-if="list.status == 'status_deposit'"><!--赊账 且 未设置单价-->
+							<i class="noset">未设置</i>
+						</strong>
 					</div>
 				</li>
 			</ul>
@@ -69,24 +45,47 @@
 
 <script>
 import searchBox from '@/components/searchBox/search'
+import { orders } from '@/services/apis/orders.js';
+
 export default {
 	components: { searchBox },
     data () {
         return {
-            
+			listdata: [],
+			val: '', //搜索
         }
     },
     mounted () {
-
+		this.getOrders();
     },
     methods: {
-
+    	//车次销售列表数据
+        getOrders(val){
+            let params = {
+                page_size: 10,
+                current_page: 1,
+                tid: this.$route.params.tid,
+                sell_day: this.$route.params.sell_day,
+                search: val,
+            };
+            orders.getOrdersList(params)
+                .then(response => {
+                    this.listdata = response.data.results;
+                })
+                .catch(function (response) {
+                    console.log(response);
+                });
+        },
+        //搜索
+        searchHandler(value){
+			this.getOrders(value);
+		},
 	    //跳转到订单详情
-        ordersDetail(id){
+        ordersDetail(oid){
         	this.$router.push({
         		name: 'ordersList/ordersDetail',
         		params: {
-        			id:id
+        			oid:oid
         		}
         	});
         }
@@ -95,8 +94,9 @@ export default {
 }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
-i,em{
+i,em,strong{
 	font-style: normal;
+	font-weight: normal;
 }
 .order-list{
 	font-size: 0.24rem;
@@ -136,7 +136,5 @@ i,em{
 		}
 	}
 }
-
-
 
 </style>

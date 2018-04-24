@@ -53,6 +53,13 @@ export const damage = {
             data: serverMoudle(params) || {}
         });
     },
-
+    //上报车次结算
+    submitBus(params) {
+        return axios({
+            url: 'rest/CHENGFENG_GET_SELEMAN_TRAIN_CLEAR',
+            method: 'post',
+            data: serverMoudle(params) || {}
+        });
+    },
 
 };

@@ -18,7 +18,7 @@ export default [{
 		mainView: home
 	}
 },{
-    path: 'blackList/:id',
+    path: 'blackList',
     name: 'blackList',
     components: {
         mainView: blackList
