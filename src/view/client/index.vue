@@ -7,7 +7,8 @@
             <span @click="addCustomer" style="font-size: 0.32rem" slot="right" v-if="type != 'order'">添加客户</span>
         </mt-header>
         <search-box  @getSmeage="searchstart"  ref="search"/>
-        <div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }">
+     
+        <div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }" >
 
             <mt-loadmore 
 				:auto-fill="false"
@@ -44,8 +45,8 @@
                         </li>
                     </ul>
                 </div>
-                <div v-if="allLoaded" class="m-t-10" style="text-align:center;font-size: 0.18rem">没有更多数据了</div>
-		  
+                <!-- <div v-if="allLoaded" class="m-t-10" style="text-align:center;font-size: 0.18rem">没有更多数据了</div>
+		   -->
 			</mt-loadmore>
         </div>
 
@@ -82,7 +83,7 @@
             if(windowWidth>768){//这里根据自己的实际情况设置容器的高度
                 this.wrapperHeight = document.documentElement.clientHeight - 130;
             }else{
-                this.wrapperHeight = document.documentElement.clientHeight - 110 + 135;
+                this.wrapperHeight = document.documentElement.clientHeight - 110 + 155;
             }
             this.type = this.$route.params.type || false;
         },
@@ -151,8 +152,8 @@
     }
 </script>
 <style scoped lang="scss">
-.page-loadmore-wrapper {
-    overflow: scroll
+.page-loadmore-wrappe{
+   overflow: scroll;
 }
     .im {
         width: 0.8rem;
