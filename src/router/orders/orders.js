@@ -10,7 +10,7 @@ export default [
 			mainView: orders
 		}
 	},{
-		path:'orders/ordersList/:id',
+		path:'orders/ordersList/:tid/:sell_day',
 		name:'orders/ordersList',
 		components: {
 			mainView: ordersList
@@ -19,7 +19,7 @@ export default [
 			showFooter: false
 		}
 	},{
-		path:'ordersList/ordersDetail/:id',
+		path:'ordersList/ordersDetail/:oid',
 		name:'ordersList/ordersDetail',
 		components: {
 			mainView: ordersDetail
