@@ -26,11 +26,11 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr v-for="n in 3">
-							<td>大白菜</td>
-							<td>100</td>
-							<td>60</td>
-							<td>20</td>
+						<tr v-for="item in goodsList" :key='item.tid'>
+							<td>{{item.goodName}}</td>
+							<td>{{item.surplusNum}}</td>
+							<td>{{item.sell_quantity}}</td>
+							<td>{{item.lossNum}}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -43,7 +43,9 @@
 </template>
 
 <script>
-export default {
+    import {damage} from '@/services/apis/damage.api'
+
+    export default {
     data () {
         return {
             item:"",
@@ -51,7 +53,7 @@ export default {
             trainsNum:'', //车次信息
             plateNum:'',//车牌号
             putStorageTime:'',//入库时间
-            
+            goodsList:'',
         }
     },
     mounted () {
@@ -60,8 +62,25 @@ export default {
         this.trainsNum = this.item.trainsNum;
         this.plateNum = this.item.plateNum;
         this.putStorageTime = this.item.putStorageTime;
+        if(this.tid){
+            this.getList();
+        }
     },
     methods: {
+        getList(){
+            let data = {
+                tid: this.tid
+            };
+            damage.damageDetails(data)
+                .then(response => {
+                    this.goodsList = response.data.results;
+                    console.log(this.goodsList);
+                    console.log(1111);
+                })
+                .catch(function (response) {
+                    console.log(response);
+                });
+        },
 
 	    //申请结算
         settlement(){
