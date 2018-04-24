@@ -41,12 +41,12 @@
                 tid: '',
                 trainsNum: '',
                 goodsList: {
-                    goodName: '',//货品名称
-                    goodId: '',//货品id
-                    sellUnit: '',//售卖单位
-                    numUnit: '',//入库单位
-                    lossNum: '',//损坏数量
-                    lossRemark: '',//损坏原因
+//                    goodName: '',//货品名称
+//                    goodId: '',//货品id
+//                    sellUnit: '',//售卖单位
+//                    numUnit: '',//入库单位
+//                    lossNum: '',//损坏数量
+//                    lossRemark: '',//损坏原因
 
                 },
 

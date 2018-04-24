@@ -46,11 +46,11 @@
         data () {
             return {
                 ownerData: {
-                    shipName: '',//货主名称
-                    trainsNum: '',//进货车次总数
-                    unsettlement: '',//未结算车次总数
-                    tradeAmount: '',//交易总金额
-                    notPayAmount: '',//待汇款总金额
+//                    shipName: '',//货主名称
+//                    trainsNum: '',//进货车次总数
+//                    unsettlement: '',//未结算车次总数
+//                    tradeAmount: '',//交易总金额
+//                    notPayAmount: '',//待汇款总金额
                 },
                 blacklistParams: {
                     search: '',
