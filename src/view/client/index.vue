@@ -92,6 +92,7 @@
         methods: {
             searchstart(msg){
                 this.params.search=msg;
+                this.listStore = [];
                 this.getList();
             },
             loadTop(){
