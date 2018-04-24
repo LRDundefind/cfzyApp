@@ -7,14 +7,14 @@
            </router-link>
 		</mt-header>
 		<div class="page-main earning">
-			<!--筛选title-->
-			<div class="choose-title ub ub-pj">
+			<!--筛选title-----本期不做select筛选-->
+			<!--<div class="choose-title ub ub-pj" v-show="false">
 				<div @click="cycleScreens" :class="cycleActive">周期</div>
 				<div @click="goodsScreens" :class="goodsActive">货品</div>
 				<div @click="ownerScreens" :class="ownerActive">货主</div>
-			</div>
-			<!--分类筛选 定位-->
-			<div class="earing-choose" v-if="isScreen">
+			</div>-->
+			<!--分类筛选 定位-----本期不做select筛选-->
+			<!--<div class="earing-choose" v-if="isScreen" v-show="false">
 				<div class="type-owner">
 					<ul v-if="cycleScreen">
 						<li v-for="n in 15">这里不对</li>
@@ -30,44 +30,42 @@
 						<div class="submit" @click="submitBtn">确定</div>
 					</div>
 				</div>
-			</div>
+			</div>-->
+			<search-box ref="search" @getSmeage="searchHandler"/>
 			<!--订单车次列表-->
 			<ul 
 			    infinite-scroll-disabled="loading"
 			    infinite-scroll-distance="10"
 			    class="orders-ul"><!--v-infinite-scroll="loadMore"-->
-				<li v-for="n in 3" class="orders-li">
-			  		<div class="orders-t ub ub-ac" @click="orderList(n)">
-			  			<div>2015-08-05</div>
-			  			<div>你的名字</div>
-			  			<div class="ub-f1">车次65</div>
-			  			<div class="status">售卖中</div>
+				<li v-for="list in listdata" class="orders-li" :key="list.tid">
+			  		<div class="orders-t ub ub-ac" @click="orderList(list.tid, list.sell_day)">
+			  			<div class="ub-f1">{{list.trainsNum}}</div>
+			  			<div class="status" v-if="list.settleStatus == 'status_selling'">售卖中</div>
+			  			<div class="status" v-if="list.settleStatus == 'status_topay'">售卖中</div>
+			  			<div class="status" v-if="list.settleStatus == 'status_toremit'">待汇款</div>
+			  			<div class="status" v-if="list.settleStatus == 'status_complete'">已完成</div>
 			  		</div>
-			  		<div class="orders-c" @click="orderList(n)">京A323544</div>
-			  		<div class="orders-b ub ub-ac" @click="orderList(n)">
-			  			<div class="ub-f1">2018-05-09</div>
+			  		<div class="orders-c" @click="orderList(list.tid, list.sell_day)">{{list.plateNum}}</div>
+			  		<div class="orders-b ub ub-ac" @click="orderList(list.tid, list.sell_day)">
+			  			<div class="ub-f1">{{list.sell_day}}</div>
 			  			<div>销售总额</div>
-			  			<div class="edu">￥330,000</div>
+			  			<div class="edu">￥{{list.day_salesAmount}}</div>
 			  		</div>
-			  		<table class="orders-table">
-						<thead>
-							<tr>
-								<th>品名</th>
-								<th>销售量</th>
-								<th>库存量</th>
-								<th>销售金额</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr v-for="n in 5">
-								<td>大白菜</td>
-								<td>100斤</td>
-								<td>50斤</td>
-								<td>￥600.00</td>
-							</tr>
-						</tbody>
-			  		</table>
-			  		<div class="slide-btn" @click="sildeDown">展开</div>
+					<ul class="table-ul">
+						<li class="title">
+							<span>品名</span>
+							<span>销售量</span>
+							<span>库存量</span>
+							<span>销售金额</span>
+						</li>
+						<li v-for="goods in list.goods" class="con">
+							<span>{{goods.goodName}}</span>
+							<span>{{goods.sell_quantity}}斤？</span>
+							<span>{{goods.surplusNum}}斤？</span>
+							<span>￥{{goods.sell_amount}}</span>
+						</li>
+					</ul>
+			  		<div class="slide-btn" v-if="list.goods.length >= 1" @click="sildeDown">展开</div>
 				</li>
 			</ul>
 			
@@ -77,19 +75,23 @@
 
 <script>
 import { InfiniteScroll } from 'mint-ui';
-import { orders } from '@/services/apis/orders.js'
+import searchBox from '@/components/searchBox/search';
+import { orders } from '@/services/apis/orders.js';
+
 export default {
+	components: { searchBox },
     data () {
         return {
-        	isScreen: false,
-        	cycleScreen: false,
-        	goodsScreen: false,
-        	ownerScreen: false,
-        	cycleActive: '',
-        	goodsActive: '',
-        	ownerActive: '',
+        	//isScreen: false, //-----本期不做select筛选-
+        	//cycleScreen: false,
+        	//goodsScreen: false,
+        	//ownerScreen: false,
+        	//cycleActive: '',
+        	//goodsActive: '',
+        	//ownerActive: '',
 			//车次销售列表数据
 			listdata: [],
+			val: '', //搜索
         }
     },
     mounted () {
@@ -100,10 +102,11 @@ export default {
 	},
     methods: {
     	//车次销售列表数据
-        getList(){
+        getList(val){
             let params = {
                 page_size: 10,
                 current_page: 1,
+                search: val,
             };
             orders.getTrainSaleList(params)
                 .then(response => {
@@ -113,75 +116,84 @@ export default {
                     console.log(response);
                 });
         },
-        //展开筛选
-        cycleScreens: function(){
-			this.cycleActive = 'active';
-			this.goodsActive = '';
-			this.ownerActive = '';
-			
-        	this.goodsScreen = false;
-        	this.ownerScreen = false;
-        	this.cycleScreen = !this.cycleScreen;
-        	this.isScreen = this.cycleScreen;
-        },
-        goodsScreens: function(){
-			this.cycleActive = '';
-			this.goodsActive = 'active';
-			this.ownerActive = '';
-			
-        	this.cycleScreen = false;
-        	this.ownerScreen = false;
-        	this.goodsScreen = !this.goodsScreen;
-        	this.isScreen = this.goodsScreen;
-        	
-        },
-        ownerScreens: function(){
-			this.cycleActive = '';
-			this.goodsActive = '';
-			this.ownerActive = 'active';
-			
-        	this.cycleScreen = false;
-        	this.goodsScreen = false;
-        	this.ownerScreen = !this.ownerScreen;
-        	this.isScreen = this.ownerScreen;
-        	
-        },
-        //重置选择
-        resetBtn: function(){
-        	this.cycleActive = '';
-			this.goodsActive = '';
-			this.ownerActive = '';
-			
-        	this.cycleScreen = false;
-        	this.goodsScreen = false;
-        	this.ownerScreen = false;
-        	this.isScreen = false;
-        },
-        //提交筛选
-        submitBtn: function(){
-        	this.cycleActive = '';
-			this.goodsActive = '';
-			this.ownerActive = '';
-			
-        	this.cycleScreen = false;
-        	this.goodsScreen = false;
-        	this.ownerScreen = false;
-        	this.isScreen = false;
-        },
+		//搜索
+		searchHandler(value){
+			this.getList(value);
+		},
         //跳转到订单列表
-        orderList(id){
+        orderList(tid, sell_day){
         	this.$router.push({
         		name: 'orders/ordersList',
         		params: {
-        			id:id
+        			tid: tid,
+        			sell_day: sell_day,
         		}
         	});
         },
         //展开table表格
         sildeDown(){
         	
-        }
-
+        },
+        
+        
+        
+        
+        
+        //展开筛选-----本期不做select筛选----暂不删除
+//      cycleScreens: function(){
+//			this.cycleActive = 'active';
+//			this.goodsActive = '';
+//			this.ownerActive = '';
+//			
+//      	this.goodsScreen = false;
+//      	this.ownerScreen = false;
+//      	this.cycleScreen = !this.cycleScreen;
+//      	this.isScreen = this.cycleScreen;
+//      },
+//      goodsScreens: function(){
+//			this.cycleActive = '';
+//			this.goodsActive = 'active';
+//			this.ownerActive = '';
+//			
+//      	this.cycleScreen = false;
+//      	this.ownerScreen = false;
+//      	this.goodsScreen = !this.goodsScreen;
+//      	this.isScreen = this.goodsScreen;
+//      	
+//      },
+//      ownerScreens: function(){
+//			this.cycleActive = '';
+//			this.goodsActive = '';
+//			this.ownerActive = 'active';
+//			
+//      	this.cycleScreen = false;
+//      	this.goodsScreen = false;
+//      	this.ownerScreen = !this.ownerScreen;
+//      	this.isScreen = this.ownerScreen;
+//      	
+//      },
+        //重置选择
+//      resetBtn: function(){
+//      	this.cycleActive = '';
+//			this.goodsActive = '';
+//			this.ownerActive = '';
+//			
+//      	this.cycleScreen = false;
+//      	this.goodsScreen = false;
+//      	this.ownerScreen = false;
+//      	this.isScreen = false;
+//      },
+        //提交筛选
+//      submitBtn: function(){
+//      	this.cycleActive = '';
+//			this.goodsActive = '';
+//			this.ownerActive = '';
+//			
+//      	this.cycleScreen = false;
+//      	this.goodsScreen = false;
+//      	this.ownerScreen = false;
+//      	this.isScreen = false;
+//      },
     }
 }
 </script>
@@ -203,7 +215,7 @@ body{
 .orders-ul{
 	font-size: 0.26rem;
 	color: #4c4c4c;
-	padding-top: 1.1rem;
+	/*padding-top: 1.1rem;*/ /*select搜索本期不做*/
 	.orders-li{
 		background: #fff;
 		margin: 0 0 0.2rem;
@@ -235,35 +247,36 @@ body{
 				margin-left: 0.1rem;
 			}
 		}
-		.orders-table{
-			margin-top: 0.3rem;
+		.table-ul{
 			width: 100%;
-			border-top: 1px solid #dedede;
-			thead{
-				background: #f2f2f2;
-				line-height: 0.6rem;
-				tr{
-					th{
-						font-weight: normal;
-						text-align: left;
-					}
-					th:first-child{
-
-						padding-left: 0.3rem;
-					}			
+			font-size: 0.26rem;
+			color: #4c4c4c;
+			li{
+				overflow: hidden;
+				span{
+					width: 24%;
+					display: block;
+					float: left;
+				}
+				span:first-child{
+					padding-left: 0.25rem;
 				}
 			}
-			tbody{
-				tr{
+			.title{
+				height: 0.6rem;
+				line-height: 0.6rem;
+				background: #f2f2f2;
+			}
+			.con{
+				height: 0.96rem;
+				line-height: 0.96rem;
+				border-bottom: 1px solid #dedede;
+				span{
 					height: 0.96rem;
-					border-bottom: 1px solid #dedede;
-					td:first-child{
-						padding-left: 0.3rem;
-					}
 				}
-				tr:last-child{
-					border-bottom: none;
-				}
+			}
+			li:last-child{
+				border-bottom: none;
 			}
 		}
 		.slide-btn{
@@ -277,7 +290,7 @@ body{
 }
 
 
-/*筛选*/
+/*筛选 --本期不做select筛选*/
 .choose-title{
 	font-size: 0.28rem;
 	color: #333;
