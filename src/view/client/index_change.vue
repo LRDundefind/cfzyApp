@@ -11,7 +11,7 @@
             <div class="main-list">
                 <div>
                      <!-- 接口无数据可编辑 -->
-                    <p class="clearfix" v-if="listdata.cusName=='' && xiTdata==''">姓名1 <input type="text" v-model="nameRead" placeholder="请输入"> </p>
+                    <p class="clearfix" v-if="listdata.cusName=='' && xiTdata==''">姓名 <input type="text" v-model="nameRead" placeholder="请输入"> </p>
                     <!-- 接口有数据不可编辑（修改时有此可能） -->
                     <p class="clearfix"  v-else>姓名2 <input type="text" v-model="nameRead" :disabled="true" > </p>
                 </div>
