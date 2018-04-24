@@ -11,7 +11,7 @@
             <div class="main-list">
                 <div>
                      <!-- 接口无数据可编辑 -->
-                    <p class="clearfix" v-if="listdata.cusName=='' && xiTdata==''">姓名1 <input type="text" v-model="nameRead" placeholder="请输入"> </p>
+                    <p class="clearfix" v-if="listdata.cusName=='' && xiTdata==''">姓名 <input type="text" v-model="nameRead" placeholder="请输入"> </p>
                     <!-- 接口有数据不可编辑（修改时有此可能） -->
                     <p class="clearfix"  v-else>姓名2 <input type="text" v-model="nameRead" :disabled="true" > </p>
                 </div>
@@ -19,8 +19,13 @@
 
                 <p class="clearfix">昵称<input type="text" v-model="nicheng" placeholder="请输入"></p>
 
-               
-                <p class="clearfix">电话<input type="text" v-model="phone" placeholder="请输入"></p>
+               <div>
+                   <!-- 增加时电话不可编辑 -->
+                   <p class="clearfix" v-if="phoneAdd==''">电话<input type="text" v-model="phone" placeholder="请输入"></p>
+                   <!-- 修改时可以 -->
+                   <p class="clearfix" v-else>电话<input type="text" v-model="phone" placeholder="请输入" :disabled="true" ></p>
+               </div>
+                
                 
                  <div style="border-top:1px #f0f0f0 solid">
                     <!-- 接口无数据可编辑 -->
@@ -159,6 +164,7 @@
                 else{
                     this.getList();
                     this.addPerson = false;
+                    
                 }
                 
                 
@@ -197,13 +203,20 @@
                     .then(response => {
 
                         let s=response.data.results
-                        this.xiTdata=response.data.results;
-                        this.cid=s.cid;//cid
-                        this.nameRead=s.cusName;//姓名
-                        this.IdcardRead=s.idCard;//身份证号
-                        this.address=s.address;//地址
-                        this.gongsi=s.company;//公司
-                        this.phone=s.phone;//手机号
+                        
+                        if(s==''){
+                            this.phone=this.phoneAdd;
+                        }
+                        else{
+                            this.xiTdata=response.data.results;
+                            this.cid=s.cid;//cid
+                            this.nameRead=s.cusName;//姓名
+                            this.IdcardRead=s.idCard;//身份证号
+                            this.address=s.address;//地址
+                            this.gongsi=s.company;//公司
+                            this.phone=s.phone;//手机号
+                        }
+                        
                     })
             },
             handleSave(){

@@ -8,22 +8,16 @@
 		<!--车次结算列表-->
 		<div class="page-main">
 			<ul class="settlement-list">
-				<li v-for="n in 3" @click="settlementDetail(1)">
+				<li v-for="item in damageData" :key='item.tid' @click="settlementDetail(item.tid)">
 					<div class="ub list-top">
-						<span class="">2018-02-03</span>
-						<span class="name">陌上花开</span>
-						<span class="ub-f1">车次20</span>
-						<span class="number">车号</span>
-						<span class="num">京A6565</span>
+						<div class="ub-f3">{{item.trainsNum}}</div>
+						<div class="number ub-f2"><span class="carNumber">车牌号</span>{{item.plateNum}}</div>
 					</div>
-					<div class="list-center ub ub-pj">
-						<div class="">剩余&nbsp;&nbsp;<span>1188</span></div>
-						<div class="">售卖量&nbsp;&nbsp;<span>1188</span></div>
-						<div class="">损坏&nbsp;&nbsp;<span>1188</span></div>
-					</div>
-					<div class="list-bottom ub ub-ac">
-						<div class="ub-f1">到达时间&nbsp;&nbsp;16:50</div>
-						<div class="btn">申请结算</div>
+					<div class="list-bottom  ">
+                        <div class="ub-ac ub">
+                            <div class="ub-f2">入库时间&nbsp;&nbsp;{{item.putStorageTime}}</div>
+                            <div class="btn">申请结算</div>
+                        </div>
 					</div>
 				</li>
 			</ul>
@@ -32,16 +26,28 @@
 </template>
 
 <script>
-export default {
+    import {damage} from '@/services/apis/damage.api'
+
+    export default {
     data () {
         return {
-            
+            damageData:[],
         }
     },
     mounted () {
-
+        this.trainList();
     },
     methods: {
+        trainList(){
+            let data = {
+                current_page: 1,
+                page_size: 10,
+            };
+            damage.damageList(data).then(response => {
+                this.damageData = response.data.results;
+                console.log(response.data.results);
+            })
+        },
 
 	    //跳转到车次结算详情
         settlementDetail(id){
@@ -70,32 +76,18 @@ i{
 		.list-top{
 			line-height: 0.86rem;
 			border-bottom:1px solid #dedede;
-			span{
-				font-size: 0.3rem;
-				color: #333;
-				display: block;
-			}
-			.name{
-				margin: 0 0.22rem;
-			}
-			.number,.num{
+            font-size: 0.3rem;
+            color: #333333;
+			.number{
 				font-size: 0.24rem;
 				color: #4c4c4c;
-			}
-			.number{
-				margin-right: 0.12rem;
-			}
-		}
-		.list-center{
-			border-bottom:1px solid #dedede;
-			line-height: 0.86rem;
-			div{
-				span{
-					font-size: 0.28rem;
-					color: #333;
-				}
+                text-align: right;
+                .carNumber{
+                    padding-right: 0.12rem;
+                }
 			}
 		}
+
 		.list-bottom{
 			color: #666;
 			line-height: 1.32rem;			

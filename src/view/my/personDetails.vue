@@ -132,7 +132,7 @@
     .top{
         background-image: url("../../assets/my/my_top.png");
         background-repeat: no-repeat;
-        background-size: 100% 100%;
+        height: 4.52rem;
         .leftIcon{
             width: 0.32rem !important;
             left: 0.3rem !important;
@@ -142,7 +142,7 @@
         .header-img{
             width: 1.24rem;
             height: 1.24rem;
-            padding: 0.9rem 0 1.4rem 0;
+            padding: 0 0 1.4rem 0;
         }
     }
     .main-list{
