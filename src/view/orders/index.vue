@@ -60,8 +60,16 @@
 						</li>
 						<li v-for="goods in list.goods" class="con">
 							<span>{{goods.goodName}}</span>
-							<span>{{goods.sell_quantity}}斤？</span>
-							<span>{{goods.surplusNum}}斤？</span>
+							<span>{{goods.sell_quantity}}
+								<i v-if="goods.priceUnit == 'unit_jin'">斤</i>
+								<i v-if="goods.priceUnit == 'unit_kg'">公斤</i>
+								<i v-if="goods.priceUnit == 'unit_pie'">件</i>
+							</span>
+							<span>{{goods.surplusNum}}
+								<i v-if="goods.priceUnit == 'unit_jin'">斤</i>
+								<i v-if="goods.priceUnit == 'unit_kg'">公斤</i>
+								<i v-if="goods.priceUnit == 'unit_pie'">件</i>
+							</span>
 							<span>￥{{goods.sell_amount}}</span>
 						</li>
 					</ul>
@@ -135,9 +143,7 @@ export default {
         	
         },
         
-        
-        
-        
+
         
         //展开筛选-----本期不做select筛选----暂不删除
 //      cycleScreens: function(){
