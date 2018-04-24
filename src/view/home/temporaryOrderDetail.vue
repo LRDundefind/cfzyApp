@@ -28,19 +28,19 @@
 			<div class="order-detail item-two">
 				<div class="ub term">
 					<div class="ub-f1">合计金额</div>
-					<div class="total">￥330,000</div>
+					<div class="total">￥330,000</div><!--totalCost.tatol-->
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">贷款</div>
-					<div class="edu">{{detailInfo.salesAmount}}</div>
+					<div class="edu">{{detailInfo.salesAmount}}</div><!--totalCost.totalAmount-->
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">包装费</div>
-					<div class="edu">{{detailInfo.packCost}}</div>
+					<div class="edu">{{detailInfo.packCost}}</div><!--totalCost.totalPack-->
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">过磅费</div>
-					<div class="edu">{{detailInfo.weighCost}}</div>
+					<div class="edu">{{detailInfo.weighCost}}</div><!--totalCost.totalWeigh-->
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">三轮费</div>
@@ -71,10 +71,12 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr v-for="goods in detailInfo.goods">
+						<tr v-for="(goods,index) in detailInfo.goods">
 							<td>{{goods.goodName}}<br />({{goods.goodNum}})</td>
 							<td>{{goods.weight}}</td>
-							<td class="set-price" @click = "dialoags=true">{{goods.price || '设置单价'}}</td>
+							<td class="set-price" @click = "setPrice(index)">{{goods.price || '设置单价'}}</td>
+							<!--<td class="set-price" @click = "dialoags=true" v-if="goods.price">{{goods.price}}</td>-->
+							<!--<td class="set-price" @click = "dialoags=true" v-if="!goods.price"><span>设置单价</span></td>-->
 							<td>{{goods.goodAmount}}</td>
 							<td>{{goods.packCost}}</td>
 						</tr>
@@ -103,12 +105,12 @@
 		<div class="dialoag" v-if="dialoags">
 			<div class="dialoag_cont">
 				<span>
-					<input type="text" :val="price" placeholder="请设置单价"/>
+					<mt-field label="" placeholder="请设置单价" type="number" v-model="price"></mt-field>
 				</span>
 				<div class="btn ub">
 					<div class="lefts" @click="dialoags = false ">取消</div>
 					<div class="center"></div>
-					<div class="rights" @click="setPrice">确定</div>
+					<div class="rights" @click="submitPrice">确定</div>
 				</div>
 			</div>
 		</div>
@@ -117,6 +119,7 @@
 
 <script>
 import { home } from '@/services/apis/home.api'
+import {order} from '@/services/apis/order.js' //计算货品价格 6.3
 export default {
 
     data () {
@@ -125,10 +128,18 @@ export default {
             detailInfo: [], //暂存订单详情数据
             orderStatus: '', //订单付款状态
             
+            //点击获取索引
+            numberNum: null,
+            price: null, //填写的单价
+            goodsInfo: [], //货品数据json集合
             
-            
-            
-            price: '0',
+			//费用总和
+			totalCost: {
+				totalAmount: 0,  //贷款费用总和-金额总和
+				totalPack: 0,  //包装费总和
+				totalWeigh: 0,  //过磅费总和
+				tatol: 0,  //合计金额
+			},
         }
     },
     mounted () {
@@ -143,7 +154,18 @@ export default {
 			home.temporaryOrderDetail(params)
 				.then(response => {
 					this.detailInfo = response.data.results;
-					this.transforSet();
+					this.goodsInfo = this.detailInfo.goods; //货品数据json集合
+					this.transforSet();//页面普通数据渲染
+					
+                    for(var i = 0, len = this.goodsInfo.length; i < this.goodsInfo.length; i ++){
+						//提交设定价格所需货品参数 ：订单详情内货品详情的返回数据
+						//goodId -- goodId
+						//price -- price
+						//goodNum -- goodNum
+						//weight -- weight
+						//weight_util -- weightUnit  不一致，所以 set一项数据到this.goodsInfo中
+						//this.$set(this.goodsInfo, this.numberNum, {weight_util: this.goodsInfo[this.numberNum].weightUnit});  -----有问题 待修改
+					}
 				})
 				.catch(function (response) {
 					console.log(response);
@@ -168,12 +190,100 @@ export default {
 			this.$router.push({name: 'client_detail', params: {ids: cid}});
 		},
 		
-		
-		//设置单价-确定按钮
-        setPrice(){
-        	this.dialoags = false;
-        	alert('设置单价');
+		//设置单价
+        setPrice(index){
+        	this.dialoags = true;
+        	this.numberNum = index;
         },
+        
+		//设置单价-确定按钮
+        submitPrice(){
+        	if(this.price == '' ){
+    			Toast({
+					message: '请填写单价',
+					position: 'middle',
+					duration: 1000
+    			});
+    		}else if(!(new RegExp(/^[0-9]+(.[0-9]+)?$/).test(this.price))){
+    			Toast({
+					message: '请正确输入单价',
+					position: 'middle',
+					duration: 1000
+    			});
+    		}else{
+        		this.dialoags = false;
+        		
+				//重置弹框单价
+				this.price = null;
+				
+				//设置价格以后重新计算货品的价格（金额、包装费、过磅费）
+        		var params = {
+					goodId: this.goodsInfo[this.numberNum].goodId,//单个货品id
+					price: this.price,//单价
+					goodNum: this.goodsInfo[this.numberNum].goodNum,//件数
+					weight: this.goodsInfo[this.numberNum].weight,//重量
+					weight_util: this.goodsInfo[this.numberNum].weight_util,//重量单位 
+					sellUnit: this.goodsInfo[this.numberNum].priceUnit,//售卖单位
+					slabWeight: this.goodsInfo[this.numberNum].slabWeight,//平板重
+				};
+				order.goodsCost(params)
+					.then(response => {
+						this.goodCosts = response.data.results; //计算出 金额goodAmount、包装费packCost、过磅费weighCost
+						console.log(this.goodCosts)
+						
+						this.$set(this.goodsInfo,this.numberNum,
+						    {	
+						    	price: this.price,//---界面展示、提交传参所需
+						    	//原数据重复set进集合
+						    	goodId: this.goodsInfo[this.numberNum].goodId,//-----提交传参所需
+						    	goodName: this.goodsInfo[this.numberNum].goodName,//-----提交传参所需
+								weight: this.goodsInfo[this.numberNum].weight,//重量-----提交传参所需
+								weight_util: this.goodsInfo[this.numberNum].weight_util,//重量单位 -----提交传参所需
+								goodNum: this.goodsInfo[this.numberNum].goodNum,//件数-----提交传参所需
+								//接口计算所得
+						    	packCost: response.data.results.packCost,//单件包装费------界面展示所需、计算总和所需
+						    	goodAmount: response.data.results.goodAmount, //单件金额---界面展示所需、计算总和所需
+								weighCost: response.data.results.weighCost,//单件过磅费------计算总和所需
+						    });
+						
+						//计算
+	                    for(var i=0,len = this.goodsInfo.length; i<this.goodsInfo.length;i++){
+							this.totalCost.totalAmount += this.goodsInfo[i]['goodAmount']; //总贷款费用
+							this.totalCost.totalPack += this.goodsInfo[i]['packCost']; //总包装费
+							this.totalCost.totalWeigh += this.goodsInfo[i]['weighCost']; //总过磅费
+							this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.detailInfo.deliveryCost; //合计费用
+	                    }
+	                    
+	                    
+	                    
+	                    
+	                    //4.24检测weight_util是否返回数据了，然后给单价和各项总和赋值，然后测试各项值是否正确，然后调取提交接口
+	                    
+	                    
+	                    
+	                    
+					})
+					.catch(function (response) {
+						console.log(response);
+					});
+					
+					
+					
+    		}
+
+			
+        },
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 	    //保存
         preservation(id){
 			
@@ -234,7 +344,6 @@ i{
 			color: #333;
 			font-size: 0.28rem;
 		}
-		
 	}
 }
 .order-detail.item-table{
@@ -278,6 +387,10 @@ i{
 				td.set-price{
 					color: #33d570;
 					font-size: 0.26rem;
+					span{
+						display: block;
+						width: 0.6rem;
+					}
 				}
 			}
 			tr:last-child{
