@@ -37,7 +37,7 @@
 			    infinite-scroll-disabled="loading"
 			    infinite-scroll-distance="10"
 			    class="orders-ul"><!--v-infinite-scroll="loadMore"-->
-				<li v-for="list in listdata" class="orders-li" :key="list.tid">
+				<li v-for="list in listdata" class="orders-li" :key="list.id">
 			  		<div class="orders-t ub ub-ac" @click="orderList(list.tid, list.sell_day)">
 			  			<div class="ub-f1">{{list.trainsNum}}</div>
 			  			<div class="status" v-if="list.settleStatus == 'status_selling'">售卖中</div>
