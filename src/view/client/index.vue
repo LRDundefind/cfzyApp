@@ -82,7 +82,7 @@
             if(windowWidth>768){//这里根据自己的实际情况设置容器的高度
                 this.wrapperHeight = document.documentElement.clientHeight - 130;
             }else{
-                this.wrapperHeight = document.documentElement.clientHeight - 110 + 105;
+                this.wrapperHeight = document.documentElement.clientHeight - 110 + 135;
             }
             this.type = this.$route.params.type || false;
         },
