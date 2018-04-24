@@ -1,7 +1,7 @@
 <template>
     <div class="page-content">
         <mt-header fixed title="货品信息">
-                <mt-button @click="goReport" icon="back" slot="left"></mt-button>
+            <mt-button @click="goReport" icon="back" slot="left"></mt-button>
         </mt-header>
 
         <!--还款记录列表-->
@@ -29,12 +29,10 @@
                     </p>
                 </div>
 
-                <div class='update clearfix'>
-                    <mt-button type="primary" :disabled="goodsType == 'edit'" size="large" class='f-l'
-                               @click="addGoods('delete')">删除
-                    </mt-button>
-                    <mt-button type="primary" size="large" class='f-l' @click="addGoods('add')">确定</mt-button>
+                <div class="login_cont">
+                    <div @click="addGoods" class="loginbtn">确定</div>
                 </div>
+
             </div>
             <div class="" v-if="showList == true">
                 <div v-for="item in goodsData" :key='item.id' class="type-list">
@@ -67,8 +65,8 @@
         },
         data () {
             return {
-                item:'',
-                trainsNum:'',
+                item: '',
+                trainsNum: '',
                 goodsType: '',
                 id: '',
 //                deleteDisabled: '',
@@ -92,7 +90,7 @@
         },
         created(){
             this.goodsType = this.$route.params.type || false;
-            if(this.goodsType =='edit'){
+            if (this.goodsType == 'edit') {
                 this.item = this.$route.params.item;
                 this.goods.goodId = this.item.goodId;
                 this.goods.goodName = this.item.goodName;
@@ -110,7 +108,7 @@
             //跳转到车次列表页
             goReport(){
                 console.log(1111);
-                this.$router.push({name: 'damageReport',params:{tid:this.tid,trainsNum:this.trainsNum}});
+                this.$router.push({name: 'damageReport', params: {tid: this.tid, trainsNum: this.trainsNum}});
                 console.log(1111);
 
             },
@@ -128,46 +126,37 @@
                 this.showList = true;
             },
             //添加货品列表
-            addGoods(type){
-                console.log(type);
-                if (type == 'add') {
-                    if (this.goods.goodName && this.goods.quantity && this.goods.lossRemark) {
-                        if (!(new RegExp(/^\d+(?:.\d{1,2})?$/).test(this.goods.quantity))) {
-                            Toast({
-                                message: '小数点后最多输入两位数字',
-                                position: 'middle',
-                                duration: 1000
-                            });
-                        } else {
-                            let data = this.goods;
-                            delete data.goodName;
-                            data.tid = this.tid;
-                            damage.submitDamage(data)
-                                .then(response => {
-                                    if(response.data.status == 'Y'){
-                                        this.goReport();
-                                    }else {
-                                        Toast({
-                                            message: response.data.results,
-                                            position: 'middle',
-                                            duration: 1000
-                                        });
-                                    }
-                                })
-                                .catch(function (response) {
-                                    console.log(response);
-                                });
-
-                            /*this.$emit('addGoods', this.goods);*/
-                        }
+            addGoods(){
+                if (this.goods.goodName && this.goods.quantity && this.goods.lossRemark) {
+                    if (!(new RegExp(/^\d+(?:.\d{1,2})?$/).test(this.goods.quantity))) {
+                        Toast({
+                            message: '小数点后最多输入两位数字',
+                            position: 'middle',
+                            duration: 1000
+                        });
                     } else {
-                        Toast('请完善信息');
-                        return false;
+                        let data = this.goods;
+                        delete data.goodName;
+                        data.tid = this.tid;
+                        damage.submitDamage(data)
+                            .then(response => {
+                                if (response.data.status == 'Y') {
+                                    this.goReport();
+                                } else {
+                                    Toast({
+                                        message: response.data.results,
+                                        position: 'middle',
+                                        duration: 1000
+                                    });
+                                }
+                            })
+                            .catch(function (response) {
+                                console.log(response);
+                            });
                     }
-                }
-                if (type == 'delete') {
-                    this.goods.goodName = '';
-                    this.$emit('addGoods', this.goods);
+                } else {
+                    Toast('请完善信息');
+                    return false;
                 }
 
             },
@@ -236,31 +225,16 @@
 
     }
 
-    .update {
-        .mint-button--primary:nth-child(1) {
-            background: url(../../assets/kehu_chakanxiaofeijilu_btn@2x.png) no-repeat center;
-            background-size: contain;
-            width: 41%;
-            color: #0f0;
-            margin: 0 3%;
-            font-size: 0.3rem !important;
-            position: fixed;
-            bottom: 0.5rem;
-        }
-        .mint-button--primary:nth-child(2) {
-            background: url(../../assets/kehu_gengxinziliao_btn@2x.png) no-repeat center;
-            background-size: contain;
-            width: 50%;
-            font-size: 0.3rem !important;
-            position: fixed;
-            bottom: 0.5rem;
-            left: 47%;
-        }
-        padding: 0.3rem 0 0rem 0;
-        button {
-            margin: 0 auto;
-            height: 1rem;
-        }
+    .login_cont {
+        width: 5.5rem;
+        margin: 0 auto;
+    }
+
+    .loginbtn {
+        width: 80% !important;
+        @include login_btn(fixed);
+        background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
+        margin: 0 !important;
     }
 
 
