@@ -18,6 +18,14 @@ export const my = {
             params: params || {}
         });
     },
+    //提交意见反馈
+    feedBack(params) {
+        return axios({
+            url: 'rest/CHENGFENG_ADD_SAAS_FEEDBACK',
+            method: 'post',
+            data: serverMoudle(params) || {}
+        });
+    },
 
 
 };
