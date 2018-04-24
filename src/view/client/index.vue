@@ -26,7 +26,7 @@
                         <!-- 平台状态 -->
                         <div class=' res8 lis-sw ub-img im3' v-show="n.sys_status=='Y'"></div>
                     </div>
-                    <ul class="">
+                    <ul >
                         <li class="ub ub-pj">
                             <div class="ub-f1">消费次数</div>
                             <div class="ub-f1">{{n.consum_num}}次</div>
@@ -45,8 +45,8 @@
                         </li>
                     </ul>
                 </div>
-                <!-- <div v-if="allLoaded" class="m-t-10" style="text-align:center;font-size: 0.18rem">没有更多数据了</div>
-		   -->
+                <div  style="text-align:center;font-size: 0.18rem;display:none"></div>
+		  
 			</mt-loadmore>
         </div>
 
@@ -79,12 +79,9 @@
             searchBox
         },
         mounted () {
-            let windowWidth = document.documentElement.clientWidth;//获取屏幕高度
-            if(windowWidth>768){//这里根据自己的实际情况设置容器的高度
-                this.wrapperHeight = document.documentElement.clientHeight - 130;
-            }else{
-                this.wrapperHeight = document.documentElement.clientHeight - 110 + 55;
-            }
+           
+            this.wrapperHeight = document.documentElement.clientHeight - 175;
+            
             this.type = this.$route.params.type || false;
         },
         created(){
