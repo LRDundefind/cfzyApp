@@ -11,8 +11,7 @@
 			<div class="order-detail">
 				<div class="ub term">
 					<div class="ub-f1">订单号&nbsp;&nbsp;{{detail.orderNo}}</div>
-					<div>已完成??</div><!--已完成展示-->
-					<div v-if="false" class="tobepaid">待支付</div><!--未完成展示-->	
+					<div class="c-6" :class="{tobepaid: noComplete}">{{status}}</div>
 				</div>
 				<div class="ub ub-ac term customer-head" @click="customerDetail(detail.cid)">
 					<div class="ub-f1">客户</div>
@@ -43,9 +42,9 @@
 					<div class="ub-f1">三轮费</div>
 					<div class="edu">￥{{detail.deliveryCost}}</div>
 				</div>
-				<div class="ub term">
+				<div class="ub term" v-if="detail.payType">
 					<div class="ub-f1">支付方式</div>
-					<div>{{detail.payType}}??</div>
+					<div>{{pay_type}}</div>
 				</div>
 				<div class="ub term no-border">
 					<div class="ub-f1">车号</div>
@@ -95,8 +94,6 @@
 					<div class="edu">{{detail.placeOrderTime}}</div>
 				</div>
 			</div>
-			<!--取消订单-->  <!--未完成时展示-->
-			<mt-button type="primary" size="large" class="submit-btn" @click="cancelOrder">取消订单</mt-button>
 		</div>
 		
 	</div>
@@ -108,6 +105,9 @@ export default {
     data () {
         return {
             detail: [],//订单详情数据
+            status: '',//订单状态
+            pay_type: '',//支付方式
+            noComplete: false,
         }
     },
     mounted () {
@@ -123,19 +123,58 @@ export default {
             orders.getOrdersDetail(params)
                 .then(response => {
                     this.detail = response.data.results;
+                    this.statusSet();
                 })
                 .catch(function (response) {
                     console.log(response);
                 });
         },
-        
-        //完成提货 getOrdersTake
-        
-        //取消订单
-        cancelOrder(){
-        	
-        },
-        
+		statusSet(){
+			switch(this.detail.status){
+				case 'status_topay':
+					this.status = '待支付';
+					this.noComplete = true;
+					break;
+				case 'status_topick':
+					this.status = '待提货';
+					this.noComplete = true;
+					break;
+				case 'status_complete':
+					this.status = '已完成';
+					this.noComplete = false;
+					break;
+				case 'status_cancel':
+					this.status = '已取消';
+					this.noComplete = false;
+					break;
+				case 'status_repay':
+					this.status = '待还款';
+					this.noComplete = true;
+					break;
+				case 'status_deposit':
+					this.status = '暂存';
+					this.noComplete = true;
+					break;
+				case 'status_complete':
+					this.status = '已完成';
+					this.noComplete = false;
+					break;
+			}
+			switch(this.detail.payType){
+				case 'type_alipay':
+					this.pay_type = '支付宝';
+					break;
+				case 'type_wechat':
+					this.pay_type = '微信';
+					break;
+				case 'type_cash':
+					this.pay_type = '现金';
+					break;
+				case 'type_card':
+					this.pay_type = '银行卡';
+					break;
+			}
+		},
         //跳转到客户详情
         customerDetail(cid){
         	this.$router.push({
