@@ -35,9 +35,9 @@
         data () {
             return {
                 damageData:{
-                    trainsNum:'',//展示车次 入库日期 货主名称 次数
-                    putStorageTime:'',//入库时间
-                    tid:'',
+//                    trainsNum:'',//展示车次 入库日期 货主名称 次数
+//                    putStorageTime:'',//入库时间
+//                    tid:'',
                 }
             }
         },
