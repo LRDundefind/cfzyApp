@@ -16,13 +16,8 @@
 						<span class="number">车号</span>
 						<span class="num">京A6565</span>
 					</div>
-					<div class="list-center ub ub-pj">
-						<div class="">剩余&nbsp;&nbsp;<span>1188</span></div>
-						<div class="">售卖量&nbsp;&nbsp;<span>1188</span></div>
-						<div class="">损坏&nbsp;&nbsp;<span>1188</span></div>
-					</div>
 					<div class="list-bottom ub ub-ac">
-						<div class="ub-f1">到达时间&nbsp;&nbsp;16:50</div>
+						<div class="ub-f1">入库时间&nbsp;&nbsp;16:50</div>
 						<div class="btn">申请结算</div>
 					</div>
 				</li>
@@ -86,16 +81,7 @@ i{
 				margin-right: 0.12rem;
 			}
 		}
-		.list-center{
-			border-bottom:1px solid #dedede;
-			line-height: 0.86rem;
-			div{
-				span{
-					font-size: 0.28rem;
-					color: #333;
-				}
-			}
-		}
+
 		.list-bottom{
 			color: #666;
 			line-height: 1.32rem;			
