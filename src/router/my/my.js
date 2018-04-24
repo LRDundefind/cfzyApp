@@ -76,6 +76,9 @@ export default [{
     components: {
         mainView: about
     },
+    meta: {
+        showFooter: false,
+    }
 },{
     path:'rules',
     name:'rules',
