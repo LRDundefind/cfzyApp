@@ -11,7 +11,7 @@ import rules from '@/view/my/rules'
 import personDetails from '@/view/my/personDetails'
 
 export default [{
-    path:'my/:id',
+    path:'my',
     name:'my',
     components: {
         mainView: my

@@ -99,8 +99,8 @@
             },
 
             //跳转到我的首页
-            goMy(id){
-                this.$router.push({name: 'my', params: {id: id}});
+            goMy(){
+                this.$router.push({name: 'my'});
             },
             goOwnerChoice(){
                 this.$router.push({name: 'ownerChoice'});
