@@ -29,7 +29,7 @@
 				<div class="bg2">
 					<span class="passIconBg"></span>
                     <input v-model="passWord" placeholder="请输入密码" :type="passwordtype" maxlength="16"  class="passIcon ">
-                    <span class="passIconBgEYE" @click="changeType"></span>
+                    <span class="passIconBgEYE"  v-bind:class="[ isActive ? 'hui' : 'green']" @click="changeType"></span>
 				</div>
 
 				<div  @click="loginBtn" class="loginbtn">注 册</div>
@@ -51,6 +51,12 @@
 
 </template>
 <style scoped lang='scss'>
+ .hui{
+         background-image: url(../../assets/login/zhuce_mima_icon@2x.png);
+    }
+    .green{
+         background-image: url(../../assets/login/zhuce_mima_green_icon@2x.png);
+    }
     .xieyi{
         width: 100vw;
         height: 100vh;
@@ -107,7 +113,6 @@
       .passIconBgEYE{
          @include login_input_icon;
          left:4.6rem;
-         background-image: url(../../assets/login/zhuce_mima_icon@2x.png);
          background-position: center center;
     }
     .phonePre{
@@ -148,6 +153,7 @@ export default {
     name: 'login',
     data () {
         return {
+            isActive:true,
           showserver:false,
           message:'<router-link> 组件支持用户在具有路由功能的应用中（点击）导航。 通过 to 属性指定目标地址，默认渲染成带有正确链接的 <a> 标签，可以通过配置 tag 属性生成别的标签.。另外，当目标路由成功激活时，链接元素自动设置一个表示激活的 CSS 类名。',
           userName:'',
@@ -162,9 +168,11 @@ export default {
     methods: {
         changeType(){
            if(this.passwordtype=='password'){
+               this.isActive=false;
                this.passwordtype='text';
            }
            else{
+                this.isActive=true;
                this.passwordtype='password';
            }
            
