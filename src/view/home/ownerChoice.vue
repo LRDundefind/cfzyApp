@@ -6,28 +6,37 @@
             </router-link>
         </mt-header>
         <div class="page-main">
-            <div v-for="n in 20" :key='n' class="main-list">
-                <div class="stall">档位{{n}}</div>
-                <div class="place">广东市-广东市-白云山农产品综合批发市场{{n}}</div>
+            <div v-for="item in ownerList" :key='item.gid' class="main-list">
+                <div class="stall">{{item.gearName}}</div>
+                <div class="place">广东市 <span v-show="item.markName != ''">--</span> {{item.markName}}<span
+                        v-show="item.userName != ''">--</span> {{item.userName}}
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import {home} from '@/services/apis/home.api'
 
     export default {
         name: 'client_detail',
         data () {
             return {
-                value: ''
+                ownerList: [],
             }
         },
         mounted () {
-
+            this.getList();
         },
         methods: {
             getList(){
+                let params = {};
+                home.gearList(params).then(response => {
+                    this.ownerList = response.data.results;
+                    console.log(response.data.results);
+                })
+
             },
             goChange(n){
                 this.$router.push({name: 'index_change', params: {id: n}});
@@ -50,15 +59,16 @@
         background: #fff;
         margin-top: 0.2rem;
         padding: 0.3rem;
-        .stall{
+        .stall {
             font-size: 0.3rem;
             color: #333333;
             padding: 0.02rem 0 0.28rem 0;
+            min-height: 0.4rem;
         }
-        .place{
+        .place {
             font-size: 0.26rem;
             color: #666666;
-            padding-bottom:0.02rem;
+            padding-bottom: 0.02rem;
         }
     }
 
