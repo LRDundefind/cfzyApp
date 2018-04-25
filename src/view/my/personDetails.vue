@@ -10,7 +10,7 @@
                     </div>
                     <div class="ub ub-pc">
                         <div class="sc">
-                            <div style="opacity: 0" class="picture"
+                            <div style="opacity: 0.5" class="picture"
                                  :style="'backgroundImage:url('+headerImage+')'"></div>
                             <input type="file" id="upload" accept="image" @change="upload1" style="opacity: 0">
                             <img v-if="personalData.headImg == ''" class="header-img"
@@ -167,14 +167,14 @@
         width: 1.24rem;
         height: 1.24rem;
         left: 50%;
-        top: 50%;
+        top: 42.5%;
         margin-left: -0.62rem;
     }
 
     .picture {
-        width: 2rem;
-        height: 2rem;
-        overflow: hidden;
+        height: 1.24rem;
+        width: 1.24rem;
+        border-radius: 50%;
         background-position: center center;
         background-repeat: no-repeat;
         background-size: cover;
@@ -193,7 +193,7 @@
         .header-img {
             width: 1.24rem;
             height: 1.24rem;
-            padding: 0 0 1.4rem 0;
+            padding: 0.9rem 0 0;
         }
     }
 
