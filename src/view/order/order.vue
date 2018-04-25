@@ -350,7 +350,16 @@ export default {
 				//unit_pie 件
 				this.goodsUnit = '件';
 			};
-        },
+			
+			//编辑弹框的值  price 单价 、goodNum 件数、weight 重量、slabWeight 平板重
+			if(this.goodsInfo[i].goodNum != null){
+				this.goodsunit = this.goodsInfo[i].price;
+				this.goodsnum = this.goodsInfo[i].goodNum;
+				this.goodsweight = this.goodsInfo[i].weight;
+				this.pbweight = this.goodsInfo[i].slabWeight;
+				
+			}
+		},
         
     	//单件货品信息录入验证和提交
     	submitGoodsInfo(){
@@ -448,7 +457,7 @@ export default {
 					     	packCost: null, //货品打包费
 					     	weighCost: null, //货品过磅费 下方列表展示
 					     	slabWeight:this.pbweight, //提交订单所需，列表不展示
-					     	weight_util:this.set_weight_util,  //重量单位，提交订单所需，列表不展示   //若按重量售卖，则重量单位为售卖单位????   待修改
+					     	weight_util:this.set_weight_util,  //重量单位，提交订单所需，列表不展示
 					     	sellUnit:this.sellUnit,  //售卖单位，提交订单所需，列表不展示
 					     	numUnit:this.numUnit,  //入库单位，列表不展示
 					    });
@@ -498,7 +507,7 @@ export default {
 							     	packCost:response.data.results.packCost, //货品打包费
 							     	weighCost:response.data.results.weighCost, //货品过磅费 下方列表展示
 							     	slabWeight:this.pbweight, //提交订单所需，列表不展示
-							     	weight_util:this.set_weight_util,  //重量单位，提交订单所需，列表不展示   //若按重量售卖，则重量单位为售卖单位????   待修改
+							     	weight_util:this.set_weight_util,  //重量单位，提交订单所需，列表不展示
 							     	sellUnit:this.sellUnit,  //售卖单位，提交订单所需，列表不展示
 							     	numUnit:this.numUnit,  //入库单位，列表不展示
 							    });
@@ -509,7 +518,7 @@ export default {
 							this.totalCost.totalWeigh += this.goodsInfo[i]['weighCost']; //总过磅费
 							this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost; //合计费用
 	                    }
-
+						
 	                    //重置弹框数据
 						this.resetPriceNum();
 	                    
@@ -551,6 +560,14 @@ export default {
         	if(this.customerType == 'Nottemporary'){
         		//非临时客户，赋值客户id 路由获取
         		this.customerId = Cookies.get('customerId');
+        		if(this.customerName == '选择客户'){
+					Toast({
+						message: '请选择客户',
+						position: 'middle',
+						duration: 1000
+	    			});
+        			return false;
+        		}
         	}else if(this.customerType == 'temporary'){
         		//客户id为''
         		this.customerId = ''
@@ -612,16 +629,7 @@ export default {
 					duration: 1000
     			});
     			return false;
-    		}else{
-				if(!(new RegExp(/^[0-9]+(.[0-9]+)?$/).test(this.totalCost.deliveryCost))){
-					Toast({
-						message: '请正确输入三轮费',  //这里弹框的层级有问题  -------待修改
-						position: 'middle',
-						duration: 1000
-	    			});
-	    			return false;
-	    		}
-			}
+    		}
     		
         	var params = {
     			tid: this.tid,//车次if
