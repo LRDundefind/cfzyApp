@@ -196,6 +196,11 @@ export default {
         setPrice(index){
         	this.dialoags = true;
         	this.numberNum = index;
+        	
+			//编辑弹框的值 当前暂存订单接口无单价的货品 单价返回的是 0
+        	if(this.goodsInfo[index].price != 0){
+        		this.price = this.goodsInfo[index].price;
+        	}
         },
 		//设置单价-确定按钮
         submitPrice(){
