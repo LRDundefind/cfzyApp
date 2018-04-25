@@ -14,7 +14,7 @@
 				
 				<div class="bg2">
 					<span class="passIconBg"></span>
-					<input v-model="passWord" placeholder="密码" :type="passwordtype"   class="passIcon ">
+					<input v-model="passWord" placeholder="密码" :type="passwordtype"   class="passIcon " maxlength="16">
                     <span class="passIconBgEYE" v-bind:class="[ isActive ? 'hui' : 'green']" @click="changeType"></span>
 				</div>
 
