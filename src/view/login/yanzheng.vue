@@ -118,7 +118,13 @@ export default {
                     'str': strEnc(JSON.stringify(this.form),this.auth.key,this.auth.key,this.auth.key)
                     };
             login.getmessname(params).then(response=>{
-                  
+                  if(response.data.status='N'){
+                       Toast({
+                        message: response.data.error_msg,
+                        position: 'middle',
+                        duration: 3000
+                        });
+                  }
             })
         },
         getphoneNumber(){
