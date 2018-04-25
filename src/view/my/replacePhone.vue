@@ -79,7 +79,7 @@
                     });
                 }
                 else{
-                    this.$router.push({name:'verification',params: { phone: this.phoneNumber }});
+                    this.$router.push({name:'yanzheng',params: { phone: this.phoneNumber,firstlogin:'Info' }});
                     //调取接口
 
                 }

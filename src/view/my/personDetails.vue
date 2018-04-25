@@ -41,18 +41,19 @@
         data () {
             return {
                 personalData:[],
-                name:'小马云',
-                phone:'18236911784',
-                company:'阿里巴巴',
-                business:'',
-                duty:'1111111',
-                scope:'支付宝',
-                publicity:'',
+                phone:'',
+                yanNumber:'',
                 headerImage:'',
-                picValue:''
             }
         },
         mounted () {
+            if(this.$route.params.phone){
+                this.phone = this.$route.params.phone;
+            }
+            if(this.$route.params.yanNumber){
+                this.yanNumber = this.$route.params.yanNumber;
+            }
+
             this.info();
         },
         methods: {
@@ -61,51 +62,54 @@
                 my.getInfo(params).then(response => {
                     if(response.data.status == 'Y'){
                         this.personalData = response.data.results;
+                        if(this.phone){
+                            this.personalData.phone = this.phone;
+                        }
                     }else {
 
                     }
                 })
             },
-            upload1 (e) {  
-            let files = e.target.files || e.dataTransfer.files;  
-            if (!files.length) return;  
-            this.picValue = files[0];  
-            this.imgPreview(this.picValue);  
-            }, 
-            imgPreview (file) {  
-                let self = this;  
-                let Orientation;  
+            upload1 (e) {
+            let files = e.target.files || e.dataTransfer.files;
+            if (!files.length) return;
+            this.picValue = files[0];
+            this.imgPreview(this.picValue);
+            },
+            imgPreview (file) {
+                let self = this;
+                let Orientation;
                 //去获取拍照时的信息，解决拍出来的照片旋转问题  
-                Exif.getData(file, function(){  
-                    Orientation = Exif.getTag(this, 'Orientation');  
-                });  
+                Exif.getData(file, function(){
+                    Orientation = Exif.getTag(this, 'Orientation');
+                });
                 // 看支持不支持FileReader  
-                if (!file || !window.FileReader) return;  
-            
-                if (/^image/.test(file.type)) {  
+                if (!file || !window.FileReader) return;
+
+                if (/^image/.test(file.type)) {
                     // 创建一个reader  
-                    let reader = new FileReader();  
+                    let reader = new FileReader();
                     // 将图片2将转成 base64 格式  
-                    reader.readAsDataURL(file);  
+                    reader.readAsDataURL(file);
                     // 读取成功后的回调  
-                    reader.onloadend = function () {  
-                        let result = this.result;  
-                        let img = new Image();  
-                        img.src = result;  
+                    reader.onloadend = function () {
+                        let result = this.result;
+                        let img = new Image();
+                        img.src = result;
                         //判断图片是否大于100K,是就直接上传，反之压缩图片  
-                        if (this.result.length <= (100 * 1024)) {  
-                        self.headerImage = this.result;  
-                        self.postImg();  
-                        }else {  
-                        img.onload = function () {  
-                            let data = self.compress(img,Orientation);  
-                            self.headerImage = data;  
+                        if (this.result.length <= (100 * 1024)) {
+                        self.headerImage = this.result;
+                        self.postImg();
+                        }else {
+                        img.onload = function () {
+                            let data = self.compress(img,Orientation);
+                            self.headerImage = data;
                             console.log(self.headerImage)
-                            self.postImg();  
-                        }  
-                        }  
-                    }   
-                    }  
+                            self.postImg();
+                        }
+                        }
+                    }
+                    }
             },
             postImg(){
                 console.log(this.headerImage)
@@ -134,14 +138,14 @@
     top: 50%;
     margin-left: -0.62rem;
 }
-.picture {  
-  width: 2rem;  
-  height: 2rem;  
-  overflow: hidden;  
-  background-position: center center;  
-  background-repeat: no-repeat;  
-  background-size: cover;   
-} 
+.picture {
+  width: 2rem;
+  height: 2rem;
+  overflow: hidden;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
     .top{
         background-image: url("../../assets/my/my_top.png");
         background-repeat: no-repeat;
@@ -188,5 +192,5 @@
         width: 5.5rem;
         margin: 0 auto;
     }
-    
+
 </style>
