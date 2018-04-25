@@ -174,15 +174,21 @@ export default {
                         position: 'middle',
                         duration: 3000
                         });
-                      this.$router.push({name:'login'});
+                        setTimeout(()=>{
+                           this.$router.push({name:'login'});
+                        },3000)
+                      
                   }
                   else{
                        Toast({
-                        message: 'response.data.error_msg',
+                        message: response.data.error_msg,
                         position: 'middle',
                         duration: 3000
                         })
-                        this.$router.push({name:'zhuce'});
+                        setTimeout(()=>{
+                           this.$router.push({name:'zhuce'});
+                        },3000)
+                        
                         
                      
                   }
@@ -206,7 +212,10 @@ export default {
                         position: 'middle',
                         duration: 3000
                         })
-                        this.$router.push({name:'login'});
+                        setTimeout(()=>{
+                            this.$router.push({name:'login'});
+                        },3000)
+                        
                        
 
                         
@@ -219,7 +228,10 @@ export default {
                         position: 'middle',
                         duration: 3000
                         })
+                         setTimeout(()=>{
                             this.$router.push({name:'forget'});
+                        },3000)
+                        
                        
                         
                         
