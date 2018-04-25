@@ -26,6 +26,15 @@ export const my = {
             data: serverMoudle(params) || {}
         });
     },
+    //获取个人信息
+    getInfo(params) {
+        return axios({
+            url: 'rest/CHENGFENG_GET_SELEMANINFO',
+            method: 'post',
+            data: serverMoudle(params) || {}
+        });
+    },
+
 
 
 };

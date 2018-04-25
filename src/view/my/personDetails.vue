@@ -12,17 +12,17 @@
                         <div class="sc">
                             <div style="opacity: 0" class="picture" :style="'backgroundImage:url('+headerImage+')'"></div>
                             <input type="file" id="upload" accept="image" @change="upload1" style="opacity: 0">
-                            <img class="header-img" src="../../assets/my/my_head.png"/>
+                            <img v-if="personalData.headImg == ''" class="header-img" src="../../assets/my/my_head.png"/>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="main-list">
                 <p class="clearfix">姓名
-                    <input type="text" v-model="name">
+                    <input type="text" v-model="personalData.selName">
                     <!--<input type="text" v-model="nameWrite" v-else>-->
                 </p>
-                <p class="clearfix" @click="goPhone()">手机号<input type="text" v-model="phone" readonly></p>
+                <p class="clearfix" @click="goPhone()">手机号<input type="text" v-model="personalData.phone" readonly></p>
             </div>
 
         </div>
@@ -34,10 +34,13 @@
 
 <script>
     import { MessageBox } from 'mint-ui';
-    import Exif from 'exif-js'
+    import Exif from 'exif-js';
+    import {Toast} from 'mint-ui';
+    import {my} from '@/services/apis/my'
     export default {
         data () {
             return {
+                personalData:[],
                 name:'小马云',
                 phone:'18236911784',
                 company:'阿里巴巴',
@@ -50,9 +53,19 @@
             }
         },
         mounted () {
-
+            this.info();
         },
         methods: {
+            info(){
+                let params={};
+                my.getInfo(params).then(response => {
+                    if(response.data.status == 'Y'){
+                        this.personalData = response.data.results;
+                    }else {
+
+                    }
+                })
+            },
             upload1 (e) {  
             let files = e.target.files || e.dataTransfer.files;  
             if (!files.length) return;  

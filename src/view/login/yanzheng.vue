@@ -118,7 +118,13 @@ export default {
                     'str': strEnc(JSON.stringify(this.form),this.auth.key,this.auth.key,this.auth.key)
                     };
             login.getmessname(params).then(response=>{
-                  
+                  if(response.data.status='N'){
+                       Toast({
+                        message: response.data.error_msg,
+                        position: 'middle',
+                        duration: 3000
+                        });
+                  }
             })
         },
         getphoneNumber(){
@@ -169,10 +175,28 @@ export default {
                     Cookies.remove('Zphone');
                     Cookies.remove('Zpassword');
                   if(response.data.error_code=='200'){
-                      this.$router.push({name:'login'});
+                      Toast({
+                        message: '注册成功',
+                        position: 'middle',
+                        duration: 3000
+                        });
+                        setTimeout(()=>{
+                           this.$router.push({name:'login'});
+                        },3000)
+                      
                   }
                   else{
-                      this.$router.push({name:'zhuce'});
+                       Toast({
+                        message: response.data.error_msg,
+                        position: 'middle',
+                        duration: 3000
+                        })
+                        setTimeout(()=>{
+                           this.$router.push({name:'zhuce'});
+                        },3000)
+                        
+                        
+                     
                   }
             })
        },
@@ -189,10 +213,35 @@ export default {
                     Cookies.remove('Fpassword');
                     Cookies.remove('Fphone');
                   if(response.data.error_code=='200'){
-                      this.$router.push({name:'login'});
+                      Toast({
+                        message: '修改成功，请重新登录',
+                        position: 'middle',
+                        duration: 3000
+                        })
+                        setTimeout(()=>{
+                            this.$router.push({name:'login'});
+                        },3000)
+                        
+                       
+
+                        
+                        
+                     
                   }
                   else{
-                      this.$router.push({name:'forget'});
+                       Toast({
+                        message: response.data.error_msg,
+                        position: 'middle',
+                        duration: 3000
+                        })
+                         setTimeout(()=>{
+                            this.$router.push({name:'forget'});
+                        },3000)
+                        
+                       
+                        
+                        
+                      
                   }
             })
        },

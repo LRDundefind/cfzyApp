@@ -45,7 +45,7 @@
 
             <div class="row" @click="gofeedBack">
                 <div class=" p-re  content ub bd-b">
-                    <span class="phone-icon"></span>
+                    <span class="back-icon" style="width: 0.4rem;top:0.3rem;"></span>
                     <div class="title">意见反馈</div>
                     <div class="">
                         <img src="../../assets/my/icon_right.png" class="my_icon"/>
@@ -55,7 +55,7 @@
 
             <div class="m-t-10 row">
                 <div class=" p-re  content ub bd-b">
-                    <span class="phone-icon"></span>
+                    <span class="update-icon" style="width: 0.4rem;top:0.3rem;"></span>
                     <div class="title">系统升级</div>
                     <div class="">
                         <img src="../../assets/my/icon_right.png" class="my_icon"/>
@@ -65,7 +65,7 @@
 
             <div class="m-b-30 row" @click="goAbout">
                 <div class=" p-re  content ub bd-b">
-                    <span class="phone-icon"></span>
+                    <span class="about-icon" style="width: 0.4rem;top:0.3rem;"></span>
                     <div class="title">关于</div>
                     <div class="">
                         <img src="../../assets/my/icon_right.png" class="my_icon"/>
@@ -136,6 +136,22 @@
                 @include login_input_icon;
                 background-image: url(../../assets/my/my_phone.png);
             }
+
+            .back-icon{
+                @include login_input_icon;
+                background-image: url(../../assets/my/my_feedback.png);
+            }
+
+            .update-icon{
+                @include login_input_icon;
+                background-image: url(../../assets/my/my_update.png);
+            }
+
+            .about-icon{
+                @include login_input_icon;
+                background-image: url(../../assets/my/my_about.png);
+            }
+
             .content{
                 line-height: 0.96rem;
                 .title{

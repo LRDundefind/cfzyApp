@@ -267,10 +267,10 @@
             badList(){
                 MessageBox({
                     title: '提示',
-                    message: '设置该人所有赊账为坏账?',
+                    message: '即将推出，敬请期待?',
                     showCancelButton: true
                 }).then(action => {
-                    alert('接口调取')
+                   
                 });
             }
 
