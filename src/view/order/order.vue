@@ -435,14 +435,6 @@ export default {
 				this.set_weight_util = this.sellUnit;
 			}
 			
-			//售卖单位为件时，重量平板重是非必填 未填则设置为0
-    		if(this.goodsweight == '' && this.sellUnit == 'unit_pie'){
-    			this.goodsweight = 0;
-    		}
-    		if(this.pbweight == '' && this.sellUnit == 'unit_pie'){
-    			this.pbweight = 0;
-    		}
-			
 			//未填写单价，不计算当前所设置货品的贷款包装过磅费，不计算合计金额
 			if(this.goodsunit == '' ){ 
 				this.have_goodsunit = false;
@@ -578,7 +570,7 @@ export default {
 			for(var index in this.goodsInfo){
 				buyNum += this.goodsInfo[index].goodNum;
 			}
-			//现结+赊账 至少有一项货品填写了下单信息
+			//现结+赊账 至少填写了一项货品信息
 			if(buyNum <= 0 || buyNum == ''){
 				Toast({
 					message: '请完善货品购买量信息',
@@ -586,39 +578,21 @@ export default {
 					duration: 1000
     			});
     			return false;
-			}else{
-    			//非 赊账暂存(szType != 'Y')时，判断填写了购买量的货品都填写了单价
-    			if(szType != 'Y'){
-                    this.goodsInfo.filter(function(item){
-                    	if(item.weight != '' && item.price == ''){
-							Toast({
-								message: '请完善货品单价',
-								position: 'middle',
-								duration: 1000
-			    			});
-							return false;
-                    	}
-    					return false;
-                    })
-				}
 			}
 			
-			//非 赊账暂存(szType != 'Y')时，【判断每件售卖单位为件的货品是否填写了重量和平板重】--售卖单位为件时，弹框不验证这两项
+			//非 赊账暂存(szType != 'Y')时，判断填写了购买量的货品都填写了单价
 			if(szType != 'Y'){
                 this.goodsInfo.filter(function(item){
-                	if(item.sellUnit == 'unit_pie' && item.goodNum != 0){
-                		if(item.weight == 0 || item.slabWeight == 0){
-	            			Toast({
-								message: '请填写正确的货品重量/平板重',
-								position: 'middle',
-								duration: 1000
-			    			});
-							return false;
-						}
-                		return false;
+                	if(item.weight != '' && item.price == ''){
+						Toast({
+							message: '请完善货品单价',
+							position: 'middle',
+							duration: 1000
+		    			});
+						return false;
+
                 	}
-					return false;
-                })
+                });
 			}
 			
         	//现结（下单）和赊账（暂存、下单）验证三轮车费
