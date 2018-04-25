@@ -20,7 +20,7 @@
                     <div class="ub-f1"><input type="text" class="number" maxlength="1" v-Wfocus3="Jd3" v-model="phoneNumber3"></div>
                     <div class="ub-f1"><input type="text" class="number" maxlength="1" v-Wfocus4="Jd4" v-model="phoneNumber4"></div>
                 </div> -->
-                <div class="security-code-wrap">
+                <!-- <div class="security-code-wrap">
                     <label for="code">
                         <ul class="security-code-container">
                             <li class="field-wrap" v-for="(item, index) in number" :key="index">
@@ -36,8 +36,8 @@
                 <div>
                     <span v-show="show" @click="getphoneNumber();daojishi()"  class="getNumber">获取验证码</span>
          			<span v-show="!show" class="getNumber">重新获取（{{count}}）</span>
-                </div>
-        
+                </div> -->
+                <securitycode v-model="code"></securitycode>
         <div @click="loginBtn" class="findbtn">确 定</div>
     </div>
     </div>
@@ -129,9 +129,13 @@
     import {Toast} from 'mint-ui';
     import {login} from '@/services/apis/login'
     import Cookies from 'js-cookie'
+    import securitycode from '@/view/login/mobiephone'
     const TIME_COUNT = 60;
     export default {
         name: 'login',
+        components:{
+            securitycode
+        },
          directives:{
             Wfocus1:{
                 inserted:function(el,{value}){
@@ -143,15 +147,16 @@
         },
         data () {
             return {
-                value:'',
-                 number: {
-                    type: Number,
-                    default: 4,
-                },
-                placeholder: {
-                    type: String,
-                    default: '-'
-                },
+                // value:'',
+                //  number: {
+                //     type: Number,
+                //     default: 4,
+                // },
+                // placeholder: {
+                //     type: String,
+                //     default: '-'
+                // },
+                code:'',
                 logintime: this.$route.params.firstlogin,
                 phoneNumber: this.$route.params.phone,
                 form: {},
