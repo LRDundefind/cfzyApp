@@ -2,7 +2,7 @@
     <div class="my">
         <div class="b-c-f">
             <div class="top ">
-                <div class="leftIcon" @click="$router.go(-1)">
+                <div class="leftIcon" @click="goHome">
                 </div>
                 <div @click="goDetails()" class="information">
                     <div class="ub ub-pc">
@@ -183,7 +183,10 @@
 
         },
         methods: {
-
+            //跳转到首页
+            goHome(){
+                this.$router.push({ name: 'home'})
+            },
             //跳转到修改密码
             goPassword(){
                 this.$router.push({ name: 'alterPassword'})
