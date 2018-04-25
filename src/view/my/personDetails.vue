@@ -6,7 +6,7 @@
                 <div class="top ">
                     <div class="ub ub-pc p-t-10">
                         <div class="c-f f-s-18 ">完善用户资料</div>
-                        <div @click="$router.go(-1)" class="leftIcon"></div>
+                        <div @click="goMy" class="leftIcon"></div>
                     </div>
                     <div class="ub ub-pc">
                         <div class="sc">
@@ -29,7 +29,7 @@
 
         </div>
         <div class="login_cont">
-            <div @click="goLogin" class="loginbtn">保存</div>
+            <div @click="savePersonal" class="loginbtn">保存</div>
         </div>
     </div>
 </template>
@@ -61,6 +61,9 @@
             this.info();
         },
         methods: {
+            goMy(){
+                this.$router.push({name: 'my'});
+            },
             info(){
                 let params = {};
                 my.getInfo(params).then(response => {
@@ -124,12 +127,32 @@
                     params: {selName: this.personalData.selName, headImg: this.personalData.headImg}
                 });
             },
-            goLogin(){
-            },
-            getList(){
-            },
-            handleSave(){
-
+            savePersonal(){
+                let data = this.personalData;
+                delete data.createTime;
+                delete data.password;
+                delete data.salt;
+                delete data.sid;
+                if(this.yanNumber){
+                    data.code = this.yanNumber;
+                }
+                //console.log(data);
+                my.alterPersonal(data).then(response => {
+                    if (response.data.status == 'Y') {
+                        Toast({
+                            message: '保存成功',
+                            position: 'middle',
+                            duration: 1000
+                        });
+                        this.$router.push({ name: 'my'})
+                    } else {
+                        Toast({
+                            message: response.data.error_msg,
+                            position: 'middle',
+                            duration: 3000
+                        });
+                    }
+                })
             },
         }
     }
