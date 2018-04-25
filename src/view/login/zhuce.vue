@@ -28,21 +28,53 @@
 
 				<div class="bg2">
 					<span class="passIconBg"></span>
-                    <input v-model="passWord" placeholder="请输入密码" :type="passwordtype"   class="passIcon ">
+                    <input v-model="passWord" placeholder="请输入密码" :type="passwordtype" maxlength="16"  class="passIcon ">
                     <span class="passIconBgEYE" @click="changeType"></span>
 				</div>
 
 				<div  @click="loginBtn" class="loginbtn">注 册</div>
                 <div class="goxieyi">
                     <p>点击上面的“注册”按钮，既表示你同意</p>
-                    <router-link :to="{ name: 'xieyi', params: { userId: 123 }}"  >程丰智运档主服务使用协议</router-link>
+                    <a @click="showserver = true">程丰智运档主服务使用协议</a>
+                    <!-- <router-link :to="{ name: 'xieyi', params: { userId: 123 }}"  ></router-link> -->
                 </div>
             </div>
-        
+            <div class="xieyi" v-show="showserver">
+                     <mt-header fixed title="服务协议">
+                            <mt-button icon="back"  slot="left" @click="showserver = false"></mt-button>
+                    </mt-header>
+                     <div class="xieyi_cont">
+                        {{message}}
+                    </div>
+            </div>
     </div>
 
 </template>
 <style scoped lang='scss'>
+    .xieyi{
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        z-index: 200;
+        left: 0;
+        top: 0;
+        background: #fff;
+    }
+    .xieyitit{
+        text-align: center;
+        font-size: 0.2rem;
+        color: #4c4c4c;
+        line-height: 0.4rem;
+    }
+    .xieyi_cont{
+       font-size: $fons_size_26;
+       padding: 0.2rem;
+       position: relative;
+       top: 0.8rem;
+       line-height: 0.48rem;
+       color: #4c4c4c;
+   }
+
     .login_header{
         width: 2rem;
         padding-top: 1.5rem;
@@ -83,7 +115,7 @@
         width: 0.5rem;
         z-index: 100;
         left: 4.8em;
-        top: 0.32rem;
+        top: 0.3rem;
         font-size: 0.26rem;
     }
     .usericon,.passIcon{
@@ -116,6 +148,8 @@ export default {
     name: 'login',
     data () {
         return {
+          showserver:false,
+          message:'<router-link> 组件支持用户在具有路由功能的应用中（点击）导航。 通过 to 属性指定目标地址，默认渲染成带有正确链接的 <a> 标签，可以通过配置 tag 属性生成别的标签.。另外，当目标路由成功激活时，链接元素自动设置一个表示激活的 CSS 类名。',
           userName:'',
           passWord:'',
           phone:'',
@@ -138,7 +172,7 @@ export default {
        loginBtn(){
            if(this.userName==''){
 					 Toast({
-                        message: '账号不可为空',
+                        message: '姓名不可为空',
                         position: 'middle',
                         duration: 5000
                         });

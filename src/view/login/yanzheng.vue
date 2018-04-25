@@ -169,10 +169,22 @@ export default {
                     Cookies.remove('Zphone');
                     Cookies.remove('Zpassword');
                   if(response.data.error_code=='200'){
+                      Toast({
+                        message: '注册成功',
+                        position: 'middle',
+                        duration: 3000
+                        });
                       this.$router.push({name:'login'});
                   }
                   else{
-                      this.$router.push({name:'zhuce'});
+                       Toast({
+                        message: 'response.data.error_msg',
+                        position: 'middle',
+                        duration: 3000
+                        })
+                        this.$router.push({name:'zhuce'});
+                        
+                     
                   }
             })
        },
@@ -189,10 +201,29 @@ export default {
                     Cookies.remove('Fpassword');
                     Cookies.remove('Fphone');
                   if(response.data.error_code=='200'){
-                      this.$router.push({name:'login'});
+                      Toast({
+                        message: '修改成功，请重新登录',
+                        position: 'middle',
+                        duration: 3000
+                        })
+                            this.$router.push({name:'login'});
+                       
+
+                        
+                        
+                     
                   }
                   else{
-                      this.$router.push({name:'forget'});
+                       Toast({
+                        message: response.data.error_msg,
+                        position: 'middle',
+                        duration: 3000
+                        })
+                            this.$router.push({name:'forget'});
+                       
+                        
+                        
+                      
                   }
             })
        },
