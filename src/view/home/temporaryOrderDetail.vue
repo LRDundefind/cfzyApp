@@ -16,8 +16,8 @@
 				<div class="ub ub-ac term customer-head" @click="customerDetail(detailInfo.cid)">
 					<div class="ub-f1">客户</div>
 					<!--<img src="../../assets/index/shouye_touxiang_img@2x.png" class="head">-->
-					<span>{{detailInfo.nickname}}</span>
-					<img src="../../assets/my/icon_right.png" class="icon">
+					<span>{{detailInfo.nickname || '临时客户'}}</span>
+					<img v-if="detailInfo.nickname" src="../../assets/my/icon_right.png" class="icon">
 				</div>
 				<div class="ub term no-border">
 					<div class="ub-f1">卖手</div>
@@ -87,7 +87,7 @@
 					<div class="">备注</div>
 				</div>
 				<div class="term no-border">
-					<div class="remarks">{{detailInfo.remark}}</div>
+					<div class="remarks">{{detailInfo.remark || '暂无~'}}</div>
 				</div>
 			</div>
 			<!--下单时间-->
@@ -337,12 +337,13 @@ i{
 			width: 0.62rem;
 			display: block;
 		}
+		span{
+			margin: 0 0 0 .15rem;
+		}
 		img.icon{
 			width: 0.18rem;
 			display: block;
-		}
-		span{
-			margin: 0 .2rem 0 .15rem;
+			margin-left: .2rem;
 		}
 	}
 	.term.no-border{
