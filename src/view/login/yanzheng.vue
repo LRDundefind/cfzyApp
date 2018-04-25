@@ -149,6 +149,8 @@
                     key: "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJRqAC45zJt7CFWUuRQgA+mm", //加密的key
                     randomKey: '' //生成签名的key
                 },
+                selName:this.$route.params.selName,
+                headImg:this.$route.params.headImg,
             }
         },
         mounted () {
@@ -226,7 +228,7 @@
                         this.zhuce(yanNumber);
                     }
                     else if(this.logintime == 'Info'){
-                        this.$router.push({name:'personDetails',params: { phone: this.phoneNumber,yanNumber:yanNumber }});
+                        this.$router.push({name:'personDetails',params: { phone: this.phoneNumber,yanNumber:yanNumber,selName:this.selName,headImg:this.headImg }});
                     }else {
                         // 修改密码
                         this.change(yanNumber);
