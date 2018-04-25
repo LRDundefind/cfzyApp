@@ -14,12 +14,25 @@
             </div>
 
             <div class="login_cont">
-                <div class="ub ub-pc" >
-                    <div class="ub-f1"><input type="text" class="number" maxlength="1" v-model="phoneNumber1"></div>
-                    <div class="ub-f1"><input type="text" class="number" maxlength="1" v-model="phoneNumber2"></div>
-                    <div class="ub-f1"><input type="text" class="number" maxlength="1" v-model="phoneNumber3"></div>
-                    <div class="ub-f1"><input type="text" class="number" maxlength="1" v-model="phoneNumber4"></div>
+                <!-- <div class="ub ub-pc" >
+                    <div class="ub-f1"><input type="text" class="number" maxlength="1" v-Wfocus1="Jd1" v-model="phoneNumber1"></div>
+                    <div class="ub-f1"><input type="text" class="number" maxlength="1" v-Wfocus2="Jd2" v-model="phoneNumber2"></div>
+                    <div class="ub-f1"><input type="text" class="number" maxlength="1" v-Wfocus3="Jd3" v-model="phoneNumber3"></div>
+                    <div class="ub-f1"><input type="text" class="number" maxlength="1" v-Wfocus4="Jd4" v-model="phoneNumber4"></div>
+                </div> -->
+                <div class="security-code-wrap">
+                    <label for="code">
+                        <ul class="security-code-container">
+                            <li class="field-wrap" v-for="(item, index) in number" :key="index">
+                            <i class="char-field">{{value[index] || placeholder}}</i>
+                            </li>
+                        </ul>
+                    </label>
+                    <input ref="input" class="input-code" @keyup="handleInput($event)" v-model="value"
+                        id="code" name="code" type="tel" :maxlength="number"
+                        autocorrect="off" autocomplete="off" autocapitalize="off">
                 </div>
+
                 <div>
                     <span v-show="show" @click="getphoneNumber();daojishi()"  class="getNumber">获取验证码</span>
          			<span v-show="!show" class="getNumber">重新获取（{{count}}）</span>
@@ -30,6 +43,41 @@
 
 </template>
 <style scoped lang='scss'>
+    .security-code-wrap {
+    overflow: hidden;
+  }
+
+  .security-code-container {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    .field-wrap {
+      list-style: none;
+      display: block;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      font-size: 16px;
+      background-color: #fff;
+      margin: 2px;
+      color: #000;
+      .char-field {
+        font-style: normal;
+      }
+    }
+  }
+
+  .input-code {
+    position: absolute;
+    left: -9999px;
+    top: -99999px;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    overflow: visible;
+    z-index: -1;
+  }
     .login_header{
         width: 2rem;
         padding-top: 1.5rem;
@@ -76,8 +124,18 @@
 const TIME_COUNT = 60;
 export default {
     name: 'login',
+    directives:{
+        Wfocus1:{
+            inserted:function(el,{value}){
+                if(value){
+                    el.Wfocus();
+                }
+            }
+        }
+    },
     data () {
         return {
+          value:'',
           logintime:this.$route.params.firstlogin,
           phoneNumber:this.$route.params.phone,
           form:{},
@@ -103,6 +161,21 @@ export default {
 
         },
     methods: {
+         hideKeyboard() {
+            // 输入完成隐藏键盘
+            document.activeElement.blur() // ios隐藏键盘
+            this.$refs.input.blur() // android隐藏键盘
+        },
+        handleSubmit() {
+            this.$emit('input', this.value)
+        },
+        handleInput(e) {
+            this.$refs.input.value = this.value
+            if (this.value.length >= this.number) {
+            this.hideKeyboard()
+            }
+            this.handleSubmit()
+        },
         getmessage(){
             if(this.logintime=='Y'){
                 this.verCodeName='Register'
