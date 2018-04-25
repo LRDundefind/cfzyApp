@@ -129,11 +129,6 @@
             },
             goLogin(){
             },
-            getList(){
-            },
-            handleSave(){
-
-            },
         }
     }
 </script>
