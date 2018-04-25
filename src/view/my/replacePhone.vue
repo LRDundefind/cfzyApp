@@ -56,11 +56,14 @@
         name: 'replacePhone',
         data () {
             return {
-                phoneNumber:''
+                phoneNumber:'',
+                selName:this.$route.params.selName,
+                headImg:this.$route.params.headImg,
             }
         },
         mounted () {
-
+            //console.log(this.selName);
+            //console.log(this.headImg);
         },
         methods: {
             loginBtn(){
