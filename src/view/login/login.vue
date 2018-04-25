@@ -15,7 +15,7 @@
 				<div class="bg2">
 					<span class="passIconBg"></span>
 					<input v-model="passWord" placeholder="密码" :type="passwordtype"   class="passIcon ">
-                    <span class="passIconBgEYE" @click="changeType"></span>
+                    <span class="passIconBgEYE" v-bind:class="[ isActive ? 'hui' : 'green']" @click="changeType"></span>
 				</div>
 
 				<div  @click="loginBtn" class="loginbtn">登 录</div>
@@ -65,8 +65,14 @@
     .passIconBgEYE{
          @include login_input_icon;
          left:4.6rem;
-         background-image: url(../../assets/login/zhuce_mima_icon@2x.png);
+        
          background-position: center center;
+    }
+    .hui{
+         background-image: url(../../assets/login/zhuce_mima_icon@2x.png);
+    }
+    .green{
+         background-image: url(../../assets/login/zhuce_mima_green_icon@2x.png);
     }
     .loginbtn{
 		@include login_btn;
@@ -89,6 +95,7 @@ export default {
     name: 'login',
     data () {
         return {
+          isActive:true,
           userName:'',
           passWord:'',
           passwordtype:'password',
@@ -105,9 +112,11 @@ export default {
     methods: {
        changeType(){
            if(this.passwordtype=='password'){
+               this.isActive=false;
                this.passwordtype='text';
            }
            else{
+                this.isActive=true;
                this.passwordtype='password';
            }
            
