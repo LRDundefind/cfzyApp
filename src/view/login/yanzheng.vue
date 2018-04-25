@@ -2,7 +2,9 @@
 
     <div class="login">
         <mt-header fixed title="验证码">
-            <router-link to="/login" slot="left">
+            <mt-button icon="back" @click="goPersonal" v-if="this.logintime == 'Info'" slot="left"></mt-button>
+
+            <router-link to="/login" slot="left" v-else>
                 <mt-button icon="back"></mt-button>
             </router-link>
             <!-- <mt-button icon="more" slot="right"></mt-button> -->
@@ -162,6 +164,10 @@
 
         },
         methods: {
+            goPersonal(){
+                this.$router.push({name: 'personDetails', params: {selName: this.selName, headImg: this.headImg}});
+            },
+
             hideKeyboard() {
                 // 输入完成隐藏键盘
                 document.activeElement.blur() // ios隐藏键盘
