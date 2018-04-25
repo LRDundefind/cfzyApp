@@ -7,7 +7,7 @@
         </mt-header>
         <div class="page-main">
             <div v-for="item in ownerList" :key='item.gid' class="main-list">
-                <div  @click="handleCommand(item)">
+                <div @click="handleCommand(item)">
                     <div class="stall">{{item.gearName}}</div>
                     <div class="place">广东市 <span v-show="item.markName != ''">--</span> {{item.markName}}<span
                             v-show="item.userName != ''">--</span> {{item.userName}}
@@ -37,7 +37,7 @@
                 let params = {};
                 home.gearList(params).then(response => {
                     this.ownerList = response.data.results;
-                    console.log(response.data.results);
+//                    console.log(response.data.results);
                 })
 
             },
@@ -48,17 +48,18 @@
             handleCommand(command){
                 var temp = command;
                 var s = JSON.parse(Cookies.get('gidOwnID_lists'));
-                var index = null;
-                for (var i = 0; i < s.length; i++) {
-                    if (command.gid == s[i].gid) {
-                        index = i
+                var number = null;
+                s.forEach(function (value,index) {
+                    if (value.gid == command.gid) {
+                        number = index;
                     }
-                }
-                s.splice(index, 1);
+                });
+                s.splice(number, 1);
                 s.unshift(temp);
+
                 let gidOwnID_lists = JSON.stringify(s);
                 Cookies.set('gidOwnID_lists', gidOwnID_lists);
-                this.$router.push({name:'home'});
+                this.$router.push({name: 'home'});
             },
 
         }
