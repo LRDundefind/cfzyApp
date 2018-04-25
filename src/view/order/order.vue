@@ -69,7 +69,9 @@
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">三轮费</div>
-					<div class="edu fare"><input type="text" @click="sanlunfei = true" v-model="totalCost.deliveryCost" placeholder="点击输入三轮费用"></div>
+					<div class="edu fare">
+						<input type="text" @click="sanlunfei = true" v-model="totalCost.deliveryCost" readonly="readonly" placeholder="点击输入三轮费用">
+					</div>
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">车号</div>
