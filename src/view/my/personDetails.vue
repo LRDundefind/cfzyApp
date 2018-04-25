@@ -134,7 +134,7 @@
         background-repeat: no-repeat;
         height: 4.52rem;
         .leftIcon{
-            width: 0.32rem !important;
+            width: 0.22rem !important;
             left: 0.3rem !important;
             @include login_input_icon;
             background-image: url(../../assets/index/left_icon.png);
@@ -148,7 +148,7 @@
     .main-list{
         background: #fff;
         margin-top: 0.2rem;
-        padding: 0.2rem;
+        padding: 0.2rem 0.3rem;
         color: #333;
         font-size: 0.28rem;
         line-height: 1rem;

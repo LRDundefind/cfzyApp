@@ -27,9 +27,9 @@
         .main-list {
             background: #fff;
             margin-top: 0.2rem;
-            padding: 0.2rem;
+            padding: 0.3rem;
             font-size: 0.28rem;
-            line-height: 1rem;
+            height: 4.32rem;
             .remark {
                 textarea {
                     border: none;

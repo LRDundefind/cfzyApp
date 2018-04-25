@@ -96,7 +96,7 @@
                 padding-top: 13.6%;
             }
             .leftIcon{
-                width: 0.32rem !important;
+                width: 0.22rem !important;
                 left: 0.3rem !important;
                 @include login_input_icon;
                 background-image: url(../../assets/index/left_icon.png);
@@ -124,7 +124,7 @@
         .list{
             .row{
                 background-color: white;
-                padding:0 0.2rem;
+                padding:0 0.3rem;
             }
 
             .lock-icon{
