@@ -13,23 +13,55 @@
             <h2>已向{{phoneNumber}}发送短信验证码短信</h2>
         </div>
 
-        <div class="login_cont">
-            <div class="ub ub-pc">
-                <div class="ub-f1"><input type="text" class="number" maxlength="1" v-model="phoneNumber1"></div>
-                <div class="ub-f1"><input type="text" class="number" maxlength="1" v-model="phoneNumber2"></div>
-                <div class="ub-f1"><input type="text" class="number" maxlength="1" v-model="phoneNumber3"></div>
-                <div class="ub-f1"><input type="text" class="number" maxlength="1" v-model="phoneNumber4"></div>
-            </div>
-            <div>
-                <span v-show="show" @click="getphoneNumber();daojishi()" class="getNumber">获取验证码</span>
-                <span v-show="!show" class="getNumber">重新获取（{{count}}）</span>
-            </div>
-        </div>
+            <div class="login_cont">
+                <!-- <div class="ub ub-pc" >
+                    <div class="ub-f1"><input type="text" class="number" maxlength="1" v-Wfocus1="Jd1" v-model="phoneNumber1"></div>
+                    <div class="ub-f1"><input type="text" class="number" maxlength="1" v-Wfocus2="Jd2" v-model="phoneNumber2"></div>
+                    <div class="ub-f1"><input type="text" class="number" maxlength="1" v-Wfocus3="Jd3" v-model="phoneNumber3"></div>
+                    <div class="ub-f1"><input type="text" class="number" maxlength="1" v-Wfocus4="Jd4" v-model="phoneNumber4"></div>
+                </div> -->
+                <securitycode v-model="code"></securitycode>
         <div @click="loginBtn" class="findbtn">确 定</div>
     </div>
-
+    </div>
 </template>
 <style scoped lang='scss'>
+    .security-code-wrap {
+        overflow: hidden;
+    }
+
+  .security-code-container {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    .field-wrap {
+      list-style: none;
+      display: block;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      font-size: 16px;
+      background-color: #fff;
+      margin: 2px;
+      color: #000;
+      .char-field {
+        font-style: normal;
+      }
+    }
+  }
+
+  .input-code {
+    position: absolute;
+    left: -9999px;
+    top: -99999px;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    overflow: visible;
+    z-index: -1;
+  }
+
     .login_header {
         width: 2rem;
         padding-top: 1.5rem;
@@ -73,16 +105,32 @@
         @include login_btn(fixed);
         background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
     }
+    
 </style>
 <script>
+
     import {Toast} from 'mint-ui';
     import {login} from '@/services/apis/login'
     import Cookies from 'js-cookie'
+    import securitycode from '@/view/login/mobiephone'
     const TIME_COUNT = 60;
     export default {
         name: 'login',
+        components:{
+            securitycode
+        },
+         directives:{
+            Wfocus1:{
+                inserted:function(el,{value}){
+                    if(value){
+                        el.Wfocus();
+                    }
+                }
+            }
+        },
         data () {
             return {
+                code:'',
                 logintime: this.$route.params.firstlogin,
                 phoneNumber: this.$route.params.phone,
                 form: {},
@@ -108,6 +156,21 @@
 
         },
         methods: {
+            hideKeyboard() {
+                // 输入完成隐藏键盘
+                document.activeElement.blur() // ios隐藏键盘
+                this.$refs.input.blur() // android隐藏键盘
+            },
+            handleSubmit() {
+                this.$emit('input', this.value)
+            },
+            handleInput(e) {
+                this.$refs.input.value = this.value
+                if (this.value.length >= this.number) {
+                this.hideKeyboard()
+                }
+                this.handleSubmit()
+            },
             getmessage(){
                 if (this.logintime == 'Y') {
                     this.verCodeName = 'Register'
@@ -139,11 +202,12 @@
                 this.phoneNumber2 = '';
                 this.phoneNumber3 = '';
                 this.phoneNumber4 = '';
+                this.code='';
                 this.getmessage();
             },
             loginBtn(){
                 //    确定按钮进行验证
-                if (this.phoneNumber4 == '') {
+                if (this.code == '') {
                     Toast({
                         message: '请输入完整验证码',
                         position: 'middle',
@@ -151,8 +215,8 @@
                     });
                 }
                 else {
-                    let yanNumber = this.phoneNumber1 + this.phoneNumber2 + this.phoneNumber3 + this.phoneNumber4;
-
+                    // let yanNumber = this.phoneNumber1 + this.phoneNumber2 + this.phoneNumber3 + this.phoneNumber4;
+                    let yanNumber=this.code;
                     if (this.logintime == 'Y') {
                         // 注册
                         this.zhuce(yanNumber);
