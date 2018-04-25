@@ -41,18 +41,21 @@
         data () {
             return {
                 personalData:[],
-                name:'小马云',
-                phone:'18236911784',
-                company:'阿里巴巴',
-                business:'',
-                duty:'1111111',
-                scope:'支付宝',
-                publicity:'',
+                phone:'',
+                yanNumber:'',
                 headerImage:'',
-                picValue:''
             }
         },
         mounted () {
+            if(this.$route.params.phone){
+                this.phone = this.$route.params.phone;
+            }
+            if(this.$route.params.yanNumber){
+                this.yanNumber = this.$route.params.yanNumber;
+            }
+            console.log(this.phone);
+            console.log(this.yanNumber)
+
             this.info();
         },
         methods: {
