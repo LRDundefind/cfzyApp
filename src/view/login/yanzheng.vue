@@ -118,7 +118,13 @@ export default {
                     'str': strEnc(JSON.stringify(this.form),this.auth.key,this.auth.key,this.auth.key)
                     };
             login.getmessname(params).then(response=>{
-                  
+                  if(response.data.status='N'){
+                       Toast({
+                        message: response.data.error_msg,
+                        position: 'middle',
+                        duration: 3000
+                        });
+                  }
             })
         },
         getphoneNumber(){
@@ -174,15 +180,21 @@ export default {
                         position: 'middle',
                         duration: 3000
                         });
-                      this.$router.push({name:'login'});
+                        setTimeout(()=>{
+                           this.$router.push({name:'login'});
+                        },3000)
+                      
                   }
                   else{
                        Toast({
-                        message: 'response.data.error_msg',
+                        message: response.data.error_msg,
                         position: 'middle',
                         duration: 3000
                         })
-                        this.$router.push({name:'zhuce'});
+                        setTimeout(()=>{
+                           this.$router.push({name:'zhuce'});
+                        },3000)
+                        
                         
                      
                   }
@@ -206,7 +218,10 @@ export default {
                         position: 'middle',
                         duration: 3000
                         })
-                        this.$router.push({name:'login'});
+                        setTimeout(()=>{
+                            this.$router.push({name:'login'});
+                        },3000)
+                        
                        
 
                         
@@ -219,7 +234,10 @@ export default {
                         position: 'middle',
                         duration: 3000
                         })
+                         setTimeout(()=>{
                             this.$router.push({name:'forget'});
+                        },3000)
+                        
                        
                         
                         
