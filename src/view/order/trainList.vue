@@ -17,8 +17,6 @@
 				<li v-for="list in listStore" @click="chooseTrain(list.tid, list.trainsNum, list.plateNum)" :key="list.id">
 					<div class="ub ub-ac list-top">
 						<div>{{list.trainsNum}}</div>
-						<!--<div class="list-name">我是谁</div>-->
-						<!--<div class="ub-f1">车次05</div>-->
 					</div>
 					<div class="list-bottom ub ub-ac">
 						<div class="list-bl">到达时间</div>

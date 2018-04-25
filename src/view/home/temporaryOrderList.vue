@@ -5,10 +5,10 @@
 			    <mt-button icon="back" @click="$router.go(-1)"></mt-button>
 			</router-link>
 		</mt-header>
+		<!--子emit发送触发事件this.$emit('getSmeage',this.searchValue)  父监听getSmeage，并接收值-->
+		<search-box ref="search" @getSmeage="searchHandler"/>
 		<!--订单列表-->
 		<div class="page-main">
-			<!--子emit发送触发事件this.$emit('getSmeage',this.searchValue)  父监听getSmeage，并接收值-->
-			<search-box ref="search" @getSmeage="searchHandler"/>
 			<ul class="order-list">
 				<li v-for="temporary in temporaryList" @click="orderDetail(temporary.oid)" :key="temporary.oid">
 					<div class="ub list-top">
