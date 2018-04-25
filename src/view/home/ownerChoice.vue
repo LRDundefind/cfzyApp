@@ -7,9 +7,11 @@
         </mt-header>
         <div class="page-main">
             <div v-for="item in ownerList" :key='item.gid' class="main-list">
-                <div class="stall">{{item.gearName}}</div>
-                <div class="place">广东市 <span v-show="item.markName != ''">--</span> {{item.markName}}<span
-                        v-show="item.userName != ''">--</span> {{item.userName}}
+                <div  @click="handleCommand(item)">
+                    <div class="stall">{{item.gearName}}</div>
+                    <div class="place">广东市 <span v-show="item.markName != ''">--</span> {{item.markName}}<span
+                            v-show="item.userName != ''">--</span> {{item.userName}}
+                    </div>
                 </div>
             </div>
         </div>
@@ -17,6 +19,7 @@
 </template>
 
 <script>
+    import Cookies from 'js-cookie'
     import {home} from '@/services/apis/home.api'
 
     export default {
@@ -41,15 +44,23 @@
             goChange(n){
                 this.$router.push({name: 'index_change', params: {id: n}});
             },
-            //跳转到消费记录（同订单列表）
-//            consumptionRecords(id){
-//                this.$router.push({
-//                    name: 'earning/orderList',
-//                    params: {
-//                        id:id
-//                    }
-//                });
-//            }
+            //档位切换
+            handleCommand(command){
+                var temp = command;
+                var s = JSON.parse(Cookies.get('gidOwnID_lists'));
+                var index = null;
+                for (var i = 0; i < s.length; i++) {
+                    if (command.gid == s[i].gid) {
+                        index = i
+                    }
+                }
+                s.splice(index, 1);
+                s.unshift(temp);
+                let gidOwnID_lists = JSON.stringify(s);
+                Cookies.set('gidOwnID_lists', gidOwnID_lists);
+                this.$router.push({name:'home'});
+            },
+
         }
     }
 </script>
