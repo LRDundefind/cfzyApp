@@ -34,7 +34,14 @@ export const my = {
             data: serverMoudle(params) || {}
         });
     },
-
+    //修改手机号和个人信息
+    alterPersonal(params) {
+        return axios({
+            url: 'rest/CHENGFENG_SET_SELEMAN_PHONE',
+            method: 'post',
+            data: serverMoudle(params) || {}
+        });
+    },
 
 
 };
