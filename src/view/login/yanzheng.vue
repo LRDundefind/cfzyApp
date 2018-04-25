@@ -20,23 +20,6 @@
                     <div class="ub-f1"><input type="text" class="number" maxlength="1" v-Wfocus3="Jd3" v-model="phoneNumber3"></div>
                     <div class="ub-f1"><input type="text" class="number" maxlength="1" v-Wfocus4="Jd4" v-model="phoneNumber4"></div>
                 </div> -->
-                <!-- <div class="security-code-wrap">
-                    <label for="code">
-                        <ul class="security-code-container">
-                            <li class="field-wrap" v-for="(item, index) in number" :key="index">
-                            <i class="char-field">{{value[index] || placeholder}}</i>
-                            </li>
-                        </ul>
-                    </label>
-                    <input ref="input" class="input-code" @keyup="handleInput($event)" v-model="value"
-                        id="code" name="code" type="tel" :maxlength="number"
-                        autocorrect="off" autocomplete="off" autocapitalize="off">
-                </div>
-
-                <div>
-                    <span v-show="show" @click="getphoneNumber();daojishi()"  class="getNumber">获取验证码</span>
-         			<span v-show="!show" class="getNumber">重新获取（{{count}}）</span>
-                </div> -->
                 <securitycode v-model="code"></securitycode>
         <div @click="loginBtn" class="findbtn">确 定</div>
     </div>
@@ -147,15 +130,6 @@
         },
         data () {
             return {
-                // value:'',
-                //  number: {
-                //     type: Number,
-                //     default: 4,
-                // },
-                // placeholder: {
-                //     type: String,
-                //     default: '-'
-                // },
                 code:'',
                 logintime: this.$route.params.firstlogin,
                 phoneNumber: this.$route.params.phone,
@@ -228,11 +202,12 @@
                 this.phoneNumber2 = '';
                 this.phoneNumber3 = '';
                 this.phoneNumber4 = '';
+                this.code='';
                 this.getmessage();
             },
             loginBtn(){
                 //    确定按钮进行验证
-                if (this.phoneNumber4 == '') {
+                if (this.code == '') {
                     Toast({
                         message: '请输入完整验证码',
                         position: 'middle',
@@ -240,8 +215,8 @@
                     });
                 }
                 else {
-                    let yanNumber = this.phoneNumber1 + this.phoneNumber2 + this.phoneNumber3 + this.phoneNumber4;
-
+                    // let yanNumber = this.phoneNumber1 + this.phoneNumber2 + this.phoneNumber3 + this.phoneNumber4;
+                    let yanNumber=this.code;
                     if (this.logintime == 'Y') {
                         // 注册
                         this.zhuce(yanNumber);

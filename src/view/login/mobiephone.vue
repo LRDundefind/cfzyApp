@@ -63,15 +63,25 @@
 
 <style scoped lang="scss">
   .security-code-wrap {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+     display: -webkit-box;  /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
+    display: -moz-box;     /* 老版本语法: Firefox (buggy) */
+    display: -ms-flexbox;  /* 混合版本语法: IE 10 */
+    display: -webkit-flex; /* 新版本语法: Chrome 21+ */
+    display: flex;         /* 新版本语法: Opera 12.1, Firefox 22+ */
+     -webkit-box-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      justify-content: center;
   }
 
   .security-code-container {
     margin: 0;
     padding: 0;
-    display: flex;
+     display: -webkit-box;  /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
+    display: -moz-box;     /* 老版本语法: Firefox (buggy) */
+    display: -ms-flexbox;  /* 混合版本语法: IE 10 */
+    display: -webkit-flex; /* 新版本语法: Chrome 21+ */
+    display: flex;         /* 新版本语法: Opera 12.1, Firefox 22+ */
     .field-wrap {
       list-style: none;
       display: block;
@@ -80,13 +90,18 @@
       line-height: 40px;
       font-size: 16px;
       .char-field {
+        display: block;
+        text-align: center;
         font-style: normal;
       }
     }
   }
 
   .block-container {
-    justify-content: center;
+      -webkit-box-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      justify-content: center;
     .field-wrap {
       background-color: #fff;
       margin: 2px;
