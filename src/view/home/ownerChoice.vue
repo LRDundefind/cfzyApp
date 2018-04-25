@@ -6,41 +6,62 @@
             </router-link>
         </mt-header>
         <div class="page-main">
-            <div v-for="n in 20" :key='n' class="main-list">
-                <div class="stall">档位{{n}}</div>
-                <div class="place">广东市-广东市-白云山农产品综合批发市场{{n}}</div>
+            <div v-for="item in ownerList" :key='item.gid' class="main-list">
+                <div @click="handleCommand(item)">
+                    <div class="stall">{{item.gearName}}</div>
+                    <div class="place">广东市 <span v-show="item.markName != ''">--</span> {{item.markName}}<span
+                            v-show="item.userName != ''">--</span> {{item.userName}}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import Cookies from 'js-cookie'
+    import {home} from '@/services/apis/home.api'
 
     export default {
         name: 'client_detail',
         data () {
             return {
-                value: ''
+                ownerList: [],
             }
         },
         mounted () {
-
+            this.getList();
         },
         methods: {
             getList(){
+                let params = {};
+                home.gearList(params).then(response => {
+                    this.ownerList = response.data.results;
+//                    console.log(response.data.results);
+                })
+
             },
             goChange(n){
                 this.$router.push({name: 'index_change', params: {id: n}});
             },
-            //跳转到消费记录（同订单列表）
-//            consumptionRecords(id){
-//                this.$router.push({
-//                    name: 'earning/orderList',
-//                    params: {
-//                        id:id
-//                    }
-//                });
-//            }
+            //档位切换
+            handleCommand(command){
+                var temp = command;
+                var s = JSON.parse(Cookies.get('gidOwnID_lists'));
+                var number = null;
+                s.forEach(function (value,index) {
+                    if (value.gid == command.gid) {
+                        number = index;
+                    }
+                });
+                s.splice(number, 1);
+                s.unshift(temp);
+
+                let gidOwnID_lists = JSON.stringify(s);
+                Cookies.set('gidOwnID_lists', gidOwnID_lists);
+                this.$router.push({name: 'home'});
+            },
+
         }
     }
 </script>
@@ -50,15 +71,16 @@
         background: #fff;
         margin-top: 0.2rem;
         padding: 0.3rem;
-        .stall{
+        .stall {
             font-size: 0.3rem;
             color: #333333;
             padding: 0.02rem 0 0.28rem 0;
+            min-height: 0.4rem;
         }
-        .place{
+        .place {
             font-size: 0.26rem;
             color: #666666;
-            padding-bottom:0.02rem;
+            padding-bottom: 0.02rem;
         }
     }
 

@@ -45,7 +45,7 @@
 
             <div class="row" @click="gofeedBack">
                 <div class=" p-re  content ub bd-b">
-                    <span class="phone-icon"></span>
+                    <span class="back-icon"></span>
                     <div class="title">意见反馈</div>
                     <div class="">
                         <img src="../../assets/my/icon_right.png" class="my_icon"/>
@@ -55,7 +55,7 @@
 
             <div class="m-t-10 row">
                 <div class=" p-re  content ub bd-b">
-                    <span class="phone-icon"></span>
+                    <span class="update-icon"></span>
                     <div class="title">系统升级</div>
                     <div class="">
                         <img src="../../assets/my/icon_right.png" class="my_icon"/>
@@ -65,7 +65,7 @@
 
             <div class="m-b-30 row" @click="goAbout">
                 <div class=" p-re  content ub bd-b">
-                    <span class="phone-icon"></span>
+                    <span class="about-icon"></span>
                     <div class="title">关于</div>
                     <div class="">
                         <img src="../../assets/my/icon_right.png" class="my_icon"/>
@@ -96,7 +96,7 @@
                 padding-top: 13.6%;
             }
             .leftIcon{
-                width: 0.32rem !important;
+                width: 0.22rem !important;
                 left: 0.3rem !important;
                 @include login_input_icon;
                 background-image: url(../../assets/index/left_icon.png);
@@ -124,7 +124,7 @@
         .list{
             .row{
                 background-color: white;
-                padding:0 0.2rem;
+                padding:0 0.3rem;
             }
 
             .lock-icon{
@@ -136,6 +136,22 @@
                 @include login_input_icon;
                 background-image: url(../../assets/my/my_phone.png);
             }
+
+            .back-icon{
+                @include login_input_icon;
+                background-image: url(../../assets/my/my_feedback.png);
+            }
+
+            .update-icon{
+                @include login_input_icon;
+                background-image: url(../../assets/my/my_phone.png);
+            }
+
+            .about-icon{
+                @include login_input_icon;
+                background-image: url(../../assets/my/my_about.png);
+            }
+
             .content{
                 line-height: 0.96rem;
                 .title{

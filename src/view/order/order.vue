@@ -69,7 +69,9 @@
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">三轮费</div>
-					<div class="edu fare"><input type="text" @click="sanlunfei = true" v-model="totalCost.deliveryCost" placeholder="点击输入三轮费用"></div>
+					<div class="edu fare">
+						<input type="text" @click="sanlunfei = true" v-model="totalCost.deliveryCost" readonly="readonly" placeholder="点击输入三轮费用">
+					</div>
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">车号</div>
@@ -147,10 +149,12 @@
 						<div class="ub-f1">平板重</div>
 						<mt-field label="" placeholder="请输入" type="number" v-model="pbweight"></mt-field>
 						<div v-if="sellUnit != 'unit_pie'">{{goodsUnit}}</div>
-						<select v-if="sellUnit == 'unit_pie' "  v-model="sellUnitPie">
+						<div v-if="sellUnit == 'unit_pie' ">{{sellUnitPie}}</div>
+						<!--平板重单位跟随重量 不单独设置-->
+						<!--<select v-if="sellUnit == 'unit_pie' "  v-model="sellUnitPie">
 							<option>斤</option>
 							<option>公斤</option>
-						</select>
+						</select>-->
 					</div>
 				</div>
 				<mt-button type="primary" size="large" class="submit-btn" @click="submitGoodsInfo">确定</mt-button>
