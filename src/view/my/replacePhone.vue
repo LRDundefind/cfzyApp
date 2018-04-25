@@ -82,7 +82,7 @@
                     });
                 }
                 else{
-                    this.$router.push({name:'yanzheng',params: { phone: this.phoneNumber,firstlogin:'Info' }});
+                    this.$router.push({name:'yanzheng',params: { phone: this.phoneNumber,firstlogin:'Info',selName:this.selName,headImg:this.headImg }});
                     //调取接口
 
                 }

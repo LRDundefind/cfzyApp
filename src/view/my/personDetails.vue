@@ -43,9 +43,11 @@
         data () {
             return {
                 personalData: [],
-                phone: '',
-                yanNumber: '',
+                phone: this.$route.params.phone,
+                yanNumber: this.$route.params.yanNumber,
                 headerImage: '',
+                selName:this.$route.params.selName,
+                headImg:this.$route.params.headImg,
             }
         },
         mounted () {
@@ -64,9 +66,9 @@
                 my.getInfo(params).then(response => {
                     if (response.data.status == 'Y') {
                         this.personalData = response.data.results;
-                        if (this.phone) {
-                            this.personalData.phone = this.phone;
-                        }
+                        if (this.phone) {this.personalData.phone = this.phone;}
+                        if (this.selName) {this.personalData.selName = this.selName;}
+                        if (this.headImg) {this.personalData.headImg = this.headImg;}
                     } else {
 
                     }
