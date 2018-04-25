@@ -124,7 +124,7 @@
         .list{
             .row{
                 background-color: white;
-                padding:0 0.2rem;
+                padding:0 0.3rem;
             }
 
             .lock-icon{
