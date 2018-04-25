@@ -206,7 +206,7 @@ export default {
                         position: 'middle',
                         duration: 3000
                         })
-                            this.$router.push({name:'login'});
+                        this.$router.push({name:'login'});
                        
 
                         
