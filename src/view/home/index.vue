@@ -36,7 +36,7 @@
             <!--货品-->
             <div class="goods">
                 <div class="ub">
-                    <div class="ub-f1">
+                    <div class="ub-f1 order-left">
                         <div class="bd-r bd-b" @click="goStorage">
                             <div>
                                 <img class="goods-image left-imge" src="../../assets/index/goods_storage.png"/>
@@ -191,6 +191,17 @@
     .goods {
         background-color: white;
         padding: 0 0.56rem;
+
+        .order-left:after{
+            content: '';
+            position: absolute;
+            top: 0.52rem;
+            left: 100%;
+            display: inline-block;
+            width: 1px;
+            height: 5.96rem;
+            background-color: #f0f0f0;
+        }
         .goods-image {
             width: 1.72rem;
             padding: 0.52rem 0.735rem 0 0.735rem;
