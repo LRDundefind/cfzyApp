@@ -127,18 +127,18 @@
 				<div class="goods-name ub ub-pc">{{goodName}}</div>
 				<div class="goods-info">
 					<div class="goods-item ub">
-						<div class="ub-f1">单价</div>
-						<mt-field label="" placeholder="请输入" type="number" v-model="goodsunit"></mt-field>
+						<div>单价</div>
+						<input placeholder="请输入" type="number" v-model="goodsunit" />
 						<div>元 / {{goodsUnit}}</div>
 					</div>
 					<div class="goods-item ub">
-						<div class="ub-f1">件数</div>
-						<mt-field label="" placeholder="请输入" type="number" v-model="goodsnum"></mt-field>
+						<div>件数</div>
+						<input placeholder="请输入" type="number" v-model="goodsnum" />
 						<div>件</div><!--{{goodsUnit}}-->
 					</div>
 					<div class="goods-item ub">
-						<div class="ub-f1">重量</div>
-						<mt-field label="" placeholder="请输入" type="number" v-model="goodsweight"></mt-field>
+						<div>重量</div>
+						<input placeholder="请输入" type="number" v-model="goodsweight" />
 						<div v-if="sellUnit != 'unit_pie'">{{goodsUnit}}</div>
 						<select v-if="sellUnit == 'unit_pie' " v-model="sellUnitPie">
 							<option>斤</option>
@@ -146,8 +146,8 @@
 						</select>
 					</div>
 					<div class="goods-item ub">
-						<div class="ub-f1">平板重</div>
-						<mt-field label="" placeholder="请输入" type="number" v-model="pbweight"></mt-field>
+						<div>平板重</div>
+						<input placeholder="请输入" type="number" v-model="pbweight" /> <!--@focus="onfocus"-->
 						<div v-if="sellUnit != 'unit_pie'">{{goodsUnit}}</div>
 						<div v-if="sellUnit == 'unit_pie' ">{{sellUnitPie}}</div>
 						<!--平板重单位跟随重量 不单独设置-->
@@ -164,7 +164,8 @@
 		<div class="setSanlunfei" v-if="sanlunfei">
 			<div class="dialoag_cont">
 				<span>
-					<mt-field label="" type="number" v-model="deliveryCost" placeholder="请输入三轮费"></mt-field>
+					<input type="number" v-model="deliveryCost" placeholder="请输入三轮费" />
+					<!--<mt-field label="" type="number" v-model="deliveryCost" placeholder="请输入三轮费"></mt-field>-->
 				</span>
 				<div class="btn ub">
 					<div class="lefts" @click="sanlunfei = false ">取消</div>
@@ -338,7 +339,10 @@ export default {
 					console.log(response);
 				});
 		},
-
+		//获取焦点-填写货品信息
+		onfocus(){
+			
+		},
 		//设置货品重量件数信息的弹框
         goodsInfoSet(i, id, name, sellunit, numUnit, tid, trainsNum){
 			this.numberNum = i;
@@ -827,8 +831,8 @@ i{
 	
 	.dialoag_cont.goods{
 		width: 80%;
-		margin: 3rem auto 0;
-		padding: 0.22rem 0 0.82rem;
+		margin: 1.4rem auto 0;
+		padding: 0.22rem 0 0.32rem;
 		background: #fff;
 		text-align: center;
 		color: #666;
@@ -850,16 +854,26 @@ i{
 			.goods-item{
 				line-height: 0.95rem;
 				border-bottom: 1px solid #dedede;
+				div:first-child{
+					width: 35%;
+					text-align: left;
+					text-indent: 0.45rem;
+				}
 				div:last-child{
 					min-width: 1.05rem;
 					padding-left: 0.1rem;
 					text-align: right;
 				}
-				.mint-field{
+				/*.mint-field{
 					width: 2rem;
 					.mint-cell-wrapper{
-						background: none !important;  /*不生效*/
+						background: none !important;
 					}
+				}*/
+				input{
+					font-size: 0.26rem;
+					color: #808080;
+					width: 2.2rem;
 				}
 				select{
 					border: none;
