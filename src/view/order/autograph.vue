@@ -8,14 +8,19 @@
 		<!--签名-->
 		<div class="page-main autograph">
 			<canvas style="background: #dedede;" @touchstart="onTouchstart($event)" @touchmove="onTouchmove($event)" @touchend="onTouchend($event)" @touchcancel="onTouchend($event)" id="myCanvas"></canvas>
-			<div class="submit" @click="submitAutograph">保存</div>
+			<div class="canvasBtn ub">
+				<div class="lefts ub-f1" @click="clear">清空</div>
+				<div class="center"></div>
+				<div class="rights ub-f1" @click="submitAutograph">保存</div>
+			</div>
+			
 		</div>
 	</div>
 </template>
-
 <script>
-export default {
+import Cookies from 'js-cookie'
 
+export default {
     data () {
         return {
 			isDown: false,
@@ -34,13 +39,11 @@ export default {
 		onTouchstart: function($event) {
 			this.isDown = true;
 			if(!this.ctx) {
-				var myCanvas = document.getElementById('myCanvas');
 				this.ctx = myCanvas.getContext('2d');
 				this.ctx.lineWidth = 1;
 			}
 			this.clientX = $event.changedTouches[0].clientX;
 			this.clientY = $event.changedTouches[0].clientY-44;
-			console.log(this.clientX,this.clientY)
 		},
 		onTouchmove: function($event) {
 			if(this.isDown) {
@@ -60,12 +63,15 @@ export default {
 		onTouchend: function() {
 			this.isDown = false;
 		},
-		
+		clear(){
+//			this.ctx.clearRect(0,0,myCanvas.width,myCanvas.height);
+			myCanvas.height = myCanvas.height;
+		},
 		//保存签名
 		submitAutograph(){
 			let images = myCanvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
-//			window.location.href = images;
-			console.log(images)
+			window.location.href = images; //在本地保存
+			Cookies.set('autograph',images);
             this.$router.push({
             	name: 'order',
 				params: {}
@@ -77,12 +83,34 @@ export default {
 <style scoped rel="stylesheet/scss" lang="scss">
 
 .autograph{
-	.submit{
-        background: -webkit-linear-gradient(left, #30b03e 0%,#33d57c 100%);
-		@include login_btn(fixed);
-		bottom: 1rem;
-		left: 0.3rem;
-		width: 92%;
+	.canvasBtn{
+	    position: fixed;
+	    bottom: .8rem;
+	    padding: 0 0.3rem;
+	    margin: 0.27rem 0 0.5rem;
+	    box-sizing: border-box;
+	    width: 100%;
+		div{
+			height: 0.9rem;
+			line-height: 0.9rem;
+			font-size: 0.3rem;
+			text-align: center;
+			color: #fff;
+			border-radius: 1rem;
+		}
+		.lefts{
+			width: 42%;
+			background: #d0fde4;
+			color: #33d57c;
+			border: 1px solid #b5f1d0;
+		}
+		.center{
+			width: 6%;
+		}
+		.rights{
+			width: 52%;
+	        background: -webkit-linear-gradient(left, #30b03e 0%,#33d57c 100%);
+		}
 	}
 }
 
