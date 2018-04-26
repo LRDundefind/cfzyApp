@@ -253,7 +253,9 @@ export default {
 		this.getChooseType();
 	},
 	created(){
-		
+		Bus.$on('setphoneList',data=>{
+			console.log(data)
+		})
 	},
     methods: {
 		//重置单件货品下单件数和其他数据

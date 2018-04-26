@@ -14,6 +14,7 @@
 
 <script>
 import {order} from '@/services/apis/order.js'
+import Bus from '@/components/bus.js'
 export default {
 
     data () {
