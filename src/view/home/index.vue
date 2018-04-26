@@ -19,11 +19,11 @@
 
             <!--当日入库-->
             <div class="ub today">
-                <div class="ub-f1 bd-r">
+                <div class="ub-f1 ">
                     <div class="number">{{storageData.trainNum}}</div>
                     <div class="words">当日入库</div>
                 </div>
-                <div class="ub-f1 bd-r">
+                <div class="ub-f1 ">
                     <div class="number">{{storageData.order_quantity}}</div>
                     <div class="words">当日下单</div>
                 </div>
@@ -37,13 +37,13 @@
             <div class="goods">
                 <div class="ub">
                     <div class="ub-f1 order-left">
-                        <div class="bd-r bd-b" @click="goStorage">
+                        <div class="bd-b" @click="goStorage">
                             <div>
                                 <img class="goods-image left-imge" src="../../assets/index/goods_storage.png"/>
                             </div>
                             <div class="name">货品入库</div>
                         </div>
-                        <div class="bd-r" @click="goTemporaryOrderList">
+                        <div class="" @click="goTemporaryOrderList">
                             <div>
                                 <img v-if="this.storageData.deposit == 0" class="goods-image left-imge" src="../../assets/index/no_dot_total_income_icon.png"/>
                                 <img v-else class="goods-image left-imge" src="../../assets/index/dot_total_income_icon.png"/>
