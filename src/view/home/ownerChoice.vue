@@ -8,9 +8,11 @@
         <div class="page-main">
             <div v-for="item in ownerList" :key='item.gid' class="main-list">
                 <div @click="handleCommand(item)">
-                    <div class="stall">{{item.gearName}}</div>
-                    <div class="place">广东市 <span v-show="item.markName != ''">--</span> {{item.markName}}<span
-                            v-show="item.userName != ''">--</span> {{item.userName}}
+                    <div class="stall ub">
+                        <div class="ub-f1">{{item.gearName}}</div>
+                        <div class="ub-f1 userName">{{item.userName}} <span class="place">&nbsp(档主)</span></div>
+                    </div>
+                    <div class="place"> <span>{{item.position}}</span> <span v-show="item.position != ''">—</span> {{item.markName}}
                     </div>
                 </div>
             </div>
@@ -76,6 +78,9 @@
             color: #333333;
             padding: 0.02rem 0 0.28rem 0;
             min-height: 0.4rem;
+            .userName{
+                text-align: right;
+            }
         }
         .place {
             font-size: 0.26rem;
