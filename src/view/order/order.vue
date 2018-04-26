@@ -107,7 +107,7 @@
 				</div>
 			</div>
 			<!--签名-->
-			<div class="order-detail" ><!--v-if="autographInfo && orderType == 'order_credit'"    临时改动 调试-->
+			<div class="order-detail" ><!--v-if="otherInfo && orderType == 'order_credit'"    临时改动 调试-->
 				<div class="ub ub-ac term no-border right-icon" @click="autograph()">
 					<div class="ub-f1">签名</div>
 					<img src="../../assets/my/icon_right.png" class="icon">
@@ -191,7 +191,6 @@ export default {
         	numberNum:null,   //点击获取索引
 			trainInfo: true,//车次模块--是否展示
 			otherInfo: false,//其他模块--是否展示
-			autographInfo: false,//签名--是否展示
 			
 			goodsInfo: [], //当前车次下的货品信息
 			goodsInfoLength: null, //当前车次下的货品件数
@@ -292,7 +291,6 @@ export default {
     		this.plateNum = Cookies.get('plateNum') || '获取车牌号';
         	if(this.tid){
         		this.otherInfo = true;//其他信息展示
-				this.autographInfo = true;//签名展示
 				this.getTrain(this.tid);
         	}else{
         		console.log('没有选择车次')
@@ -301,8 +299,8 @@ export default {
         	this.customerName = Cookies.get('customerName')  || '选择客户';
         	this.customerId = Cookies.get('customerId');
         	
-        	//临时客户签名
-        	this.autographUrl = Cookies.get('autograph');
+        	//赊账时签名
+        	this.autographUrl = Cookies.get('autograph') || '';
         	console.log(this.autographUrl)
         },
 		//获取车次货品详细信息
@@ -331,7 +329,6 @@ export default {
                     }
 					if(response.data.error_code == '204'){
 						this.otherInfo = false;//其他信息
-						this.autographInfo = false;//签名
 						console.log(response.data.error_msg);
 					}
 				})
@@ -624,14 +621,15 @@ export default {
     			remark: this.beizhu,//备注
     			deposit: 'N',//是否暂存 Y暂存 N普通
     			goods: this.goodsInfo,//货品信息
-    			signature_name: 'qianming',//电子签名图片名称
-    			signImg: 'qianming',//电子签名图片
+    			signImg: this.autographUrl,//电子签名图片
         	};
         	if(this.orderType == 'order_knot'){
         		delete params.deposit; //现结-下单 不传deposit
+        		delete params.signImg; //现结-下单 不签名
 			}else if(this.orderType == 'order_credit'){
 	        	//赊账-下单  【deposit 赊账订单传入此参数  Y暂存, N普通】
         		params.deposit = szType;
+        		params.signImg = this.autographUrl;//赊账签名
         	};
         	order.submitorder(params)
         		.then(response => {
