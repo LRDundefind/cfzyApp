@@ -193,7 +193,6 @@
         .header-img {
             width: 1.24rem;
             height: 1.24rem;
-            padding: 0.9rem 0 0;
         }
     }
 
