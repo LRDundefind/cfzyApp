@@ -130,20 +130,21 @@
         methods: {
             tipsQX(){
                 // 新增的取消按钮
-                if(this.phoneAdd==''){
-					Toast({
-                        message: '请输入手机号',
-                        position: 'middle',
-                        duration: 3000
-                        });
-                }
-                else{
-                    Toast({
-                        message: '请点击确定按钮',
-                        position: 'middle',
-                        duration: 3000
-                        });
-                }
+                // if(this.phoneAdd==''){
+				// 	Toast({
+                //         message: '请输入手机号',
+                //         position: 'middle',
+                //         duration: 3000
+                //         });
+                // }
+                // else{
+                //     Toast({
+                //         message: '请点击确定按钮',
+                //         position: 'middle',
+                //         duration: 3000
+                //         });
+                // }
+                this.$router.push({name: 'client'});
             },
             showa(){
                 //新增的确定按钮
@@ -241,24 +242,49 @@
                 }
                 else{
                 // 新增客户   
-                     let params = {
-                        cusName:this.nameRead,
-                        nickname:this.nicheng,
-                        phone:this.phone,
-                        idCard:this.IdcardRead,
-                        company:this.gongsi,
-                        address:this.address,
-                        remark:this.message,
-                        cid:this.cid
-                    };
-                client.addC(params)
-                    .then(response => {
-                        this.xiTdata=response.data.results;
-                        if(response.data.status=='Y'){
-                            this.$router.push({name: 'client'});
+                    if(this.nameRead==''){
+                         Toast({
+                            message: '请填写昵称',
+                            position: 'middle',
+                            duration: 3000
+                            });
+                    }
+                    else{
+                        let params = {
+                            cusName:this.nameRead,
+                            nickname:this.nicheng,
+                            phone:this.phone,
+                            idCard:this.IdcardRead,
+                            company:this.gongsi,
+                            address:this.address,
+                            remark:this.message,
+                            cid:this.cid
+                        };
+                        client.addC(params)
+                            .then(response => {
+                                this.xiTdata=response.data.results;
+                                if(response.data.status=='Y'){
+                                     Toast({
+                                        message: '客户添加成功',
+                                        position: 'middle',
+                                        duration: 3000
+                                        });
+                                        setTimeout(() => {
+                                            this.$router.push({name: 'client'});
+                                        }, 3000)
+                                    
+                                }
+                                else{
+                                     Toast({
+                                        message: response.data.error_msg,
+                                        position: 'middle',
+                                        duration: 3000
+                                        });
+                                }
+                            })
                         }
-                    })
-                }
+                    }
+                     
                 
             },
             send(){
