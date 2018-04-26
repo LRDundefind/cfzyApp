@@ -13,7 +13,7 @@
                      <!-- 接口无数据可编辑 -->
                     <p class="clearfix" v-if="listdata.cusName=='' && xiTdata==''">姓名 <input type="text" v-model="nameRead" placeholder="请输入"> </p>
                     <!-- 接口有数据不可编辑（修改时有此可能） -->
-                    <p class="clearfix"  v-else>姓名2 <input type="text" v-model="nameRead" :disabled="true" > </p>
+                    <p class="clearfix"  v-else>姓名2  <span class="Unchange">{{ nameRead }}</span></p>
                 </div>
                
 
@@ -23,7 +23,7 @@
                    <!-- 增加时电话不可编辑 -->
                    <p class="clearfix" v-if="phoneAdd==''">电话<input type="text" v-model="phone" placeholder="请输入"></p>
                    <!-- 修改时可以 -->
-                   <p class="clearfix" v-else>电话<input type="text" v-model="phone" placeholder="请输入" :disabled="true" ></p>
+                   <p class="clearfix" v-else>电话<span class="Unchange">{{phone}}</span></p>
                </div>
                 
                 
@@ -31,7 +31,7 @@
                     <!-- 接口无数据可编辑 -->
                     <p class="clearfix" v-if="listdata.idCard==''&& xiTdata==''">身份证号 <input type="text" v-model="IdcardRead" placeholder="请输入"> </p>
                     <!-- 接口有数据不可编辑（修改时有此可能） -->
-                    <p class="clearfix" v-else>身份证号 <input type="text" v-model="IdcardRead" :disabled="true"> </p>
+                    <p class="clearfix" v-else>身份证号  <span class="Unchange">{{IdcardRead}}</span></p>
                 
                 </div>
                 <p style="border:none;text-align: right;line-height: 0.3rem;font-size:0.22rem;color:#808080;">
@@ -285,6 +285,12 @@
         margin-bottom: 0.5rem;
         box-sizing: border-box;
         padding-left: 2px;
+    }
+    .Unchange{
+        display: block;
+        float: right;
+        padding-right: 0.2rem;
+        color:  #999;
     }
     .main-list {
         background: #fff;
