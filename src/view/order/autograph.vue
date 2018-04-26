@@ -18,7 +18,6 @@
 	</div>
 </template>
 <script>
-import Cookies from 'js-cookie'
 import Bus from '@/components/bus.js'
 export default {
     data () {
@@ -70,9 +69,8 @@ export default {
 		//保存签名
 		submitAutograph(){
 			let images = myCanvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
-			window.location.href = images; //在本地保存
-			// Cookies.set('autograph',images);
-			Bus.$emit('setphoneList',images)
+			//window.location.href = images; //在本地保存
+			Bus.$emit('autograph',images)
             this.$router.push({
             	name: 'order',
 				params: {}

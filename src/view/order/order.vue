@@ -107,7 +107,7 @@
 				</div>
 			</div>
 			<!--签名-->
-			<div class="order-detail" ><!--v-if="otherInfo && orderType == 'order_credit'"    临时改动 调试-->
+			<div class="order-detail" v-if="otherInfo && orderType == 'order_credit'">
 				<div class="ub ub-ac term no-border right-icon" @click="autograph()">
 					<div class="ub-f1">签名</div>
 					<img src="../../assets/my/icon_right.png" class="icon">
@@ -201,7 +201,7 @@ export default {
 			
 			customerName: '', //客户信息
 			
-			autographUrl: '',//客户签名url
+			autographUrl: '',//客户签名
 			
 			//设置价格弹框
 			dialoags: false,
@@ -253,8 +253,9 @@ export default {
 		this.getChooseType();
 	},
 	created(){
-		Bus.$on('setphoneList',data=>{
-			console.log(data)
+		Bus.$on('autograph',data=>{
+			this.autographUrl = data;
+			//console.log(this.autographUrl)
 		})
 	},
     methods: {
@@ -300,10 +301,6 @@ export default {
         	//获取客户信息
         	this.customerName = Cookies.get('customerName')  || '选择客户';
         	this.customerId = Cookies.get('customerId');
-        	
-        	//赊账时签名
-        	this.autographUrl = Cookies.get('autograph') || '';
-        	console.log(this.autographUrl)
         },
 		//获取车次货品详细信息
 		getTrain(tid){
@@ -623,7 +620,7 @@ export default {
     			remark: this.beizhu,//备注
     			deposit: 'N',//是否暂存 Y暂存 N普通
     			goods: this.goodsInfo,//货品信息
-    			signImg: this.autographUrl,//电子签名图片
+    			signImg: this.autographUrl,//电子签名
         	};
         	if(this.orderType == 'order_knot'){
         		delete params.deposit; //现结-下单 不传deposit
