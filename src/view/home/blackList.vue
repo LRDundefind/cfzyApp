@@ -1,8 +1,8 @@
 <template>
     <div class="page-content">
-        <mt-header fixed  title="平台黑名单">
-            <router-link to="/zhuce" slot="left">
-                <mt-button icon="back" @click="$router.go(-1)"></mt-button>
+        <mt-header fixed title="平台黑名单">
+            <router-link to="/home" slot="left">
+                <mt-button icon="back"></mt-button>
             </router-link>
         </mt-header>
         <search-box @getSmeage="searchBlack" :msg="msg" ref="search"/>
@@ -29,20 +29,20 @@
 
 <script>
     import searchBox from '@/components/searchBox/search'
-    import { home } from '@/services/apis/home.api'
+    import {home} from '@/services/apis/home.api'
 
     export default {
         data () {
             return {
-                msg:'',
-                blacklistParams:{
-                    search:'',
+                msg: '',
+                blacklistParams: {
+                    search: '',
                 },
-                blacklistData:{
-                    headImg:'',//头像
-                    cusName:'',//名字
-                    blockingReason:'',//拉黑原因
-                    createTime:'', //日期
+                blacklistData: {
+                    headImg: '',//头像
+                    cusName: '',//名字
+                    blockingReason: '',//拉黑原因
+                    createTime: '', //日期
                 },
 
             }
@@ -51,71 +51,72 @@
             this.getlist()
         },
 
-        components:{
+        components: {
             searchBox
         },
 
         methods: {
             searchBlack(msg){
-                this.blacklistParams.search=msg;
+                this.blacklistParams.search = msg;
                 this.getlist();
             },
             getlist(){
-                home.blacklist(this.blacklistParams).then(response=>{
+                home.blacklist(this.blacklistParams).then(response => {
                     this.blacklistData = response.data.results;
                     console.log(this.blacklistData);
                 })
             },
 
             goDetail(cid){
-                this.$router.push({name:'client_detail',params: { id: cid }});
+                this.$router.push({name: 'client_detail', params: {ids: cid, come: 'black'}});
             }
 
         }
     }
 </script>
 <style scoped lang="scss">
-    .im{
+    .im {
         width: 0.8rem;
         height: 0.8rem;
         border-radius: 50%;
         overflow: hidden;
         background-image: url(../../assets/kehu_gengxinziliao_btn@2x.png)
     }
-    .main-list{
+
+    .main-list {
         background: #fff;
         margin-top: 0.2rem;
         padding: 0.3rem;
         color: #333;
-        .heade{
+        .heade {
             font-size: 0.4rem;
             border-bottom: 1px #f0f0f0 solid;
         }
-        h3{
+        h3 {
             font-size: 0.4rem;
 
             line-height: 0.8rem;
         }
-        ul{
+        ul {
 
-            li{
+            li {
                 font-size: 0.3rem;
-                .black-img{
+                .black-img {
                     width: 1.06rem;
                 }
-                .name{
+                .name {
                     font-size: 0.3rem;
                     color: #333333;
                     padding: 0 0 0.22rem 0.26rem;
                 }
-                .reason{
+                .reason {
                     font-size: 0.22rem;
                     color: #808080;
                     padding-left: 0.26rem;
                 }
-                .date{
+                .date {
                     font-size: 0.22rem;
-                    color:#808080;
+                    color: #808080;
                     padding-top: 0.16rem;
                 }
 
