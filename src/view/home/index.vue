@@ -2,7 +2,7 @@
     <div class="main">
         <mt-header fixed title="首页">
             <router-link to="/ownerChoice" slot="left">
-                <span class="c-3 f-s-16">白云上档A</span>
+                <span class="c-3 f-s-16">{{gearName}}</span>
                 <img class="header_img" src="../../assets/index/down_icon.png"/>
             </router-link>
             <div class=" personal" @click="goMy(5)" slot="right">
@@ -36,7 +36,7 @@
             <!--货品-->
             <div class="goods">
                 <div class="ub">
-                    <div class="ub-f1">
+                    <div class="ub-f1 order-left">
                         <div class="bd-r bd-b" @click="goStorage">
                             <div>
                                 <img class="goods-image left-imge" src="../../assets/index/goods_storage.png"/>
@@ -46,7 +46,7 @@
                         <div class="bd-r" @click="goTemporaryOrderList">
                             <div>
                                 <img v-if="this.storageData.deposit == 0" class="goods-image left-imge" src="../../assets/index/no_dot_total_income_icon.png"/>
-                                <img v-else="this.storageData.deposit != 0" class="goods-image left-imge" src="../../assets/index/dot_total_income_icon.png"/>
+                                <img v-else class="goods-image left-imge" src="../../assets/index/dot_total_income_icon.png"/>
                             </div>
                             <div class="name">暂存订单</div>
                         </div>
@@ -59,7 +59,7 @@
                             <div class="name">货品损坏</div>
                         </div>
 
-                        <div class=" bd-b" @click="goSettlementList">
+                        <div class=" bd-b bb" @click="goSettlementList">
                             <div>
                                 <img class="goods-image right-img" src="../../assets/index/trips_computing.png"/>
                             </div>
@@ -75,9 +75,12 @@
 
 <script> 
      import { home } from '@/services/apis/home.api'
-    export default {
+     import Cookies from 'js-cookie'
+
+     export default {
         data () {
             return {
+                gearName:'',
                 storageData:{
 //                    trainNum:'',//当日入库量
 //                    order_quantity:'',//当日下单量
@@ -86,6 +89,9 @@
             }
         },
         mounted () {
+            if(JSON.parse(Cookies.get('gidOwnID_lists'))[0].gearName){
+                this.gearName = JSON.parse(Cookies.get('gidOwnID_lists'))[0].gearName;
+            }
             this.getlist()
         },
         methods: {
@@ -94,7 +100,7 @@
                 let params={};
                 home.index(params).then(response=>{
                     this.storageData = response.data.results;
-                    console.log(response.data.results);
+//                    console.log(response.data.results);
                 })
             },
 
@@ -142,7 +148,9 @@
         padding-top: 0.1rem;
         padding-left: 0.05rem;
     }
-
+    .bb{
+        box-sizing: border-box;
+    }
     .personal {
         width: 0.68rem;
         padding-left: 50%;
@@ -183,6 +191,17 @@
     .goods {
         background-color: white;
         padding: 0 0.56rem;
+
+        .order-left:after{
+            content: '';
+            position: absolute;
+            top: 0.52rem;
+            left: 100%;
+            display: inline-block;
+            width: 1px;
+            height: 5.96rem;
+            background-color: #f0f0f0;
+        }
         .goods-image {
             width: 1.72rem;
             padding: 0.52rem 0.735rem 0 0.735rem;
