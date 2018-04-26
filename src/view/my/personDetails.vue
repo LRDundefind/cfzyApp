@@ -181,7 +181,7 @@
     }
 
     .top {
-        background-image: url("../../assets/my/my_top.png");
+        background-image: url("../../assets/my/my_background.png");
         background-repeat: no-repeat;
         height: 4.52rem;
         .leftIcon {
