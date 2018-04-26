@@ -107,7 +107,7 @@
 				</div>
 			</div>
 			<!--签名-->
-			<div class="order-detail" v-if="autographInfo && orderType == 'order_credit'">
+			<div class="order-detail" ><!--v-if="autographInfo && orderType == 'order_credit'"    临时改动 调试-->
 				<div class="ub ub-ac term no-border right-icon" @click="autograph()">
 					<div class="ub-f1">签名</div>
 					<img src="../../assets/my/icon_right.png" class="icon">
@@ -200,6 +200,8 @@ export default {
 			tid:'',//车次id
 			
 			customerName: '', //客户信息
+			
+			autographUrl: '',//客户签名url
 			
 			//设置价格弹框
 			dialoags: false,
@@ -297,6 +299,10 @@ export default {
         	//获取客户信息
         	this.customerName = Cookies.get('customerName')  || '选择客户';
         	this.customerId = Cookies.get('customerId');
+        	
+        	//临时客户签名
+        	this.autographUrl = Cookies.get('autograph');
+        	console.log(this.autographUrl)
         },
 		//获取车次货品详细信息
 		getTrain(tid){

@@ -2,9 +2,7 @@
     <div class="page-content" id="client_detail">
         <div style="height:4rem">
             <mt-header fixed title="客 户">
-                <router-link :to="{name:'client'}" slot="left">
-                    <mt-button icon="back"></mt-button>
-                </router-link>
+                    <mt-button icon="back" slot="left" @click="goClient"></mt-button>
             </mt-header>
             <div class="blackbg">
                 <div class="headimg"><img :src="imgpath+listdata.headImg" alt="图片" ></div> 
@@ -82,6 +80,14 @@
                     })
 
             },
+            goClient(){
+                if(this.$route.params.come == 'black'){
+                    this.$router.push({name: 'blackList'})
+                }else{
+                    this.$router.push({name:'client'})
+                }
+            },
+
             goChange(n){
                 // 跳转到修改
                 this.$router.push({name: 'index_change/update', params: {id: this.cid, type: 'update'}});

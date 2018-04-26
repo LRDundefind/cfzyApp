@@ -2,7 +2,7 @@
     <div class="main">
         <mt-header fixed title="首页">
             <router-link to="/ownerChoice" slot="left">
-                <span class="c-3 f-s-16">白云上档A</span>
+                <span class="c-3 f-s-16">{{gearName}}</span>
                 <img class="header_img" src="../../assets/index/down_icon.png"/>
             </router-link>
             <div class=" personal" @click="goMy(5)" slot="right">
@@ -75,17 +75,23 @@
 
 <script> 
      import { home } from '@/services/apis/home.api'
-    export default {
+     import Cookies from 'js-cookie'
+
+     export default {
         data () {
             return {
+                gearName:'',
                 storageData:{
-                    trainNum:'',//当日入库量
-                    order_quantity:'',//当日下单量
-                    deposit:'',//暂存订单量
+//                    trainNum:'',//当日入库量
+//                    order_quantity:'',//当日下单量
+//                    deposit:'',//暂存订单量
                 }
             }
         },
         mounted () {
+            if(JSON.parse(Cookies.get('gidOwnID_lists'))[0].gearName){
+                this.gearName = JSON.parse(Cookies.get('gidOwnID_lists'))[0].gearName;
+            }
             this.getlist()
         },
         methods: {
@@ -94,7 +100,7 @@
                 let params={};
                 home.index(params).then(response=>{
                     this.storageData = response.data.results;
-                    console.log(response.data.results);
+//                    console.log(response.data.results);
                 })
             },
 
