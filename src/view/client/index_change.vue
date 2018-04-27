@@ -29,7 +29,7 @@
                 
                  <div style="border-top:1px #f0f0f0 solid">
                     <!-- 接口无数据可编辑 -->
-                    <p class="clearfix" v-if="listdata.idCard==''&& xiTdata==''">身份证号 <input type="text" v-model="IdcardRead" placeholder="请输入"> </p>
+                    <p class="clearfix"  v-if="listdata.idCard=='' && xiTdata==''">身份证号 <input type="text" v-model="IdcardRead" placeholder="请输入"> </p>
                     <!-- 接口有数据不可编辑（修改时有此可能） -->
                     <p class="clearfix" v-else>身份证号  <span class="Unchange">{{IdcardRead}}</span></p>
                 
@@ -165,7 +165,8 @@
                 else{
                     this.getList();
                     this.addPerson = false;
-                    
+                    console.log(this.listdata.idCard)
+                    console.log(this.xiTdata)
                 }
                 
                 
