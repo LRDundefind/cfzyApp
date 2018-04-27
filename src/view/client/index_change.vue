@@ -29,7 +29,7 @@
                 
                  <div style="border-top:1px #f0f0f0 solid">
                     <!-- 接口无数据可编辑 -->
-                    <p class="clearfix" v-if="listdata.idCard==''&& xiTdata==''">身份证号 <input type="text" v-model="IdcardRead" placeholder="请输入"> </p>
+                    <p class="clearfix"  v-if="listdata.idCard=='' && xiTdata==''">身份证号 <input type="text" v-model="IdcardRead" placeholder="请输入"> </p>
                     <!-- 接口有数据不可编辑（修改时有此可能） -->
                     <p class="clearfix" v-else>身份证号  <span class="Unchange">{{IdcardRead}}</span></p>
                 
@@ -116,14 +116,15 @@
             //create添加  update是修改
             this.typeW = this.$route.params.type || false;
             this.cid = this.$route.params.id || false;
-            if (this.cid) {
-                // 根据客户ID修改
-                    this.getData();
-                    this.addPerson=false;
+            if (this.typeW=='create') {
+               
+                    // 根据手机号调取资源池数据，新增客户    
+                    this.addPerson=true;
             }
             else{
-                // 根据手机号调取资源池数据，新增客户    
-                    this.addPerson=true;
+                 // 根据客户ID修改
+                    this.getData();
+                    this.addPerson=false;
             }
 
         },
@@ -165,7 +166,6 @@
                 else{
                     this.getList();
                     this.addPerson = false;
-                    
                 }
                 
                 
@@ -209,7 +209,7 @@
                             this.phone=this.phoneAdd;
                         }
                         else{
-                            this.xiTdata=response.data.results;
+                            // this.xiTdata=response.data.results;
                             this.cid=s.cid;//cid
                             this.nameRead=s.cusName;//姓名
                             this.IdcardRead=s.idCard;//身份证号
@@ -221,27 +221,8 @@
                     })
             },
             handleSave(){
-                if (this.cid) {
-                // 修改信息
-                   let params = {
-                        cid:this.cid,    //客户id
-                        cusName:this.nameRead, //姓名
-                        nickname:this.nicheng,
-                        phone:this.phone,
-                        idCard:this.IdcardRead,
-                        company:this.gongsi,
-                        address:this.address,
-                        remark:this.message
-                    };
-                    client.Cgemessage(params)
-                        .then(response => {
-                            if(response.data.status=='Y'){
-                                this.$router.push({name: 'client'});
-                            }
-                        })
-                }
-                else{
-                // 新增客户   
+                if (this.typeW=='create') {
+                        // 新增客户   
                     if(this.nameRead==''){
                          Toast({
                             message: '请填写昵称',
@@ -262,7 +243,7 @@
                         };
                         client.addC(params)
                             .then(response => {
-                                this.xiTdata=response.data.results;
+                                // this.xiTdata=response.data.results;
                                 if(response.data.status=='Y'){
                                      Toast({
                                         message: '客户添加成功',
@@ -283,6 +264,26 @@
                                 }
                             })
                         }
+                }
+                else{
+                    // 修改信息
+                   let params = {
+                        cid:this.cid,    //客户id
+                        cusName:this.nameRead, //姓名
+                        nickname:this.nicheng,
+                        phone:this.phone,
+                        idCard:this.IdcardRead,
+                        company:this.gongsi,
+                        address:this.address,
+                        remark:this.message
+                    };
+                    client.Cgemessage(params)
+                        .then(response => {
+                            if(response.data.status=='Y'){
+                                this.$router.push({name: 'client'});
+                            }
+                        })
+                
                     }
                      
                 
