@@ -173,7 +173,7 @@ export default {
                                 this.$router.push({name:'noStalls'});
                             }
                             else{
-                                let gidOwnID_list=JSON.stringify(result.stalls_list);
+                                let gidOwnID_list=JSON.stringify(result.stalls_list[0]);
                                 Cookies.set('gidOwnID_lists', gidOwnID_list);                 //档位信息集合
                                 this.$router.push({name:'home'});
                             }

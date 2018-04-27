@@ -13,7 +13,7 @@
                      <!-- 接口无数据可编辑 -->
                     <p class="clearfix" v-if="listdata.cusName=='' && xiTdata==''">姓名 <input type="text" v-model="nameRead" placeholder="请输入"> </p>
                     <!-- 接口有数据不可编辑（修改时有此可能） -->
-                    <p class="clearfix"  v-else>姓名2  <span class="Unchange">{{ nameRead }}</span></p>
+                    <p class="clearfix"  v-else>姓名  <span class="Unchange">{{ nameRead }}</span></p>
                 </div>
                
 

@@ -24,8 +24,8 @@ export function serverMoudle(params) {
      changeable={
       sid : sids,
       roleId:roleIds,
-      owner_id : gidOwnID_lists[0].owner_id,
-      gid : gidOwnID_lists[0].gid
+      owner_id : gidOwnID_lists.owner_id,
+      gid : gidOwnID_lists.gid
   
     } 
   }
