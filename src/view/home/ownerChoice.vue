@@ -1,8 +1,8 @@
 <template>
     <div class="page-content" id="client_detail">
         <mt-header fixed title="档位选择">
-            <router-link to="/" slot="left">
-                <mt-button icon="back" @click="$router.go(-1)"></mt-button>
+            <router-link to="/home" slot="left">
+                <mt-button icon="back"></mt-button>
             </router-link>
         </mt-header>
         <div class="page-main">
@@ -49,18 +49,7 @@
             //档位切换
             handleCommand(command){
                 var temp = command;
-                var s = JSON.parse(Cookies.get('gidOwnID_lists'));
-                var number = null;
-                s.forEach(function (value,index) {
-                    if (value.gid == command.gid) {
-                        number = index;
-                    }
-                });
-                s.splice(number, 1);
-                s.unshift(temp);
-
-                let gidOwnID_lists = JSON.stringify(s);
-                Cookies.set('gidOwnID_lists', gidOwnID_lists);
+                Cookies.set('gidOwnID_lists', temp);
                 this.$router.push({name: 'home'});
             },
 

@@ -13,7 +13,7 @@
                      <!-- 接口无数据可编辑 -->
                     <p class="clearfix" v-if="listdata.cusName=='' && xiTdata==''">姓名 <input type="text" v-model="nameRead" placeholder="请输入"> </p>
                     <!-- 接口有数据不可编辑（修改时有此可能） -->
-                    <p class="clearfix"  v-else>姓名2  <span class="Unchange">{{ nameRead }}</span></p>
+                    <p class="clearfix"  v-else>姓名  <span class="Unchange">{{ nameRead }}</span></p>
                 </div>
                
 
@@ -29,7 +29,7 @@
                 
                  <div style="border-top:1px #f0f0f0 solid">
                     <!-- 接口无数据可编辑 -->
-                    <p class="clearfix" v-if="listdata.idCard==''&& xiTdata==''">身份证号 <input type="text" v-model="IdcardRead" placeholder="请输入"> </p>
+                    <p class="clearfix"  v-if="listdata.idCard=='' && xiTdata==''">身份证号 <input type="text" v-model="IdcardRead" placeholder="请输入"> </p>
                     <!-- 接口有数据不可编辑（修改时有此可能） -->
                     <p class="clearfix" v-else>身份证号  <span class="Unchange">{{IdcardRead}}</span></p>
                 
@@ -165,7 +165,6 @@
                 else{
                     this.getList();
                     this.addPerson = false;
-                    
                 }
                 
                 
@@ -209,7 +208,7 @@
                             this.phone=this.phoneAdd;
                         }
                         else{
-                            this.xiTdata=response.data.results;
+                            // this.xiTdata=response.data.results;
                             this.cid=s.cid;//cid
                             this.nameRead=s.cusName;//姓名
                             this.IdcardRead=s.idCard;//身份证号
@@ -262,7 +261,7 @@
                         };
                         client.addC(params)
                             .then(response => {
-                                this.xiTdata=response.data.results;
+                                // this.xiTdata=response.data.results;
                                 if(response.data.status=='Y'){
                                      Toast({
                                         message: '客户添加成功',
