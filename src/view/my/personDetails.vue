@@ -12,9 +12,14 @@
                         <div class="sc">
                             <div style="opacity: 0.5" class="picture"
                                  :style="'backgroundImage:url('+headerImage+')'"></div>
+                                <div>{{headerImage}}</div>
                             <input type="file" id="upload" accept="image" @change="upload1" style="opacity: 0">
-                            <img v-if="personalData.headImg == ''" class="header-img"
+                            <div>
+                                 <img v-if="personalData.headImg == ''" class="header-img"
                                  src="../../assets/my/my_head.png"/>
+                                 <img v-else :src="personalData.headImg" alt="" class="header-img">
+                            </div>
+                           
                         </div>
                     </div>
                 </div>
@@ -69,6 +74,10 @@
                 my.getInfo(params).then(response => {
                     if (response.data.status == 'Y') {
                         this.personalData = response.data.results;
+                        let imgpath=process.env.BASE_PATH;
+                        if(personalData.headImg){
+                            personalData.headImg = imgpath+ personalData.headImg;
+                        }
                         if (this.phone) {this.personalData.phone = this.phone;}
                         if (this.selName) {this.personalData.selName = this.selName;}
                         if (this.headImg) {this.personalData.headImg = this.headImg;}
@@ -144,7 +153,11 @@
                             position: 'middle',
                             duration: 1000
                         });
-                        this.$router.push({ name: 'my'})
+                         this.info();
+                         setTimeout(()=>{
+                             this.$router.push({ name: 'my'})
+                         },2000)
+                        
                     } else {
                         Toast({
                             message: response.data.error_msg,
