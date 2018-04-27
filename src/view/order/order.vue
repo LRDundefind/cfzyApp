@@ -108,7 +108,7 @@
 			</div>
 			<!--签名-->
 			<div class="order-detail" v-if="otherInfo && orderType == 'order_credit'">
-				<div class="ub ub-ac term no-border right-icon" @click="autograph()">
+				<div class="ub ub-ac term no-border right-icon" @click="goAutograph">
 					<div class="ub-f1">签名</div>
 					<img src="../../assets/my/icon_right.png" class="icon">
 				</div>
@@ -174,6 +174,9 @@
 				</div>
 			</div>
 		</div>
+		<div class="autograph-con" v-if="showAutograph">
+			<autograph @closeAutographCon = "closeAutograph" @autographInfo = "getAutographInfo"></autograph>
+		</div>
 	</div>
 </template>
 
@@ -182,10 +185,10 @@ import { Toast } from 'mint-ui'
 import Bus from '@/components/bus.js'
 import {order} from '@/services/apis/order.js'
 import Cookies from 'js-cookie'
-
+import Autograph from '@/components/Autograph/autograph'
 //import Router from 'vue-router'
 export default {
-
+	components: { Autograph },
     data () {
         return {
         	numberNum:null,   //点击获取索引
@@ -201,7 +204,8 @@ export default {
 			
 			customerName: '', //客户信息
 			
-			autographUrl: '',//客户签名
+			showAutograph: false,//是否展示签名
+			autographInfo: '',//客户签名
 			
 			//设置价格弹框
 			dialoags: false,
@@ -255,10 +259,7 @@ export default {
 		this.getChooseType();
 	},
 	created(){
-		Bus.$on('autograph',data=>{
-			this.autographUrl = data;
-			//console.log(this.autographUrl)
-		})
+		
 	},
     methods: {
 		//重置单件货品下单件数和其他数据
@@ -559,12 +560,21 @@ export default {
         },
         
         //签名
-        autograph(){
-            this.$router.push({name: 'autograph'});
+        goAutograph(){
+        	this.showAutograph = true;
         },
-		
+        //接收事件 ：签名页返回按钮-实质是关闭弹框
+        closeAutograph(){
+			this.showAutograph = false;    	
+        },
+		//接收事件 ：关闭弹框 并 获取签名信息
+		getAutographInfo(val){
+			this.autographInfo = val;
+			this.showAutograph = false; 
+		},
         //下单
         submitOrder(szType){
+
         	if(this.customerType == 'Nottemporary'){
         		//非临时客户，赋值客户id 路由获取
         		this.customerId = Cookies.get('customerId');
@@ -620,7 +630,17 @@ export default {
     			});
     			return false;
     		}
-    		
+			
+			//非临时客户赊账时，验证是否签名了
+        	if(this.orderType == 'order_credit' && this.autographInfo == ''){
+        		Toast({
+					message: '请签名',
+					position: 'middle',
+					duration: 1000
+    			});
+        		return false;
+        	}
+        	
         	var params = {
     			tid: this.tid,//车次if
     			cid: this.customerId,//客户id
@@ -630,7 +650,7 @@ export default {
     			remark: this.beizhu,//备注
     			deposit: 'N',//是否暂存 Y暂存 N普通
     			goods: this.goodsInfo,//货品信息
-    			signImg: this.autographUrl,//电子签名
+    			signImg: this.autographInfo,//电子签名
         	};
         	if(this.orderType == 'order_knot'){
         		delete params.deposit; //现结-下单 不传deposit
@@ -638,7 +658,7 @@ export default {
 			}else if(this.orderType == 'order_credit'){
 	        	//赊账-下单  【deposit 赊账订单传入此参数  Y暂存, N普通】
         		params.deposit = szType;
-        		params.signImg = this.autographUrl;//赊账签名
+        		params.signImg = this.autographInfo;//赊账签名
         	};
         	order.submitorder(params)
         		.then(response => {
@@ -976,5 +996,15 @@ i{
 
 	}
 }
-
+/*签名*/
+.autograph-con{
+	font-size: 0.26rem; 
+	width: 100%; 
+	height: 100%; 
+	position: fixed; 
+	left: 0; 
+	top: 0; 
+	background: rgba(0, 0, 0, 0.6); 
+	z-index: 99;
+}
 </style>
