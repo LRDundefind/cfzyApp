@@ -4,9 +4,9 @@
             <div class="top ">
                 <div class="leftIcon" @click="goHome">
                 </div>
-                <div @click="goDetails()" class="information">
+                <div  class="information">
                     <div class="ub ub-pc">
-                        <div>
+                        <div @click="goDetails()">
                             <img class="header-img" src="../../assets/my/my_head.png"/>
                         </div>
                     </div>
