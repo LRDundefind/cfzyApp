@@ -116,14 +116,15 @@
             //create添加  update是修改
             this.typeW = this.$route.params.type || false;
             this.cid = this.$route.params.id || false;
-            if (this.cid) {
-                // 根据客户ID修改
-                    this.getData();
-                    this.addPerson=false;
+            if (this.typeW=='create') {
+               
+                    // 根据手机号调取资源池数据，新增客户    
+                    this.addPerson=true;
             }
             else{
-                // 根据手机号调取资源池数据，新增客户    
-                    this.addPerson=true;
+                 // 根据客户ID修改
+                    this.getData();
+                    this.addPerson=false;
             }
 
         },
@@ -220,27 +221,8 @@
                     })
             },
             handleSave(){
-                if (this.cid) {
-                // 修改信息
-                   let params = {
-                        cid:this.cid,    //客户id
-                        cusName:this.nameRead, //姓名
-                        nickname:this.nicheng,
-                        phone:this.phone,
-                        idCard:this.IdcardRead,
-                        company:this.gongsi,
-                        address:this.address,
-                        remark:this.message
-                    };
-                    client.Cgemessage(params)
-                        .then(response => {
-                            if(response.data.status=='Y'){
-                                this.$router.push({name: 'client'});
-                            }
-                        })
-                }
-                else{
-                // 新增客户   
+                if (this.typeW=='create') {
+                        // 新增客户   
                     if(this.nameRead==''){
                          Toast({
                             message: '请填写昵称',
@@ -282,6 +264,26 @@
                                 }
                             })
                         }
+                }
+                else{
+                    // 修改信息
+                   let params = {
+                        cid:this.cid,    //客户id
+                        cusName:this.nameRead, //姓名
+                        nickname:this.nicheng,
+                        phone:this.phone,
+                        idCard:this.IdcardRead,
+                        company:this.gongsi,
+                        address:this.address,
+                        remark:this.message
+                    };
+                    client.Cgemessage(params)
+                        .then(response => {
+                            if(response.data.status=='Y'){
+                                this.$router.push({name: 'client'});
+                            }
+                        })
+                
                     }
                      
                 
