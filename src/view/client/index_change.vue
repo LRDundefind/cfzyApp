@@ -165,8 +165,6 @@
                 else{
                     this.getList();
                     this.addPerson = false;
-                    console.log(this.listdata.idCard)
-                    console.log(this.xiTdata)
                 }
                 
                 
@@ -210,7 +208,7 @@
                             this.phone=this.phoneAdd;
                         }
                         else{
-                            this.xiTdata=response.data.results;
+                            // this.xiTdata=response.data.results;
                             this.cid=s.cid;//cid
                             this.nameRead=s.cusName;//姓名
                             this.IdcardRead=s.idCard;//身份证号
@@ -263,7 +261,7 @@
                         };
                         client.addC(params)
                             .then(response => {
-                                this.xiTdata=response.data.results;
+                                // this.xiTdata=response.data.results;
                                 if(response.data.status=='Y'){
                                      Toast({
                                         message: '客户添加成功',
