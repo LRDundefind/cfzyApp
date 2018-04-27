@@ -44,7 +44,7 @@
 						<span>金额</span>
 						<span>包装费</span>
 					</li>
-					<li class="con" v-for=" (goods,index) in goodsInfo" @click="goodsInfoSet(index, goods.goodId, goods.goodName, goods.sellUnit, goods.numUnit, goods.tid, trainsNum)" :key="goods.id">
+					<li class="con" v-for=" (goods,index) in goodsInfo" @click="goodsInfoSet(index, goods.goodId, goods.goodName, goods.sellUnit, goods.numUnit, goods.surplusNum, goods.tid, trainsNum)" :key="goods.id">
 						<span>{{goods.goodName}}</span>
 						<span>{{goods.weight}}</span>
 						<span>{{goods.price}}</span>
@@ -73,24 +73,24 @@
 						<input type="text" @click="sanlunfei = true" v-model="totalCost.deliveryCost" readonly="readonly" placeholder="点击输入三轮费用">
 					</div>
 				</div>
-				<div class="ub term">
+				<div class="ub term no-border">
 					<div class="ub-f1">车号</div>
 					<div class="F26C4c">{{plateNum}}</div>
 				</div>
-				<div class="ub term no-border" v-if="have_goodsunit">
+				<div class="ub term border-top" v-if="have_goodsunit">
 					<div class="ub-f1">合计金额</div>
 					<div class="total">{{totalCost.tatol}}</div>
 				</div>
 			</div>
 			<!--付款方式  order_knot现结  order_credit赊账-->
 			<div class="order-detail" v-if="otherInfo" id="orderTypes">
-				<div class="ub ub-ac term right-icon input-choose">
+				<div class="ub ub-ac term no-border right-icon input-choose">
 					<input id="xj" type="radio" name="choosetype" value="order_knot" v-model="orderType">
 					<label for="xj" class="individual"></label>
 					<div class="ub-f1"></div>					
 					<div>现结</div>					
 				</div>
-				<div class="ub ub-ac term no-border input-choose" v-if="customerType == 'Nottemporary'"> <!--临时客户不可以赊账-->
+				<div class="ub ub-ac term border-top input-choose" v-if="customerType == 'Nottemporary'"> <!--临时客户不可以赊账-->
 					<input id="sz" type="radio" name="choosetype" value="order_credit" v-model="orderType">
 					<label for="sz" class="individual"></label>
 					<div class="ub-f1"></div>					
@@ -126,26 +126,26 @@
 				<div @click="closeInfo" class="closeInfo">关闭</div>
 				<div class="goods-name ub ub-pc">{{goodName}}</div>
 				<div class="goods-info">
-					<div class="goods-item ub">
+					<div class="goods-item ub ub-ac">
 						<div>单价</div>
 						<input placeholder="请输入" type="number" v-model="goodsunit" />
 						<div>元 / {{goodsUnit}}</div>
 					</div>
-					<div class="goods-item ub">
+					<div class="goods-item ub ub-ac">
 						<div>件数</div>
-						<input placeholder="请输入" type="number" v-model="goodsnum" />
+						<input :placeholder="surplusPiece || '请输入'" type="number" v-model="goodsnum" />
 						<div>件</div><!--{{goodsUnit}}-->
 					</div>
-					<div class="goods-item ub">
+					<div class="goods-item ub ub-ac">
 						<div>重量</div>
-						<input placeholder="请输入" type="number" v-model="goodsweight" />
+						<input :placeholder="surplusHeavy || '请输入'" type="number" v-model="goodsweight" />
 						<div v-if="sellUnit != 'unit_pie'">{{goodsUnit}}</div>
 						<select v-if="sellUnit == 'unit_pie' " v-model="sellUnitPie">
 							<option>斤</option>
 							<option>公斤</option>
 						</select>
 					</div>
-					<div class="goods-item ub">
+					<div class="goods-item ub ub-ac">
 						<div>平板重</div>
 						<input placeholder="请输入" type="number" v-model="pbweight" /> <!--@focus="onfocus"-->
 						<div v-if="sellUnit != 'unit_pie'">{{goodsUnit}}</div>
@@ -210,6 +210,8 @@ export default {
 			goodsUnit: '', //显示货品信息-货品售卖单位转换
 			sellUnitPie: '斤',//显示货品信息-售卖单位为件时，设置重量单位和平板重单位
 			set_weight_util: 'unit_jin',//售卖单位为件时，设置重量单位和平板重单位，计算货品价格、提交订单所需
+			surplusPiece: '',//显示货品剩余量，入库单位为件时
+			surplusHeavy: '',//显示货品剩余量，入库单位为斤/公斤时
 			
 			//手动输入的每项货品的信息
 			goodsunit: '', //设置货品价格-单价
@@ -340,13 +342,21 @@ export default {
 			
 		},
 		//设置货品重量件数信息的弹框
-        goodsInfoSet(i, id, name, sellunit, numUnit, tid, trainsNum){
+        goodsInfoSet(i, id, name, sellunit, numUnit, surplusNum, tid, trainsNum){
 			this.numberNum = i;
         	this.dialoags = true;
         	this.goodId = id;//货品id 提交订单传参所需
         	this.goodName = name;
         	this.sellUnit = sellunit;//提交订单传参所需 售卖单位
         	this.numUnit = numUnit;//提交订单传参所需  重量单位
+        	if(numUnit == 'unit_pie'){
+        		this.surplusHeavy = '';
+        		this.surplusPiece = surplusNum; //显示货品剩余量，入库单位为件时
+        	}else{
+        		this.surplusPiece = '';
+        		this.surplusHeavy = surplusNum; //显示货品剩余量，入库单位为斤/公斤时
+        	}
+
 
 			if(this.sellUnit == 'unit_jin'){
 				this.goodsUnit = '斤';
@@ -744,6 +754,10 @@ i{
 	.term.no-border{
 		border-bottom: none;
 	}
+	.term.border-top{
+		border: none;
+		border-top: 1px solid #dedede;
+	}
 }
 .order-detail.item-table{
 	color: #4c4c4c;
@@ -828,8 +842,8 @@ i{
 	
 	.dialoag_cont.goods{
 		width: 80%;
-		margin: 1.4rem auto 0;
-		padding: 0.22rem 0 0.32rem;
+		margin: 1.6rem auto 0;
+		padding: 0.02rem 0 0.22rem;
 		background: #fff;
 		text-align: center;
 		color: #666;
@@ -837,24 +851,28 @@ i{
 		.closeInfo{
 			float: right;
     		margin-right: 0.3rem;
+    		margin-top: 0.1rem;
 		}
 		.goods-name{
 			clear: both;
 			padding: 0 0.3rem;
 			margin: 0.2rem 0;
-			line-height: 0.95rem;
+			line-height: 0.5rem;
 			background: #fff;
+			font-size: 0.3rem;
+			color: #333;
 		}
 		.goods-info{
 			background: #fff;
-			padding: 0 0.3rem;
+			padding: 0 0.6rem;
 			.goods-item{
-				line-height: 0.95rem;
+				line-height: 0.8rem;
 				border-bottom: 1px solid #dedede;
+				padding: 0 0.2rem;
 				div:first-child{
-					width: 35%;
+					width: 30%;
 					text-align: left;
-					text-indent: 0.45rem;
+					text-indent: 0.15rem;
 				}
 				div:last-child{
 					min-width: 1.05rem;
@@ -870,9 +888,10 @@ i{
 				input{
 					font-size: 0.26rem;
 					color: #808080;
-					width: 2.2rem;
+					width: 1.8rem;
 				}
 				select{
+				    min-width: 1.05rem;
 					border: none;
 					font-size: 0.28rem;
 	    			color: #666;
@@ -880,7 +899,7 @@ i{
 			}
 		}
 		.submit-btn{
-			width: 73%;
+			width: 55%;
 			height: 0.9rem;
 			border-radius: 1rem;
 			background: -webkit-linear-gradient(left, #30b03e 0%,#33d57c 100%);
