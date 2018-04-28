@@ -18,6 +18,11 @@ import * as filters from '@/filters'; // 全局vue filter
 
 Vue.use(Mint);
 Vue.prototype.$http = axios
+
+Vue.prototype.goBack = function(){
+	window.history.go(-1);
+}
+
 Vue.config.productionTip = false
 // register global utility filters.
 Object.keys(filters).forEach(key => {

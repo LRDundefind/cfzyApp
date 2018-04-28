@@ -2,7 +2,7 @@
 	<div class="page-content">
 		<mt-header fixed  title="暂存订单详情">
 			<router-link to="/" slot="left">
-			    <mt-button icon="back" @click="$router.go(-1)"></mt-button>
+			    <mt-button icon="back" @click="goBack()"></mt-button>
 			</router-link>
 		</mt-header>
 		<!--订单列表-->
@@ -31,7 +31,7 @@
 					<div class="total">￥{{totalCost.tatol || total}}</div>
 				</div>
 				<div class="ub term">
-					<div class="ub-f1">贷款{{totalCost.totalAmount}}</div>
+					<div class="ub-f1">贷款</div>
 					<div class="edu">￥{{totalCost.totalAmount || detailInfo.salesAmount}}</div><!--totalCost.totalAmount-->
 				</div>
 				<div class="ub term">

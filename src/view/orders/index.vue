@@ -2,7 +2,7 @@
 	<div class="page-content">
 		<mt-header fixed  title="订单">
 			<router-link to="/ownerChoice" slot="left">
-                <span class="c-3 f-s-16">白云上档A</span>
+                <span class="c-3 f-s-16">{{gearName}}</span>
                 <img class="header_img" src="../../assets/index/down_icon.png"/>
            </router-link>
 		</mt-header>
@@ -43,7 +43,7 @@
 				    infinite-scroll-disabled="loading"
 				    infinite-scroll-distance="10"
 				    class="orders-ul"><!--v-infinite-scroll="loadMore"-->
-					<li v-for="list in listStore" class="orders-li" :key="list.id">
+					<li v-for="list in listStore" class="orders-li" :key="list.id" @click="orderList(list.tid, list.sell_day)">
 				  		<div class="orders-t ub ub-ac" @click="orderList(list.tid, list.sell_day)">
 				  			<div class="ub-f1">{{list.trainsNum}}</div>
 				  			<div class="status" v-if="list.settleStatus == 'status_selling'">售卖中</div>
@@ -93,6 +93,7 @@ import { InfiniteScroll } from 'mint-ui';
 import searchBox from '@/components/searchBox/search';
 import { orders } from '@/services/apis/orders.js';
 import { Loadmore , Indicator} from 'mint-ui'
+import Cookies from 'js-cookie'
 export default {
 	components: { searchBox },
     data () {
@@ -104,6 +105,8 @@ export default {
         	//cycleActive: '',
         	//goodsActive: '',
         	//ownerActive: '',
+        	
+        	gearName:'',//档位
         	
         	allLoaded: false,
             wrapperHeight: 0,//容器高度
@@ -118,6 +121,11 @@ export default {
         }
     },
     mounted () {
+    	//档位
+    	if(JSON.parse(Cookies.get('gidOwnID_lists')).gearName){
+            this.gearName = JSON.parse(Cookies.get('gidOwnID_lists')).gearName;
+        }
+    	
 		this.getList();
 		this.wrapperHeight = document.documentElement.clientHeight - 175;
     },
