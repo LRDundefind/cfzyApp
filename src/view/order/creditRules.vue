@@ -2,7 +2,7 @@
 	<div class="page-content">
 		<mt-header fixed  title="赊账规则">
 			<router-link to="/" slot="left">
-			    <mt-button icon="back" @click="$router.go(-1)"></mt-button>
+			    <mt-button icon="back" @click="goBack()"></mt-button>
 			</router-link>
 		</mt-header>
 		<!--赊账规则-->
