@@ -31,7 +31,7 @@
 					<div class="total">￥{{totalCost.tatol || total}}</div>
 				</div>
 				<div class="ub term">
-					<div class="ub-f1">贷款{{totalCost.totalAmount}}</div>
+					<div class="ub-f1">贷款</div>
 					<div class="edu">￥{{totalCost.totalAmount || detailInfo.salesAmount}}</div><!--totalCost.totalAmount-->
 				</div>
 				<div class="ub term">

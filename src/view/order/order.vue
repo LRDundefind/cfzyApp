@@ -2,7 +2,7 @@
 	<div class="page-content">
 		<mt-header fixed  title="下单">
 			<router-link to="/ownerChoice" slot="left">
-                <span class="c-3 f-s-16">白云上档A</span>
+                <span class="c-3 f-s-16">{{gearName}}</span>
                 <img class="header_img" src="../../assets/index/down_icon.png"/>
             </router-link>
             <router-link to="/creditRules" slot="right">
@@ -191,6 +191,8 @@ export default {
 	components: { Autograph },
     data () {
         return {
+        	gearName:'', //档位
+        	
         	numberNum:null,   //点击获取索引
 			trainInfo: true,//车次模块--是否展示
 			otherInfo: false,//其他模块--是否展示
@@ -256,6 +258,10 @@ export default {
         }
     },
     mounted () {
+    	//档位
+    	if(JSON.parse(Cookies.get('gidOwnID_lists')).gearName){
+            this.gearName = JSON.parse(Cookies.get('gidOwnID_lists')).gearName;
+        }
 		this.getChooseType();
 	},
 	created(){
@@ -675,6 +681,19 @@ export default {
         
     },
     watch: {
+    	//选中临时客户后
+    	'customerType': function(newVal, oldVal){
+    		if(newVal == 'temporary'){
+    			
+    			//删掉已选的客户 并清除Cookies
+				Cookies.remove('customerId');
+        		this.customerName = '选择客户';
+        		
+        		//确保默认选中现结 而非赊账
+        		this.orderType = 'order_knot';
+    		}
+    		console.log(this.orderType)
+    	},
         '$route'(to, from) {
 			alert('..')
 		}
