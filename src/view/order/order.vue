@@ -280,7 +280,7 @@ export default {
 			this.totalCost.totalAmount = 0;
 			this.totalCost.totalPack = 0;
 			this.totalCost.totalWeigh = 0;
-			this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost; //合计费用
+			this.totalCost.tatol = (this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost).toFixed(2); //合计费用
 		},
 	    //选择车次
         choosetrainNumber(){
@@ -531,7 +531,7 @@ export default {
 							this.totalCost.totalAmount += this.goodsInfo[i]['goodAmount']; //总贷款费用
 							this.totalCost.totalPack += this.goodsInfo[i]['packCost']; //总包装费
 							this.totalCost.totalWeigh += this.goodsInfo[i]['weighCost']; //总过磅费
-							this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost; //合计费用
+							this.totalCost.tatol = (this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost).toFixed(2);
 	                    }
 						
 	                    //重置弹框数据
@@ -562,7 +562,7 @@ export default {
         setSanlunfei(){
         	this.sanlunfei = false;
         	this.totalCost.deliveryCost = Number(this.deliveryCost) || '';
-			this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost;
+			this.totalCost.tatol = (this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost).toFixed(2);
         },
         
         //签名

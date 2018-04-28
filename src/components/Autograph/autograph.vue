@@ -32,7 +32,7 @@ export default {
     mounted () {
 		var myCanvas = document.getElementById('myCanvas');
 		myCanvas.setAttribute("width", window.innerWidth);
-		myCanvas.setAttribute("height", window.innerHeight - 98);
+		myCanvas.setAttribute("height", window.innerHeight);
     },
     methods: {
 		//监听按下
@@ -43,12 +43,12 @@ export default {
 				this.ctx.lineWidth = 1;
 			}
 			this.clientX = $event.changedTouches[0].clientX;
-			this.clientY = $event.changedTouches[0].clientY-44;
+			this.clientY = $event.changedTouches[0].clientY;
 		},
 		onTouchmove: function($event) {
 			if(this.isDown) {
 				var clientX = $event.changedTouches[0].clientX;
-				var clientY = $event.changedTouches[0].clientY-44;
+				var clientY = $event.changedTouches[0].clientY;
 				//								if(Math.abs(clientX - this.clientX) <= 3 && Math.abs(clientY - this.clientY) <= 3) {
 				//									this.ctx.fillRect($event.clientX, $event.clientY, 3, 3);
 				//								} else {　
