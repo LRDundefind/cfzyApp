@@ -1,8 +1,8 @@
 <template>
 	<div class="page-content">
 		<mt-header fixed  title="车次结算">
-			<router-link to="/" slot="left">
-			    <mt-button icon="back" @click="goBack()"></mt-button>
+			<router-link to="/home" slot="left">
+			    <mt-button icon="back"></mt-button>
 			</router-link>
 		</mt-header>
 		<!--车次结算列表-->
