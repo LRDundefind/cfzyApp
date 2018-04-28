@@ -69,7 +69,7 @@ export default {
 		},
 		//保存签名
 		submitAutograph(){
-			this.images = myCanvas.toDataURL('image/png').replace('image/png', 'image/octet-stream');
+			this.images = myCanvas.toDataURL('image/jpeg');//.replace('image/png', 'image/octet-stream') //修改DataURL的Mime-type为octet-stream，强制让浏览器下载
 			//window.location.href = images; //在本地保存
 			this.$emit('autographInfo', this.images);
 		},
