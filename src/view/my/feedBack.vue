@@ -1,8 +1,8 @@
 <template>
     <div class="feedBack">
         <mt-header fixed title="意见反馈">
-            <router-link to="/" slot="left">
-                <mt-button icon="back" @click="$router.go(-1)"></mt-button>
+            <router-link to="/my" slot="left">
+                <mt-button icon="back"></mt-button>
             </router-link>
         </mt-header>
 
