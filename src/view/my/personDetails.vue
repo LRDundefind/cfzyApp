@@ -75,8 +75,8 @@
                     if (response.data.status == 'Y') {
                         this.personalData = response.data.results;
                         let imgpath=process.env.BASE_PATH;
-                        if(personalData.headImg){
-                            personalData.headImg = imgpath+ personalData.headImg;
+                        if(this.personalData.headImg){
+                            this.personalData.headImg = imgpath+ this.personalData.headImg;
                         }
                         if (this.phone) {this.personalData.phone = this.phone;}
                         if (this.selName) {this.personalData.selName = this.selName;}
