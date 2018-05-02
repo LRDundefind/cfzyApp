@@ -17,9 +17,9 @@
 
                 <div class="main-list">
                     <p class="clearfix">数量
-                        <input type="text" placeholder="请输入数量" v-model="goods.quantity" readonly
+                        <input type="text" placeholder="请输入损坏数量" v-model="goods.quantity" readonly
                                v-if="goods.goodName ==''">
-                        <input type="text" placeholder="请输入数量" v-model="goods.quantity" v-else>
+                        <input type="text" placeholder="请输入损坏数量" v-model="goods.quantity" v-else>
                     </p>
 
                     <p class="clearfix">损坏原因
