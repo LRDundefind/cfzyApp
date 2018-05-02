@@ -64,7 +64,7 @@ export default {
     },
     mounted () {
 
-			this.wrapperHeight = document.documentElement.clientHeight - 160; 
+			this.wrapperHeight = document.documentElement.clientHeight - 150; 
     },
     methods: {
 			// 跳转区分
