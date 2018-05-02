@@ -476,7 +476,7 @@ export default {
 					     	sellUnit:this.sellUnit,  //售卖单位，提交订单所需，列表不展示
 					     	numUnit:this.numUnit,  //入库单位，列表不展示
 					    });
-					    console.log(this.goodsInfo)
+					    //console.log(this.goodsInfo)
 				//重置弹框数据
 			    this.resetPriceNum(); 
 			    //重置各项价格总和
@@ -537,13 +537,14 @@ export default {
 	                    //重置弹框数据
 						this.resetPriceNum();
 	                    
-						this.goodsInfo.filter(function(item){
-			            	if(item.weight != '' && item.price == ''){
+	                    //判断是否展示合计金额等项
+		                for(var i = 0, len = this.goodsInfo.length; i < this.goodsInfo.length; i ++){
+		                	if(this.goodsInfo[i].weight != '' && this.goodsInfo[i].price == ''){
 								this.have_goodsunit = false;
-			            	}else{
-			            		this.have_goodsunit = true;
-			            	}
-			            });
+		                	}else{
+		                		this.have_goodsunit = true;
+		                	}
+		                }
 
 					})
 					.catch(function (response) {
@@ -611,22 +612,21 @@ export default {
     			});
     			return false;
 			}
-			
+
 			//非 赊账暂存(szType != 'Y')时，判断填写了购买量的货品都填写了单价
 			if(szType != 'Y'){
-                this.goodsInfo.filter(function(item){
-                	if(item.weight != '' && item.price == ''){
+                for(var i = 0, len = this.goodsInfo.length; i < this.goodsInfo.length; i ++){
+                	if(this.goodsInfo[i].weight != '' && this.goodsInfo[i].price == ''){
 						Toast({
 							message: '请完善货品单价',
 							position: 'middle',
 							duration: 1000
 		    			});
 						return false;
-
                 	}
-                });
+                }
 			}
-			
+
         	//现结（下单）和赊账（暂存、下单）验证三轮车费
 			if(this.totalCost.deliveryCost == '' || this.totalCost.deliveryCost == null){
     			Toast({
@@ -666,7 +666,6 @@ export default {
         		params.deposit = szType;
         		params.signImg = this.autographInfo;//赊账签名
         	};
-        	//console.log(params.signImg)
         	order.submitorder(params)
         		.then(response => {
 					//下单成功跳转至首页
