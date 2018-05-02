@@ -1,6 +1,7 @@
 <template>
 	<div class="page-content">
 		<mt-header fixed  title="物流">
+                <span class="c-3 f-s-16" slot="right">发布货源</span>
 		</mt-header>
 		<!--物流-->
 		<div class="page-main logistics">
