@@ -50,7 +50,14 @@
             handleCommand(command){
                 var temp = command;
                 Cookies.set('gidOwnID_lists', temp);
-                this.$router.push({name: 'home'});
+                //清除下单页面相关cookies
+                Cookies.remove('trainTid');
+	        	Cookies.remove('trainsNum');
+	        	Cookies.remove('plateNum');
+	        	Cookies.remove('customerName'); 
+	        	Cookies.remove('customerId');
+                window.history.go(-1);
+//              this.$router.push({name: 'home'});
             },
 
         }
