@@ -8,7 +8,7 @@
 				<img src="../../assets/wuliu.png">
 				<div>敬请期待...</div>
 			</div> -->
-			<div id="container">
+			<div id="XSDFXPage">
 
 			</div>
 		</div>
@@ -21,6 +21,8 @@ export default {
 
     data () {
         return {
+			longitude:116.404,	//定义经度
+　　　　　　 latitude:39.915	//定义纬度
         }
     },
     mounted () {
@@ -28,15 +30,17 @@ export default {
             // 创建Map实例
             var map = new BMap.Map("XSDFXPage",{enableMapClick:true});
             // 初始化地图,设置中心点坐标和地图级别
-            map.centerAndZoom(new BMap.Point(116.4035,39.915), 11);
-            // 添加地图类型控件
-            map.addControl(new BMap.MapTypeControl());  
+　　　　　　var point = new BMap.Point(this.longitude,this.latitude);
+　　　　　　map.centerAndZoom(point, 11);
+　　　　　　var marker = new BMap.Marker(point);// 创建标注
+　　　　　　map.addOverlay(marker);
+
             // 设置地图显示的城市 此项是必须设置的
-            map.setCurrentCity("北京"); 
+           map.setCurrentCity("北京"); 
 			
-			setTimeout(function(){
-                map.panTo(new BMap.Point(113.262232,23.154345));
-            }, 2000);  
+			// setTimeout(function(){
+            //     map.panTo(new BMap.Point(this.longitude,this.latitude));
+            // }, 5000);  
     },
     methods: {
             
@@ -44,14 +48,16 @@ export default {
 }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
-#container{
+#XSDFXPage{
 	width: 100%;
 	height: 100%;
+}
+.page-main{
+	height: calc(100vh - 0.8rem - 55px);
 }
 .not-online{
 	position: fixed;
 	width: 100%;
-	height: 100%;
 	margin-top: 0.2rem;
 	background: #fff;
 	padding-top: 2.14rem;
