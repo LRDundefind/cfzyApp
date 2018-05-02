@@ -169,6 +169,7 @@ export default {
                              Cookies.set('sid', result.sid);                //登录用户ID
                              Cookies.set('userName', result.userName);     //姓名
                              Cookies.set('compayName', result.compayName); //公司名称
+                             Cookies.set('uid', result.uid);
                             if(result.stalls_list.length==0){
                                 this.$router.push({name:'noStalls'});
                             }
