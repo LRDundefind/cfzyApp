@@ -41,6 +41,7 @@ export default {
 			if(!this.ctx) {
 				this.ctx = myCanvas.getContext('2d');
 				this.ctx.lineWidth = 1;
+//				this.ctx.strokeStyle = 'rgba(255,255,255,1)'; 
 			}
 			this.clientX = $event.changedTouches[0].clientX;
 			this.clientY = $event.changedTouches[0].clientY;
@@ -69,7 +70,7 @@ export default {
 		},
 		//保存签名
 		submitAutograph(){
-			this.images = myCanvas.toDataURL('image/jpeg');//.replace('image/png', 'image/octet-stream') //修改DataURL的Mime-type为octet-stream，强制让浏览器下载
+			this.images = myCanvas.toDataURL('image/png');//.replace('image/png', 'image/octet-stream') //修改DataURL的Mime-type为octet-stream，强制让浏览器下载
 			//window.location.href = images; //在本地保存
 			this.$emit('autographInfo', this.images);
 		},
