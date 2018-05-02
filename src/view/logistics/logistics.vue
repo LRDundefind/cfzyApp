@@ -9,9 +9,44 @@
 				<img src="../../assets/wuliu.png">
 				<div>敬请期待...</div>
 			</div> -->
-			<div id="XSDFXPage">
+			<div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }" >
 
-			</div>
+          
+            <!-- <mt-loadmore 
+				:auto-fill="false"
+				:top-method="loadTop" 
+				:bottom-method="loadBottom"
+				:bottom-all-loaded="allLoaded"
+				ref="loadmore"> -->
+
+                <div v-for="n in 3" :key='n.id' class="main-list" @click="goDetail()">
+                    <div class="ub ub-ac heade">
+                        <div class='lis-icon'>发货人&nbsp;</div>
+                        <!-- {{n.nickname}} -->
+                        <div class='ub-f1 ut-s ft28'> 张三</div>
+                        <!-- 正常客户状态 -->
+                        <div class='res8 lis-sw col33d547' @click="goBaiMap()">查看位置</div>
+                    </div>
+                    <ul >
+                        <li class="ub ub-pj">
+                            <div class="ub-f1">车牌号</div>
+                            <div class="ub-f1">888888</div>
+                        </li>
+                        <li class="ub ub-pj">
+                            <div class="ub-f1">司机</div>
+                            <div class="ub-f1">小李</div>
+                        </li>
+                        <li class="ub ub-pj">
+                            <div class="ub-f1">司机电话</div>
+                            <div class="ub-f1">小李</div>
+                        </li>
+                    </ul>
+                </div>
+                <div  style="text-align:center;font-size: 0.18rem;display:none"></div>
+		  
+			<!-- </mt-loadmore> -->	
+        </div>
+			
 		</div>
 	</div>
 </template>
@@ -22,59 +57,69 @@ export default {
 
     data () {
         return {
-			longitude:116.404,	//定义经度
-　　　　　　 latitude:39.915	//定义纬度
+			  allLoaded: false,
+			  msg:'',
+			  wrapperHeight: 0,//容器高度
         }
     },
     mounted () {
-		    // 百度地图API功能
-            // 创建Map实例
-            var map = new BMap.Map("XSDFXPage",{enableMapClick:true});
-            // 初始化地图,设置中心点坐标和地图级别
-　　　　　　var point = new BMap.Point(this.longitude,this.latitude);
-　　　　　　map.centerAndZoom(point, 11);
-　　　　　　var marker = new BMap.Marker(point);// 创建标注
-　　　　　　map.addOverlay(marker);
 
-            // 设置地图显示的城市 此项是必须设置的
-           map.setCurrentCity("北京"); 
-			
-			// setTimeout(function(){
-            //     map.panTo(new BMap.Point(this.longitude,this.latitude));
-            // }, 5000);  
+			this.wrapperHeight = document.documentElement.clientHeight - 160; 
     },
     methods: {
-            
+			// 跳转区分
+			goDetail(){
+				if(this.$route.params.fromc=='order'){
+					this.$router.push({name: 'storage'})
+				}
+			},
+			//查看位置
+            goBaiMap(){
+				this.$router.push({name: 'baiduMap', params: {}})
+			}
     }
 }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
-#XSDFXPage{
-	width: 100%;
-	height: 100%;
+.page-loadmore-wrappe{
+   overflow: scroll;
 }
-.page-main{
-	height: calc(100vh - 0.8rem - 55px);
-}
-.not-online{
-	position: fixed;
-	width: 100%;
-	margin-top: 0.2rem;
-	background: #fff;
-	padding-top: 2.14rem;
-	img{
-		width: 4.18rem;
-		height: 4.18rem;
-		display: block;
-		margin: 0 auto;
-	}
-	div{
-		font-size: 0.28rem;
-		color: #333;
-		margin: 0.42rem 0 0;
-		text-align: center;
-	}
-}
+.ft28{font-size: 0.43rem;}
+.col33d547{color: #33d547;border:1px solid #33d547;padding: 0.1rem 0.25rem;border-radius: 25px;}
+    .im {
+        width: 0.8rem;
+        height: 0.8rem;
+        border-radius: 50%;
+        overflow: hidden;
+        margin-right: 0.2rem;
+    }
+    .main-list {
+        background: #fff;
+        margin-top: 0.2rem;
+        padding: 0.2rem;
+        color: #333;
+        .heade {
+            font-size: 0.4rem;
+            border-bottom: 1px #f0f0f0 solid;
+            padding-bottom: 0.2rem;
+        }
+        h3 {
+            font-size: 0.4rem;
+
+            line-height: 0.8rem;
+        }
+        ul {
+
+            li {
+                font-size: 0.3rem;
+                margin-top: 0.1rem;
+                padding-bottom: 0.1rem;
+                div:last-child {
+                    text-align: right;
+                }
+            }
+        }
+    }
 
 
 </style>

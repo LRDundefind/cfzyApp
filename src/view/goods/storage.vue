@@ -37,7 +37,12 @@
                                                                   src="../../assets/index/gray-right-icon.png"/></span>
                         </p>
                     </div>
-
+                    <div class="basic-list" @click="gologistics">
+                        <p class="clearfix">车次
+                            <span class="name">{{stall.name}}<img class="right-icon"
+                                                                  src="../../assets/index/gray-right-icon.png"/></span>
+                        </p>
+                    </div>
                     <div class="basic-list">
                         <p class="clearfix">司机姓名<input type="text" v-model="stall.driverName"></p>
                         <p class="clearfix">司机电话<input type="text" v-model="stall.driverPhone"></p>
@@ -204,7 +209,10 @@
                 this.ownerList = true;
                 this.selected = false;
             },
-
+            //跳转到车次
+            gologistics(){
+                this.$router.push({name: 'logistics',params: {fromc: 'order'}});
+            },
 
             //跳转到订单详情
             orderDetail(id){
