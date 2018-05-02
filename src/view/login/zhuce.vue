@@ -206,12 +206,19 @@ export default {
                         duration: 5000
                         });
                 }
-				else if(this.passWord=='' || this.passwordtype==''){
+				else if(this.passWord==''){
 					Toast({
                         message: '密码不可为空',
                         position: 'middle',
                         duration: 5000
                         });
+                }
+                else if(!(new RegExp(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/).test(this.passWord))){
+					Toast({
+								message: '密码格式不正确，请输入6-16位数字和字母的组合',
+								position: 'middle',
+                                duration: 5000
+							});
 				}
                 else{
                      Cookies.set('Zname',this.userName);
