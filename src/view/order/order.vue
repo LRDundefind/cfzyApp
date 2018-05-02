@@ -56,7 +56,7 @@
 			</div>
 			<div class="order-detail" v-if="otherInfo">
 				<div class="ub term" v-if="have_goodsunit">
-					<div class="ub-f1">贷款费用</div>
+					<div class="ub-f1">货款费用</div>
 					<div class="edu">{{totalCost.totalAmount}}</div>
 				</div>
 				<div class="ub term" v-if="have_goodsunit">
@@ -238,7 +238,7 @@ export default {
 			
 			//费用总和
 			totalCost: {
-				totalAmount: 0,  //贷款费用总和-金额总和
+				totalAmount: 0,  //货款费用总和-金额总和
 				totalPack: 0,  //包装费总和
 				totalWeigh: 0,  //过磅费总和
 				deliveryCost: null, //三轮费--手动输入
@@ -444,7 +444,7 @@ export default {
         
         //单件货品信息录入提交 
         getGoodsInformation(){
-        	//通过是否写入单价的情况 判断是否显示总贷款、包装、过磅、合计金额费用
+        	//通过是否写入单价的情况 判断是否显示总货款、包装、过磅、合计金额费用
 			this.have_goodsunit = true;
 			
 			//售卖单位为件时，设置重量单位和平板重单位
@@ -458,10 +458,10 @@ export default {
 				this.set_weight_util = this.sellUnit;
 			}
 			
-			//未填写单价，不计算当前所设置货品的贷款包装过磅费，不计算合计金额
+			//未填写单价，不计算当前所设置货品的货款包装过磅费，不计算合计金额
 			if(this.goodsunit == '' ){ 
 				this.have_goodsunit = false;
-				//未填写单价则不调6.3接口（计算总贷款费用 和 合计费用的）,但是还是要set 
+				//未填写单价则不调6.3接口（计算总货款费用 和 合计费用的）,但是还是要set 
 				this.$set(this.goodsInfo,this.numberNum,
 					    {	goodName:this.goodName,
 					     	goodId:this.goodId, //提交订单所需，列表不展示
@@ -482,7 +482,7 @@ export default {
 			    //重置各项价格总和
 			    this.resetTotalCost();
 			}else{
-	        	//填写单价，计算当前所设置货品的贷款包装过磅费， 
+	        	//填写单价，计算当前所设置货品的货款包装过磅费， 
 				var params = {
 					goodId: this.goodId,//单个货品id
 					price: this.goodsunit,//单价
@@ -528,7 +528,7 @@ export default {
 							    });
 		    			//根据返回数据计算总和
 	                    for(var i=0,len = this.goodsInfo.length; i<this.goodsInfo.length;i++){
-							this.totalCost.totalAmount += this.goodsInfo[i]['goodAmount']; //总贷款费用
+							this.totalCost.totalAmount += this.goodsInfo[i]['goodAmount']; //总货款费用
 							this.totalCost.totalPack += this.goodsInfo[i]['packCost']; //总包装费
 							this.totalCost.totalWeigh += this.goodsInfo[i]['weighCost']; //总过磅费
 							this.totalCost.tatol = (this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost).toFixed(2);

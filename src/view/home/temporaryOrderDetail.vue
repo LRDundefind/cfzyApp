@@ -31,7 +31,7 @@
 					<div class="total">￥{{totalCost.tatol || total}}</div>
 				</div>
 				<div class="ub term">
-					<div class="ub-f1">贷款</div>
+					<div class="ub-f1">货款</div>
 					<div class="edu">￥{{totalCost.totalAmount || detailInfo.salesAmount}}</div><!--totalCost.totalAmount-->
 				</div>
 				<div class="ub term">
@@ -135,7 +135,7 @@ export default {
 			//费用总和
 			total: null,//未改变单价前的合计金额
 			totalCost: {
-				totalAmount: null,  //贷款费用总和-金额总和
+				totalAmount: null,  //货款费用总和-金额总和
 				totalPack: null,  //包装费总和
 				totalWeigh: null,  //过磅费总和
 				tatol: null,  //合计金额
@@ -260,7 +260,7 @@ export default {
 						    });
 						//计算
 	                    for(var i=0,len = this.goodsInfo.length; i<this.goodsInfo.length;i++){
-							this.totalCost.totalAmount += this.goodsInfo[i]['goodAmount']; //总贷款费用
+							this.totalCost.totalAmount += this.goodsInfo[i]['goodAmount']; //总货款费用
 							this.totalCost.totalPack += this.goodsInfo[i]['packCost']; //总包装费
 							this.totalCost.totalWeigh += Number(this.goodsInfo[i]['weighCost']); //总过磅费
 							this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.detailInfo.deliveryCost; //合计费用
