@@ -666,6 +666,7 @@ export default {
         		params.deposit = szType;
         		params.signImg = this.autographInfo;//赊账签名
         	};
+        	//console.log(params.signImg)
         	order.submitorder(params)
         		.then(response => {
 					//下单成功跳转至首页
