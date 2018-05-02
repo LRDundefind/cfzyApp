@@ -66,7 +66,7 @@ export default {
 	height: 100%;
 }
 .page-main{
-	height: calc(100vh - 0.8rem - 55px);
+	height: calc(100vh - 0.8rem);
 }
 .not-online{
 	position: fixed;
