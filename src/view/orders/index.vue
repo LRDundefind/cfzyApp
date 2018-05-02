@@ -112,7 +112,7 @@ export default {
             wrapperHeight: 0,//容器高度
             params:{
                 current_page: 1,
-                page_size: 2,
+                page_size: 5,
             },
             listStore: [],
 			//车次销售列表数据
