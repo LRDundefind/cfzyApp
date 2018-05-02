@@ -13,7 +13,7 @@
                     <div class="ub ub-pc" >
                         <div class="name  ">
                             <span>档位</span>&nbsp;
-                            <span>小鑫鑫0506</span>
+                            <span>{{userName}}</span>
                         </div>
                     </div>
                 </div>
@@ -172,15 +172,20 @@
 
 </style>
 <script>
+    import Cookies from 'js-cookie'
+
     export default {
         name: 'my',
         data () {
             return {
-                phone:''
+                phone:'',
+                userName:'',
             }
         },
         mounted () {
-
+            if(JSON.parse(Cookies.get('gidOwnID_lists')).userName){
+                this.userName = JSON.parse(Cookies.get('gidOwnID_lists')).userName;
+            }
         },
         methods: {
             //跳转到首页

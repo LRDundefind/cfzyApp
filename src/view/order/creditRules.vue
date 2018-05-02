@@ -43,10 +43,11 @@ export default {
 <style scoped rel="stylesheet/scss" lang="scss">
 
 .rules{
-	font-size: 0.26rem;
-	color: #4c4c4c;
-	line-height: 0.45rem;
-	margin: 0.4rem 0.3rem;
+    word-break: break-all;
+    font-size: 0.26rem;
+    color: #4c4c4c;
+    line-height: 0.45rem;
+    padding: 0.4rem 0.3rem;
 }
 
 

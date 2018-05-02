@@ -8,7 +8,7 @@
         <div class="login_cont m-t-20">
             <div class="bg1">
                 <span class="usericonBg"></span>
-                <input v-model="phoneNumber" placeholder="手机号" class="usericon ">
+                <input v-model="phoneNumber" type="Number" placeholder="手机号" class="usericon ">
             </div>
             <div>
                 <div class="text">单个手机仅可用作一个账户使用</div>

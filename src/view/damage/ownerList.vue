@@ -1,7 +1,7 @@
 <template>
     <div class="page-content">
         <div class="page-main">
-            <search-box ref="search"/>
+            <search-box @getSmeage="searchBlack" :msg="msg" ref="search"/>
             <div v-for="item in ownerData" :key='item.id' class="main-list">
                 <div @click="choiceOwner(item)">
                     <div class="name">{{item.shipName}}</div>
@@ -45,6 +45,7 @@
         name:'owner',
         data () {
             return {
+                msg: '',
                 ownerData: {
 //                    shipName: '',//货主名称
 //                    trainsNum: '',//进货车次总数
@@ -64,6 +65,10 @@
             this.getlist()
         },
         methods: {
+            searchBlack(msg){
+                this.blacklistParams.search = msg;
+                this.getlist();
+            },
             //初始化数据--获取货主列表
             getlist(){
                 damage.ownerList(this.blacklistParams).then(response => {
