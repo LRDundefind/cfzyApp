@@ -6,7 +6,7 @@
                 <img class="header_img" src="../../assets/index/down_icon.png"/>
             </router-link>
             <div class=" personal" @click="goMy(5)" slot="right">
-                <img src="../../assets/index/shouye_touxiang_img@2x.png"/>
+                <img class="personal_img" :src="personalData.headImg"/>
             </div>
         </mt-header>
 
@@ -76,11 +76,13 @@
 <script> 
      import { home } from '@/services/apis/home.api'
      import Cookies from 'js-cookie'
+     import {my} from '@/services/apis/my'
 
      export default {
         data () {
             return {
                 gearName:'',
+                personalData:[],
                 storageData:{
 //                    trainNum:'',//当日入库量
 //                    order_quantity:'',//当日下单量
@@ -92,10 +94,32 @@
             if(JSON.parse(Cookies.get('gidOwnID_lists')).gearName){
                 this.gearName = JSON.parse(Cookies.get('gidOwnID_lists')).gearName;
             }
-            this.getlist()
+            this.getlist();
+            this.info();
         },
         methods: {
+            //获取头像
+            info(){
+                let params = {};
+                my.getInfo(params).then(response => {
+                    if (response.data.status == 'Y') {
+                        this.personalData = response.data.results;
+                        let doMain = process.env.BASE_PATH;
+                        let defaultImg = require('../../assets/my/my_head.png');
+                        let headImg = this.personalData.headImg;
+                        //返回头像的处理
+                        if (headImg == '') {
+                            this.personalData.headImg = defaultImg;
+                        } else {
+                            this.personalData.headImg = doMain + headImg;
+                        }
+                    } else {
 
+                    }
+                })
+            },
+
+            //获取当日交易情况
             getlist(){
                 let params={};
                 home.index(params).then(response=>{
@@ -152,8 +176,11 @@
         box-sizing: border-box;
     }
     .personal {
-        width: 0.68rem;
-        padding-left: 50%;
+        .personal_img{
+            width: 0.68rem;
+            height: 0.68rem;
+            border-radius: 50%;
+        }
     }
 
     .home {
