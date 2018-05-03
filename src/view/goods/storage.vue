@@ -328,11 +328,11 @@
 
             upload1 (e, ty) {
                 if (ty == 'source') {
-                    this.source = source;
+                    this.source = 'source';
                 } else if (ty == 'detect') {
-                    this.detect = detect;
+                    this.detect = 'detect';
                 } else if (ty == 'ship') {
-                    this.ship = ship;
+                    this.ship = 'ship';
                 }
                 console.log(ty);
                 let files = e.target.files || e.dataTransfer.files;
