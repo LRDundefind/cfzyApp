@@ -130,7 +130,7 @@ export default {
                         duration: 5000
                         });
 				}
-				else if(!(new RegExp( /^1[3|4|5|7|8][0-9]{9}$/).test(this.userName))){
+				else if(!(new RegExp( /^1[3|4|5|7|8|9][0-9]{9}$/).test(this.userName))){
 					Toast({
                         message: '账号输入有误',
                         position: 'middle',
