@@ -1,9 +1,7 @@
 <template>
 	<div class="page-content">
 		<mt-header fixed  title="赊账规则">
-			<router-link to="/" slot="left">
-			    <mt-button icon="back" @click="goBack()"></mt-button>
-			</router-link>
+			    <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
 		</mt-header>
 		<!--赊账规则-->
 		<div class="page-main rules">

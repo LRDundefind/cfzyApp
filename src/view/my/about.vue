@@ -1,8 +1,8 @@
 <template>
     <div class="about" >
         <mt-header fixed title="关于">
-            <router-link to="/" slot="left">
-                <mt-button icon="back" @click="$router.go(-1)"></mt-button>
+            <router-link to="/my" slot="left">
+                <mt-button icon="back"></mt-button>
             </router-link>
         </mt-header>
         <div class="about_cont">
