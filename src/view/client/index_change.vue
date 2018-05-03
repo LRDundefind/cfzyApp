@@ -52,7 +52,7 @@
         </div>
         <div class="footer_btn" v-if="typeW=='update'">
             <div class="ub ub-pc">
-                <div class="ub-f1 blackList" @click="dialoags = true ">加入黑名单</div>
+                <!-- <div class="ub-f1 blackList" @click="dialoags = true ">加入黑名单</div> -->
                 <div class="ub-f1 bad" @click="badList">设置为坏账</div>
             </div>
         </div>
@@ -62,8 +62,8 @@
             <div class="dialoag_cont">
                 <h3>黑名单</h3>
                 <p>将{{nameWrite}}设置为黑名单</p>
-                <div>加入黑名单</div>
-                <div>加入黑名单并上报平台</div>
+                <div @click="joinB">加入黑名单</div>
+                <div @click="joinPB">加入黑名单并上报平台</div>
                 <div @click="dialoags = false ">取消</div>
             </div>
         </div>
@@ -129,6 +129,12 @@
 
         },
         methods: {
+            joinPB(){
+
+            },
+            joinB(){
+
+            },
             tipsQX(){
                 // 新增的取消按钮
                 // if(this.phoneAdd==''){
