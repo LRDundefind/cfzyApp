@@ -146,7 +146,7 @@ export default {
 				}
 				else if(!(new RegExp(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/).test(this.passWord))){
 					Toast({
-                        message: '密码输入有误',
+                        message: '密码密码格式不正确',
                         position: 'middle',
                         duration: 5000
                         });
