@@ -12,7 +12,6 @@
                         <div class="sc">
                             <div style="opacity: 0" class="picture"
                                  :style="'backgroundImage:url('+headerImage+')'"></div>
-                            <!-- <div>{{headerImage}}</div> -->
                             <input type="file" id="upload" accept="image" @change="upload1" style="opacity: 0">
                             <div>
                                 <img class="header-img" :src="personalData.headImg"/>
@@ -76,17 +75,13 @@
                         let doMain = process.env.BASE_PATH;
                         let defaultImg = require('../../assets/my/my_head.png');
                         let headImg = this.personalData.headImg;
-
+                        //返回头像的处理
                         if (headImg == '') {
                             this.personalData.headImg = defaultImg;
                         } else {
                             this.personalData.headImg = doMain + headImg;
                         }
 
-
-//                        if(this.personalData.headImg){
-//                            this.personalData.headImg = imgpath+ this.personalData.headImg;
-//                        }
                         if (this.phone) {
                             this.personalData.phone = this.phone;
                         }
@@ -215,12 +210,14 @@
                 tCanvas.width = tCanvas.height = canvas.width = canvas.height = 0;
                 return ndata;
             },
+            //修改手机号
             goPhone(){
                 this.$router.push({
                     name: 'replacePhone',
                     params: {selName: this.personalData.selName, headImg: this.personalData.headImg}
                 });
             },
+            //保存用户资料
             savePersonal(){
                 let data = this.personalData;
                 delete data.createTime;
