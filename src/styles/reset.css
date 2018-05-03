@@ -345,7 +345,8 @@ body {
 }
 .mint-header-title{
   font-size: 0.36rem !important;
-  color: #333333;
+	color: #333333;
+	line-height: 0.38rem;
 }
 .bdr-r:after {
 	height: 100%;

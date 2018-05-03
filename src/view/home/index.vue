@@ -1,6 +1,6 @@
 <template>
     <div class="main">
-        <mt-header fixed title="首页">
+        <mt-header fixed title="首页" style="z-index:400;">
             <router-link to="/ownerChoice" slot="left">
                 <span class="c-3 f-s-16">{{gearName}}</span>
                 <img class="header_img" src="../../assets/index/down_icon.png"/>

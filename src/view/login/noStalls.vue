@@ -1,6 +1,6 @@
 <template>
     <div class="main">
-        <mt-header fixed title="首页">
+        <mt-header fixed title="首页" style="z-index:400;">
             <div class=" personal" slot="right">
                 <img src="../../assets/index/shouye_touxiang_img@2x.png"/>
             </div>
