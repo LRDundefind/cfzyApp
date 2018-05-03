@@ -90,17 +90,20 @@
                 let files = e.target.files || e.dataTransfer.files;
                 if (!files.length) return;
                 this.picValue = files[0];
+                alert(this.picValue)
                 this.imgPreview(this.picValue);
             },
             imgPreview (file) {
                 let self = this;
                 let Orientation;
+                alert(self)
                 //去获取拍照时的信息，解决拍出来的照片旋转问题  
                 Exif.getData(file, function () {
                     Orientation = Exif.getTag(this, 'Orientation');
                 });
+                alert(self)
                 // 看支持不支持FileReader  
-                if (!file || !window.FileReader) return;
+                // if (!file || !window.FileReader) return;
 
                 if (/^image/.test(file.type)) {
                     // 创建一个reader  
@@ -110,6 +113,7 @@
                     // 读取成功后的回调  
                     reader.onloadend = function () {
                         let result = this.result;
+                        alert(result)
                         let img = new Image();
                         img.src = result;
                         //判断图片是否大于100K,是就直接上传，反之压缩图片  
