@@ -55,7 +55,8 @@
 
                     <div class="basic-list">
                         <p class="clearfix">产地<input type="text" v-model="stall.origin"></p>
-                        <p class="clearfix" @change="upload1">产地证明
+                        <p class="clearfix" @change="upload1" style="position: relative">产地证明
+                            <input type="file" id="upload" accept="image" @change="upload1" style="opacity: 0.4">
                             <span class="upload">点击上传<img class="right-icon"
                                                           src="../../assets/index/gray-right-icon.png"/></span>
                         </p>
@@ -109,6 +110,7 @@
     import goodsDetails from '@/view/goods/goodsDetails'
     import {damage} from '@/services/apis/damage.api'
     import {Toast} from 'mint-ui';
+    import Exif from 'exif-js';
 
     export default {
         data () {
@@ -388,6 +390,14 @@
             line-height: 0.98rem;
             > p {
                 border-top: 1px #f0f0f0 solid;
+                #upload {
+                    position: absolute;
+                    width: 2rem;
+                    height: 0.95rem;
+                    left: 70%;
+                    top: 0;
+                    opacity: 0.1;
+                }
                 .name {
                     float: right;
                 }
