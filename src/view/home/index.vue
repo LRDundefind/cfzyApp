@@ -20,15 +20,15 @@
             <!--当日入库-->
             <div class="ub today">
                 <div class="ub-f1 ">
-                    <div class="number">{{storageData.trainNum}}</div>
+                    <div class="number">{{storageData.trainNum | format}}</div>
                     <div class="words">当日入库</div>
                 </div>
                 <div class="ub-f1 ">
-                    <div class="number">{{storageData.order_quantity}}</div>
+                    <div class="number">{{storageData.order_quantity | format}}</div>
                     <div class="words">当日下单</div>
                 </div>
                 <div class="ub-f1">
-                    <div class="number">{{storageData.deposit}}</div>
+                    <div class="number">{{storageData.deposit | format}}</div>
                     <div class="words">暂存下单</div>
                 </div>
             </div>

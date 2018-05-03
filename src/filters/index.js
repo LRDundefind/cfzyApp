@@ -1,6 +1,6 @@
 export function format(num) {
-
-    num = num.toString().replace(/\$|\,/g,'');
+    num = Number(num)
+    //num = num.toString().replace(/\$|\,/g,'');
     if(isNaN(num))
         num = "0";
     var sign = (num == (num = Math.abs(num)));
