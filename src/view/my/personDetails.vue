@@ -140,7 +140,6 @@
                                 let data = self.compress(img, Orientation);
                                 self.headerImage = data;
                                 self.personalData.headImg = data;
-                                alert('进入压缩')
                                 self.postImg();
                             }
                         }
