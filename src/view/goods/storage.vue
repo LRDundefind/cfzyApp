@@ -57,21 +57,30 @@
                         <p class="clearfix">产地<input type="text" v-model="stall.origin"></p>
                         <p class="clearfix" style="position: relative">产地证明
                             <input type="file" class="upload-picture" accept="image" @change="upload1($event,'source')"
-                                   style="opacity: 0.4">
-                            <span class="upload">点击上传<img class="right-icon"
-                                                          src="../../assets/index/gray-right-icon.png"/></span>
+                                   style="opacity: 0">
+                            <span class="upload">
+                                <span v-if="stall.originProve == ''">点击上传</span>
+                                <span v-if="stall.originProve != ''">已经上传</span>
+                                <img class="right-icon"
+                                     src="../../assets/index/gray-right-icon.png"/></span>
                         </p>
                         <p class="clearfix" style="position: relative">检验证明
                             <input type="file" class="upload-picture" accept="image" @change="upload1($event,'detect')"
-                                   style="opacity: 0.4">
-                            <span class="name">已经上传<img class="right-icon"
-                                                        src="../../assets/index/gray-right-icon.png"/></span>
+                                   style="opacity: 0">
+                            <span class="upload">
+                                <span v-if="stall.checkProve == ''">点击上传</span>
+                                <span v-if="stall.checkProve != ''">已经上传</span>
+                                <img class="right-icon"
+                                     src="../../assets/index/gray-right-icon.png"/></span>
                         </p>
                         <p class="clearfix" style="position: relative">承运合同
-                            <input type="file" class="upload-picture" accept="image" @change="upload1($event,'detect')"
-                                   style="opacity: 0.4">
-                            <span class="upload">点击上传<img class="right-icon"
-                                                          src="../../assets/index/gray-right-icon.png"/></span>
+                            <input type="file" class="upload-picture" accept="image" @change="upload1($event,'ship')"
+                                   style="opacity: 0">
+                            <span class="upload">
+                                <span v-if="stall.carrierContract == ''">点击上传</span>
+                                <span v-if="stall.carrierContract != ''">已经上传</span>
+                                <img class="right-icon"
+                                     src="../../assets/index/gray-right-icon.png"/></span>
                         </p>
                     </div>
 
@@ -123,7 +132,7 @@
                 source: '',//产地证明
                 detect: '',//检验证明
                 ship: '',//乘运证明
-                headerImage:'',
+                headerImage: '',
                 index: '',
 
                 editItem: {},
@@ -369,11 +378,11 @@
                 }
             },
             postImg(){
-                if(this.source){
+                if (this.source) {
                     this.stall.originProve = this.headerImage;
-                }else if(this.detect){
+                } else if (this.detect) {
                     this.stall.checkProve = this.headerImage;
-                }else if(this.ship){
+                } else if (this.ship) {
                     this.stall.carrierContract = this.headerImage;
                 }
                 console.log(this.headerImage);
