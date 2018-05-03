@@ -10,14 +10,12 @@
                     </div>
                     <div class="ub ub-pc">
                         <div class="sc">
-                            <div style="opacity: 0.5" class="picture"
+                            <div style="opacity: 0" class="picture"
                                  :style="'backgroundImage:url('+headerImage+')'"></div>
                                 <!-- <div>{{headerImage}}</div> -->
                             <input type="file" id="upload" accept="image" @change="upload1" style="opacity: 0">
                             <div>
-                                 <img v-if="personalData.headImg == ''" class="header-img"
-                                 src="../../assets/my/my_head.png"/>
-                                 <img v-else :src="personalData.headImg" alt="" class="header-img">
+                                 <img  class="header-img" :src="personalData.headImg"/>
                             </div>
                            
                         </div>
@@ -75,10 +73,20 @@
                 my.getInfo(params).then(response => {
                     if (response.data.status == 'Y') {
                         this.personalData = response.data.results;
-                        let imgpath=process.env.BASE_PATH;
-                        if(this.personalData.headImg){
-                            this.personalData.headImg = imgpath+ this.personalData.headImg;
+                        let doMain = process.env.BASE_PATH;
+                        let defaultImg = require('../../assets/my/my_head.png');
+                        let headImg = this.personalData.headImg;
+
+                        if (headImg == '') {
+                            this.personalData.headImg = defaultImg;
+                        } else {
+                            this.personalData.headImg = doMain + headImg;
                         }
+
+
+//                        if(this.personalData.headImg){
+//                            this.personalData.headImg = imgpath+ this.personalData.headImg;
+//                        }
                         if (this.phone) {this.personalData.phone = this.phone;}
                         if (this.selName) {this.personalData.selName = this.selName;}
                         if (this.headImg) {this.personalData.headImg = this.headImg;}
@@ -119,11 +127,13 @@
                         //判断图片是否大于100K,是就直接上传，反之压缩图片  
                         if (result.length <= (100 * 1024)) {
                             self.headerImage = result;
+                            self.personalData.headImg = result;
                             self.postImg();
                         } else {
                             img.onload = function () {
                                 let data = self.compress(img, Orientation);
                                 self.headerImage = data;
+                                self.personalData.headImg = data;
                                 alert('进入压缩')
                                 self.postImg();
                             }
@@ -276,6 +286,7 @@
         .header-img {
             width: 1.24rem;
             height: 1.24rem;
+            border-radius: 50%;
         }
     }
 
