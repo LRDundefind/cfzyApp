@@ -56,15 +56,20 @@
                     <div class="basic-list">
                         <p class="clearfix">产地<input type="text" v-model="stall.origin"></p>
                         <p class="clearfix" style="position: relative">产地证明
-                            <input type="file" id="upload" accept="image" @change="upload1($event,'111')" style="opacity: 0.4">
+                            <input type="file" class="upload-picture" accept="image" @change="upload1($event,'source')"
+                                   style="opacity: 0.4">
                             <span class="upload">点击上传<img class="right-icon"
                                                           src="../../assets/index/gray-right-icon.png"/></span>
                         </p>
-                        <p class="clearfix">检验证明
+                        <p class="clearfix" style="position: relative">检验证明
+                            <input type="file" class="upload-picture" accept="image" @change="upload1($event,'detect')"
+                                   style="opacity: 0.4">
                             <span class="name">已经上传<img class="right-icon"
                                                         src="../../assets/index/gray-right-icon.png"/></span>
                         </p>
-                        <p class="clearfix">承运合同
+                        <p class="clearfix" style="position: relative">承运合同
+                            <input type="file" class="upload-picture" accept="image" @change="upload1($event,'detect')"
+                                   style="opacity: 0.4">
                             <span class="upload">点击上传<img class="right-icon"
                                                           src="../../assets/index/gray-right-icon.png"/></span>
                         </p>
@@ -115,6 +120,10 @@
     export default {
         data () {
             return {
+                source: '',//产地证明
+                detect: '',//检验证明
+                ship: '',//乘运证明
+                headerImage:'',
                 index: '',
 
                 editItem: {},
@@ -213,7 +222,7 @@
             },
             //跳转到车次
             gologistics(){
-                this.$router.push({name: 'logistics',params: {fromc: 'order'}});
+                this.$router.push({name: 'logistics', params: {fromc: 'order'}});
             },
 
             //跳转到订单详情
@@ -308,7 +317,14 @@
                 }
             },
 
-            upload1 (e,ty) {
+            upload1 (e, ty) {
+                if (ty == 'source') {
+                    this.source = source;
+                } else if (ty == 'detect') {
+                    this.detect = detect;
+                } else if (ty == 'ship') {
+                    this.ship = ship;
+                }
                 console.log(ty);
                 let files = e.target.files || e.dataTransfer.files;
                 if (!files.length) return;
@@ -353,7 +369,17 @@
                 }
             },
             postImg(){
-                console.log(this.headerImage)
+                if(this.source){
+                    this.stall.originProve = this.headerImage;
+                }else if(this.detect){
+                    this.stall.checkProve = this.headerImage;
+                }else if(this.ship){
+                    this.stall.carrierContract = this.headerImage;
+                }
+                console.log(this.headerImage);
+                this.source = '';
+                this.detect = '';
+                this.ship = '';
             },
             compress(img, Orientation) {
                 let canvas = document.createElement("canvas");
@@ -457,7 +483,7 @@
             line-height: 0.98rem;
             > p {
                 border-top: 1px #f0f0f0 solid;
-                #upload {
+                .upload-picture {
                     position: absolute;
                     width: 2rem;
                     height: 0.95rem;
