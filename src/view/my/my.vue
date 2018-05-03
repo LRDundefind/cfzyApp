@@ -12,7 +12,6 @@
                     </div>
                     <div class="ub ub-pc">
                         <div class="name  ">
-                            <span>档位</span>&nbsp;
                             <span>{{userName}}</span>
                         </div>
                     </div>
