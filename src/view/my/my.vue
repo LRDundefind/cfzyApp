@@ -4,13 +4,13 @@
             <div class="top ">
                 <div class="leftIcon" @click="goHome">
                 </div>
-                <div  class="information">
+                <div class="information">
                     <div class="ub ub-pc">
                         <div @click="goDetails()">
-                            <img class="header-img" src="../../assets/my/my_head.png"/>
+                            <img class="header-img" :src="personalData.headImg"/>
                         </div>
                     </div>
-                    <div class="ub ub-pc" >
+                    <div class="ub ub-pc">
                         <div class="name  ">
                             <span>档位</span>&nbsp;
                             <span>{{userName}}</span>
@@ -81,86 +81,87 @@
 
 </template>
 <style scoped lang='scss'>
-    .my{
+    .my {
         width: 100%;
-        .img-left{
+        .img-left {
             width: 0.25rem;
         }
 
-        .top{
+        .top {
             background-image: url("../../assets/my/my_background.png");
             background-repeat: no-repeat;
             height: 4.52rem;
 
-            .information{
+            .information {
                 padding-top: 13.6%;
             }
-            .leftIcon{
+            .leftIcon {
                 width: 0.22rem !important;
                 left: 0.3rem !important;
                 @include login_input_icon;
                 background-image: url(../../assets/index/left_icon.png);
             }
-            .header-img{
+            .header-img {
                 width: 1.24rem;
                 height: 1.24rem;
+                border-radius: 50%;
             }
-            .name{
+            .name {
                 padding: 0.22rem 0 0.34rem 0;
                 color: #ffffff;
                 font-size: 0.26rem;
             }
         }
-        .loginbtn{
+        .loginbtn {
             width: 80% !important;
             @include login_btn(fixed);
             background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
-            margin: 0!important;
+            margin: 0 !important;
         }
-        .login_cont{
+        .login_cont {
             width: 5.5rem;
             margin: 0 auto;
         }
-        .list{
-            .row{
+        .list {
+            .row {
                 background-color: white;
-                padding:0 0.3rem;
+                padding: 0 0.3rem;
             }
 
-            .lock-icon{
+            .lock-icon {
                 @include login_input_icon;
                 background-image: url(../../assets/my/my_lock.png);
             }
 
-            .phone-icon{
+            .phone-icon {
                 @include login_input_icon;
                 background-image: url(../../assets/my/my_phone.png);
             }
 
-            .back-icon{
+            .back-icon {
                 @include login_input_icon;
                 background-image: url(../../assets/my/my_feedback.png);
             }
 
-            .update-icon{
+            .update-icon {
                 @include login_input_icon;
                 background-image: url(../../assets/my/my_update.png);
             }
 
-            .about-icon{
+            .about-icon {
                 @include login_input_icon;
                 background-image: url(../../assets/my/my_about.png);
             }
 
-            .content{
+            .content {
                 line-height: 0.96rem;
-                .title{
+                .title {
                     padding-left: 0.87rem;
-                    a{
+                    a {
                         color: #333;
                     }
                 }
-                .my_icon{
+                .my_icon {
                     position: absolute;
                     width: 0.2rem;
                     right: 0.1rem;
@@ -173,44 +174,67 @@
 </style>
 <script>
     import Cookies from 'js-cookie'
-
+    import {Toast} from 'mint-ui';
+    import {my} from '@/services/apis/my'
     export default {
         name: 'my',
         data () {
             return {
-                phone:'',
-                userName:'',
+                phone: '',
+                userName: '',
+                personalData:[],
             }
         },
         mounted () {
-            if(JSON.parse(Cookies.get('gidOwnID_lists')).userName){
+            if (JSON.parse(Cookies.get('gidOwnID_lists')).userName) {
                 this.userName = JSON.parse(Cookies.get('gidOwnID_lists')).userName;
             }
+            this.info();
         },
         methods: {
+
+            info(){
+                let params = {};
+                my.getInfo(params).then(response => {
+                    if (response.data.status == 'Y') {
+                        this.personalData = response.data.results;
+                        let doMain = process.env.BASE_PATH;
+                        let defaultImg = require('../../assets/my/my_head.png');
+                        let headImg = this.personalData.headImg;
+                        //返回头像的处理
+                        if (headImg == '') {
+                            this.personalData.headImg = defaultImg;
+                        } else {
+                            this.personalData.headImg = doMain + headImg;
+                        }
+                    } else {
+
+                    }
+                })
+            },
             //跳转到首页
             goHome(){
-                this.$router.push({ name: 'home'})
+                this.$router.push({name: 'home'})
             },
             //跳转到修改密码
             goPassword(){
-                this.$router.push({ name: 'alterPassword'})
+                this.$router.push({name: 'alterPassword'})
             },
             //跳转到意见反馈
             gofeedBack(){
-                this.$router.push({ name: 'feedBack'})
+                this.$router.push({name: 'feedBack'})
             },
             //跳转到关于我们
             goAbout(){
-                this.$router.push({ name: 'about'})
+                this.$router.push({name: 'about'})
             },
             //退出登录
             goLogin(){
-                this.$router.push({ name: 'login'})
+                this.$router.push({name: 'login'})
             },
             //跳转到个人编辑页
             goDetails(){
-                this.$router.push({ name: 'personDetails'})
+                this.$router.push({name: 'personDetails'})
             },
         }
     }
