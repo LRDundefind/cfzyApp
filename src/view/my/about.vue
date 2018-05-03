@@ -1,9 +1,7 @@
 <template>
     <div class="about" >
         <mt-header fixed title="关于">
-            <router-link to="/my" slot="left">
-                <mt-button icon="back"></mt-button>
-            </router-link>
+            <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
         </mt-header>
         <div class="about_cont">
             {{aboutList.sell_protocol}}
