@@ -5,7 +5,7 @@
                 <span class="c-3 f-s-16">{{gearName}}</span>
                 <img class="header_img" src="../../assets/index/down_icon.png"/>
             </router-link>
-            <div class=" personal" @click="goMy(5)" slot="right">
+            <div class=" personal" @click="goMy()" slot="right">
                 <img class="personal_img" :src="personalData.headImg"/>
             </div>
         </mt-header>
