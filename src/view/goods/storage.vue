@@ -313,14 +313,16 @@
                 this.imgPreview(this.picValue);
             },
             imgPreview (file) {
-                let self = this;
+                var self = this;
                 let Orientation;
+
                 //去获取拍照时的信息，解决拍出来的照片旋转问题
                 Exif.getData(file, function () {
                     Orientation = Exif.getTag(this, 'Orientation');
                 });
+
                 // 看支持不支持FileReader
-                if (!file || !window.FileReader) return;
+                // if (!file || !window.FileReader) return;
 
                 if (/^image/.test(file.type)) {
                     // 创建一个reader
@@ -330,17 +332,17 @@
                     // 读取成功后的回调
                     reader.onloadend = function () {
                         let result = this.result;
+
                         let img = new Image();
                         img.src = result;
                         //判断图片是否大于100K,是就直接上传，反之压缩图片
-                        if (this.result.length <= (100 * 1024)) {
-                            self.headerImage = this.result;
+                        if (result.length <= (100 * 1024)) {
+                            self.headerImage = result;
                             self.postImg();
                         } else {
                             img.onload = function () {
                                 let data = self.compress(img, Orientation);
                                 self.headerImage = data;
-                                console.log(self.headerImage)
                                 self.postImg();
                             }
                         }
