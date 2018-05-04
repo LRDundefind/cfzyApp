@@ -1,8 +1,9 @@
 import axios from "../index";
 import md5 from 'js-md5';
+import Cookies from 'js-cookie'
 let rd=parseInt(1000*Math.random());  //需要的随机数
 let time=new Date().getTime();     //生成时间戳
-let uId=123|| Cookies.get('sid');
+let uId= Cookies.get('sid');
 
 
 
@@ -14,7 +15,7 @@ let uId=123|| Cookies.get('sid');
 export const logistics = {
     //
     auth(params) {
-
+        
         var dataList={
             uId:uId,
             content:params,
