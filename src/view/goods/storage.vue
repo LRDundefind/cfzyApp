@@ -39,7 +39,7 @@
                     </div>
                     <div class="basic-list" @click="gologistics">
                         <p class="clearfix">车次
-                            <span class="name">{{stall.name}}<img class="right-icon"
+                            <span class="name">功能开发中...<img class="right-icon"
                                                                   src="../../assets/index/gray-right-icon.png"/></span>
                         </p>
                     </div>
