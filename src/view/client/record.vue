@@ -41,16 +41,16 @@
             <!--货品信息-->
             <div v-if="selected == 'goods'">
                 <ul class="pay-list">
-                    <!--<li class="pay-total ub ub-pj">-->
-                        <!--<div class="ub ub-ac">-->
-                            <!--<span class="ub-f1 c-3">赊账总金额</span>-->
-                            <!--<i class="c-6">￥30000</i>-->
-                        <!--</div>-->
-                        <!--<div class="ub ub-ac">-->
-                            <!--<span class="ub-f1 c-3">还款总金额</span>-->
-                            <!--<i class="c-6">￥30000</i>-->
-                        <!--</div>-->
-                    <!--</li>-->
+                    <li class="pay-total ub ub-pj">
+                        <div class="ub ub-ac">
+                            <span class="ub-f1 c-3">赊账总金额</span>
+                            <i class="c-6">￥30000</i>
+                        </div>
+                        <div class="ub ub-ac">
+                            <span class="ub-f1 c-3">待还款金额</span>
+                            <i class="c-6">￥30000</i>
+                        </div>
+                    </li>
                     <li v-for="item in repaymentData">
                         <div class="ub list-t">
                             <div class="pay">还款金额</div>
@@ -229,7 +229,6 @@
         color: #333;
         .pay-total {
             font-size: 0.26rem;
-            margin-top: 0.2rem;
             span {
                 display: block;
                 margin-right: 0.36rem;
