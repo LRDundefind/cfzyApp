@@ -313,8 +313,15 @@
                     delete data.name;
                     damage.submitGoods(data).then(response => {
                         if (response.data.status == 'Y') {
-                            this.$router.push({name: 'home'});
-                        } else if (response.data.status == 'N') {
+                            Toast({
+                                message: '已完成入库操作',
+                                position: 'middle',
+                                duration: 1000
+                            });
+                            setTimeout(() => {
+                                this.$router.push({name: 'home'});
+                            }, 1500)
+                        } else {
                             Toast({
                                 message: response.data.results,
                                 position: 'middle',
