@@ -4,14 +4,14 @@
         <mt-header fixed title="消费记录">
             <mt-button icon="back" slot="left" @click="goDetail" v-if="selected == 'basic'"></mt-button>
             <mt-button slot="right" style="font-size: 0.32rem">
-                
+                切换档位
             </mt-button>
         </mt-header>
 
         <mt-header fixed title="还款记录" v-if="selected == 'goods'">
             <mt-button icon="back" slot="left" @click="goBasic"></mt-button>
             <mt-button slot="right" style="font-size: 0.32rem">
-
+                切换档位
             </mt-button>
         </mt-header>
 
@@ -22,8 +22,11 @@
         <mt-tab-container>
             <!--消费记录-->
             <div v-if="selected == 'basic'">
+
+                <search-box @getSmeage="searchBlack" :msg="msg" ref="search"/>
+
                 <ul class="order-record">
-                    <li v-for="item in consumeData" @click="orderDetail(1)">
+                    <li v-for="item in consumeData" @click="ordersDetail(item.oid)">
                         <div class="ub list-top">
                             <span class="ub-f1">订单号 {{item.orderNo}}</span>
                             <i class="c-6">{{item.status}}</i>
@@ -81,6 +84,7 @@
 
         data () {
             return {
+                msg: '',
                 selected: 'basic',
                 keyValueData: [],
                 payType: [],
@@ -113,6 +117,7 @@
         methods: {
             //初始化数据--查看消费记录
             getConsume(){
+                console.log(this.consumeParams);
                 client.consume(this.consumeParams).then(response => {
                     if (response.data.results) {
                         this.consumeData = response.data.results;
@@ -139,11 +144,26 @@
                 })
             },
 
+            searchBlack(msg){
+                this.consumeParams.search = msg;
+                this.getlist();
+            },
+
             goDetail(){
                 this.$router.push({name: 'client_detail', params: {ids: this.cid}});
             },
             goBasic(){
                 this.selected = 'basic';
+            },
+
+            //跳转到订单详情
+            ordersDetail(oid){
+                this.$router.push({
+                    name: 'ordersList/ordersDetail',
+                    params: {
+                        oid:oid
+                    }
+                });
             }
 
         },
