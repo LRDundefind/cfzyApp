@@ -22,7 +22,6 @@
         <mt-tab-container>
             <!--消费记录-->
             <div v-if="selected == 'basic'">
-                <search-box ref="search"/>
                 <ul class="order-record">
                     <li v-for="item in consumeData" @click="orderDetail(1)">
                         <div class="ub list-top">
@@ -114,7 +113,6 @@
         methods: {
             //初始化数据--查看消费记录
             getConsume(){
-                console.log(this.consumeParams);
                 client.consume(this.consumeParams).then(response => {
                     if (response.data.results) {
                         this.consumeData = response.data.results;
