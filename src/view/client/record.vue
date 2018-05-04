@@ -39,16 +39,16 @@
             <!--货品信息-->
             <div v-if="selected == 'goods'">
                 <ul class="pay-list">
-                    <li class="pay-total ub ub-pj">
-                        <div class="ub ub-ac">
-                            <span class="ub-f1 c-3">赊账总金额</span>
-                            <i class="c-6">￥30000</i>
-                        </div>
-                        <div class="ub ub-ac">
-                            <span class="ub-f1 c-3">还款总金额</span>
-                            <i class="c-6">￥30000</i>
-                        </div>
-                    </li>
+                    <!--<li class="pay-total ub ub-pj">-->
+                        <!--<div class="ub ub-ac">-->
+                            <!--<span class="ub-f1 c-3">赊账总金额</span>-->
+                            <!--<i class="c-6">￥30000</i>-->
+                        <!--</div>-->
+                        <!--<div class="ub ub-ac">-->
+                            <!--<span class="ub-f1 c-3">还款总金额</span>-->
+                            <!--<i class="c-6">￥30000</i>-->
+                        <!--</div>-->
+                    <!--</li>-->
                     <li v-for="item in repaymentData">
                         <div class="ub list-t">
                             <div class="pay">还款金额</div>
@@ -157,11 +157,11 @@
     }
 
     .searchBox {
-        margin: 0.2rem 0;
+        margin-bottom: 0.2rem;
     }
 
     .mint-navbar {
-        margin-top: 0.2rem;
+        margin: 0.2rem 0;
         .mint-tab-item {
             color: #4c4c4c;
             font-size: 0.28rem; /*没有生效*/
