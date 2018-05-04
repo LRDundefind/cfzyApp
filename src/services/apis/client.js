@@ -43,4 +43,21 @@ export const client = {
             data: serverMoudle(params) || {}
         });
     },
+    //查看消费记录
+    consume(params) {
+        return axios({
+            url: 'rest/CHENGFENG_GET_SELEMAN_CUSTOMER_ORDER',
+            method: 'post',
+            data: serverMoudle(params) || {}
+        });
+    },
+    //查看还款记录
+    repayment(params) {
+        return axios({
+            url: 'rest/CHENGFENG_GET_SELEMAN_CUSTOMER_TRANSFER',
+            method: 'post',
+            data: serverMoudle(params) || {}
+        });
+    },
+
 };
