@@ -52,7 +52,7 @@
 </template>
 
 <script>
-
+import {logistics} from '@/services/apis/logistics'
 export default {
 
     data () {
@@ -64,7 +64,19 @@ export default {
     },
     mounted () {
 
-			this.wrapperHeight = document.documentElement.clientHeight - 150; 
+            this.wrapperHeight = document.documentElement.clientHeight - 150; 
+             
+    },
+    created(){
+         let params = {
+                  phoneNumber:18253175771,
+                  page:1,
+                  count:10,
+                  orderState:3,
+              };
+        logistics.auth(params).then(response => {
+            
+        })
     },
     methods: {
 			// 跳转区分
