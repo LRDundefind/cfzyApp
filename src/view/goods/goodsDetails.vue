@@ -15,7 +15,7 @@
                     <p class="clearfix">数量
                         <input type="text" placeholder="请输入数量" v-model="goods.goodNum" readonly
                                v-if="goods.goodName ==''">
-                        <input type="text" placeholder="请输入数量" v-model="goods.goodNum" v-else>
+                        <input type="number"  placeholder="请输入数量" v-model="goods.goodNum" v-else>
                     </p>
 
                     <p class="clearfix">入库单位
@@ -111,7 +111,7 @@
                     if (this.goods.goodName && this.goods.numUnit && this.goods.goodNum) {
                         if (!(new RegExp(/^\d+(?:.\d{1,2})?$/).test(this.goods.goodNum))) {
                             Toast({
-                                message: '小数点后最多输入两位数字',
+                                message: '请输入正确的数字',
                                 position: 'middle',
                                 duration: 1000
                             });
