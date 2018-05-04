@@ -1,7 +1,13 @@
 import axios from "../index";
 import md5 from 'js-md5';
 import Cookies from 'js-cookie'
-let rd=parseInt(1000*Math.random());  //需要的随机数
+let rd=parseInt(100*Math.random());  //需要的随机数
+if(rd>900){
+    return rd
+}
+else{
+    return rd+100
+}
 let time=new Date().getTime();     //生成时间戳
 let uId= Cookies.get('sid');
 
