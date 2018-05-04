@@ -1,9 +1,10 @@
 import client from '@/view/client/index'
 import client_detail from '@/view/client/index_detail'
 import index_change from '@/view/client/index_change'
-import orderPay_record from '@/view/client/orderPay_record'
-import orderRecord from '@/view/client/orderRecord'
-import payRecord from '@/view/client/payRecord'
+// import orderPay_record from '@/view/client/orderPay_record'
+// import orderRecord from '@/view/client/orderRecord'
+// import payRecord from '@/view/client/payRecord'
+import record from '@/view/client/record'
 
 export default [
     {
@@ -53,37 +54,17 @@ export default [
         meta: {
             showFooter: false
         }
-    }, {
-        //消费和还款记录
-        path: 'orderPay_record',
-        name: 'orderPay_record',
+    },  {
+
+        // 记录
+        path: 'record/:id',
+        name: 'record',
         components: {
-            mainView: orderPay_record
+            mainView: record
         },
         meta: {
             showFooter: false
-        },
-        redirect: 'orderPay_record/record',
-        children: [
-            {
-                path: 'record',
-                name: 'record',
-                components: {
-                    orderpayRouteView: orderRecord
-                },
-                meta: {
-                    showFooter: false
-                }
-            }, {
-                path: 'pays',
-                name: 'pays',
-                components: {
-                    orderpayRouteView: payRecord
-                },
-                meta: {
-                    showFooter: false
-                }
-            }
-        ]
+        }
+
     }
 ]

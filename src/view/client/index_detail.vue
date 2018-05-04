@@ -93,13 +93,8 @@
                 this.$router.push({name: 'index_change/update', params: {id: this.cid, type: 'update'}});
             },
             //跳转到消费记录
-            consumptionRecords(id){
-                this.$router.push({
-                    name: 'orderPay_record',
-//      		params: {
-//      			id:id
-//      		}
-                });
+            consumptionRecords(){
+                this.$router.push({name: 'record', params: {id: this.cid}});
             }
         }
     }
