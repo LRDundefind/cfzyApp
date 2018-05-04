@@ -23,7 +23,7 @@
             <!--消费记录-->
             <div v-if="selected == 'basic'">
 
-                <search-box @getSmeage="searchBlack" :msg="msg" ref="search"/>
+                <!--<search-box @getSmeage="searchBlack" :msg="msg" ref="search"/>-->
 
                 <ul class="order-record">
                     <li v-for="item in consumeData" @click="ordersDetail(item.oid)">
@@ -84,7 +84,7 @@
 
         data () {
             return {
-                msg: '',
+//                msg: '',
                 selected: 'basic',
                 keyValueData: [],
                 payType: [],
@@ -144,10 +144,10 @@
                 })
             },
 
-            searchBlack(msg){
-                this.consumeParams.search = msg;
-                this.getlist();
-            },
+//            searchBlack(msg){
+//                this.consumeParams.search = msg;
+//                this.getlist();
+//            },
 
             goDetail(){
                 this.$router.push({name: 'client_detail', params: {ids: this.cid}});
