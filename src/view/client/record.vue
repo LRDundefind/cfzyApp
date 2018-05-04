@@ -2,7 +2,7 @@
     <div class="page-content storage">
 
         <mt-header fixed title="消费记录">
-                <mt-button icon="back" slot="left" @click="goDetail" v-if="selected == 'basic'"></mt-button>
+            <mt-button icon="back" slot="left" @click="goDetail" v-if="selected == 'basic'"></mt-button>
             <mt-button slot="right" style="font-size: 0.32rem">
                 切换档位
             </mt-button>
@@ -72,28 +72,28 @@
 </template>
 
 <script>
-    import { client } from '@/services/apis/client'
+    import {client} from '@/services/apis/client'
     import {Toast} from 'mint-ui';
     import searchBox from '@/components/searchBox/search'
     import {keyValue} from '@/services/apis/key-value';
 
     export default {
-        components: { searchBox },
+        components: {searchBox},
 
         data () {
             return {
                 selected: 'basic',
-                keyValueData:[],
-                payType:[],
+                keyValueData: [],
+                payType: [],
                 cid: this.$route.params.id,
-                consumeData:[],//消费记录数据
-                repaymentData:[],//还款记录数据
+                consumeData: [],//消费记录数据
+                repaymentData: [],//还款记录数据
                 consumeParams: {
                     search: '',
-                    cid:this.$route.params.id,
+                    cid: this.$route.params.id,
                 },
                 repaymentParams: {
-                    cid:this.$route.params.id,
+                    cid: this.$route.params.id,
                 },
             }
         },
@@ -101,7 +101,7 @@
             keyValue()
                 .then(response => {
                     this.keyValueData = response.data.results;
-//                    this.payType = this.keyValueData.pay_type;
+                    this.payType = this.keyValueData.pay_type;
                 })
         },
 
@@ -116,7 +116,7 @@
             getConsume(){
                 console.log(this.consumeParams);
                 client.consume(this.consumeParams).then(response => {
-                    if(response.data.results){
+                    if (response.data.results) {
                         this.consumeData = response.data.results;
                     }
                     console.log(this.consumeData);
@@ -125,10 +125,18 @@
 
             //初始化数据--查看还款记录
             getRepayment(){
-                console.log(this.repaymentParams);
                 client.repayment(this.repaymentParams).then(response => {
-                    if(response.data.results){
+                    if (response.data.results) {
                         this.repaymentData = response.data.results;
+                        //转换支付方式
+                        for (var i = 0; i < this.repaymentData.length; i++) {
+                            for (var j = 0; j < this.payType.length; j++) {
+                                if (this.repaymentData[i].refundType == this.payType[j].key) {
+                                    this.repaymentData[i].refundType = this.payType[j].value;
+                                }
+                            }
+                        }
+                        console.log(this.repaymentData)
                     }
                 })
             },
@@ -144,13 +152,14 @@
     }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
-    i{
+    i {
         font-style: normal;
     }
 
-    .searchBox{
+    .searchBox {
         margin: 0.2rem 0;
     }
+
     .mint-navbar {
         margin-top: 0.2rem;
         .mint-tab-item {
@@ -167,83 +176,85 @@
             background-size: 1.4rem;
         }
     }
-    .order-record{
+
+    .order-record {
         font-size: 0.24rem;
         color: #333;
-        li{
+        li {
             background: #fff;
             margin-bottom: 0.2rem;
             padding: 0.18rem 0.3rem;
-            .list-top{
+            .list-top {
                 line-height: 0.53rem;
-                span,i{
+                span, i {
                     display: block;
                 }
-                span{
+                span {
                     font-size: 0.3rem;
                 }
             }
-            .list-bottom{
+            .list-bottom {
                 line-height: 0.48rem;
-                span,i{
+                span, i {
                     display: block;
                 }
-                i{
+                i {
                     font-size: 0.32rem;
                     color: #49c98b;
                 }
             }
         }
     }
-    .pay-list{
+
+    .pay-list {
         font-size: 0.24rem;
         color: #333;
-        .pay-total{
+        .pay-total {
             font-size: 0.26rem;
             margin-top: 0.2rem;
-            span{
+            span {
                 display: block;
                 margin-right: 0.36rem;
             }
-            i{
+            i {
                 display: block;
                 font-size: 0.34rem;
                 color: #33d57c;
             }
         }
-        li{
+        li {
             background: #fff;
             margin-bottom: 0.2rem;
             padding: 0.18rem 0.3rem 0.16rem;
-            .list-t{
+            .list-t {
                 line-height: 0.5rem;
-                .pay{
+                .pay {
                     font-size: 0.3rem;
                     margin-right: 0.36rem;
                 }
-                .edu{
+                .edu {
                     font-size: 0.3rem;
                     color: #33d57c;
                 }
-                .type{
+                .type {
                     font-size: 0.26rem;
                     color: #4c4c4c;
                 }
 
             }
-            .list-c{
+            .list-c {
                 line-height: 0.5rem;
                 font-size: 0.26rem;
                 color: #4c4c4c;
-                .data{
+                .data {
                     margin-right: 0.15rem;
                 }
             }
-            .list-b{
+            .list-b {
                 line-height: 0.5rem;
                 font-size: 0.24rem;
                 line-height: 0.48rem;
-                .remarks{
+                .remarks {
                     margin-right: 0.15rem;
                 }
             }
