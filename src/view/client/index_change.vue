@@ -76,7 +76,10 @@
                 <div @click="showa">确定</div>
             </div>
         </div>
-
+         <!-- 保存时候的遮罩 -->
+        <div class="dialoag" v-show="addover">
+            <h5>保存中，请稍后</h5>
+        </div>
     </div>
 </template>
 
@@ -88,6 +91,7 @@
         data () {
             return {
                 addPerson:false,
+                addover:false,
                 value: '',
                 nameRead: '',
                 nameWrite: '',
@@ -227,7 +231,9 @@
                     })
             },
             handleSave(){
+                this.addover=true;
                 if (this.typeW=='create') {
+                    
                         // 新增客户   
                     if(this.nameRead==''){
                          Toast({
@@ -251,6 +257,7 @@
                             .then(response => {
                                 // this.xiTdata=response.data.results;
                                 if(response.data.status=='Y'){
+                                    this.addover=false;
                                      Toast({
                                         message: '客户添加成功',
                                         position: 'middle',
@@ -286,6 +293,7 @@
                     client.Cgemessage(params)
                         .then(response => {
                             if(response.data.status=='Y'){
+                                this.addover=false;
                                 this.$router.push({name: 'client'});
                             }
                         })
