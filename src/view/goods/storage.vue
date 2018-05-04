@@ -260,7 +260,6 @@
             confirmStorage(){
                 const data = this.stall;
                 data.goods = this.goods;
-                delete data.name;
                 if (data.good_sid == '') {
                     Toast({
                         message: '货主不可为空',
@@ -311,6 +310,7 @@
                     });
                 } else {
                     console.log(data);
+                    delete data.name;
                     damage.submitGoods(data).then(response => {
                         if (response.data.status == 'Y') {
                             this.$router.push({name: 'home'});
