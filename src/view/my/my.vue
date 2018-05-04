@@ -73,7 +73,7 @@
             </div>
         </div>
         <div class="login_cont">
-            <div @click="goLogin" class="loginbtn">退出登 录</div>
+            <div @click="goLogin" class="loginbtn">退出登录</div>
         </div>
 
     </div>
