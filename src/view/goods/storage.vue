@@ -55,17 +55,32 @@
 
                     <div class="basic-list">
                         <p class="clearfix">产地<input type="text" v-model="stall.origin"></p>
-                        <p class="clearfix" @change="upload1">产地证明
-                            <span class="upload">点击上传<img class="right-icon"
-                                                          src="../../assets/index/gray-right-icon.png"/></span>
+                        <p class="clearfix" style="position: relative">产地证明
+                            <input type="file" class="upload-picture" accept="image" @change="upload1($event,'source')"
+                                   style="opacity: 0">
+                            <span class="upload">
+                                <span v-if="stall.originProve == ''">点击上传</span>
+                                <span v-if="stall.originProve != ''">已经上传</span>
+                                <img class="right-icon"
+                                     src="../../assets/index/gray-right-icon.png"/></span>
                         </p>
-                        <p class="clearfix">检验证明
-                            <span class="name">已经上传<img class="right-icon"
-                                                        src="../../assets/index/gray-right-icon.png"/></span>
+                        <p class="clearfix" style="position: relative">检验证明
+                            <input type="file" class="upload-picture" accept="image" @change="upload1($event,'detect')"
+                                   style="opacity: 0">
+                            <span class="upload">
+                                <span v-if="stall.checkProve == ''">点击上传</span>
+                                <span v-if="stall.checkProve != ''">已经上传</span>
+                                <img class="right-icon"
+                                     src="../../assets/index/gray-right-icon.png"/></span>
                         </p>
-                        <p class="clearfix">承运合同
-                            <span class="upload">点击上传<img class="right-icon"
-                                                          src="../../assets/index/gray-right-icon.png"/></span>
+                        <p class="clearfix" style="position: relative">承运合同
+                            <input type="file" class="upload-picture" accept="image" @change="upload1($event,'ship')"
+                                   style="opacity: 0">
+                            <span class="upload">
+                                <span v-if="stall.carrierContract == ''">点击上传</span>
+                                <span v-if="stall.carrierContract != ''">已经上传</span>
+                                <img class="right-icon"
+                                     src="../../assets/index/gray-right-icon.png"/></span>
                         </p>
                     </div>
 
@@ -109,10 +124,15 @@
     import goodsDetails from '@/view/goods/goodsDetails'
     import {damage} from '@/services/apis/damage.api'
     import {Toast} from 'mint-ui';
+    import Exif from 'exif-js';
 
     export default {
         data () {
             return {
+                source: '',//产地证明
+                detect: '',//检验证明
+                ship: '',//乘运证明
+                headerImage: '',
                 index: '',
 
                 editItem: {},
@@ -211,7 +231,7 @@
             },
             //跳转到车次
             gologistics(){
-                this.$router.push({name: 'logistics',params: {fromc: 'order'}});
+                this.$router.push({name: 'logistics', params: {fromc: 'order'}});
             },
 
             //跳转到订单详情
@@ -306,7 +326,15 @@
                 }
             },
 
-            upload1 (e) {
+            upload1 (e, ty) {
+                if (ty == 'source') {
+                    this.source = 'source';
+                } else if (ty == 'detect') {
+                    this.detect = 'detect';
+                } else if (ty == 'ship') {
+                    this.ship = 'ship';
+                }
+                console.log(ty);
                 let files = e.target.files || e.dataTransfer.files;
                 if (!files.length) return;
                 this.picValue = files[0];
@@ -350,7 +378,83 @@
                 }
             },
             postImg(){
-                console.log(this.headerImage)
+                if (this.source) {
+                    this.stall.originProve = this.headerImage;
+                } else if (this.detect) {
+                    this.stall.checkProve = this.headerImage;
+                } else if (this.ship) {
+                    this.stall.carrierContract = this.headerImage;
+                }
+                console.log(this.headerImage);
+                this.source = '';
+                this.detect = '';
+                this.ship = '';
+            },
+            compress(img, Orientation) {
+                let canvas = document.createElement("canvas");
+                let ctx = canvas.getContext('2d');
+                //瓦片canvas
+                let tCanvas = document.createElement("canvas");
+                let tctx = tCanvas.getContext("2d");
+                let initSize = img.src.length;
+                let width = img.width;
+                let height = img.height;
+                //如果图片大于四百万像素，计算压缩比并将大小压至400万以下
+                let ratio;
+                if ((ratio = width * height / 4000000) > 1) {
+                    console.log("大于400万像素")
+                    ratio = Math.sqrt(ratio);
+                    width /= ratio;
+                    height /= ratio;
+                } else {
+                    ratio = 1;
+                }
+                canvas.width = width;
+                canvas.height = height;
+                //        铺底色
+                ctx.fillStyle = "#fff";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                //如果图片像素大于100万则使用瓦片绘制
+                let count;
+                if ((count = width * height / 1000000) > 1) {
+                    console.log("超过100W像素");
+                    count = ~~(Math.sqrt(count) + 1); //计算要分成多少块瓦片
+                    //            计算每块瓦片的宽和高
+                    let nw = ~~(width / count);
+                    let nh = ~~(height / count);
+                    tCanvas.width = nw;
+                    tCanvas.height = nh;
+                    for (let i = 0; i < count; i++) {
+                        for (let j = 0; j < count; j++) {
+                            tctx.drawImage(img, i * nw * ratio, j * nh * ratio, nw * ratio, nh * ratio, 0, 0, nw, nh);
+                            ctx.drawImage(tCanvas, i * nw, j * nh, nw, nh);
+                        }
+                    }
+                } else {
+                    ctx.drawImage(img, 0, 0, width, height);
+                }
+                //修复ios上传图片的时候 被旋转的问题
+                if (Orientation != "" && Orientation != 1) {
+                    switch (Orientation) {
+                        case 6://需要顺时针（向左）90度旋转
+                            this.rotateImg(img, 'left', canvas);
+                            break;
+                        case 8://需要逆时针（向右）90度旋转
+                            this.rotateImg(img, 'right', canvas);
+                            break;
+                        case 3://需要180度旋转
+                            this.rotateImg(img, 'right', canvas);//转两次
+                            this.rotateImg(img, 'right', canvas);
+                            break;
+                    }
+                }
+                //进行最小压缩
+                let ndata = canvas.toDataURL('image/jpeg', 0.1);
+                console.log('压缩前：' + initSize);
+                console.log('压缩后：' + ndata.length);
+                console.log('压缩率：' + ~~(100 * (initSize - ndata.length) / initSize) + "%");
+                tCanvas.width = tCanvas.height = canvas.width = canvas.height = 0;
+                return ndata;
             },
 
 
@@ -388,6 +492,14 @@
             line-height: 0.98rem;
             > p {
                 border-top: 1px #f0f0f0 solid;
+                .upload-picture {
+                    position: absolute;
+                    width: 2rem;
+                    height: 0.95rem;
+                    left: 70%;
+                    top: 0;
+                    opacity: 0.1;
+                }
                 .name {
                     float: right;
                 }
