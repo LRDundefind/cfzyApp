@@ -3,16 +3,16 @@
 
         <mt-header fixed title="消费记录">
             <mt-button icon="back" slot="left" @click="goDetail" v-if="selected == 'basic'"></mt-button>
-            <mt-button slot="right" style="font-size: 0.32rem">
-                切换档位
-            </mt-button>
+            <!--<mt-button slot="right" style="font-size: 0.32rem">-->
+                <!--切换档位-->
+            <!--</mt-button>-->
         </mt-header>
 
         <mt-header fixed title="还款记录" v-if="selected == 'goods'">
             <mt-button icon="back" slot="left" @click="goBasic"></mt-button>
-            <mt-button slot="right" style="font-size: 0.32rem">
-                切换档位
-            </mt-button>
+            <!--<mt-button slot="right" style="font-size: 0.32rem">-->
+                <!--切换档位-->
+            <!--</mt-button>-->
         </mt-header>
 
         <mt-navbar v-model="selected" v-if="selected">
