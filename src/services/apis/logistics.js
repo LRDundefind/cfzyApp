@@ -11,8 +11,6 @@ else{
 let time=new Date().getTime();     //生成时间戳
 let uId= Cookies.get('sid');
 
-
-
 // 调取接口逻辑
 // 1：post请求请求路径需要添加三位的随机数，时间戳和uid外加sign签名，请求的参数都是明文的方式没有什么特殊处理
 // 2:sign签名需要格外注意首先 sign（tokenId, time, rd, json）
@@ -22,7 +20,7 @@ export const logistics = {
     //
     auth(params) {
         
-        var dataList={
+        var Lista={
             uId:uId,
             content:params,
             tokenId:'',
@@ -45,14 +43,11 @@ export const logistics = {
                 }
             }
         ]
-           
         
-        
-
         return axios({
             url: 'http://xdt.52cfzy.com/intf?sign='+md5(sign1.sort())+'&time='+time+'&rd='+rd+'&tokenId=',
             method: 'post',
-            data: dataList || {}
+            data: Lista || {}
         });
     }
 }
