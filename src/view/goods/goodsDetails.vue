@@ -23,6 +23,14 @@
                         <span>{{goods.numUnit | sellNnit}}</span>
                     </p>
                 </div>
+                <div v-if="goods.numUnit== '公斤' || '件' ">
+                        <select v-model="goods.numUnit" >
+                            <option>公斤</option>
+                            <option>件</option>
+                        </select>
+                    <span>Selected: {{ goods.numUnit }}</span>
+                </div>
+                
 
                 <div class='update clearfix'>
                     <mt-button type="primary" :disabled="deleteDisabled == 'edit'" size="large" class='f-l'
@@ -134,7 +142,14 @@
                 this.goods.goodId = item.goodId;
                 this.goods.goodName = item.goodName;
                 this.goods.numUnit = item.sellUnit;
-                console.log(item);
+                if(this.goods.numUnit =='unit_kg'){
+                    this.goods.numUnit = '公斤'
+                }else if(this.goods.numUnit=='unit_pie'){
+                    this.goods.numUnit = '件'
+                }else if(this.goods.numUnit == 'unit_jin'){
+                    this.goods.numUnit = '斤'
+                }
+                console.log(this.goods.numUnit);
                 this.showList = false;
             },
 
