@@ -28,11 +28,11 @@
 			<div class="order-detail item-two">
 				<div class="ub term">
 					<div class="ub-f1">合计金额</div>
-					<div class="total">￥{{totalCost.tatol || total}}</div>
+					<div class="total">￥{{totalCost.tatol || detailInfo.salesAmount}}</div>
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">货款</div>
-					<div class="edu">￥{{totalCost.totalAmount || detailInfo.salesAmount}}</div><!--totalCost.totalAmount-->
+					<div class="edu">￥{{totalCost.totalAmount || defaultAmount}}</div>
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">包装费</div>
@@ -133,7 +133,7 @@ export default {
             goodsInfo: [], //货品数据json集合
             
 			//费用总和
-			total: null,//未改变单价前的合计金额
+			defaultAmount: null,//未改变单价前的总货款
 			totalCost: {
 				totalAmount: null,  //货款费用总和-金额总和
 				totalPack: null,  //包装费总和
@@ -158,6 +158,10 @@ export default {
 					this.transforSet();//页面普通数据渲染
 
                     for(var i = 0, len = this.goodsInfo.length; i < this.goodsInfo.length; i ++){
+                    	
+        				//未改变单价前的总货款 ， 初始货款 = 货品信息中所有的金额
+						this.defaultAmount += this.goodsInfo[i]['goodAmount']; //总货款费用
+			
 						//提交设定价格所需货品参数 ：订单详情内货品详情的返回数据
 						//goodId -- goodId
 						//price -- price
@@ -184,8 +188,6 @@ export default {
 					this.orderStatus = '已完成';
 					break;
 			}
-			//未改变单价前的合计金额
-			this.total = this.detailInfo.salesAmount + this.detailInfo.packCost + this.detailInfo.weighCost + this.detailInfo.deliveryCost;
 		},
 		//跳转至客户详情
 		customerDetail(cid){
