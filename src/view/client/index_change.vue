@@ -78,7 +78,7 @@
         </div>
          <!-- 保存时候的遮罩 -->
         <div class="dialoag" v-show="addover">
-            <h5>保存中，请稍后</h5>
+            <h5 class="wenzi">保存中，请稍后</h5>
         </div>
     </div>
 </template>
@@ -166,7 +166,7 @@
                         duration: 3000
                         });
                 }
-                else if(!new RegExp(/^1[3|4|5|7|8][0-9]{9}$/).test(this.phoneAdd)){
+                else if(!new RegExp(/^1[3|4|5|7|8|9][0-9]{9}$/).test(this.phoneAdd)){
                     Toast({
                         message: '手机号格式输入有误',
                         position: 'middle',
@@ -231,7 +231,7 @@
                     })
             },
             handleSave(){
-                this.addover=true;
+                
                 if (this.typeW=='create') {
                     
                         // 新增客户   
@@ -242,7 +242,15 @@
                             duration: 3000
                             });
                     }
+                    else if(!new RegExp(/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/).test(this.IdcardRead)){
+                        Toast({
+                            message: '身份证格式输入有误',
+                            position: 'middle',
+                            duration: 3000
+                            });
+                    }
                     else{
+                        this.addover=true;
                         let params = {
                             cusName:this.nameRead,
                             nickname:this.nicheng,
@@ -280,6 +288,7 @@
                 }
                 else{
                     // 修改信息
+                    this.addover=true;
                    let params = {
                         cid:this.cid,    //客户id
                         cusName:this.nameRead, //姓名
@@ -319,6 +328,12 @@
     }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
+    .wenzi{
+        text-align: center;
+        color: #fff;
+        line-height: 10rem;
+        font-size: 0.4rem;
+    }
     .phonemobil{
         border: 1px solid #dedede;
         color: #4c4c4c;
