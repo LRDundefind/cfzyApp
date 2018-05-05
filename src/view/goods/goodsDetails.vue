@@ -169,7 +169,7 @@
             .choice{
                 position: absolute;
                 top: 0.98rem;
-                right: 0.5rem;
+                right: 0.3rem;
             }
 
             > input {
