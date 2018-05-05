@@ -18,13 +18,15 @@
                         <input type="number" placeholder="请输入数量" v-model="goods.goodNum" v-else>
                     </div>
 
-                    <div class="clearfix goods" >入库单位
+                    <div class="clearfix goods">入库单位
                         <div class="choice" v-if="goods.goodName !=''">
                             <select v-model="goods.numUnit">
                                 <option>件</option>
                                 <option v-show="Unit=='unit_kg' ">公斤</option>
                                 <option v-show="Unit=='unit_jin'">斤</option>
                             </select>
+                            <img class="jin-right"
+                                 src="../../assets/index/gray-right-icon.png"/>
                         </div>
                     </div>
                 </div>
@@ -166,10 +168,29 @@
         line-height: 0.98rem;
         .goods {
             border-bottom: 1px #f0f0f0 solid;
-            .choice{
+            .choice {
+                padding-right: 0.2rem;
                 position: absolute;
                 top: 0.98rem;
                 right: 0.3rem;
+                .jin-right{
+                    position: absolute;
+                    top: 0.3rem;
+                    width: 0.18rem;
+                    right: 0rem;
+                }
+            }
+            select {
+                border: none;
+                line-height: 1;
+                width: 100%;
+                appearance: none;
+                -moz-appearance: none;
+                -webkit-appearance: none;
+                background-size: 0.9rem 0.9rem;
+                color: #666666;
+                outline: none;
+                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
             }
 
             > input {
