@@ -42,7 +42,7 @@
 
             <div class="main-list">
                 <p class="clearfix">备注</p>
-                <div class="remark">{{listdata.remark}}</div>
+                <div class="remark" style="ling-height:0.4rem;">{{listdata.remark}}</div>
             </div>
         </div>
         <div class='update clearfix'>
