@@ -4,24 +4,24 @@
         <div class="page-main">
             <div class="" v-show="showList==false">
                 <div class="main-list" @click="showType">
-                    <p class="clearfix">货品分类
+                    <div class="clearfix goods">货品分类
                         <!--<span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>-->
                         <span class="name">{{goods.goodName}}<img class="right-icon"
                                                                   src="../../assets/index/gray-right-icon.png"/></span>
-                    </p>
+                    </div>
                 </div>
 
                 <div class="main-list">
-                    <p class="clearfix">数量
+                    <div class="clearfix goods">数量
                         <input type="text" placeholder="请输入数量" v-model="goods.goodNum" readonly
                                v-if="goods.goodName ==''">
                         <input type="number" placeholder="请输入数量" v-model="goods.goodNum" v-else>
-                    </p>
+                    </div>
 
-                    <p class="clearfix">入库单位
+                    <div class="clearfix goods">入库单位
                         <span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
                         <span>{{goods.numUnit}}</span>
-                    </p>
+                    </div>
                 </div>
                 <div>
                     <select v-model="goods.numUnit">
@@ -168,7 +168,7 @@
         color: #333;
         font-size: 0.28rem;
         line-height: 0.98rem;
-        > p {
+        .goods {
             border-bottom: 1px #f0f0f0 solid;
 
             > input {
