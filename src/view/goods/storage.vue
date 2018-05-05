@@ -99,7 +99,7 @@
                 <div v-for="item in goods" :key='item.goodId' class="goods-list">
                     <p @click="editGoods(item)" class="clearfix">{{item.goodName}}
                         <span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
-                        <span>{{item.goodNum}} {{item.numUnit | sellNnit}}</span>
+                        <span>{{item.goodNum}} {{item.numUnit}}</span>
                     </p>
                 </div>
                 <div class="login_cont">
