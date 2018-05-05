@@ -15,7 +15,7 @@
                     <p class="clearfix">数量
                         <input type="text" placeholder="请输入数量" v-model="goods.goodNum" readonly
                                v-if="goods.goodName ==''">
-                        <input type="number"  placeholder="请输入数量" v-model="goods.goodNum" v-else>
+                        <input type="number" placeholder="请输入数量" v-model="goods.goodNum" v-else>
                     </p>
 
                     <p class="clearfix">入库单位
@@ -24,14 +24,14 @@
                     </p>
                 </div>
                 <div>
-                        <select v-model="goods.numUnit" >
-                            <option>件</option>
-                            <option v-show="Unit=='unit_kg' ">公斤</option>
-                            <option  v-show="Unit=='unit_jin'">斤</option>
-                        </select>
+                    <select v-model="goods.numUnit">
+                        <option>件</option>
+                        <option v-show="Unit=='unit_kg' ">公斤</option>
+                        <option v-show="Unit=='unit_jin'">斤</option>
+                    </select>
                     <span>Selected: {{ goods.numUnit }}</span>
                 </div>
-                
+
 
                 <div class='update clearfix'>
                     <mt-button type="primary" :disabled="deleteDisabled == 'edit'" size="large" class='f-l'
@@ -71,7 +71,7 @@
         },
         data () {
             return {
-                Unit:'',
+                Unit: '',
                 deleteDisabled: '',
                 goods: {
                     goodId: '',
@@ -141,15 +141,15 @@
             },
             //隐藏货品列表
             hideType(item){
-                this.Unit=item.sellUnit;
+                this.Unit = item.sellUnit;
                 this.goods.goodId = item.goodId;
                 this.goods.goodName = item.goodName;
                 this.goods.numUnit = item.sellUnit;
-                if(this.goods.numUnit =='unit_kg'){
+                if (this.goods.numUnit == 'unit_kg') {
                     this.goods.numUnit = '公斤'
-                }else if(this.goods.numUnit=='unit_pie'){
+                } else if (this.goods.numUnit == 'unit_pie') {
                     this.goods.numUnit = '件'
-                }else if(this.goods.numUnit == 'unit_jin'){
+                } else if (this.goods.numUnit == 'unit_jin') {
                     this.goods.numUnit = '斤'
                 }
                 console.log(this.goods.numUnit);
