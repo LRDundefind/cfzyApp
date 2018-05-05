@@ -97,7 +97,8 @@
                 this.goods.lossRemark = this.item.lossRemark;
                 this.goods.quantity = this.item.lossNum;
             }
-            this.tid = this.$route.params.id || false;
+            this.tid = this.$route.params.tid || false;
+            this.id = this.$route.params.id || false;
         },
         mounted () {
             this.trainsNum = this.$route.params.trainsNum;
@@ -138,6 +139,7 @@
                         let data = this.goods;
                         delete data.goodName;
                         data.tid = this.tid;
+                        data.id = this.id;
                         damage.submitDamage(data)
                             .then(response => {
                                 if (response.data.status == 'Y') {

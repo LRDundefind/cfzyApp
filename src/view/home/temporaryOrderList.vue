@@ -52,6 +52,7 @@ export default {
 				});
 		},
 		searchHandler(value){
+			this.params.current_page = 1 ;
 			this.getTemporaryList(value);
 		},
 	    //跳转到订单详情

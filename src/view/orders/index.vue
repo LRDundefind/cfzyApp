@@ -163,6 +163,8 @@ export default {
         },
 		//搜索
 		searchHandler(value){
+			this.params.current_page = 1 ;
+        	this.listStore = [];
 			this.getList(value);
 		},
 		

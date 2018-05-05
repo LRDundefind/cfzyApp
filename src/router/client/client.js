@@ -1,9 +1,6 @@
 import client from '@/view/client/index'
 import client_detail from '@/view/client/index_detail'
 import index_change from '@/view/client/index_change'
-// import orderPay_record from '@/view/client/orderPay_record'
-// import orderRecord from '@/view/client/orderRecord'
-// import payRecord from '@/view/client/payRecord'
 import record from '@/view/client/record'
 
 export default [
