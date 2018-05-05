@@ -308,7 +308,7 @@
             badList(){
                 MessageBox({
                     title: '提示',
-                    message: '即将推出，敬请期待?',
+                    message: '即将推出，敬请期待',
                     showCancelButton: true
                 }).then(action => {
                    
