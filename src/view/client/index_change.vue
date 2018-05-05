@@ -2,7 +2,7 @@
     <div class="page-content">
         <mt-header fixed title="客 户">
             <router-link to="/client" slot="left">
-                <mt-button icon="back">返回</mt-button>
+                <mt-button icon="back"> </mt-button>
             </router-link>
             <mt-button @click="handleSave" slot="right" style="color:#333;">保存</mt-button>
         </mt-header>
