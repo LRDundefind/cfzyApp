@@ -25,9 +25,9 @@
             </div>
         </div>
 
-        <div class="login_cont">
-            <div @click="goRecord" class="loginbtn">记录货品损坏</div>
-        </div>
+        <!--<div class="login_cont">-->
+            <!--<div @click="goRecord" class="loginbtn">记录货品损坏</div>-->
+        <!--</div>-->
 
     </div>
 </template>
@@ -72,11 +72,11 @@
                     });
             },
             goRecordUpdate(item){
-                this.$router.push({name: 'damageRecord/update', params: {id: item.tid,type:'edit',trainsNum:this.trainsNum,item:item}})
+                this.$router.push({name: 'damageRecord/update', params: {id:item.id,tid: item.tid,type:'edit',trainsNum:this.trainsNum,item:item}})
             },
-            goRecord(){
-                this.$router.push({name: 'damageRecord/create', params: {id: this.tid, type: 'add',trainsNum:this.trainsNum}});
-            }
+//            goRecord(){
+//                this.$router.push({name: 'damageRecord/create', params: {id: this.tid, type: 'add',trainsNum:this.trainsNum}});
+//            }
         }
     }
 </script>
