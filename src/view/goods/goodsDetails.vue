@@ -20,13 +20,14 @@
 
                     <p class="clearfix">入库单位
                         <span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
-                        <span>{{goods.numUnit | sellNnit}}</span>
+                        <span>{{goods.numUnit}}</span>
                     </p>
                 </div>
-                <div v-if="goods.numUnit== '公斤' || '件' ">
+                <div>
                         <select v-model="goods.numUnit" >
-                            <option>公斤</option>
                             <option>件</option>
+                            <option v-show="Unit=='unit_kg' ">公斤</option>
+                            <option  v-show="Unit=='unit_jin'">斤</option>
                         </select>
                     <span>Selected: {{ goods.numUnit }}</span>
                 </div>
@@ -70,6 +71,7 @@
         },
         data () {
             return {
+                Unit:'',
                 deleteDisabled: '',
                 goods: {
                     goodId: '',
@@ -139,6 +141,7 @@
             },
             //隐藏货品列表
             hideType(item){
+                this.Unit=item.sellUnit;
                 this.goods.goodId = item.goodId;
                 this.goods.goodName = item.goodName;
                 this.goods.numUnit = item.sellUnit;
