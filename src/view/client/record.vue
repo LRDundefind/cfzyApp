@@ -88,6 +88,8 @@
                 selected: 'basic',
                 keyValueData: [],
                 payType: [],
+                orderKnot:[],
+                orderRemit:[],
                 cid: this.$route.params.id,
                 consumeData: [],//消费记录数据
                 repaymentData: [],//还款记录数据
@@ -105,6 +107,8 @@
                 .then(response => {
                     this.keyValueData = response.data.results;
                     this.payType = this.keyValueData.pay_type;
+                    this.orderKnot = this.keyValueData.order_knot_status;
+                    this.orderRemit = this.keyValueData.order_remit_status;
                 })
         },
 
@@ -121,6 +125,23 @@
                 client.consume(this.consumeParams).then(response => {
                     if (response.data.results) {
                         this.consumeData = response.data.results;
+                        for(var i = 0;i<this.consumeData.length; i++){
+                            if(this.consumeData[i].orderType == 'order_knot'){
+                                for(var j = 0; j<this.orderKnot.length; j++){
+                                    if(this.consumeData[i].status == this.orderKnot[j].key){
+                                        this.consumeData[i].status = this.orderKnot[j].value;
+                                    }
+                                }
+                            }else {
+                                for(var k = 0; k< this.orderRemit.length; k++){
+                                    if(this.consumeData[i].status == this.orderRemit[k].key){
+                                        this.consumeData[i].status = this.orderRemit[k].value;
+                                    }
+                                }
+                            }
+
+                        }
+
                     }
                     console.log(this.consumeData);
                 })
