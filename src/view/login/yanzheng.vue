@@ -11,7 +11,7 @@
         </mt-header>
 
         <div class="login_header">
-            <img src="../../assets/logo.png" alt="">
+            <img src="../../assets/logo1.png" alt="">
         </div>
         <div class="phoneNumber">已向{{phoneNumber}}发送短信验证码短信 </div>
 
