@@ -11,27 +11,23 @@
                     </div>
                 </div>
 
-                <div class="main-list">
+                <div class="main-list" style="position: relative">
                     <div class="clearfix goods">数量
                         <input type="text" placeholder="请输入数量" v-model="goods.goodNum" readonly
                                v-if="goods.goodName ==''">
                         <input type="number" placeholder="请输入数量" v-model="goods.goodNum" v-else>
                     </div>
 
-                    <div class="clearfix goods">入库单位
-                        <span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
-                        <span>{{goods.numUnit}}</span>
+                    <div class="clearfix goods" >入库单位
+                        <div class="choice" v-if="goods.goodName !=''">
+                            <select v-model="goods.numUnit">
+                                <option>件</option>
+                                <option v-show="Unit=='unit_kg' ">公斤</option>
+                                <option v-show="Unit=='unit_jin'">斤</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-                <div>
-                    <select v-model="goods.numUnit">
-                        <option>件</option>
-                        <option v-show="Unit=='unit_kg' ">公斤</option>
-                        <option v-show="Unit=='unit_jin'">斤</option>
-                    </select>
-                    <span>Selected: {{ goods.numUnit }}</span>
-                </div>
-
 
                 <div class='update clearfix'>
                     <mt-button type="primary" :disabled="deleteDisabled == 'edit'" size="large" class='f-l'
@@ -170,6 +166,11 @@
         line-height: 0.98rem;
         .goods {
             border-bottom: 1px #f0f0f0 solid;
+            .choice{
+                position: absolute;
+                top: 0.98rem;
+                right: 0.5rem;
+            }
 
             > input {
                 float: right;
