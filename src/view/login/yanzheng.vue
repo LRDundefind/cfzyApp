@@ -12,8 +12,8 @@
 
         <div class="login_header">
             <img src="../../assets/logo.png" alt="">
-            <h2>已向{{phoneNumber}}发送短信验证码短信</h2>
         </div>
+        <div class="phoneNumber">已向{{phoneNumber}}发送短信验证码短信 </div>
 
             <div class="login_cont">
                 <!-- <div class="ub ub-pc" >
@@ -72,12 +72,14 @@
         width: 2rem;
         padding-top: 1.5rem;
         margin: 0 auto;
-        h2 {
-            font-size: $login_ftsize_18;
-            padding: 0.2rem 0 1rem;;
-        }
         @include textAgain_center;
 
+    }
+    .phoneNumber{
+        color: #666;
+        font-size: 0.26rem;
+        text-align: center;
+        padding: 0.52rem 0 0.84rem;
     }
 
     .login_cont {
