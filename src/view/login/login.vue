@@ -130,7 +130,7 @@ export default {
                         duration: 5000
                         });
 				}
-				else if(!(new RegExp( /^1[3|4|5|7|8][0-9]{9}$/).test(this.userName))){
+				else if(!(new RegExp( /^1[3|4|5|7|8|9][0-9]{9}$/).test(this.userName))){
 					Toast({
                         message: '账号输入有误',
                         position: 'middle',
@@ -146,7 +146,7 @@ export default {
 				}
 				else if(!(new RegExp(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/).test(this.passWord))){
 					Toast({
-                        message: '密码输入有误',
+                        message: '密码密码格式不正确',
                         position: 'middle',
                         duration: 5000
                         });

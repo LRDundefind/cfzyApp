@@ -11,17 +11,17 @@
             <div class="main-list">
                 <div>
                      <!-- 接口无数据可编辑 -->
-                    <p class="clearfix" v-if="listdata.cusName=='' && xiTdata==''">姓名 <input type="text" v-model="nameRead" placeholder="请输入"> </p>
+                    <p class="clearfix" v-if="listdata.cusName=='' && xiTdata==''">姓名 <input type="text" v-model="nameRead" placeholder="请输入" maxlength="10"> </p>
                     <!-- 接口有数据不可编辑（修改时有此可能） -->
                     <p class="clearfix"  v-else>姓名  <span class="Unchange">{{ nameRead }}</span></p>
                 </div>
                
 
-                <p class="clearfix">昵称<input type="text" v-model="nicheng" placeholder="请输入"></p>
+                <p class="clearfix">昵称<input type="text" v-model="nicheng" placeholder="请输入" maxlength="10"></p>
 
                <div>
                    <!-- 增加时电话不可编辑 -->
-                   <p class="clearfix" v-if="phoneAdd==''">电话<input type="text" v-model="phone" placeholder="请输入"></p>
+                   <p class="clearfix" v-if="phoneAdd==''">电话<input type="text" v-model="phone" placeholder="请输入" maxlength="11"></p>
                    <!-- 修改时可以 -->
                    <p class="clearfix" v-else>电话<span class="Unchange">{{phone}}</span></p>
                </div>
@@ -29,7 +29,7 @@
                 
                  <div style="border-top:1px #f0f0f0 solid">
                     <!-- 接口无数据可编辑 -->
-                    <p class="clearfix"  v-if="listdata.idCard=='' && xiTdata==''">身份证号 <input type="text" v-model="IdcardRead" placeholder="请输入"> </p>
+                    <p class="clearfix"  v-if="listdata.idCard=='' && xiTdata==''">身份证号 <input type="text" v-model="IdcardRead" placeholder="请输入" maxlength="18"> </p>
                     <!-- 接口有数据不可编辑（修改时有此可能） -->
                     <p class="clearfix" v-else>身份证号  <span class="Unchange">{{IdcardRead}}</span></p>
                 
@@ -39,20 +39,20 @@
             </div>
 
             <div class="main-list">
-                <p class="clearfix">公司<input type="text" v-model="gongsi" placeholder="请输入"></p>
-                <p class="clearfix">地址<input type="text" v-model="address" placeholder="请输入"></p>
+                <p class="clearfix">公司<input type="text" v-model="gongsi" placeholder="请输入" maxlength="50"></p>
+                <p class="clearfix">地址<input type="text" v-model="address" placeholder="请输入" maxlength="50"></p>
             </div>
 
             <div class="main-list">
                 <p class="clearfix">备注</p>
                 <div class="remark">
-                    <textarea name="" id="" cols="30" rows="3" placeholder="备注信息" v-model="message"></textarea>
+                    <textarea name="" id="" cols="30" rows="3" placeholder="备注信息" v-model="message" maxlength="420"></textarea>
                 </div>
             </div>
         </div>
         <div class="footer_btn" v-if="typeW=='update'">
             <div class="ub ub-pc">
-                <div class="ub-f1 blackList" @click="dialoags = true ">加入黑名单</div>
+                <!-- <div class="ub-f1 blackList" @click="dialoags = true ">加入黑名单</div> -->
                 <div class="ub-f1 bad" @click="badList">设置为坏账</div>
             </div>
         </div>
@@ -62,8 +62,8 @@
             <div class="dialoag_cont">
                 <h3>黑名单</h3>
                 <p>将{{nameWrite}}设置为黑名单</p>
-                <div>加入黑名单</div>
-                <div>加入黑名单并上报平台</div>
+                <div @click="joinB">加入黑名单</div>
+                <div @click="joinPB">加入黑名单并上报平台</div>
                 <div @click="dialoags = false ">取消</div>
             </div>
         </div>
@@ -76,7 +76,10 @@
                 <div @click="showa">确定</div>
             </div>
         </div>
-
+         <!-- 保存时候的遮罩 -->
+        <div class="dialoag" v-show="addover">
+            <h5>保存中，请稍后</h5>
+        </div>
     </div>
 </template>
 
@@ -88,6 +91,7 @@
         data () {
             return {
                 addPerson:false,
+                addover:false,
                 value: '',
                 nameRead: '',
                 nameWrite: '',
@@ -129,6 +133,12 @@
 
         },
         methods: {
+            joinPB(){
+
+            },
+            joinB(){
+
+            },
             tipsQX(){
                 // 新增的取消按钮
                 // if(this.phoneAdd==''){
@@ -221,7 +231,9 @@
                     })
             },
             handleSave(){
+                this.addover=true;
                 if (this.typeW=='create') {
+                    
                         // 新增客户   
                     if(this.nameRead==''){
                          Toast({
@@ -245,6 +257,7 @@
                             .then(response => {
                                 // this.xiTdata=response.data.results;
                                 if(response.data.status=='Y'){
+                                    this.addover=false;
                                      Toast({
                                         message: '客户添加成功',
                                         position: 'middle',
@@ -280,6 +293,7 @@
                     client.Cgemessage(params)
                         .then(response => {
                             if(response.data.status=='Y'){
+                                this.addover=false;
                                 this.$router.push({name: 'client'});
                             }
                         })

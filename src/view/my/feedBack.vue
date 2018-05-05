@@ -1,9 +1,7 @@
 <template>
     <div class="feedBack">
         <mt-header fixed title="意见反馈">
-            <router-link to="/my" slot="left">
-                <mt-button icon="back"></mt-button>
-            </router-link>
+            <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
         </mt-header>
 
         <div class="main-list">

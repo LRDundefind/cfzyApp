@@ -4,24 +4,31 @@
         <div class="page-main">
             <div class="" v-show="showList==false">
                 <div class="main-list" @click="showType">
-                    <p class="clearfix">货品分类
+                    <div class="clearfix goods">货品分类
                         <!--<span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>-->
                         <span class="name">{{goods.goodName}}<img class="right-icon"
                                                                   src="../../assets/index/gray-right-icon.png"/></span>
-                    </p>
+                    </div>
                 </div>
 
-                <div class="main-list">
-                    <p class="clearfix">数量
+                <div class="main-list" style="position: relative">
+                    <div class="clearfix goods">数量
                         <input type="text" placeholder="请输入数量" v-model="goods.goodNum" readonly
                                v-if="goods.goodName ==''">
-                        <input type="text" placeholder="请输入数量" v-model="goods.goodNum" v-else>
-                    </p>
+                        <input type="number" placeholder="请输入数量" v-model="goods.goodNum" v-else>
+                    </div>
 
-                    <p class="clearfix">入库单位
-                        <span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
-                        <span>{{goods.numUnit | sellNnit}}</span>
-                    </p>
+                    <div class="clearfix goods">入库单位
+                        <div class="choice" v-if="goods.goodName !=''">
+                            <select v-model="goods.numUnit">
+                                <option>件</option>
+                                <option v-show="Unit=='unit_kg' ">公斤</option>
+                                <option v-show="Unit=='unit_jin'">斤</option>
+                            </select>
+                            <img class="jin-right"
+                                 src="../../assets/index/gray-right-icon.png"/>
+                        </div>
+                    </div>
                 </div>
 
                 <div class='update clearfix'>
@@ -62,6 +69,7 @@
         },
         data () {
             return {
+                Unit: '',
                 deleteDisabled: '',
                 goods: {
                     goodId: '',
@@ -111,7 +119,7 @@
                     if (this.goods.goodName && this.goods.numUnit && this.goods.goodNum) {
                         if (!(new RegExp(/^\d+(?:.\d{1,2})?$/).test(this.goods.goodNum))) {
                             Toast({
-                                message: '小数点后最多输入两位数字',
+                                message: '请输入正确的数字',
                                 position: 'middle',
                                 duration: 1000
                             });
@@ -131,10 +139,18 @@
             },
             //隐藏货品列表
             hideType(item){
+                this.Unit = item.sellUnit;
                 this.goods.goodId = item.goodId;
                 this.goods.goodName = item.goodName;
                 this.goods.numUnit = item.sellUnit;
-                console.log(item);
+                if (this.goods.numUnit == 'unit_kg') {
+                    this.goods.numUnit = '公斤'
+                } else if (this.goods.numUnit == 'unit_pie') {
+                    this.goods.numUnit = '件'
+                } else if (this.goods.numUnit == 'unit_jin') {
+                    this.goods.numUnit = '斤'
+                }
+                console.log(this.goods.numUnit);
                 this.showList = false;
             },
 
@@ -150,8 +166,32 @@
         color: #333;
         font-size: 0.28rem;
         line-height: 0.98rem;
-        > p {
+        .goods {
             border-bottom: 1px #f0f0f0 solid;
+            .choice {
+                padding-right: 0.2rem;
+                position: absolute;
+                top: 0.98rem;
+                right: 0.3rem;
+                .jin-right{
+                    position: absolute;
+                    top: 0.3rem;
+                    width: 0.18rem;
+                    right: 0rem;
+                }
+            }
+            select {
+                border: none;
+                line-height: 1;
+                width: 100%;
+                appearance: none;
+                -moz-appearance: none;
+                -webkit-appearance: none;
+                background-size: 0.9rem 0.9rem;
+                color: #666666;
+                outline: none;
+                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            }
 
             > input {
                 float: right;

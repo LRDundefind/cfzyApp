@@ -1,8 +1,8 @@
 <template>
     <div class="rules">
         <mt-header fixed title="赊账规则">
-            <router-link to="/" slot="left">
-                <mt-button icon="back" @click="$router.go(-1)"></mt-button>
+            <router-link to="/my" slot="left">
+                <mt-button icon="back"></mt-button>
             </router-link>
             <!-- <mt-button icon="more" slot="right"></mt-button> -->
         </mt-header>

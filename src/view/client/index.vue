@@ -19,7 +19,10 @@
 
                 <div v-for="n in listStore" :key='n.id' class="main-list" @click="goDetail(n.cid, n.nickname)">
                     <div class="ub ub-ac heade">
-                        <div class='lis-icon ub-img im'><img :src="imgpath+n.headImg" ></div>
+                        <div class='lis-icon ub-img im'>
+                            <img v-show="n.headImg!=''" :src="imgpath+n.headImg" >
+                            <img v-show="n.headImg==''" src="../../assets/my/my_head.png" alt="">
+                        </div>
                         <div class='ub-f1 ut-s'>{{n.nickname}}</div>
                         <!-- 正常客户状态 -->
                         <div class=' res8 lis-sw ub-img im2' v-show="n.status=='Y'"></div>

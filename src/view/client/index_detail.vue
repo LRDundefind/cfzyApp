@@ -5,7 +5,10 @@
                     <mt-button icon="back" slot="left" @click="goClient"></mt-button>
             </mt-header>
             <div class="blackbg">
-                <div class="headimg"><img :src="imgpath+listdata.headImg" alt="图片" ></div> 
+                <div class="headimg">
+                    <img v-show="listdata.headImg!=''" :src="imgpath+listdata.headImg" alt="图片" >
+                    <img v-show="listdata.headImg==''" src="../../assets/my/my_head.png" alt="">
+                </div> 
                 <h2 v-if="listdata.sys_status=='Y'" class="titstyle">已被系统加入黑名单<br>请谨慎合作</h2>
                 <h2 v-else>{{listdata.cusName}}</h2>
             </div>
@@ -93,13 +96,8 @@
                 this.$router.push({name: 'index_change/update', params: {id: this.cid, type: 'update'}});
             },
             //跳转到消费记录
-            consumptionRecords(id){
-                this.$router.push({
-                    name: 'orderPay_record',
-//      		params: {
-//      			id:id
-//      		}
-                });
+            consumptionRecords(){
+                this.$router.push({name: 'record', params: {id: this.cid}});
             }
         }
     }
