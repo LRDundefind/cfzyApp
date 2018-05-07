@@ -54,11 +54,11 @@
             },
             //跳转到黑名单
             goBlack(){
-                this.$router.push({name: 'blackList'});
+                this.$router.push({name: 'blackList',params:{black:'nostall'}});
             },
             //跳转到个人中心
             goMy(){
-                this.$router.push({name: 'my',params:{id:'nostall'}});
+                this.$router.push({name: 'my',params:{black:'nostall'}});
             },
 
         }

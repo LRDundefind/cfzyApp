@@ -1,7 +1,7 @@
 <template>
     <div class="page-content">
         <mt-header fixed title="平台黑名单">
-            <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
+            <mt-button icon="back" @click="goMy()" slot="left"></mt-button>
         </mt-header>
         <search-box @getSmeage="searchBlack" :msg="msg" ref="search"/>
         <div class="page-main">
@@ -32,6 +32,7 @@
     export default {
         data () {
             return {
+                black:'',
                 msg: '',
                 blacklistParams: {
                     search: '',
@@ -39,6 +40,9 @@
                 blacklistData: [],
 
             }
+        },
+        created(){
+            this.black = this.$route.params.black || false;
         },
         mounted () {
             this.getlist()
@@ -49,6 +53,13 @@
         },
 
         methods: {
+            goMy(){
+                if(this.black == 'nostall'){
+                    this.$router.push({name: 'noStalls'})
+                }else {
+                    this.$router.push({name: 'my'});
+                }
+            },
             searchBlack(msg){
                 this.blacklistParams.search = msg;
                 this.getlist();
