@@ -7,11 +7,11 @@
         <!--还款记录列表-->
         <div class="page-main">
             <div class="" v-show="showList==false">
-                <div class="main-list" @click="showType">
+                <div class="main-list">
                     <p class="clearfix">货品分类
                         <!--<span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>-->
-                        <span class="name">{{goods.goodName}}<img class="right-icon"
-                                                                  src="../../assets/index/gray-right-icon.png"/></span>
+                        <span class="name">{{goods.goodName}}
+                        </span>
                     </p>
                 </div>
 
@@ -94,8 +94,8 @@
                 this.item = this.$route.params.item;
                 this.goods.goodId = this.item.goodId;
                 this.goods.goodName = this.item.goodName;
-                this.goods.lossRemark = this.item.lossRemark;
-                this.goods.quantity = this.item.lossNum;
+                //this.goods.lossRemark = this.item.lossRemark;
+                //this.goods.quantity = this.item.lossNum;
             }
             this.tid = this.$route.params.tid || false;
             this.id = this.$route.params.id || false;
@@ -123,12 +123,12 @@
 //                    this.storageData = response.data.results;
                 })
             },
-            showType(){
-                this.showList = true;
-            },
+//            showType(){
+//                this.showList = true;
+//            },
             //添加货品列表
             addGoods(){
-                if (this.goods.goodName && this.goods.quantity && this.goods.lossRemark) {
+                if (this.goods.goodName && this.goods.quantity) {
                     if (!(new RegExp(/^\d+(?:.\d{1,2})?$/).test(this.goods.quantity))) {
                         Toast({
                             message: '请输入正确的数字',

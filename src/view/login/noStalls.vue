@@ -9,7 +9,7 @@
         <div class="">
             <div class="home">
                 <span class="black-title">黑名单</span>
-                <img class="p-re" src="../../assets/index/black_img.png"/>
+                <img @click="goBlack" class="p-re" src="../../assets/index/black_img.png"/>
             </div>
 
             <div class="stalls">
@@ -52,6 +52,11 @@
                     }
                 })
             },
+            //跳转到黑名单
+            goBlack(){
+                this.$router.push({name: 'blackList'});
+            },
+
         }
     }
 </script>
@@ -77,11 +82,11 @@
     .stalls{
         margin-top: 0.22rem;
         text-align: center;
-        height: 10.4rem;
+        height: 10.38rem;
         background-color: white;
         .stalls_pic{
             width: 4.18rem;
-            padding-bottom: 0.42rem;
+            padding: 1.22rem 0 0.42rem;
         }
         .word{
             font-size: 0.26rem;

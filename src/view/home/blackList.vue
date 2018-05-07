@@ -1,9 +1,7 @@
 <template>
     <div class="page-content">
         <mt-header fixed title="平台黑名单">
-            <router-link to="/home" slot="left">
-                <mt-button icon="back"></mt-button>
-            </router-link>
+            <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
         </mt-header>
         <search-box @getSmeage="searchBlack" :msg="msg" ref="search"/>
         <div class="page-main">
@@ -38,12 +36,7 @@
                 blacklistParams: {
                     search: '',
                 },
-                blacklistData: {
-                    headImg: '',//头像
-                    cusName: '',//名字
-                    blockingReason: '',//拉黑原因
-                    createTime: '', //日期
-                },
+                blacklistData: [],
 
             }
         },
@@ -63,7 +56,7 @@
             getlist(){
                 home.blacklist(this.blacklistParams).then(response => {
                     this.blacklistData = response.data.results;
-                    console.log(this.blacklistData);
+                    //console.log(this.blacklistData)
                 })
             },
 
