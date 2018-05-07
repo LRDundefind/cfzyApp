@@ -1,9 +1,7 @@
 <template>
     <div class="page-content">
         <mt-header fixed title="平台黑名单">
-            <router-link to="/home" slot="left">
-                <mt-button icon="back"></mt-button>
-            </router-link>
+            <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
         </mt-header>
         <search-box @getSmeage="searchBlack" :msg="msg" ref="search"/>
         <div class="page-main">
