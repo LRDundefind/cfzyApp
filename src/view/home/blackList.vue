@@ -57,7 +57,7 @@
                 if(this.black == 'nostall'){
                     this.$router.push({name: 'noStalls'})
                 }else {
-                    this.$router.push({name: 'my'});
+                    this.$router.push({name: 'home'});
                 }
             },
             searchBlack(msg){
