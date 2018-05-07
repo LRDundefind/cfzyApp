@@ -38,12 +38,7 @@
                 blacklistParams: {
                     search: '',
                 },
-                blacklistData: {
-                    headImg: '',//头像
-                    cusName: '',//名字
-                    blockingReason: '',//拉黑原因
-                    createTime: '', //日期
-                },
+                blacklistData: [],
 
             }
         },
@@ -63,7 +58,7 @@
             getlist(){
                 home.blacklist(this.blacklistParams).then(response => {
                     this.blacklistData = response.data.results;
-                    console.log(this.blacklistData);
+                    //console.log(this.blacklistData)
                 })
             },
 

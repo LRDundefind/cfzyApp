@@ -1,9 +1,7 @@
 <template>
 	<div class="page-content">
 		<mt-header fixed  title="订单">
-			
-			    <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
-		
+		    <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
 		</mt-header>
 		<search-box ref="search" @getSmeage="searchHandler"/>
 		<!--订单列表-->
@@ -26,7 +24,7 @@
 							<!--以下三种为赊账-->
 							<i class="c-6" v-if="list.status == 'status_repay'">待还款</i>
 							<i class="c-6" v-if="list.status == 'status_deposit'">暂存</i>
-							<i class="c-6" v-if="list.status == 'status_complete'">已完成</i>
+							<!--<i class="c-6" v-if="list.status == 'status_complete'">已完成</i>-->
 						</div>
 						<div class="ub list-bottom">
 							<span class="ub-f1 c-6">{{list.placeOrderTime}}</span>
@@ -74,7 +72,7 @@ export default {
     mounted () {
 		this.getOrders();
 		
-		this.wrapperHeight = document.documentElement.clientHeight - 175;
+		this.wrapperHeight = document.documentElement.clientHeight - 140;
     },
     methods: {  
     	//车次销售列表数据
@@ -109,6 +107,8 @@ export default {
         },
         //搜索
         searchHandler(value){
+        	this.params.current_page = 1 ;
+        	this.listStore = [];
 			this.getOrders(value);
 		},
 		
