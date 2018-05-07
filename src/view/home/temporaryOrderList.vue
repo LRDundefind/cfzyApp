@@ -1,8 +1,8 @@
 <template>
 	<div class="page-content">
 		<mt-header fixed  title="暂存订单">
-			<router-link to="/" slot="left">
-			    <mt-button icon="back" @click="goBack()"></mt-button>
+			<router-link to="/home" slot="left">
+			    <mt-button icon="back"></mt-button>
 			</router-link>
 		</mt-header>
 		<!--子emit发送触发事件this.$emit('getSmeage',this.searchValue)  父监听getSmeage，并接收值-->
