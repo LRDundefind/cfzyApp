@@ -2,7 +2,7 @@
     <div class="main">
         <mt-header fixed title="首页" style="z-index:400;">
             <div class=" personal" slot="right">
-                <img src="../../assets/index/shouye_touxiang_img@2x.png"/>
+                <img @click="goMy" src="../../assets/index/shouye_touxiang_img@2x.png"/>
             </div>
         </mt-header>
 
@@ -55,6 +55,10 @@
             //跳转到黑名单
             goBlack(){
                 this.$router.push({name: 'blackList'});
+            },
+            //跳转到个人中心
+            goMy(){
+                this.$router.push({name: 'my',params:{id:'nostall'}});
             },
 
         }
