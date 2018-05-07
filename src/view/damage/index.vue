@@ -5,26 +5,39 @@
                 <mt-button icon="back"></mt-button>
             </router-link>
         </mt-header>
-        <div class="page-main">
-            <div v-for="item in damageData" :key='item.tid' class="main-list">
-                <div class="ub clearfix" @click="goReport(item)">
-                    <div class="ub-f5">
-                        <div>
+        <div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
+            <mt-loadmore
+                    :auto-fill="false"
+                    :top-method="loadTop"
+                    :bottom-method="loadBottom"
+                    :bottom-all-loaded="allLoaded"
+                    ref="loadmore">
+
+                <div  class="main-list"  v-for="item in listStore" :key='item.tid'>
+                    <div class="ub clearfix" @click="goReport(item)">
+                        <div class="ub-f5">
+                            <div>
                             <span class="information">
                                 {{item.trainsNum}}
                             </span>
+                            </div>
+                            <div class="date">
+                                <span class="time">到达时间</span>
+                                <span class="time">{{item.putStorageTime}}</span>
+                            </div>
                         </div>
-                        <div class="date">
-                            <span class="time">到达时间</span>
-                            <span class="time">{{item.putStorageTime}}</span>
+                        <div class="ub-f1">
+                            <img class="right-icon" src="../../assets/index/gray-right-icon.png"/>
                         </div>
-                    </div>
-                    <div class="ub-f1">
-                        <img class="right-icon" src="../../assets/index/gray-right-icon.png"/>
                     </div>
                 </div>
-            </div>
+                <div v-if="allLoaded" class="m-t-10" style="text-align:center;font-size: 0.18rem">没有更多数据了</div>
+
+            </mt-loadmore>
+
         </div>
+
+
     </div>
 </template>
 
@@ -34,42 +47,71 @@
     export default {
         data () {
             return {
-                damageData:{
-//                    trainsNum:'',//展示车次 入库日期 货主名称 次数
-//                    putStorageTime:'',//入库时间
-//                    tid:'',
+                allLoaded: false,
+                wrapperHeight: 0,//容器高度
+                listStore: [],
+                trainList: [],
+                params:{
+                    current_page: 1,
+                    page_size: 10
                 }
             }
         },
 
         mounted () {
-            this.trainList();
+            let windowWidth = document.documentElement.clientWidth;//获取屏幕高度
+            if(windowWidth>768){//这里根据自己的实际情况设置容器的高度
+                this.wrapperHeight = document.documentElement.clientHeight - 130;
+            }else{
+                this.wrapperHeight = document.documentElement.clientHeight - 40;
+            }
+            this.getList();
         },
         methods: {
-            trainList(){
-                let data = {
-                    current_page: 1,
-                    page_size: 10,
-                };
-                damage.damageList(data).then(response => {
-                    this.damageData = response.data.results;
+            getList(){
+                damage.damageList(this.params).then(response => {
+                    this.trainList = response.data.results;
+                    if(this.trainList.length==this.params.page_size){
+                        //判断是否应该加载下一页
+                        this.params.current_page+=1 ;
+                    }else{
+                        //禁用上拉加载
+                        this.allLoaded = true;
+                    }
+                    if (this.trainList) {
+                        this.listStore.push(...this.trainList)
+                    }
                     console.log(response.data.results);
                 })
             },
             goReport(item){
-                this.$router.push({name: 'damageReport',params:{tid:item.tid,trainsNum:item.trainsNum}});
+                this.$router.push({name: 'damageReport', params: {tid: item.tid, trainsNum: item.trainsNum}});
+            },
+
+            loadTop(){
+                this.listStore = [];
+                this.params.current_page = 1;
+                this.getList();
+                this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
+                this.allLoaded = false;//下拉刷新时解除上拉加载的禁用
+            },
+            loadBottom() {
+                this.getList();
             }
         }
     }
 </script>
 <style scoped lang="scss">
+    .page-loadmore-wrapper {
+        overflow: scroll
+    }
     .main-list {
         background: #fff;
         margin-top: 0.2rem;
         padding: 0.3rem;
         color: #333;
         font-size: 0.3rem;
-        .information{
+        .information {
             min-height: 0.34rem;
         }
         span {
