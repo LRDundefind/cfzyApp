@@ -31,10 +31,10 @@ export default {
         }
 	},
 	created(){
-		// this.goDetail()
+	 this.goDetail()
 	},
     mounted () {
-		  this.goDetail()
+		 
            
 			 
     },
