@@ -69,7 +69,7 @@
             }
         },
         mounted () {
-            this.wrapperHeight = document.documentElement.clientHeight - 175;
+            this.wrapperHeight = document.documentElement.clientHeight - 40;
             // this.$nextTick(() => {
             //    this.scroll = new BScroll(this.$refs.wrapper,{});
             // })
