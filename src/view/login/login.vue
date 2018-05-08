@@ -108,8 +108,14 @@ export default {
         }
     },
     mounted () {
-        Bus.$on('sendPhone', function(val) {　  
-                     this.userName=val;
+       
+    },
+    created(){
+        // let _this = this;
+         Bus.$on('sendPhone', (msg)=>{　  
+                    console.log(msg+'123')
+                     this.userName=msg;
+                     console.log(this.userName)
                 })  
     },
     methods: {
