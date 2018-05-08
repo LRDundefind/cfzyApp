@@ -122,6 +122,7 @@
 <style scoped rel="stylesheet/scss" lang="scss">
 .wrapper{
     height: 100vh;
+     overflow:hidden;
 }
     .blackbg{
         height: 4rem;
