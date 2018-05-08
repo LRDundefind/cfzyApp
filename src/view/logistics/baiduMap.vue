@@ -10,6 +10,10 @@
 				<img src="../../assets/wuliu.png">
 				<div>敬请期待...</div>
 			</div> -->
+			<div class="Dwdata" v-show="Xdtlist==null">
+				<img src="../../assets/index/no_Stalls.png" alt="">
+				<h3>该车辆暂无定位信息！</h3> 
+			</div>
 			<div class="page-main page-loadmore-wrappe logistics" >
                 <div id="XSDFXPage">
 
@@ -27,7 +31,8 @@ export default {
         return {
 			orderId: this.$route.params.orderId,
 			longitude:null,	//定义经度
-　　　　　　 latitude:null	//定义纬度
+　　　　　　 latitude:null,	//定义纬度
+			Xdtlist:null
         }
 	},
 	created(){
@@ -96,6 +101,19 @@ export default {
 }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
+.Dwdata{
+	text-align: center;
+    img{
+        width: 2.5rem;
+        margin: 1rem auto 0.5rem;;
+    }
+    h3{
+        font-size: 0.3rem;
+        padding: 0.15rem 0;
+        color: #333;
+    }
+}
+
 .page-loadmore-wrappe{
    overflow: scroll;
 }
