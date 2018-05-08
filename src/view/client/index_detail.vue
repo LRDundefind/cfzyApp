@@ -63,6 +63,7 @@
             return {
                 value: '',
                 listdata:{},
+                wrapperHeight: 0,//容器高度
                 cid:this.$route.params.ids,
                 imgpath:process.env.BASE_PATH
             }
