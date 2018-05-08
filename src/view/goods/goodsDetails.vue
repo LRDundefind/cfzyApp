@@ -21,9 +21,9 @@
                     <div class="clearfix goods">入库单位
                         <div class="choice" v-if="goods.goodName !=''">
                             <select v-model="goods.numUnit">
-                                <option>件</option>
-                                <option v-show="Unit=='unit_kg' ">公斤</option>
-                                <option v-show="Unit=='unit_jin'">斤</option>
+                                <option value="unit_pie">件</option>
+                                <option v-show="Unit=='unit_kg' " value="unit_kg">公斤</option>
+                                <option v-show="Unit=='unit_jin'" value="unit_jin">斤</option>
                             </select>
                             <img class="jin-right"
                                  src="../../assets/index/gray-right-icon.png"/>
@@ -143,13 +143,13 @@
                 this.goods.goodId = item.goodId;
                 this.goods.goodName = item.goodName;
                 this.goods.numUnit = item.sellUnit;
-                if (this.goods.numUnit == 'unit_kg') {
-                    this.goods.numUnit = '公斤'
-                } else if (this.goods.numUnit == 'unit_pie') {
-                    this.goods.numUnit = '件'
-                } else if (this.goods.numUnit == 'unit_jin') {
-                    this.goods.numUnit = '斤'
-                }
+//                if (this.goods.numUnit == 'unit_kg') {
+//                    this.goods.numUnit = '公斤'
+//                } else if (this.goods.numUnit == 'unit_pie') {
+//                    this.goods.numUnit = '件'
+//                } else if (this.goods.numUnit == 'unit_jin') {
+//                    this.goods.numUnit = '斤'
+//                }
                 console.log(this.goods.numUnit);
                 this.showList = false;
             },

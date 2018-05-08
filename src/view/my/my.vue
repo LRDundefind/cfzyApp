@@ -179,10 +179,14 @@
         name: 'my',
         data () {
             return {
+                black:'',
                 phone: '',
                 userName: '',
                 personalData:[],
             }
+        },
+        created(){
+            this.black = this.$route.params.black || false;
         },
         mounted () {
             if (JSON.parse(Cookies.get('gidOwnID_lists')).userName) {
@@ -213,7 +217,11 @@
             },
             //跳转到首页
             goHome(){
-                this.$router.push({name: 'home'})
+                if(this.black == 'nostall'){
+                    this.$router.push({name: 'noStalls'})
+                }else {
+                    this.$router.push({name: 'home'})
+                }
             },
             //跳转到修改密码
             goPassword(){

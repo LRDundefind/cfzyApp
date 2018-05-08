@@ -19,7 +19,10 @@
                         <div class="ub-f1 number"><span class="count">数量</span> <span>{{item.lossNum}}</span></div>
                     </div>
                     <div class="ub ub-pj reason">
-                        <div class="ub-f1"><span>{{item.lossRemark}}</span></div>
+                        <div class="ub-f1">
+                            <span>损坏原因：</span>
+                            <span>{{item.lossRemark}}</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -114,6 +117,9 @@
             font-size: 0.24rem;
             padding: 0.34rem 0 0.32rem 0;
             border-bottom: 1px #f0f0f0 solid;
+            word-break: break-all;
+            line-height: 1.8;
+            min-height: 0.24rem;
         }
     }
 
