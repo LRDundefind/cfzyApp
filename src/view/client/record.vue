@@ -26,7 +26,7 @@
                 <!--<search-box @getSmeage="searchBlack" :msg="msg" ref="search"/>-->
 
                 <ul class="order-record">
-                    <noDate v-if="consumeData == 0"></noDate> 
+                    <noDate v-show="consumeData==''"></noDate> 
                     <li v-for="item in consumeData" :key="item.id" @click="ordersDetail(item.oid)">
                         <div class="ub list-top">
                             <span class="ub-f1">订单号 {{item.orderNo}}</span>
@@ -41,7 +41,7 @@
             </div>
             <!--货品信息-->
             <div v-if="selected == 'goods'">
-                <noDate v-if="repaymentData == 0"></noDate> 
+                <noDate v-show="repaymentData==''"></noDate> 
                 <ul class="pay-list">
                     <!-- <li class="pay-total ub ub-pj">
                         <div class="ub ub-ac">
@@ -82,7 +82,7 @@
     import {keyValue} from '@/services/apis/key-value';
      import noDate from '@/components/noData/noDate'
     export default {
-        components: {searchBox,searchBox},
+        components: {searchBox,noDate},
 
         data () {
             return {

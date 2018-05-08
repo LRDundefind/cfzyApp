@@ -302,8 +302,16 @@
                     client.Cgemessage(params)
                         .then(response => {
                             if(response.data.status=='Y'){
-                                this.addover=false;
-                                this.$router.push({name: 'client'});
+                                Toast({
+                                        message: '更新成功',
+                                        position: 'middle',
+                                        duration: 3000
+                                        });
+                                setTimeout(() => {
+                                    this.addover=false;
+                                    this.$router.push({name: 'client'});
+                                }, 3000)
+                                
                             }
                         })
                 
