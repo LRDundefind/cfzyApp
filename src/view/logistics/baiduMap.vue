@@ -35,21 +35,7 @@ export default {
 	},
     mounted () {
 		  this.goDetail()
-           // 百度地图API功能
-            // 创建Map实例
-            var map = new BMap.Map("XSDFXPage",{enableMapClick:true});
-            // 初始化地图,设置中心点坐标和地图级别
-　　　　　　var point = new BMap.Point(this.longitude,this.latitude);
-　　　　　　map.centerAndZoom(point, 11);
-　　　　　　var marker = new BMap.Marker(point);// 创建标注
-　　　　　　map.addOverlay(marker);
-
-            // 设置地图显示的城市 此项是必须设置的
-           map.setCurrentCity("北京"); 
-			
-			// setTimeout(function(){
-            //     map.panTo(new BMap.Point(this.longitude,this.latitude));
-            // }, 5000);  
+           
 			 
     },
     methods: {
@@ -75,13 +61,33 @@ export default {
 						};
 					logistics.auth(params).then(response => {
 						let ss=JSON.parse(response.data.results)
-						this.Xdtlist=ss.content;
-						console.log(this.Xdtlist)
-						this.longitude=this.Xdtlist.eandw;
-						this.latitude=this.Xdtlist.nands;
+						if(ss.status==200){
+							this.Xdtlist=ss.content;
+							this.longitude=this.Xdtlist.eandw;
+							this.latitude=this.Xdtlist.nands;
+							this.dT()
+						}
+						
 						
 					})
             },
+			dT(){
+				// 百度地图API功能
+				// 创建Map实例
+				var map = new BMap.Map("XSDFXPage",{enableMapClick:true});
+				// 初始化地图,设置中心点坐标和地图级别
+	　　　　　　var point = new BMap.Point(this.longitude,this.latitude);
+	　　　　　　map.centerAndZoom(point, 11);
+	　　　　　　var marker = new BMap.Marker(point);// 创建标注
+	　　　　　　map.addOverlay(marker);
+
+				// 设置地图显示的城市 此项是必须设置的
+			   map.setCurrentCity("北京"); 
+				
+				// setTimeout(function(){
+				//     map.panTo(new BMap.Point(this.longitude,this.latitude));
+				// }, 5000);  
+			},
             golist(){
                 window.history.go(-1);
             }
