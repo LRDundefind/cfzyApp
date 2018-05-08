@@ -1,53 +1,55 @@
 <template>
     <div class="page-content wrapper" id="client_detail" ref="wrapper">
-        <div style="height:4rem">
-            <mt-header fixed title="客 户">
-                    <mt-button icon="back" slot="left" @click="goClient"></mt-button>
-            </mt-header>
-            <div class="blackbg">
-                <div class="headimg">
-                    <img v-show="listdata.headImg!=''" :src="imgpath+listdata.headImg" alt="图片" >
-                    <img v-show="listdata.headImg==''" src="../../assets/my/my_head.png" alt="">
-                </div> 
-                <h2 v-if="listdata.sys_status=='Y'" class="titstyle">已被系统加入黑名单<br>请谨慎合作</h2>
-                <h2 v-else>{{listdata.cusName}}</h2>
+        <div class="content">
+            <div style="height:4rem">
+                <mt-header fixed title="客 户">
+                        <mt-button icon="back" slot="left" @click="goClient"></mt-button>
+                </mt-header>
+                <div class="blackbg">
+                    <div class="headimg">
+                        <img v-show="listdata.headImg!=''" :src="imgpath+listdata.headImg" alt="图片" >
+                        <img v-show="listdata.headImg==''" src="../../assets/my/my_head.png" alt="">
+                    </div> 
+                    <h2 v-if="listdata.sys_status=='Y'" class="titstyle">已被系统加入黑名单<br>请谨慎合作</h2>
+                    <h2 v-else>{{listdata.cusName}}</h2>
+                </div>
             </div>
-        </div>
-        
+            
 
-        <div class="page-main " >
-            <div class="main-list">
-                <p class="clearfix">消费次数<span>{{listdata.consum_num}}</span></p>
-                <p class="clearfix">最后消费时间<span>{{listdata.consum_ltime}}</span></p>
-            </div>
+            <div class="page-main " >
+                <div class="main-list">
+                    <p class="clearfix">消费次数<span>{{listdata.consum_num}}</span></p>
+                    <p class="clearfix">最后消费时间<span>{{listdata.consum_ltime}}</span></p>
+                </div>
 
-            <div class="main-list">
-                <p class="clearfix">赊账总金额<span>{{listdata.notPayAmount}}</span></p>
-                <p class="clearfix">赊账最长时间<span>{{listdata.creditTime}}</span></p>
-            </div>
+                <div class="main-list">
+                    <p class="clearfix">赊账总金额<span>{{listdata.notPayAmount}}</span></p>
+                    <p class="clearfix">赊账最长时间<span>{{listdata.creditTime}}</span></p>
+                </div>
 
-            <div class="main-list">
-                <p class="clearfix">姓名<span>{{listdata.cusName}}</span></p>
-                <p class="clearfix">昵称<span>{{listdata.nickname}}</span></p>
-                <p class="clearfix">电话<span>{{listdata.phone}}</span></p>
-                <p class="clearfix">身份证号<span>{{listdata.idCard}}</span></p>
-                <p style="border:none;text-align: right;line-height: 0.3rem;font-size:0.22rem;color:#808080;">
-                    "身份证号"首次编辑后将无法修改</p>
-            </div>
+                <div class="main-list">
+                    <p class="clearfix">姓名<span>{{listdata.cusName}}</span></p>
+                    <p class="clearfix">昵称<span>{{listdata.nickname}}</span></p>
+                    <p class="clearfix">电话<span>{{listdata.phone}}</span></p>
+                    <p class="clearfix">身份证号<span>{{listdata.idCard}}</span></p>
+                    <p style="border:none;text-align: right;line-height: 0.3rem;font-size:0.22rem;color:#808080;">
+                        "身份证号"首次编辑后将无法修改</p>
+                </div>
 
-            <div class="main-list">
-                <p class="clearfix">公司<span>{{listdata.company}}</span></p>
-                <p class="clearfix">地址<span>{{listdata.address}}</span></p>
-            </div>
+                <div class="main-list">
+                    <p class="clearfix">公司<span>{{listdata.company}}</span></p>
+                    <p class="clearfix">地址<span>{{listdata.address}}</span></p>
+                </div>
 
-            <div class="main-list">
-                <p class="clearfix">备注</p>
-                <div class="remark" style="ling-height:0.4rem;">{{listdata.remark}}</div>
+                <div class="main-list">
+                    <p class="clearfix">备注</p>
+                    <div class="remark" style="ling-height:0.4rem;">{{listdata.remark}}</div>
+                </div>
             </div>
-        </div>
-        <div class='update clearfix'>
-            <mt-button type="primary" size="large" class='f-l' @click="consumptionRecords(3)">查看消费记录</mt-button>
-            <mt-button type="primary" size="large" class='f-l' @click="goChange()">更新资料</mt-button>
+            <div class='update clearfix'>
+                <mt-button type="primary" size="large" class='f-l' @click="consumptionRecords(3)">查看消费记录</mt-button>
+                <mt-button type="primary" size="large" class='f-l' @click="goChange()">更新资料</mt-button>
+            </div>
         </div>
     </div>
 </template>
@@ -66,9 +68,9 @@
             }
         },
         mounted () {
-            //即定时器 20ms
+        
             this.$nextTick(() => {
-               this.scroll = new BScroll(this.$refs.wrapper);
+               this.scroll = new BScroll(this.$refs.wrapper,{});
             })
 
         }, 
@@ -109,8 +111,11 @@
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
 .wrapper{
-    height: 100vh;
+     height: 100vh;
      overflow:hidden;
+}
+.content{
+    height: 100%;
 }
     .blackbg{
         height: 4rem;
