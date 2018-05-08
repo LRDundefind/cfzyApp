@@ -7,7 +7,7 @@
             <span @click="addCustomer" style="font-size: 0.32rem" slot="right" v-if="type != 'order'">添加客户</span>
         </mt-header>
         <search-box  @getSmeage="searchstart"  ref="search"/>
-        <noDate v-show="listStore.length==0"></noDate>  
+        <noDate v-if="counts == 0"></noDate>  
         <div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }" >
 
             <mt-loadmore 
@@ -71,6 +71,7 @@
                 type: '',
                 listStore: [],
                 listdata:null,
+                counts: null,
                 params:{
                     current_page: 1,
                     page_size: 10,
@@ -121,6 +122,7 @@
                 client.dataList(this.params)
                     .then(response => {
                         this.listdata = response.data.results;
+                        this.counts = this.listdata.length;
                         if(this.listdata.length==this.params.page_size){  
                             //判断是否应该加载下一页
                             this.params.current_page+=1 ;
