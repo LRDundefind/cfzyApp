@@ -1,6 +1,6 @@
 <template>
-    <div class="page-content wrapper" id="client_detail" ref="wrapper">
-        <div class="content">
+    <div class="page-content" id="client_detail">
+       
             <div style="height:4rem">
                 <mt-header fixed title="客 户">
                         <mt-button icon="back" slot="left" @click="goClient"></mt-button>
@@ -16,7 +16,7 @@
             </div>
             
 
-            <div class="page-main " :style="{ height: wrapperHeight + 'px' }">
+            <div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }">
                 <div class="main-list">
                     <p class="clearfix">消费次数<span>{{listdata.consum_num}}</span></p>
                     <p class="clearfix">最后消费时间<span>{{listdata.consum_ltime}}</span></p>
@@ -51,7 +51,7 @@
                 <mt-button type="primary" size="large" class='f-l' @click="goChange()">更新资料</mt-button>
             </div>
         </div>
-    </div>
+    
 </template>
 
 <script>
