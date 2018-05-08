@@ -337,6 +337,8 @@ i{
 			font-size: 0.26rem;
 			color: #666;
 		    padding-bottom: 0.6rem;
+		    line-height: 0.38rem;
+    		margin-top: 0.2rem;
 		}
 	}
 	.customer-head{
