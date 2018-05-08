@@ -4,8 +4,9 @@
             <mt-button icon="back" @click="goMy()" slot="left"></mt-button>
         </mt-header>
         <search-box @getSmeage="searchBlack" :msg="msg" ref="search"/>
-        <noDate v-if="listStore.length == 0"></noDate>
+        
         <div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
+            <no-Date v-show="listStore=='' || listStore.length==0"/>
             <mt-loadmore
                     :auto-fill="false"
                     :top-method="loadTop"
@@ -63,8 +64,9 @@
 
             }
         },
-        components:{
-            noDate
+         components:{
+            noDate,
+             searchBox
         },
         created(){
             this.black = this.$route.params.black || false;
@@ -72,10 +74,6 @@
         mounted () {
             this.wrapperHeight = document.documentElement.clientHeight - 100;
             this.getList();
-        },
-
-        components: {
-            searchBox
         },
 
         methods: {
