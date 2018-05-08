@@ -80,10 +80,9 @@
     import {Toast} from 'mint-ui';
     import searchBox from '@/components/searchBox/search'
     import {keyValue} from '@/services/apis/key-value';
-     import noDate from '@/components/noData/noDate'
+    import noDate from '@/components/noData/noDate'
     export default {
         components: {searchBox,noDate},
-
         data () {
             return {
 //                msg: '',

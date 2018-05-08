@@ -112,12 +112,17 @@ export default {
     },
     created(){
         // let _this = this;
-         Bus.$on('sendPhone', (msg)=>{　  
-                    
-                     this.userName=msg;
-                     console.log(this.userName)
-                     alert(this.userName)
-                })  
+        //  Bus.$on('sendPhone', (msg)=>{　  
+        //              this.userName=msg;
+        //              console.log(this.userName)
+        //              alert(this.userName)
+        //         })
+        if(Cookies.get('loginPhone')) {
+            this.userName=Cookies.get('loginPhone');
+        }
+        else{
+            this.userName='';
+        } 
     },
     methods: {
        changeType(){
