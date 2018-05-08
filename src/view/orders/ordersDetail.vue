@@ -92,6 +92,9 @@
 					<div class="edu">{{detail.placeOrderTime}}</div>
 				</div>
 			</div>
+			
+			<div v-if="status == '待提货'" class="submit-btn" @click="takeGood">完成提货</div>
+			
 		</div>
 		
 	</div>
@@ -113,7 +116,7 @@ export default {
     },
     methods: {
     	
-    	//车次销售列表数据
+    	//订单详情
         ordersDetail(){
             let params = {
                 oid: this.$route.params.oid
@@ -168,6 +171,25 @@ export default {
 					this.pay_type = '银行卡';
 					break;
 			}
+		},
+		//提货
+		takeGood(){
+            let params = {
+                oid: this.$route.params.oid
+            };
+            orders.getOrdersTake(params)
+                .then(response =>{
+                	Toast({
+						message: '提货成功',
+						position: 'middle',
+						duration: 1000
+	    			});
+                	//完成提货刷新页面
+                    this.ordersDetail();
+                })
+                .catch(function (response) {
+                    console.log(response);
+                });
 		},
         //跳转到客户详情
         customerDetail(cid){
@@ -301,6 +323,8 @@ i{
 .submit-btn{
 	width: 73%;
 	height: 0.9rem;
+	line-height: 0.9rem;
+	text-align: center;
 	border-radius: 1rem;
 	background: -webkit-linear-gradient(left, #30b03e 0%,#33d57c 100%);
 	color: #fff;

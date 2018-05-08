@@ -238,7 +238,7 @@ export default {
 						this.totalCost.totalAmount = 0;
 						this.totalCost.totalPack = 0;
 						this.totalCost.totalWeigh = 0;
-						this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost; //合计费用
+						this.totalCost.tatol = (this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost).toFixed(2); //合计费用
 
 						this.goodCosts = response.data.results; //计算出 金额goodAmount、包装费packCost、过磅费weighCost
 						
@@ -265,7 +265,7 @@ export default {
 							this.totalCost.totalAmount += this.goodsInfo[i]['goodAmount']; //总货款费用
 							this.totalCost.totalPack += this.goodsInfo[i]['packCost']; //总包装费
 							this.totalCost.totalWeigh += Number(this.goodsInfo[i]['weighCost']); //总过磅费
-							this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.detailInfo.deliveryCost; //合计费用
+							this.totalCost.tatol = (this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.detailInfo.deliveryCost).toFixed(2); //合计费用
 	                    }
 
 	                    //重置弹框单价
@@ -297,6 +297,11 @@ export default {
 			};
 			home.temporarySetPrice(params)
 				.then(response => {
+					Toast({
+						message: '保存成功',
+						position: 'middle',
+						duration: 1000
+	    			});
 					//设置单价保存成功跳转至首页
 		            this.$router.push({
 		            	name: 'home',
