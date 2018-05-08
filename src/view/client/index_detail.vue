@@ -1,5 +1,5 @@
 <template>
-    <div class="page-content " id="client_detail" >
+    <div class="page-content wrapper" id="client_detail" ref="wrapper">
         <div style="height:4rem">
             <mt-header fixed title="客 户">
                     <mt-button icon="back" slot="left" @click="goClient"></mt-button>
@@ -15,7 +15,7 @@
         </div>
         
 
-        <div class="page-main wrapper" ref="wrapper">
+        <div class="page-main " >
             <div class="main-list">
                 <p class="clearfix">消费次数<span>{{listdata.consum_num}}</span></p>
                 <p class="clearfix">最后消费时间<span>{{listdata.consum_ltime}}</span></p>
@@ -68,19 +68,7 @@
         mounted () {
             //即定时器 20ms
             this.$nextTick(() => {
-                //$refs绑定元素
-                if(!this.scroll){
-                    this.scroll = new BScroll(this.$refs.wrapper, {
-                    //开启点击事件 默认为false
-                    click:true
-                })
-                // console.log(this.scroll)
-                }else if(!this.$refs.wrapper){
-                    return
-                }
-                else{
-                    this.scroll.refresh()
-                }
+               this.scroll = new BScroll(this.$refs.wrapper);
             })
 
         }, 
@@ -122,6 +110,7 @@
 <style scoped rel="stylesheet/scss" lang="scss">
 .wrapper{
     height: 100vh;
+     overflow:hidden;
 }
     .blackbg{
         height: 4rem;
