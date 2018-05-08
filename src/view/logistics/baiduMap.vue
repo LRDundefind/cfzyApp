@@ -26,8 +26,8 @@ export default {
     data () {
         return {
 			orderId: this.$route.params.orderId,
-			longitude:116.404,	//定义经度
-　　　　　　 latitude:39.915	//定义纬度
+			longitude:null,	//定义经度
+　　　　　　 latitude:null	//定义纬度
         }
 	},
 	created(){
@@ -74,7 +74,7 @@ export default {
 			dT(){
 				// 百度地图API功能
 				// 创建Map实例
-				var map = new BMap.Map("XSDFXPage",{enableMapClick:true});
+			   var map = new BMap.Map("XSDFXPage",{enableMapClick:true});
 				// 初始化地图,设置中心点坐标和地图级别
 	　　　　　　var point = new BMap.Point(this.longitude,this.latitude);
 	　　　　　　map.centerAndZoom(point, 11);
