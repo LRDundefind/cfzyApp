@@ -302,6 +302,7 @@
         > p {
             border-top: 1px #f0f0f0 solid;
             > input {
+                font-size: 0.26rem;
                 float: right;
                 color: #4c4c4c;
                 text-align: right;

@@ -7,6 +7,7 @@
            </router-link>
 		</mt-header>
 		<search-box ref="search" @getSmeage="searchHandler"/>
+        <noDate v-if="listStore.length==0"></noDate>  
 		<div class="page-main earning page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
 			<mt-loadmore 
 				:auto-fill="false"
@@ -91,11 +92,12 @@
 <script>
 import { InfiniteScroll } from 'mint-ui';
 import searchBox from '@/components/searchBox/search';
+import noDate from '@/components/noData/noDate'
 import { orders } from '@/services/apis/orders.js';
 import { Loadmore , Indicator} from 'mint-ui'
 import Cookies from 'js-cookie'
 export default {
-	components: { searchBox },
+	components: { searchBox, noDate },
     data () {
         return {
         	//isScreen: false, //-----本期不做select筛选-

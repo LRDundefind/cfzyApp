@@ -1,9 +1,7 @@
 <template>
 	<div class="page-content">
 		<mt-header fixed  title="订单详情">
-		
-			    <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
-			
+		    <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
 		</mt-header>
 		<!--订单列表-->
 		<div class="page-main">
@@ -154,10 +152,6 @@ export default {
 				case 'status_deposit':
 					this.status = '暂存';
 					this.noComplete = true;
-					break;
-				case 'status_complete':
-					this.status = '已完成';
-					this.noComplete = false;
 					break;
 			}
 			switch(this.detail.payType){

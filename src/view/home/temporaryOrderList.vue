@@ -7,6 +7,7 @@
 		</mt-header>
 		<!--子emit发送触发事件this.$emit('getSmeage',this.searchValue)  父监听getSmeage，并接收值-->
 		<search-box ref="search" @getSmeage="searchHandler"/>
+        <noDate v-show="temporaryList.length==0"></noDate>  
 		<!--订单列表-->
 		<div class="page-main">
 			<ul class="order-list">
@@ -25,9 +26,10 @@
 
 <script>
 import searchBox from '@/components/searchBox/search'
+import noDate from '@/components/noData/noDate'
 import { home } from '@/services/apis/home.api'
 export default {
-	components: { searchBox },
+	components: { searchBox, noDate },
     data () {
         return {
             temporaryList: [],
@@ -52,7 +54,7 @@ export default {
 				});
 		},
 		searchHandler(value){
-			this.params.current_page = 1 ;
+			this.temporaryList = [],
 			this.getTemporaryList(value);
 		},
 	    //跳转到订单详情
