@@ -113,9 +113,10 @@ export default {
     created(){
         // let _this = this;
          Bus.$on('sendPhone', (msg)=>{　  
-                    console.log(msg+'123')
+                    
                      this.userName=msg;
                      console.log(this.userName)
+                     alert(this.userName)
                 })  
     },
     methods: {
