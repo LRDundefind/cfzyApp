@@ -120,6 +120,9 @@
     }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
+.wrapper{
+    height: 100vh;
+}
     .blackbg{
         height: 4rem;
         background: url(../../assets/client/kehu_kehuxiangqing.png) no-repeat;
