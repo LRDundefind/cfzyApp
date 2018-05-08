@@ -89,6 +89,7 @@
 </style>
 <script>
  import { Toast } from 'mint-ui';
+  import Bus from '@/components/bus.js'
  import { login } from '@/services/apis/login'
  import Cookies from 'js-cookie'
 export default {
@@ -107,7 +108,9 @@ export default {
         }
     },
     mounted () {
-
+        Bus.$on('sendPhone', function(val) {　  
+                     this.userName=val;
+                })  
     },
     methods: {
        changeType(){

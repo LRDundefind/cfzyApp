@@ -18,7 +18,7 @@ export default [
 		}
 	},
 	{
-		path:'baiduMap',
+		path:'baiduMap/:orderId',
 		name:'baiduMap',
 		components: {
 			mainView: baiduMap

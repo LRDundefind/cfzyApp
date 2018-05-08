@@ -118,6 +118,7 @@
 <script>
 
     import {Toast} from 'mint-ui';
+    import Bus from '@/components/bus.js'
     import {login} from '@/services/apis/login'
     import Cookies from 'js-cookie'
     import securitycode from '@/view/login/mobiephone'
@@ -267,6 +268,7 @@
                             duration: 3000
                         });
                         setTimeout(() => {
+                            Bus.$emit('sendPhone', this.phoneNumber);
                             this.$router.push({name: 'login'});
                         }, 3000)
 

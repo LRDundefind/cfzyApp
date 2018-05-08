@@ -2,7 +2,7 @@
 	<div class="page-content">
 		<mt-header fixed  title="车次位置">
                
-                    <mt-button icon="back" slot="left" @click="golist">返回</mt-button>
+                    <mt-button icon="back" slot="left" @click="golist"></mt-button>
             
 		</mt-header>
 		<!--物流-->
@@ -19,16 +19,22 @@
 </template>
 
 <script>
-
+import Cookies from 'js-cookie'
+import {logistics} from '@/services/apis/logistics'
 export default {
 
     data () {
         return {
+			orderId: this.$route.params.orderId,
 			longitude:116.404,	//定义经度
 　　　　　　 latitude:39.915	//定义纬度
         }
-    },
+	},
+	created(){
+		// this.goDetail()
+	},
     mounted () {
+		  this.goDetail()
            // 百度地图API功能
             // 创建Map实例
             var map = new BMap.Map("XSDFXPage",{enableMapClick:true});
@@ -48,7 +54,33 @@ export default {
     },
     methods: {
             goDetail(){
-                
+                 let rd=parseInt(100*Math.random());  //需要的随机数
+					if(rd>900){
+						rd
+					}
+					else{
+						rd=rd+100
+					}
+					let time=new Date().getTime();     //生成时间戳
+					let uId= Cookies.get('sid');
+					let params = {
+								uId:uId,
+								tokenId:'',
+								time:time,
+								rd:rd,
+								inCode:140007,
+								content:{
+										orderId:this.orderId
+								}
+						};
+					logistics.auth(params).then(response => {
+						let ss=JSON.parse(response.data.results)
+						this.Xdtlist=ss.content;
+						console.log(this.Xdtlist)
+						this.longitude=this.Xdtlist.eandw;
+						this.latitude=this.Xdtlist.nands;
+						
+					})
             },
             golist(){
                 window.history.go(-1);

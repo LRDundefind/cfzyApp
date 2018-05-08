@@ -19,26 +19,26 @@
 				:bottom-all-loaded="allLoaded"
 				ref="loadmore"> -->
 
-                <div v-for="n in 3" :key='n.id' class="main-list" @click="goDetail()">
+                <div v-for="n in Xdtlist" :key='n.id' class="main-list" @click="goDetail()">
                     <div class="ub ub-ac heade">
                         <div class='lis-icon'>发货人&nbsp;</div>
                         <!-- {{n.nickname}} -->
-                        <div class='ub-f1 ut-s ft28'> 张三</div>
+                        <div class='ub-f1 ut-s ft28'>{{n.goodOwnerName}}</div>
                         <!-- 正常客户状态 -->
-                        <div class='res8 lis-sw col33d547' @click="goBaiMap()">查看位置</div>
+                        <div class='res8 lis-sw col33d547' @click="goBaiMap(n.orderId)">查看位置</div>
                     </div>
                     <ul >
                         <li class="ub ub-pj">
                             <div class="ub-f1">车牌号</div>
-                            <div class="ub-f1">888888</div>
+                            <div class="ub-f1">{{n.plateNumber}}</div>
                         </li>
                         <li class="ub ub-pj">
                             <div class="ub-f1">司机</div>
-                            <div class="ub-f1">小李</div>
+                            <div class="ub-f1">{{n.carDriverMan}}</div>
                         </li>
                         <li class="ub ub-pj">
                             <div class="ub-f1">司机电话</div>
-                            <div class="ub-f1">小李</div>
+                            <div class="ub-f1">{{n.carDriverPhone}}</div>
                         </li>
                     </ul>
                 </div>
@@ -52,31 +52,25 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 import {logistics} from '@/services/apis/logistics'
 export default {
 
     data () {
         return {
 			  allLoaded: false,
-			  msg:'',
+              msg:'',
+              Xdtlist:[],
 			  wrapperHeight: 0,//容器高度
         }
     },
     mounted () {
 
-            this.wrapperHeight = document.documentElement.clientHeight - 150; 
+            this.wrapperHeight = document.documentElement.clientHeight - 85; 
              
     },
     created(){
-         let params = {
-                  phoneNumber:18253175771,
-                  page:1,
-                  count:10,
-                  orderState:3,
-              };
-        logistics.auth(params).then(response => {
-            
-        })
+        this.getlist()
     },
     methods: {
 			// 跳转区分
@@ -86,9 +80,40 @@ export default {
 				}
 			},
 			//查看位置
-            goBaiMap(){
-				this.$router.push({name: 'baiduMap', params: {}})
-			}
+            goBaiMap(orderId){
+				this.$router.push({name: 'baiduMap', params: {orderId:orderId}})
+            },
+            getlist(){
+                let rd=parseInt(100*Math.random());  //需要的随机数
+                if(rd>900){
+                    rd
+                }
+                else{
+                    rd=rd+100
+                }
+                let time=new Date().getTime();     //生成时间戳
+                let uId= Cookies.get('sid');
+                let params = {
+                            uId:uId,
+                            tokenId:'',
+                            time:time,
+                            rd:rd,
+                            inCode:140022,
+                            content:{
+                                    phoneNumber:18253175771,
+                                    page:1,
+                                    count:10,
+                                    orderState:3,
+                            }
+                    };
+                logistics.auth(params).then(response => {
+                    let ss=JSON.parse(response.data.results)
+                    this.Xdtlist=ss.content.items;
+                    console.log(this.Xdtlist)
+                    
+                })
+            }
+            
     }
 }
 </script>
@@ -96,8 +121,8 @@ export default {
 .page-loadmore-wrappe{
    overflow: scroll;
 }
-.ft28{font-size: 0.43rem;}
-.col33d547{color: #33d547;border:1px solid #33d547;padding: 0.1rem 0.25rem;border-radius: 25px;}
+.ft28{font-size: 0.36rem;}
+.col33d547{color: #33d547;border:1px solid #33d547;padding: 0.05rem 0.25rem;border-radius: 25px;}
     .im {
         width: 0.8rem;
         height: 0.8rem;
@@ -111,13 +136,12 @@ export default {
         padding: 0.2rem;
         color: #333;
         .heade {
-            font-size: 0.4rem;
+            font-size: 0.32rem;
             border-bottom: 1px #f0f0f0 solid;
             padding-bottom: 0.2rem;
         }
         h3 {
-            font-size: 0.4rem;
-
+            font-size: 0.32rem;
             line-height: 0.8rem;
         }
         ul {

@@ -7,7 +7,7 @@
             <span @click="addCustomer" style="font-size: 0.32rem" slot="right" v-if="type != 'order'">添加客户</span>
         </mt-header>
         <search-box  @getSmeage="searchstart"  ref="search"/>
-     
+        <noDate v-show="listStore.length==0"></noDate>  
         <div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }" >
 
             <mt-loadmore 
@@ -58,6 +58,7 @@
 
 <script>
     import searchBox from '@/components/searchBox/search'
+    import noDate from '@/components/noData/noDate'
     import { client } from '@/services/apis/client'
     import Cookies from 'js-cookie' 
     import { Loadmore , Indicator} from 'mint-ui'
@@ -79,7 +80,8 @@
             }
         },
         components: {
-            searchBox
+            searchBox,
+            noDate
         },
         mounted () {
            
