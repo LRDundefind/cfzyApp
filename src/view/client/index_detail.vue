@@ -18,7 +18,7 @@
         <div class="page-main">
             <div class="main-list">
                 <p class="clearfix">消费次数<span>{{listdata.consum_num}}</span></p>
-                <p class="clearfix">最后消费时间<span>{{listdata.sysCreateTime}}</span></p>
+                <p class="clearfix">最后消费时间<span>{{listdata.consum_ltime}}</span></p>
             </div>
 
             <div class="main-list">
