@@ -304,7 +304,7 @@
                     });
                 } else if (data.goods.length == 0) {
                     Toast({
-                        message: '货品信息不能为空',
+                        message: '请维护车次货品信息',
                         position: 'middle',
                         duration: 2000
                     });
