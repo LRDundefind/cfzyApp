@@ -26,6 +26,7 @@
                 <!--<search-box @getSmeage="searchBlack" :msg="msg" ref="search"/>-->
 
                 <ul class="order-record">
+                    <noDate v-if="consumeData == 0"></noDate> 
                     <li v-for="item in consumeData" :key="item.id" @click="ordersDetail(item.oid)">
                         <div class="ub list-top">
                             <span class="ub-f1">订单号 {{item.orderNo}}</span>
@@ -40,6 +41,7 @@
             </div>
             <!--货品信息-->
             <div v-if="selected == 'goods'">
+                <noDate v-if="repaymentData == 0"></noDate> 
                 <ul class="pay-list">
                     <!-- <li class="pay-total ub ub-pj">
                         <div class="ub ub-ac">
@@ -78,9 +80,9 @@
     import {Toast} from 'mint-ui';
     import searchBox from '@/components/searchBox/search'
     import {keyValue} from '@/services/apis/key-value';
-
+     import noDate from '@/components/noData/noDate'
     export default {
-        components: {searchBox},
+        components: {searchBox,searchBox},
 
         data () {
             return {
