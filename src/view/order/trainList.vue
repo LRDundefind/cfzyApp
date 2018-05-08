@@ -71,7 +71,6 @@ export default {
 			order.getTrainList(this.params)
 				.then(response => {
 					this.trainList = response.data.results;
-					this.counts = this.trainList.length;
 					if(this.trainList.length==this.params.page_size){  
 						//判断是否应该加载下一页
 						this.params.current_page+=1 ;
@@ -80,7 +79,8 @@ export default {
 						this.allLoaded = true;
 					}
 					if (this.trainList) {
-						this.listStore.push(...this.trainList)
+						this.listStore.push(...this.trainList);
+						this.counts = this.listStore.length;
 					}
 				})
 				.catch(function (response) {

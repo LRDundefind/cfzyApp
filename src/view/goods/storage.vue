@@ -4,7 +4,7 @@
             <router-link to="/home" slot="left">
                 <mt-button icon="back"></mt-button>
             </router-link>
-            <mt-button slot="right" style="font-size: 0.32rem" :disabled="selected == 'basic'" @click="confirmStorage">
+            <mt-button slot="right" style="font-size: 0.32rem" @click="confirmStorage">
                 确认入库
             </mt-button>
         </mt-header>
