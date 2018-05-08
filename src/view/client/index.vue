@@ -97,6 +97,7 @@
             searchstart(msg){
                 this.params.search=msg;
                 this.listStore = [];
+                this.params.current_page=1 ;
                 this.getList();
             },
             loadTop(){
