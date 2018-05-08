@@ -103,7 +103,7 @@
 					<div class="">备注</div>
 				</div>
 				<div class="term no-border">
-					<textarea class="" v-model="beizhu" placeholder="备注信息"></textarea>
+					<textarea class="" v-model="beizhu" placeholder="备注信息，最多输入420个字符"></textarea>
 				</div>
 			</div>
 			<!--签名-->
@@ -647,6 +647,14 @@ export default {
         		return false;
         	}
         	
+        	if(this.beizhu.length > 420){
+        		Toast({
+					message: '备注字数请不要超出规定字数',
+					position: 'middle',
+					duration: 1000
+    			});
+        		return false;
+        	}
         	var params = {
     			tid: this.tid,//车次if
     			cid: this.customerId,//客户id
@@ -734,6 +742,8 @@ i{
 			font-size: 0.26rem;
 			color: #666;
 		    padding-bottom: 0.6rem;
+		    line-height: 0.38rem;
+    		margin-top: 0.2rem;
 		}
 		.edu{
 			color: #333;

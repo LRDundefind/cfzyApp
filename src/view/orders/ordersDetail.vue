@@ -82,7 +82,7 @@
 					<div class="">备注</div>
 				</div>
 				<div class="term no-border">
-					<div class="remarks">{{detail.remark}}</div>
+					<div class="remarks">{{detail.remark || '暂无~'}}</div>
 				</div>
 			</div>
 			<!--下单时间-->
@@ -211,6 +211,8 @@ i{
 			font-size: 0.26rem;
 			color: #666;
 		    padding-bottom: 0.6rem;
+		    line-height: 0.38rem;
+    		margin-top: 0.2rem;
 		}
 	}
 	.customer-head{
