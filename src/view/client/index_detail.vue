@@ -16,7 +16,7 @@
             </div>
             
 
-            <div class="page-main " >
+            <div class="page-main " :style="{ height: wrapperHeight + 'px' }">
                 <div class="main-list">
                     <p class="clearfix">消费次数<span>{{listdata.consum_num}}</span></p>
                     <p class="clearfix">最后消费时间<span>{{listdata.consum_ltime}}</span></p>
@@ -68,10 +68,10 @@
             }
         },
         mounted () {
-        
-            this.$nextTick(() => {
-               this.scroll = new BScroll(this.$refs.wrapper,{});
-            })
+            this.wrapperHeight = document.documentElement.clientHeight - 175;
+            // this.$nextTick(() => {
+            //    this.scroll = new BScroll(this.$refs.wrapper,{});
+            // })
 
         }, 
         created(){
@@ -116,6 +116,9 @@
 }
 .content{
     height: 100%;
+}
+.page-loadmore-wrappe{
+   overflow: scroll;
 }
     .blackbg{
         height: 4rem;
