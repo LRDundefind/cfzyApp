@@ -123,7 +123,7 @@
                                     position: 'middle',
                                     duration: 5000
                                 });
-                                this.$router.push({name: 'login'});
+                                this.$router.push({name: 'my'});
                             } else if (response.data.status == 'N') {
                                 Toast({
                                     message: response.data.error_msg,

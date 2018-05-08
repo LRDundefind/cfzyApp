@@ -1,5 +1,5 @@
 <template>
-    <div class="page-content" id="client_detail">
+    <div class="page-content " id="client_detail" >
         <div style="height:4rem">
             <mt-header fixed title="客 户">
                     <mt-button icon="back" slot="left" @click="goClient"></mt-button>
@@ -15,7 +15,7 @@
         </div>
         
 
-        <div class="page-main">
+        <div class="page-main wrapper" ref="wrapper">
             <div class="main-list">
                 <p class="clearfix">消费次数<span>{{listdata.consum_num}}</span></p>
                 <p class="clearfix">最后消费时间<span>{{listdata.consum_ltime}}</span></p>
@@ -54,6 +54,7 @@
 
 <script>
     import { client } from '@/services/apis/client'
+    import BScroll from 'better-scroll'
     export default {
         name: 'client_detail',
         data () {
@@ -65,6 +66,22 @@
             }
         },
         mounted () {
+            //即定时器 20ms
+            this.$nextTick(() => {
+                //$refs绑定元素
+                if(!this.scroll){
+                    this.scroll = new BScroll(this.$refs.wrapper, {
+                    //开启点击事件 默认为false
+                    click:true
+                })
+                // console.log(this.scroll)
+                }else if(!this.$refs.wrapper){
+                    return
+                }
+                else{
+                    this.scroll.refresh()
+                }
+            })
 
         }, 
         created(){
@@ -103,6 +120,9 @@
     }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
+.wrapper{
+    height: 100vh;
+}
     .blackbg{
         height: 4rem;
         background: url(../../assets/client/kehu_kehuxiangqing.png) no-repeat;
