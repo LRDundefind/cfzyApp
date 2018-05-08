@@ -261,6 +261,10 @@ i{
 				width: 19%;
 				display: block;
 				float: left;
+				text-overflow:ellipsis;
+				overflow:hidden;
+				white-space:nowrap; 
+				display:block;
 			}
 			span:first-child{
 				padding-left: 0.25rem;
