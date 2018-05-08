@@ -45,7 +45,7 @@
                     </div>
                     <div class="basic-list">
                         <p class="clearfix">司机姓名<input type="text" v-model="stall.driverName"></p>
-                        <p class="clearfix">司机电话<input type="text" v-model="stall.driverPhone"></p>
+                        <p class="clearfix">司机电话<input type="number" v-model="stall.driverPhone"></p>
                     </div>
 
                     <div class="basic-list">
