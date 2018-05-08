@@ -4,6 +4,7 @@
 		    <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
 		</mt-header>
 		<search-box ref="search" @getSmeage="searchHandler"/>
+		<noDate v-if="listStore.length==0"></noDate>  
 		<!--订单列表-->
 		<div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
 			<mt-loadmore 
@@ -51,10 +52,11 @@
 
 <script>
 import searchBox from '@/components/searchBox/search'
+import noDate from '@/components/noData/noDate'
 import { orders } from '@/services/apis/orders.js'
 import { Loadmore , Indicator} from 'mint-ui'
 export default {
-	components: { searchBox },
+	components: { searchBox, noDate },
     data () {
         return {
         	allLoaded: false,

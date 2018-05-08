@@ -1,10 +1,9 @@
 <template>
 	<div class="page-content">
 		<mt-header fixed  title="车次">
-		
-			    <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
-			
+		    <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
 		</mt-header>
+		<noDate v-if="listStore.length==0"></noDate>  
 		<!--车次列表-->
 		<div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
 			<mt-loadmore 
@@ -19,7 +18,7 @@
 						<div>{{list.trainsNum}}</div>
 					</div>
 					<div class="list-bottom ub ub-ac">
-						<div class="list-bl">到达时间</div>
+						<div class="list-bl">入库时间</div>
 						<div class="ub-f1">{{list.putStorageTime}}</div>
 						<div>{{list.plateNum}}</div>
 					</div>
@@ -35,11 +34,13 @@
 <script>
 
 import Bus from '@/components/bus.js'
+import noDate from '@/components/noData/noDate'
 import {order} from '@/services/apis/order.js'
 import { Loadmore } from 'mint-ui'
 import { InfiniteScroll } from 'mint-ui'
 import Cookies from 'js-cookie'
 export default {
+	components: { noDate },
     data () {
         return {
         	allLoaded: false,
