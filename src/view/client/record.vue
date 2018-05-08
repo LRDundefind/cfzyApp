@@ -26,7 +26,7 @@
                 <!--<search-box @getSmeage="searchBlack" :msg="msg" ref="search"/>-->
 
                 <ul class="order-record">
-                    <li v-for="item in consumeData" @click="ordersDetail(item.oid)">
+                    <li v-for="item in consumeData" :key="item.id" @click="ordersDetail(item.oid)">
                         <div class="ub list-top">
                             <span class="ub-f1">订单号 {{item.orderNo}}</span>
                             <i class="c-6">{{item.status}}</i>
@@ -41,7 +41,7 @@
             <!--货品信息-->
             <div v-if="selected == 'goods'">
                 <ul class="pay-list">
-                    <li class="pay-total ub ub-pj">
+                    <!-- <li class="pay-total ub ub-pj">
                         <div class="ub ub-ac">
                             <span class="ub-f1 c-3">赊账总金额</span>
                             <i class="c-6">￥30000</i>
@@ -50,8 +50,8 @@
                             <span class="ub-f1 c-3">待还款金额</span>
                             <i class="c-6">￥30000</i>
                         </div>
-                    </li>
-                    <li v-for="item in repaymentData">
+                    </li> -->
+                    <li v-for="item in repaymentData" :key="item.id">
                         <div class="ub list-t">
                             <div class="pay">还款金额</div>
                             <div class="edu ub-f1">{{item.refundAmount}}</div>
