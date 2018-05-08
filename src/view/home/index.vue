@@ -200,17 +200,16 @@
         background-color: white;
         margin: 0.22rem 0;
         padding: 0.32rem 0;
+        text-align: center;
 
         .number {
             font-size: 0.42rem;
             color: #33d57c;
-            text-align: center;
             min-height: 0.48rem;
         }
         .words {
             font-size: 0.24rem;
             color: #666;
-            padding-left: 0.8rem;
             padding-top: 0.24rem;
         }
     }
