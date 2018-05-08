@@ -3,7 +3,7 @@
 		<mt-header fixed  title="车次">
 		    <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
 		</mt-header>
-		<noDate v-if="listStore.length==0"></noDate>  
+		<noDate v-if="counts == 0"></noDate>  
 		<!--车次列表-->
 		<div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
 			<mt-loadmore 
@@ -47,6 +47,7 @@ export default {
         	wrapperHeight: 0,//容器高度
         	listStore: [],
         	trainList: [],
+        	counts: null,
         	params:{
         		current_page: 1,
 				page_size: 10
@@ -70,6 +71,7 @@ export default {
 			order.getTrainList(this.params)
 				.then(response => {
 					this.trainList = response.data.results;
+					this.counts = this.trainList.length;
 					if(this.trainList.length==this.params.page_size){  
 						//判断是否应该加载下一页
 						this.params.current_page+=1 ;

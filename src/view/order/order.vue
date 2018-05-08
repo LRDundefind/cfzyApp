@@ -668,6 +668,11 @@ export default {
         	};
         	order.submitorder(params)
         		.then(response => {
+        			Toast({
+						message: '下单成功',
+						position: 'middle',
+						duration: 2000
+	    			});
 					//下单成功跳转至首页
 		            this.$router.push({
 		            	name: 'home',
@@ -821,6 +826,10 @@ i{
 			}
 			span:first-child{
 				padding-left: 0.25rem;
+				text-overflow:ellipsis;
+				overflow:hidden;
+				white-space:nowrap; 
+				display:block;
 			}
 		}
 		.title{

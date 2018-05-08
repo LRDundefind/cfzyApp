@@ -4,7 +4,7 @@
 		    <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
 		</mt-header>
 		<search-box ref="search" @getSmeage="searchHandler"/>
-		<noDate v-if="listStore.length==0"></noDate>  
+		<noDate v-if="counts == 0"></noDate>  
 		<!--订单列表-->
 		<div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
 			<mt-loadmore 
@@ -68,6 +68,7 @@ export default {
                 
             listStore: [],
 			listdata: [],
+			counts: null,
 			val: '', //搜索
         }
     },
@@ -89,7 +90,7 @@ export default {
             orders.getOrdersList(params)
                 .then(response => {
                     this.listdata = response.data.results;
-                    
+                    this.counts = this.listdata.length;
 					if(this.listdata.length == this.params.page_size){  
                         //判断是否应该加载下一页
                         this.params.current_page += 1 ;
