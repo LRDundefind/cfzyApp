@@ -4,6 +4,7 @@
             <mt-button icon="back" @click="goMy()" slot="left"></mt-button>
         </mt-header>
         <search-box @getSmeage="searchBlack" :msg="msg" ref="search"/>
+        <noDate v-if="listStore.length == 0"></noDate>
         <div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
             <mt-loadmore
                     :auto-fill="false"
@@ -41,6 +42,7 @@
     import searchBox from '@/components/searchBox/search'
     import {home} from '@/services/apis/home.api'
     import { Loadmore , Indicator} from 'mint-ui'
+    import noDate from '@/components/noData/noDate'
 
     export default {
         data () {
@@ -60,6 +62,9 @@
                 imgpath: process.env.BASE_PATH
 
             }
+        },
+        components:{
+            noDate
         },
         created(){
             this.black = this.$route.params.black || false;
