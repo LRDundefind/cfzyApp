@@ -148,13 +148,13 @@ export default {
                 let time=new Date().getTime();     //生成时间戳
                 let uId= Cookies.get('sid');
                 let params = {
-                            uId:uId,
+                            uId:'',
                             tokenId:'',
                             time:time,
                             rd:rd,
                             inCode:100017,
                             content:{
-                                    mobilePhone:18253175771,
+                                    mobilePhone:Cookies.get('xdtPhne'),
                                     xdyUserId:uId,
                             }
                     };
