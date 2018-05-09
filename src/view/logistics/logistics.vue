@@ -110,7 +110,7 @@ export default {
                             inCode:140021,
 
                             content:{
-                                    mobilePhone:18253175771,
+                                    mobilePhone:Cookies.get('xdtPhne'),
                                     userId:Cookies.get('xdtuseid'),
                                     page:1,
                                     count:10,
