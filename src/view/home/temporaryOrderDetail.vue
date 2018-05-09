@@ -1,9 +1,7 @@
 <template>
 	<div class="page-content">
 		<mt-header fixed  title="暂存订单详情">
-			<router-link to="/" slot="left">
-			    <mt-button icon="back" @click="goBack()"></mt-button>
-			</router-link>
+		    <mt-button icon="back" @click="goBack()"></mt-button>
 		</mt-header>
 		<!--订单列表-->
 		<div class="page-main">
@@ -352,6 +350,7 @@ i{
 		    padding-bottom: 0.6rem;
 		    line-height: 0.38rem;
     		margin-top: 0.2rem;
+    		word-break: break-all;
 		}
 	}
 	.customer-head{
