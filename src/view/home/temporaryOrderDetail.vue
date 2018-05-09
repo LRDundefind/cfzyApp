@@ -28,19 +28,23 @@
 			<div class="order-detail item-two">
 				<div class="ub term">
 					<div class="ub-f1">合计金额</div>
-					<div class="total">￥{{totalCost.tatol || detailInfo.salesAmount}}</div>
+					<div class="total" v-if = "totalCost.tatol">￥{{totalCost.tatol | keepTwoNum}}</div>
+					<div class="total" v-if = "!totalCost.tatol">￥{{detailInfo.salesAmount}}</div>
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">货款</div>
-					<div class="edu">￥{{totalCost.totalAmount || defaultAmount}}</div>
+					<div class="edu" v-if = "totalCost.totalAmount">￥{{totalCost.totalAmount | keepTwoNum}}</div>
+					<div class="edu" v-if = "!totalCost.totalAmount">￥{{defaultAmount}}</div>
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">包装费</div>
-					<div class="edu">￥{{totalCost.totalPack || detailInfo.packCost}}</div><!--totalCost.totalPack-->
+					<div class="edu" v-if = "totalCost.totalPack">￥{{totalCost.totalPack | keepTwoNum}}</div><!--totalCost.totalPack-->
+					<div class="edu" v-if = "!totalCost.totalPack">￥{{detailInfo.packCost}}</div><!--totalCost.totalPack-->
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">过磅费</div>
-					<div class="edu">￥{{totalCost.totalWeigh || detailInfo.weighCost}}</div><!--totalCost.totalWeigh-->
+					<div class="edu" v-if = "totalCost.totalWeigh">￥{{totalCost.totalWeigh | keepTwoNum}}</div><!--totalCost.totalWeigh-->
+					<div class="edu" v-if = "!totalCost.totalWeigh">￥{{detailInfo.weighCost}}</div><!--totalCost.totalWeigh-->
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">三轮费</div>
@@ -145,6 +149,12 @@ export default {
     mounted () {
 		this.getTemporaryOrderDetail();
     },
+    filters: {
+		keepTwoNum: function(value){
+			value = Number(value);
+			return value.toFixed(2);
+		}
+	},
     methods: {
 		//暂存订单-详情
 		getTemporaryOrderDetail(){
@@ -238,7 +248,7 @@ export default {
 						this.totalCost.totalAmount = 0;
 						this.totalCost.totalPack = 0;
 						this.totalCost.totalWeigh = 0;
-						this.totalCost.tatol = (this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost).toFixed(2); //合计费用
+						this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost; //合计费用
 
 						this.goodCosts = response.data.results; //计算出 金额goodAmount、包装费packCost、过磅费weighCost
 						
@@ -265,7 +275,7 @@ export default {
 							this.totalCost.totalAmount += this.goodsInfo[i]['goodAmount']; //总货款费用
 							this.totalCost.totalPack += this.goodsInfo[i]['packCost']; //总包装费
 							this.totalCost.totalWeigh += Number(this.goodsInfo[i]['weighCost']); //总过磅费
-							this.totalCost.tatol = (this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.detailInfo.deliveryCost).toFixed(2); //合计费用
+							this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.detailInfo.deliveryCost; //合计费用
 	                    }
 
 	                    //重置弹框单价
