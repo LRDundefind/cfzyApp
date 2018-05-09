@@ -22,7 +22,7 @@
 				:bottom-all-loaded="allLoaded"
 				ref="loadmore"> -->
 
-                <div v-for="n in Xdtlist" :key='n.id' class="main-list" @click="goDetail()">
+                <div v-for="n in Xdtlist" :key='n.id' class="main-list" @click="goDetail(n)">
                     <div class="ub ub-ac heade">
                         <div class='lis-icon'>发货人&nbsp;</div>
                         <!-- {{n.nickname}} -->
@@ -80,9 +80,9 @@ export default {
     },
     methods: {
 			// 跳转区分
-			goDetail(){
+			goDetail(item){
 				if(this.$route.params.fromc=='order'){
-					this.$router.push({name: 'storage'})
+					this.$router.push({name: 'storage',params:{item:item}})
 				}
 			},
 			//查看位置
