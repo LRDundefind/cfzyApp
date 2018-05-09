@@ -576,7 +576,7 @@ export default {
     			return false;
     		}
         	this.sanlunfei = false;
-        	this.totalCost.deliveryCost = Number(this.deliveryCost) || '';
+        	this.totalCost.deliveryCost = Number(this.deliveryCost);
 			this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost;
         },
         
