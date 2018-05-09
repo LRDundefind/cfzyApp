@@ -95,7 +95,8 @@
                 if(this.$route.params.come == 'black'){
                     this.$router.push({name: 'blackList'})
                 }else{
-                    this.$router.push({name:'client'})
+                	window.history.go(-1);
+                    //this.$router.push({name:'client'})
                 }
             },
 
