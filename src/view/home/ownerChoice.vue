@@ -1,8 +1,8 @@
 <template>
     <div class="page-content" id="client_detail">
         <mt-header fixed title="档位选择">
-            <router-link to="/home" slot="left">
-                <mt-button icon="back"></mt-button>
+            <router-link to="/" slot="left">
+                <mt-button icon="back" @click="goBack()"></mt-button>
             </router-link>
         </mt-header>
         <div class="page-main">
