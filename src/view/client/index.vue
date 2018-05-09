@@ -167,6 +167,11 @@
         border-radius: 50%;
         overflow: hidden;
         margin-right: 0.2rem;
+        img{
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
     }
     .im2 {
       width: 1.2rem;
