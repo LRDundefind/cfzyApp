@@ -13,7 +13,7 @@
 				<div>敬请期待...</div>
 			</div> -->
 			<div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }" >
-
+            <noDate v-show="Xdtlist.length=='0'"></noDate>  
           
             <!-- <mt-loadmore 
 				:auto-fill="false"
@@ -56,9 +56,12 @@
 
 <script>
 import Cookies from 'js-cookie'
+import noDate from '@/components/noData/noDate'
 import {logistics} from '@/services/apis/logistics'
 export default {
-
+    components:{
+        noDate
+    },
     data () {
         return {
 			  allLoaded: false,
@@ -104,9 +107,11 @@ export default {
                             tokenId:'',
                             time:time,
                             rd:rd,
-                            inCode:140022,
+                            inCode:140021,
+
                             content:{
-                                    // phoneNumber:18253175771,
+                                    mobilePhone:18253175771,
+                                    userId:Cookies.get('xdtuseid'),
                                     page:1,
                                     count:10,
                                     orderState:3,
