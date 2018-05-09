@@ -242,12 +242,21 @@
                             duration: 3000
                             });
                     }
-                    else if(!new RegExp(/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/).test(this.IdcardRead)){
+                    else if(this.phone==''){
                         Toast({
+                            message: '请输入手机号',
+                            position: 'middle',
+                            duration: 3000
+                            });
+                    }
+                    else if(this.IdcardRead!=''){
+                        if(!new RegExp(/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/).test(this.IdcardRead)){
+                             Toast({
                             message: '身份证格式输入有误',
                             position: 'middle',
                             duration: 3000
                             });
+                        }
                     }
                     else{
                         this.addover=true;
@@ -302,8 +311,16 @@
                     client.Cgemessage(params)
                         .then(response => {
                             if(response.data.status=='Y'){
-                                this.addover=false;
-                                this.$router.push({name: 'client'});
+                                Toast({
+                                        message: '更新成功',
+                                        position: 'middle',
+                                        duration: 3000
+                                        });
+                                setTimeout(() => {
+                                    this.addover=false;
+                                    this.$router.push({name: 'client'});
+                                }, 3000)
+                                
                             }
                         })
                 
