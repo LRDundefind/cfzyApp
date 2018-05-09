@@ -1,15 +1,28 @@
-import home from '@/view/home/index'
-import blackList from '@/view/home/blackList'
-import ownerChoice from '@/view/home/ownerChoice'
+// import home from '@/view/home/index'
+// import blackList from '@/view/home/blackList'
+// import ownerChoice from '@/view/home/ownerChoice'
 
+// //暂存订单
+// import temporaryOrderList from '@/view/home/temporaryOrderList'
+// //暂存订单详情
+// import temporaryOrderDetail from '@/view/home/temporaryOrderDetail'
+// //车次列表
+// import settlementList from '@/view/home/settlementList'
+// //车次详情
+// import settlementDetail from '@/view/home/settlementDetail'
+
+
+const home = resolve => require([ '@/view/home/index'],resolve)
+const blackList = resolve => require([ '@/view/home/blackList'],resolve)
+const ownerChoice = resolve => require([ '@/view/home/ownerChoice'],resolve)
 //暂存订单
-import temporaryOrderList from '@/view/home/temporaryOrderList'
+const temporaryOrderList = resolve => require([ '@/view/home/temporaryOrderList'],resolve)
 //暂存订单详情
-import temporaryOrderDetail from '@/view/home/temporaryOrderDetail'
+const temporaryOrderDetail = resolve => require([ '@/view/home/temporaryOrderDetail'],resolve)
 //车次列表
-import settlementList from '@/view/home/settlementList'
+const settlementList = resolve => require([ '@/view/home/settlementList'],resolve)
 //车次详情
-import settlementDetail from '@/view/home/settlementDetail'
+const settlementDetail = resolve => require([ '@/view/home/settlementDetail'],resolve)
 
 export default [{
 	path: 'home',

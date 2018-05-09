@@ -1,7 +1,13 @@
-import client from '@/view/client/index'
-import client_detail from '@/view/client/index_detail'
-import index_change from '@/view/client/index_change'
-import record from '@/view/client/record'
+// import client from '@/view/client/index'
+// import client_detail from '@/view/client/index_detail'
+// import index_change from '@/view/client/index_change'
+// import record from '@/view/client/record'
+
+const client = resolve => require([ '@/view/client/index'],resolve)
+const client_detail = resolve => require([ '@/view/client/client_detail'],resolve)
+const index_change = resolve => require([ '@/view/client/index_change'],resolve)
+const record = resolve => require([ '@/view/client/record'],resolve)
+
 
 export default [
     {

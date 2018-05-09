@@ -1,5 +1,7 @@
-import storage from '@/view/goods/storage'
-import goodsDetails from '@/view/goods/goodsDetails'
+// import storage from '@/view/goods/storage'
+// import goodsDetails from '@/view/goods/goodsDetails'
+
+const storage = resolve => require([ '@/view/goods/storage'],resolve)
 
 export default [
     // {

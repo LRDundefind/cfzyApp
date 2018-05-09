@@ -1,6 +1,10 @@
 //物流
-import logistics from '@/view/logistics/logistics'
-import baiduMap from '@/view/logistics/baiduMap'
+// import logistics from '@/view/logistics/logistics'
+// import baiduMap from '@/view/logistics/baiduMap'
+
+const logistics = resolve => require([ '@/view/logistics/logistics'],resolve)
+const baiduMap = resolve => require([ '@/view/logistics/baiduMap'],resolve)
+
 
 export default [
 	{
