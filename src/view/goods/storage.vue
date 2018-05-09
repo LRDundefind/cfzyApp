@@ -31,30 +31,31 @@
             <!--基本信息-->
             <div v-if="selected == 'basic'">
                 <div class="">
+                    <div class="basic-list" @click="gologistics">
+                        <p class="clearfix">车次
+                            <span class="name">功能开发中...<img class="right-icon"
+                                                            src="../../assets/index/gray-right-icon.png"/></span>
+                        </p>
+                    </div>
                     <div class="basic-list" @click="goList">
                         <p class="clearfix">货主
                             <span class="name">{{stall.name}}<img class="right-icon"
                                                                   src="../../assets/index/gray-right-icon.png"/></span>
                         </p>
                     </div>
-                    <div class="basic-list" @click="gologistics">
-                        <p class="clearfix">车次
-                            <span class="name">功能开发中...<img class="right-icon"
-                                                                  src="../../assets/index/gray-right-icon.png"/></span>
-                        </p>
-                    </div>
+
                     <div class="basic-list">
-                        <p class="clearfix">司机姓名<input type="text" v-model="stall.driverName"></p>
-                        <p class="clearfix">司机电话<input type="number" v-model="stall.driverPhone"></p>
+                        <p class="clearfix">司机姓名<input type="text" v-model="stall.driverName" :disabled = "item.carDriverMan != ''"></p>
+                        <p class="clearfix">司机电话<input type="number" v-model="stall.driverPhone" :disabled = "item.carDriverPhone != ''"></p>
                     </div>
 
                     <div class="basic-list">
-                        <p class="clearfix">车牌号<input type="text" v-model="stall.plateNum"></p>
-                        <p class="clearfix">发货地点<input type="text" v-model="stall.startAddress"></p>
+                        <p class="clearfix">车牌号<input type="text" v-model="stall.plateNum" :disabled = "item.plateNumber != ''"></p>
+                        <p class="clearfix">发货地点<input type="text" v-model="stall.startAddress" :disabled = "item.sourceAddr != ''"></p>
                     </div>
 
                     <div class="basic-list">
-                        <p class="clearfix">产地<input type="text" v-model="stall.origin"></p>
+                        <p class="clearfix">产地<input type="text" v-model="stall.origin" :disabled = "item.productAddr != ''"></p>
                         <p class="clearfix" style="position: relative">产地证明
                             <input type="file" class="upload-picture" accept="image" @change="upload1($event,'source')"
                                    style="opacity: 0">
@@ -88,7 +89,7 @@
                         <p class="clearfix">备注</p>
                         <div class="remark">
                             <textarea name="" id="" cols="30" rows="3" placeholder="备注信息"
-                                      v-model="stall.remark"></textarea>
+                                      v-model="stall.remark" :disabled = "item.goodsRemark != ''"></textarea>
                         </div>
                     </div>
                 </div>
@@ -159,6 +160,7 @@
 
                 goodsDetails: false,//货品列表详情
                 ownerList: false,//货主列表
+                item:[],//物流信息
             }
         },
         components: {
@@ -167,6 +169,38 @@
         },
         mounted () {
 
+            console.log(this.item);
+            if(this.$route.params.item) {
+                this.item = this.$route.params.item;
+                if (this.item.carDriverMan) {
+                    this.stall.driverName = this.item.carDriverMan;
+                }
+                if (this.item.carDriverPhone) {
+                    this.stall.driverPhone = this.item.carDriverPhone;
+                }
+                if (this.item.plateNumber) {
+                    this.stall.plateNum = this.item.plateNumber;
+                }
+                if (this.item.sourceAddr) {
+                    this.stall.startAddress = this.item.sourceAddr;
+                }
+                if (this.item.productAddr) {
+                    this.stall.origin = this.item.productAddr;
+                }
+                if (this.item.goodsRemark) {
+                    this.stall.remark = this.item.goodsRemark;
+                }
+                console.log(this.item);
+            }else {
+                this.item={
+                    carDriverMan:'',
+                    carDriverPhone:'',
+                    plateNumber:'',
+                    sourceAddr:'',
+                    productAddr:'',
+                    goodsRemark:'',
+                }
+            }
         },
         methods: {
             //货主列表返回
@@ -231,7 +265,7 @@
             },
             //跳转到车次
             gologistics(){
-                this.$router.push({name: 'logistics', params: {fromc: 'order'}});
+                this.$router.push({name: 'logistics/fromc', params: {fromc: 'order'}});
             },
 
             //跳转到订单详情
@@ -474,6 +508,9 @@
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
     .storage {
+        input:disabled, textarea:disabled {
+            background-color: white!important;
+        }
         .mint-navbar {
             margin-top: 0.2rem;
             .mint-tab-item {

@@ -1,7 +1,10 @@
 <template>
 	<div class="page-content">
 		<mt-header fixed  title="物流">
-                <span class="c-3 f-s-16" slot="right">发布货源</span>
+            <router-link to="/storage" slot="left">
+                <mt-button v-if="this.$route.params.fromc=='order'" icon="back"></mt-button>
+            </router-link>
+            <span class="c-3 f-s-16" slot="right">发布货源</span>
 		</mt-header>
 		<!--物流-->
 		<div class="page-main logistics">
@@ -19,7 +22,7 @@
 				:bottom-all-loaded="allLoaded"
 				ref="loadmore"> -->
 
-                <div v-for="n in Xdtlist" :key='n.id' class="main-list" @click="goDetail()">
+                <div v-for="n in Xdtlist" :key='n.id' class="main-list" @click="goDetail(n)">
                     <div class="ub ub-ac heade">
                         <div class='lis-icon'>发货人&nbsp;</div>
                         <!-- {{n.nickname}} -->
@@ -65,18 +68,21 @@ export default {
         }
     },
     mounted () {
+        if(this.$route.params.fromc=='order'){
+            this.wrapperHeight = document.documentElement.clientHeight - 40;
+        }else {
+            this.wrapperHeight = document.documentElement.clientHeight - 85;
+        }
 
-            this.wrapperHeight = document.documentElement.clientHeight - 85; 
-             
     },
     created(){
         this.getlist()
     },
     methods: {
 			// 跳转区分
-			goDetail(){
+			goDetail(item){
 				if(this.$route.params.fromc=='order'){
-					this.$router.push({name: 'storage'})
+					this.$router.push({name: 'storage',params:{item:item}})
 				}
 			},
 			//查看位置
@@ -100,7 +106,7 @@ export default {
                             rd:rd,
                             inCode:140022,
                             content:{
-                                    phoneNumber:18253175771,
+                                    // phoneNumber:18253175771,
                                     page:1,
                                     count:10,
                                     orderState:3,

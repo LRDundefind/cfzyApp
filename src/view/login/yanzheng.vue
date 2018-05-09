@@ -268,7 +268,8 @@
                             duration: 3000
                         });
                         setTimeout(() => {
-                            Bus.$emit('sendPhone', this.phoneNumber);
+                            // Bus.$emit('sendPhone', this.phoneNumber);
+                            Cookies.set('loginPhone',this.phoneNumber)
                             this.$router.push({name: 'login'});
                         }, 3000)
 
