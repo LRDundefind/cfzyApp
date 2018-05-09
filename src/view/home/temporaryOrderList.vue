@@ -7,7 +7,7 @@
 		</mt-header>
 		<!--子emit发送触发事件this.$emit('getSmeage',this.searchValue)  父监听getSmeage，并接收值-->
 		<search-box ref="search" @getSmeage="searchHandler"/>
-        <noDate v-if="counts == 0"></noDate>  
+        <noDate v-if="counts == null"></noDate>  
 		<!--订单列表-->
 		<div class="page-main">
 			<ul class="order-list">

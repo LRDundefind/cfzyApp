@@ -7,7 +7,7 @@
            </router-link>
 		</mt-header>
 		<search-box ref="search" @getSmeage="searchHandler"/>
-        <noDate v-if="counts == 0"></noDate>  
+        <noDate v-if="counts == null"></noDate>  
 		<div class="page-main earning page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
 			<mt-loadmore 
 				:auto-fill="false"

@@ -13,7 +13,7 @@
 					<div class="ub-f1">订单号&nbsp;&nbsp;{{detailInfo.orderNo}}</div>
 					<div class="zt">{{orderStatus}}</div>
 				</div>
-				<div class="ub ub-ac term customer-head" @click="customerDetail(detailInfo.cid)">
+				<div class="ub ub-ac term customer-head" @click="customerDetail(detailInfo.cid)"><!--临时客户不可赊账-->
 					<div class="ub-f1">客户</div>
 					<!--<img src="../../assets/index/shouye_touxiang_img@2x.png" class="head">-->
 					<span>{{detailInfo.nickname || '临时客户'}}</span>

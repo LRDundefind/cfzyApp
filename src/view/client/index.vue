@@ -7,7 +7,7 @@
             <span @click="addCustomer" style="font-size: 0.32rem" slot="right" v-if="type != 'order'">添加客户</span>
         </mt-header>
         <search-box  @getSmeage="searchstart"  ref="search"/>
-        <noDate v-show="counts == 0 || listStore==''"></noDate>  
+        <noDate v-show="counts == null"></noDate>  
         <div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }" >
 
             <mt-loadmore 
