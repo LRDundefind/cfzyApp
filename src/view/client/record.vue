@@ -295,6 +295,7 @@
                 line-height: 0.48rem;
                 .remarks {
                     margin-right: 0.15rem;
+                    word-break: break-all;
                 }
             }
         }

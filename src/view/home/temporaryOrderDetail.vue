@@ -350,6 +350,7 @@ i{
 		    padding-bottom: 0.6rem;
 		    line-height: 0.38rem;
     		margin-top: 0.2rem;
+    		word-break: break-all;
 		}
 	}
 	.customer-head{
