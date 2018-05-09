@@ -1,7 +1,9 @@
 <template>
 	<div class="page-content">
 		<mt-header fixed  title="暂存订单详情">
-		    <mt-button icon="back" @click="goBack()"></mt-button>
+			<router-link to="/" slot="left">
+		    	<mt-button icon="back" @click="goBack()"></mt-button>
+		    </router-link>
 		</mt-header>
 		<!--订单列表-->
 		<div class="page-main">

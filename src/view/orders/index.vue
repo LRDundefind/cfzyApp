@@ -168,6 +168,7 @@ export default {
 		searchHandler(value){
 			this.params.current_page = 1 ;
         	this.listStore = [];
+        	this.counts = null;
 			this.getList(value);
 		},
 		

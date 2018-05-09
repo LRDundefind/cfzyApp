@@ -57,7 +57,9 @@ export default {
 		},
 		searchHandler(value){
 			this.temporaryList = [],
+			this.counts = null;
 			this.getTemporaryList(value);
+			console.log(this.counts)
 		},
 	    //跳转到订单详情
         orderDetail(oid){
