@@ -222,7 +222,7 @@ export default {
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(!(new RegExp(/^[0-9]+(.[0-9]+)?$/).test(this.price))){
+    		}else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.price))){
     			Toast({
 					message: '请正确输入单价',
 					position: 'middle',
@@ -289,9 +289,8 @@ export default {
 
 	    //保存
         preservation(){
-        	console.log(this.goodsInfo)
-            this.goodsInfo.filter(function(item){
-            	if(item.price == ''){
+            for(var i = 0, len = this.goodsInfo.length; i < this.goodsInfo.length; i ++){
+            	if(this.goodsInfo[i].weight != '' && this.goodsInfo[i].price == ''){
 					Toast({
 						message: '请完善货品单价',
 						position: 'middle',
@@ -299,8 +298,7 @@ export default {
 	    			});
 					return false;
             	}
-				return false;
-            });
+            }
 			var params = {
 				oid: this.$route.params.oid,
 				goods: this.goodsInfo
@@ -461,7 +459,7 @@ i{
 	left: 0;
 	top: 0;
 	background: rgba(0, 0, 0, 0.6);
-	z-index: 10001;
+	z-index: 99;
 	.dialoag_cont{
 		width: 80%;
 		margin: 3rem auto 0;
