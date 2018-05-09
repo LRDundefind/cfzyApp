@@ -57,15 +57,15 @@
 			<div class="order-detail" v-if="otherInfo">
 				<div class="ub term" v-if="have_goodsunit">
 					<div class="ub-f1">货款费用</div>
-					<div class="edu">{{totalCost.totalAmount}}</div>
+					<div class="edu">{{totalCost.totalAmount | keepTwoNum}}</div>
 				</div>
 				<div class="ub term" v-if="have_goodsunit">
 					<div class="ub-f1">包装费</div>
-					<div class="edu">{{totalCost.totalPack}}</div>
+					<div class="edu">{{totalCost.totalPack | keepTwoNum}}</div>
 				</div>
 				<div class="ub term" v-if="have_goodsunit">
 					<div class="ub-f1">过磅费</div>
-					<div class="edu">{{totalCost.totalWeigh}}</div>
+					<div class="edu">{{totalCost.totalWeigh | keepTwoNum}}</div>
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">三轮费</div>
@@ -79,7 +79,7 @@
 				</div>
 				<div class="ub term border-top" v-if="have_goodsunit">
 					<div class="ub-f1">合计金额</div>
-					<div class="total">{{totalCost.tatol}}</div>
+					<div class="total">{{totalCost.tatol | keepTwoNum}}</div>
 				</div>
 			</div>
 			<!--付款方式  order_knot现结  order_credit赊账-->
@@ -267,6 +267,12 @@ export default {
 	created(){
 		
 	},
+	filters: {
+		keepTwoNum: function(value){
+			value = Number(value);
+			return value.toFixed(2);
+		}
+	},
     methods: {
 		//重置单件货品下单件数和其他数据
 		resetPriceNum(){
@@ -280,7 +286,7 @@ export default {
 			this.totalCost.totalAmount = 0;
 			this.totalCost.totalPack = 0;
 			this.totalCost.totalWeigh = 0;
-			this.totalCost.tatol = (this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost).toFixed(2); //合计费用
+			this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost; //合计费用
 		},
 	    //选择车次
         choosetrainNumber(){
@@ -392,7 +398,7 @@ export default {
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(!(new RegExp(/^[0-9]+(.[0-9]+)?$/).test(this.goodsnum))){
+    		}else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.goodsnum))){
     			Toast({
 					message: '请正确输入件数',
 					position: 'middle',
@@ -404,7 +410,7 @@ export default {
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(!(new RegExp(/^[0-9]+(.[0-9]+)?$/).test(this.goodsweight))){
+    		}else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.goodsweight))){
     			Toast({
 					message: '请正确输入重量',
 					position: 'middle',
@@ -416,7 +422,7 @@ export default {
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(!(new RegExp(/^[0-9]+(.[0-9]+)?$/).test(this.pbweight))){
+    		}else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.pbweight))){
     			Toast({
 					message: '请正确输入平板重',
 					position: 'middle',
@@ -424,7 +430,7 @@ export default {
     			});
     		}else{
     			if(this.goodsunit != ''){
-	    			if(!(new RegExp(/^[0-9]+(.[0-9]+)?$/).test(this.goodsunit))){
+	    			if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.goodsunit))){
 		    			Toast({
 							message: '请正确输入单价',
 							position: 'middle',
@@ -531,7 +537,7 @@ export default {
 							this.totalCost.totalAmount += this.goodsInfo[i]['goodAmount']; //总货款费用
 							this.totalCost.totalPack += this.goodsInfo[i]['packCost']; //总包装费
 							this.totalCost.totalWeigh += this.goodsInfo[i]['weighCost']; //总过磅费
-							this.totalCost.tatol = (this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost).toFixed(2);
+							this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost;
 	                    }
 						
 	                    //重置弹框数据
@@ -561,9 +567,17 @@ export default {
         },
         //设置三轮费-确定按钮
         setSanlunfei(){
+        	if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.deliveryCost))){
+    			Toast({
+					message: '请正确输入三轮费',
+					position: 'middle',
+					duration: 1000
+    			});
+    			return false;
+    		}
         	this.sanlunfei = false;
         	this.totalCost.deliveryCost = Number(this.deliveryCost) || '';
-			this.totalCost.tatol = (this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost).toFixed(2);
+			this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost;
         },
         
         //签名
@@ -977,7 +991,7 @@ i{
 	left: 0;
 	top: 0;
 	background: rgba(0, 0, 0, 0.6);
-	z-index: 10001;
+	z-index: 99;
 	.dialoag_cont{
 		width: 80%;
 		margin: 3rem auto 0;
