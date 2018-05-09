@@ -1,6 +1,10 @@
-import orders from '@/view/orders/index'
-import ordersList from '@/view/orders/ordersList'
-import ordersDetail from '@/view/orders/ordersDetail'
+// import orders from '@/view/orders/index'
+// import ordersList from '@/view/orders/ordersList'
+// import ordersDetail from '@/view/orders/ordersDetail'
+
+const orders = resolve => require([ '@/view/orders/index'],resolve)
+const ordersList = resolve => require([ '@/view/orders/ordersList'],resolve)
+const ordersDetail = resolve => require([ '@/view/orders/ordersDetail'],resolve)
 
 export default [
 	{
