@@ -10,6 +10,16 @@ export default [
 			mainView: logistics
 		}
 	},
+    {
+        path:'logistics/:fromc',
+        name:'logistics/fromc',
+        components: {
+            mainView: logistics
+        },
+        meta: {
+            showFooter: false
+        }
+    },
 	{
 		path:'logistics/:fromc',
 		name:'logistics',

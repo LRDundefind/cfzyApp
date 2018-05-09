@@ -31,18 +31,19 @@
             <!--基本信息-->
             <div v-if="selected == 'basic'">
                 <div class="">
+                    <div class="basic-list" @click="gologistics">
+                        <p class="clearfix">车次
+                            <span class="name">功能开发中...<img class="right-icon"
+                                                            src="../../assets/index/gray-right-icon.png"/></span>
+                        </p>
+                    </div>
                     <div class="basic-list" @click="goList">
                         <p class="clearfix">货主
                             <span class="name">{{stall.name}}<img class="right-icon"
                                                                   src="../../assets/index/gray-right-icon.png"/></span>
                         </p>
                     </div>
-                    <div class="basic-list" @click="gologistics">
-                        <p class="clearfix">车次
-                            <span class="name">功能开发中...<img class="right-icon"
-                                                                  src="../../assets/index/gray-right-icon.png"/></span>
-                        </p>
-                    </div>
+
                     <div class="basic-list">
                         <p class="clearfix">司机姓名<input type="text" v-model="stall.driverName"></p>
                         <p class="clearfix">司机电话<input type="number" v-model="stall.driverPhone"></p>
@@ -231,7 +232,7 @@
             },
             //跳转到车次
             gologistics(){
-                this.$router.push({name: 'logistics', params: {fromc: 'order'}});
+                this.$router.push({name: 'logistics/fromc', params: {fromc: 'order'}});
             },
 
             //跳转到订单详情
