@@ -101,6 +101,7 @@
 </template>
 
 <script>
+import { Toast } from 'mint-ui'
 import { orders } from '@/services/apis/orders.js';
 export default {
     data () {
