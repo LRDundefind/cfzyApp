@@ -3,7 +3,7 @@
 		<mt-header fixed  title="车次">
 		    <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
 		</mt-header>
-		<noDate v-if="counts == 0 || listStore==''"></noDate>  
+		<noDate v-if="counts == null"></noDate>  
 		<!--车次列表-->
 		<div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
 			<mt-loadmore 
