@@ -2,9 +2,9 @@
 // import ordersList from '@/view/orders/ordersList'
 // import ordersDetail from '@/view/orders/ordersDetail'
 
-const orders = resolve => require([ '@/view/order/index'],resolve)
-const ordersList = resolve => require([ '@/view/order/ordersList'],resolve)
-const ordersDetail = resolve => require([ '@/view/order/ordersDetail'],resolve)
+const orders = resolve => require([ '@/view/orders/index'],resolve)
+const ordersList = resolve => require([ '@/view/orders/ordersList'],resolve)
+const ordersDetail = resolve => require([ '@/view/orders/ordersDetail'],resolve)
 
 export default [
 	{

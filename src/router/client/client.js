@@ -4,7 +4,7 @@
 // import record from '@/view/client/record'
 
 const client = resolve => require([ '@/view/client/index'],resolve)
-const client_detail = resolve => require([ '@/view/client/client_detail'],resolve)
+const client_detail = resolve => require([ '@/view/client/index_detail'],resolve)
 const index_change = resolve => require([ '@/view/client/index_change'],resolve)
 const record = resolve => require([ '@/view/client/record'],resolve)
 
