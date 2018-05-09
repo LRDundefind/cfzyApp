@@ -33,7 +33,7 @@
                 <div class="">
                     <div class="basic-list" @click="gologistics">
                         <p class="clearfix">车次
-                            <span class="name">功能开发中...<img class="right-icon"
+                            <span class="name">{{trainShow}}<img class="right-icon"
                                                             src="../../assets/index/gray-right-icon.png"/></span>
                         </p>
                     </div>
@@ -51,7 +51,7 @@
 
                     <div class="basic-list">
                         <p class="clearfix">车牌号<input type="text" v-model="stall.plateNum" :disabled = "item.plateNumber != ''"></p>
-                        <p class="clearfix">发货地点<input type="text" v-model="stall.startAddress" :disabled = "item.sourceAddr != ''"></p>
+                        <p class="clearfix">发货地点<input style="width: 80%" type="text" v-model="stall.startAddress" :disabled = "item.sourceAddr != ''"></p>
                     </div>
 
                     <div class="basic-list">
@@ -74,7 +74,7 @@
                                 <img class="right-icon"
                                      src="../../assets/index/gray-right-icon.png"/></span>
                         </p>
-                        <p class="clearfix" style="position: relative">承运合同
+                        <p class="clearfix" style="position: relative"  v-if="item.contractBigUrl == ''">承运合同
                             <input type="file" class="upload-picture" accept="image" @change="upload1($event,'ship')"
                                    style="opacity: 0">
                             <span class="upload">
@@ -83,6 +83,15 @@
                                 <img class="right-icon"
                                      src="../../assets/index/gray-right-icon.png"/></span>
                         </p>
+
+                        <p class="clearfix" style="position: relative" v-if="item.contractBigUrl != ''">承运合同
+                            <span class="upload">
+                                <span>已经上传</span>
+                                <img class="right-icon"
+                                     src="../../assets/index/gray-right-icon.png"/></span>
+                        </p>
+
+
                     </div>
 
                     <div class="basic-list">
@@ -130,6 +139,7 @@
     export default {
         data () {
             return {
+                trainShow:'请选择',
                 source: '',//产地证明
                 detect: '',//检验证明
                 ship: '',//乘运证明
@@ -172,6 +182,10 @@
             console.log(this.item);
             if(this.$route.params.item) {
                 this.item = this.$route.params.item;
+                if(this.item.orderId){
+//                    this.trainShow = this.item.orderId
+                    this.trainShow = '已选择';
+                }
                 if (this.item.carDriverMan) {
                     this.stall.driverName = this.item.carDriverMan;
                 }
@@ -190,6 +204,10 @@
                 if (this.item.goodsRemark) {
                     this.stall.remark = this.item.goodsRemark;
                 }
+                if(this.item.contractBigUrl){
+                    this.stall.carrierContract = this.item.contractBigUrl;
+                }
+
                 console.log(this.item);
             }else {
                 this.item={
@@ -199,6 +217,7 @@
                     sourceAddr:'',
                     productAddr:'',
                     goodsRemark:'',
+                    contractBigUrl:'',
                 }
             }
         },
