@@ -191,6 +191,7 @@
                 color: #666666;
                 outline: none;
                 -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+                background-color: #fff;
             }
 
             > input {
