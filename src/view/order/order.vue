@@ -628,7 +628,7 @@ export default {
     			});
     			return false;
 			}
-
+			
 			//非 赊账暂存(szType != 'Y')时，判断填写了购买量的货品都填写了单价
 			if(szType != 'Y'){
                 for(var i = 0, len = this.goodsInfo.length; i < this.goodsInfo.length; i ++){
@@ -692,17 +692,12 @@ export default {
         		params.deposit = szType;
         		params.signImg = this.autographInfo;//赊账签名
         	};
-        	
-        	alert('设置前'+this.permit);
+
         	this.permit = false;
-        	alert('设置后'+this.permit);
         	
         	order.submitorder(params)
         		.then(response => {
-        			alert('下单成功-设置前'+this.permit);
         			this.permit = true;
-        			alert('下单成功-设置后'+this.permit);
-        			
         			Toast({
 						message: '下单成功',
 						position: 'middle',
