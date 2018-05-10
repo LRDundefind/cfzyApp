@@ -741,6 +741,9 @@ export default {
 i{
 	font-style: normal;
 }
+.page-main{
+	overflow: scroll;
+}
 .page-loadmore-wrappe{
    overflow: scroll;
     -webkit-overflow-scrolling : touch;
