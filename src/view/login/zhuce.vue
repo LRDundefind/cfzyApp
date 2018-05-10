@@ -199,7 +199,7 @@ export default {
                         duration: 5000
                         });
                 }
-                else if(!new RegExp(/^1[3|4|5|7|8|9][0-9]{9}$/).test(this.phone)){
+                else if(!new RegExp(/^1[3|4|6|5|7|8|9][0-9]{9}$/).test(this.phone)){
                     Toast({
                         message: '手机号格式输入有误',
                         position: 'middle',
