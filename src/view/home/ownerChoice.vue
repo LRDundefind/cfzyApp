@@ -1,9 +1,7 @@
 <template>
     <div class="page-content" id="client_detail">
         <mt-header fixed title="档位选择">
-            <router-link to="/" slot="left">
-                <mt-button icon="back" @click="goBack()"></mt-button>
-            </router-link>
+            <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
         </mt-header>
         <div class="page-main">
             <div v-for="item in ownerList" :key='item.gid' class="main-list">
