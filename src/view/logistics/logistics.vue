@@ -4,7 +4,7 @@
             <router-link to="/storage" slot="left">
                 <mt-button v-if="this.$route.params.fromc=='order'" icon="back"></mt-button>
             </router-link>
-            <span class="c-3 f-s-16" slot="right">发布货源</span>
+            <span class="c-3 f-s-16" slot="right" @click="sendXDT">发布货源</span>
 		</mt-header>
 		<!--物流-->
 		<div class="page-main logistics">
@@ -82,6 +82,9 @@ export default {
         this.getlist()
     },
     methods: {
+            sendXDT(){
+                XDYApp.startXDT();
+            },
 			// 跳转区分
 			goDetail(item){
 				if(this.$route.params.fromc=='order'){
