@@ -4,7 +4,7 @@
 		    <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
 		</mt-header>
 		<!--订单列表-->
-		<div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }">
+		<div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
 			<!--信息一-->
 			<div class="order-detail">
 				<div class="ub term">
@@ -87,13 +87,13 @@
 			</div>
 			<!--下单时间-->
 			<div class="order-detail">
-				<div class="ub term no-border m-b-20">
+				<div class="ub term no-border">
 					<div class="ub-f1">下单时间</div>
 					<div class="edu">{{detail.placeOrderTime}}</div>
 				</div>
 			</div>
 			
-			<div v-if="status == '待提货'" class="submit-btn" @click="takeGood">完成提货</div>
+			<div v-if="status == '待提货'" class="submit-btn m-t-20" @click="takeGood">完成提货</div>
 			
 		</div>
 		
@@ -114,7 +114,7 @@ export default {
         }
     },
     mounted () {
-    	this.wrapperHeight = document.documentElement.clientHeight - 100;
+    	this.wrapperHeight = document.documentElement.clientHeight - 60;
 		this.ordersDetail();
     },
     methods: {
@@ -208,7 +208,7 @@ export default {
 }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
-.page-loadmore-wrappe{
+.page-loadmore-wrapper{
    overflow: scroll;
    -webkit-overflow-scrolling : touch;
 }

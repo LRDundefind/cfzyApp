@@ -1,13 +1,13 @@
 <template>
     <div class="page-content">
-        <mt-header fixed title="客 户">
+        <mt-header fixed title="客户">
             <router-link :to="{name:'order'}" slot="left" v-if="type=='order'">
                 <mt-button icon="back"></mt-button>
             </router-link>
             <span @click="addCustomer" style="font-size: 0.32rem" slot="right">添加客户</span>
         </mt-header>
         <search-box  @getSmeage="searchstart"  ref="search"/>
-        <noDate v-show="counts == null"></noDate>  
+        <noDate v-show="noWdata"></noDate>  
         <div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }" >
 
             <mt-loadmore 
@@ -65,7 +65,9 @@
     export default {
         data () {
             return {
+            	heightNum: 0,
                 allLoaded: false,
+                noWdata:false,
                 msg:'',
                 wrapperHeight: 0,//容器高度
                 type: '',
@@ -85,7 +87,7 @@
             noDate
         },
         mounted () {
-            this.wrapperHeight = document.documentElement.clientHeight - 175;
+            this.wrapperHeight = document.documentElement.clientHeight - this.heightNum;
 
             this.type = this.$route.params.type || false;
         },
@@ -122,6 +124,9 @@
                 client.dataList(this.params)
                     .then(response => {
                         this.listdata = response.data.results;
+                        if(this.listdata==''){
+                            this.noWdata=true;
+                        }
                         if(this.listdata.length==this.params.page_size){  
                             //判断是否应该加载下一页
                             this.params.current_page+=1 ;
@@ -132,10 +137,15 @@
                         if (this.listdata) {
                             this.listStore.push(...this.listdata)
                             this.counts = this.listStore.length;
-                            console.log(this.counts)
                         }
                         Indicator.close();
                     })
+                
+                if(this.$route.params.type == 'order'){
+                	this.heightNum = 140;
+                }else{
+                	this.heightNum = 175;
+                }
                     
             },
             //跳转到添加客户

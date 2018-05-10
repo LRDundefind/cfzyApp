@@ -2,7 +2,7 @@
     <div class="page-content" id="client_detail">
        
             <div style="height:4rem">
-                <mt-header fixed title="客 户">
+                <mt-header fixed title="客户">
                         <mt-button icon="back" slot="left" @click="goClient"></mt-button>
                 </mt-header>
                 <div class="blackbg">
@@ -11,7 +11,7 @@
                         <img v-show="listdata.headImg==''" src="../../assets/my/my_head.png" alt="">
                     </div> 
                     <h2 v-if="listdata.sys_status=='Y'" class="titstyle">已被系统加入黑名单<br>请谨慎合作</h2>
-                    <h2 v-else>{{listdata.cusName}}</h2>
+                    <h2 v-else>{{listdata.nickname}}</h2>
                 </div>
             </div>
             
@@ -45,7 +45,7 @@
 
                         <div class="main-list">
                             <p class="clearfix">备注</p>
-                            <div class="remark" style="ling-height:0.4rem;">{{listdata.remark}}</div>
+                            <div class="remark">{{listdata.remark}}</div>
                         </div>
                     </li>
                 </ul>
@@ -172,6 +172,7 @@
         .remark {
             color: #666;
             padding-bottom: 0.8rem;
+            line-height: 0.4rem;
         }
     }
 

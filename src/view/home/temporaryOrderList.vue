@@ -9,7 +9,7 @@
 		<search-box ref="search" @getSmeage="searchHandler"/>
         <noDate v-if="counts == null"></noDate>  
 		<!--订单列表-->
-		<div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }">
+		<div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
 			<ul class="order-list">
 				<li v-for="temporary in temporaryList" @click="orderDetail(temporary.oid)" :key="temporary.oid">
 					<div class="ub list-top">
@@ -39,7 +39,7 @@ export default {
         }
     },
     mounted () {
-    	this.wrapperHeight = document.documentElement.clientHeight - 100;
+    	this.wrapperHeight = document.documentElement.clientHeight - 140;
 		this.getTemporaryList();
     },
     methods: {
@@ -80,7 +80,7 @@ export default {
 .page-main{
 	overflow: scroll;
 }
-.page-loadmore-wrappe{
+.page-loadmore-wrapper{
    overflow: scroll;
    -webkit-overflow-scrolling : touch;
 }
