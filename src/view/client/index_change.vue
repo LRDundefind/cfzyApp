@@ -593,10 +593,12 @@
     .phonemobil{
         border: 1px solid #dedede;
         color: #4c4c4c;
-        line-height: 0.8rem;
+        padding: 0.2rem 0;
+        line-height: 0.5rem;
         margin-bottom: 0.5rem;
         box-sizing: border-box;
         padding-left: 2px;
+        box-sizing: border-box;
     }
     .Unchange{
         display: block;
@@ -628,7 +630,8 @@
                 float: right;
                 color: #4c4c4c;
                 text-align: right;
-                line-height: 1rem;
+                line-height: 0.5rem;
+                margin-top: 0.25rem;
             }
         }
         > p:nth-child(1) {
