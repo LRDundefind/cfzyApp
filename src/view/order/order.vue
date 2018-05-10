@@ -261,7 +261,7 @@ export default {
         }
     },
     mounted () {
-    	this.wrapperHeight = document.documentElement.clientHeight+190;
+    	this.wrapperHeight = document.documentElement.clientHeight - 100;
     	//档位
     	if(JSON.parse(Cookies.get('gidOwnID_lists')).gearName){
             this.gearName = JSON.parse(Cookies.get('gidOwnID_lists')).gearName;
