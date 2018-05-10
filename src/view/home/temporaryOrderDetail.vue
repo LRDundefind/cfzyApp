@@ -2,8 +2,8 @@
 	<div class="page-content">
 		<mt-header fixed  title="暂存订单详情">
 			<router-link to="/" slot="left">
-			    <mt-button icon="back" @click="goBack()"></mt-button>
-			</router-link>
+		    	<mt-button icon="back" @click="goBack()"></mt-button>
+		    </router-link>
 		</mt-header>
 		<!--订单列表-->
 		<div class="page-main">
@@ -13,7 +13,7 @@
 					<div class="ub-f1">订单号&nbsp;&nbsp;{{detailInfo.orderNo}}</div>
 					<div class="zt">{{orderStatus}}</div>
 				</div>
-				<div class="ub ub-ac term customer-head" @click="customerDetail(detailInfo.cid)">
+				<div class="ub ub-ac term customer-head" @click="customerDetail(detailInfo.cid)"><!--临时客户不可赊账-->
 					<div class="ub-f1">客户</div>
 					<!--<img src="../../assets/index/shouye_touxiang_img@2x.png" class="head">-->
 					<span>{{detailInfo.nickname || '临时客户'}}</span>
@@ -222,7 +222,7 @@ export default {
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(!(new RegExp(/^[0-9]+(.[0-9]+)?$/).test(this.price))){
+    		}else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.price))){
     			Toast({
 					message: '请正确输入单价',
 					position: 'middle',
@@ -289,9 +289,8 @@ export default {
 
 	    //保存
         preservation(){
-        	console.log(this.goodsInfo)
-            this.goodsInfo.filter(function(item){
-            	if(item.price == ''){
+            for(var i = 0, len = this.goodsInfo.length; i < this.goodsInfo.length; i ++){
+            	if(this.goodsInfo[i].weight != '' && this.goodsInfo[i].price == ''){
 					Toast({
 						message: '请完善货品单价',
 						position: 'middle',
@@ -299,8 +298,7 @@ export default {
 	    			});
 					return false;
             	}
-				return false;
-            });
+            }
 			var params = {
 				oid: this.$route.params.oid,
 				goods: this.goodsInfo
@@ -354,6 +352,7 @@ i{
 		    padding-bottom: 0.6rem;
 		    line-height: 0.38rem;
     		margin-top: 0.2rem;
+    		word-break: break-all;
 		}
 	}
 	.customer-head{
@@ -461,7 +460,7 @@ i{
 	left: 0;
 	top: 0;
 	background: rgba(0, 0, 0, 0.6);
-	z-index: 10001;
+	z-index: 99;
 	.dialoag_cont{
 		width: 80%;
 		margin: 3rem auto 0;

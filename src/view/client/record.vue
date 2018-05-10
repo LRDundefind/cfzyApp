@@ -2,7 +2,7 @@
     <div class="page-content storage">
 
         <mt-header fixed title="消费记录">
-            <mt-button icon="back" slot="left" @click="goDetail" v-if="selected == 'basic'"></mt-button>
+            <mt-button icon="back" slot="left" @click="goBack" v-if="selected == 'basic'"></mt-button>
             <!--<mt-button slot="right" style="font-size: 0.32rem">-->
                 <!--切换档位-->
             <!--</mt-button>-->
@@ -172,7 +172,8 @@
 //            },
 
             goDetail(){
-                this.$router.push({name: 'client_detail', params: {ids: this.cid}});
+                // this.$router.push({name: 'client_detail', params: {ids: this.cid}});
+
             },
             goBasic(){
                 this.selected = 'basic';
@@ -295,6 +296,7 @@
                 line-height: 0.48rem;
                 .remarks {
                     margin-right: 0.15rem;
+                    word-break: break-all;
                 }
             }
         }

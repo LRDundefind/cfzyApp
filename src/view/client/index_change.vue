@@ -417,7 +417,7 @@
                             position: 'middle',
                             duration: 3000
                             });
-                            alert('12')
+                            
                         }
                         else{
                         this.addover=true;
@@ -432,7 +432,7 @@
                             cid:this.cid,
                             headImg:this.headerImage
                         };
-                        alert('123')
+                        
                         client.addC(params)
                             .then(response => {
                                 // this.xiTdata=response.data.results;
