@@ -85,12 +85,9 @@
             noDate
         },
         mounted () {
+            this.wrapperHeight = document.documentElement.clientHeight - 175;
+
             this.type = this.$route.params.type || false;
-            if(this.type = 'order'){
-                this.wrapperHeight = document.documentElement.clientHeight - 100;
-            }else{
-                this.wrapperHeight = document.documentElement.clientHeight - 175;
-            }
         },
         created(){
             this.getList();
