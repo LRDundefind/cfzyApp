@@ -4,7 +4,7 @@
             <router-link :to="{name:'order'}" slot="left" v-if="type=='order'">
                 <mt-button icon="back"></mt-button>
             </router-link>
-            <span @click="addCustomer" style="font-size: 0.32rem" slot="right" v-if="type != 'order'">添加客户</span>
+            <span @click="addCustomer" style="font-size: 0.32rem" slot="right">添加客户</span>
         </mt-header>
         <search-box  @getSmeage="searchstart"  ref="search"/>
         <noDate v-show="counts == null"></noDate>  
@@ -85,9 +85,8 @@
             noDate
         },
         mounted () {
-           
             this.wrapperHeight = document.documentElement.clientHeight - 175;
-            
+
             this.type = this.$route.params.type || false;
         },
         created(){
@@ -160,6 +159,7 @@
 <style scoped lang="scss">
 .page-loadmore-wrappe{
    overflow: scroll;
+    -webkit-overflow-scrolling : touch;
 }
     .im {
         width: 0.8rem;

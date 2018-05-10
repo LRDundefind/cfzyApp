@@ -110,14 +110,15 @@
                     this.payType = this.keyValueData.pay_type;
                     this.orderKnot = this.keyValueData.order_knot_status;
                     this.orderRemit = this.keyValueData.order_remit_status;
-                })
+                    //查看消费记录
+                    this.getConsume();
+                    //查看还款记录
+                    this.getRepayment()
+                    })
         },
 
         mounted () {
-            //查看消费记录
-            this.getConsume();
-            //查看还款记录
-            this.getRepayment();
+            
         },
         methods: {
             //初始化数据--查看消费记录
