@@ -93,6 +93,7 @@
         },
         created(){
             this.getList();
+            app.Vwaiting();
         },
         methods: {
             searchstart(msg){
@@ -123,9 +124,11 @@
                
                 client.dataList(this.params)
                     .then(response => {
+                        
                         this.listdata = response.data.results;
                         if(this.listdata==''){
                             this.noWdata=true;
+                         app.Cwaiting();
                         }
                         if(this.listdata.length==this.params.page_size){  
                             //判断是否应该加载下一页
@@ -137,6 +140,7 @@
                         if (this.listdata) {
                             this.listStore.push(...this.listdata)
                             this.counts = this.listStore.length;
+                             app.Cwaiting()
                         }
                         Indicator.close();
                     })

@@ -22,6 +22,9 @@ Vue.prototype.$http = axios
 Vue.prototype.goBack = function(){
 	window.history.go(-1);
 }
+//定义全局加载组件
+import {Vwaiting,Cwaiting} from '../static/js/showWating.js'
+window.app = Object.assign({},{Vwaiting,Cwaiting})
 
 Vue.config.productionTip = false
 // register global utility filters.
