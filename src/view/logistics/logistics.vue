@@ -4,7 +4,7 @@
             <router-link to="/storage" slot="left">
                 <mt-button v-if="this.$route.params.fromc=='order'" icon="back"></mt-button>
             </router-link>
-            <span class="c-3 f-s-16" slot="right">发布货源</span>
+            <span class="c-3 f-s-16" slot="right" @click="sendXDT">发布货源</span>
 		</mt-header>
 		<!--物流-->
 		<div class="page-main logistics">
@@ -13,7 +13,7 @@
 				<div>敬请期待...</div>
 			</div> -->
 			<div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }" >
-
+            <noDate v-show="Xdtlist.length=='0'"></noDate>  
           
             <!-- <mt-loadmore 
 				:auto-fill="false"
@@ -56,9 +56,12 @@
 
 <script>
 import Cookies from 'js-cookie'
+import noDate from '@/components/noData/noDate'
 import {logistics} from '@/services/apis/logistics'
 export default {
-
+    components:{
+        noDate
+    },
     data () {
         return {
 			  allLoaded: false,
@@ -79,6 +82,12 @@ export default {
         this.getlist()
     },
     methods: {
+            sendXDT(){
+                if(typeOf(XDYApp)!=undefined){
+                    XDYApp.startXDT();
+                }
+                console.log('请去真机上点击')
+            },
 			// 跳转区分
 			goDetail(item){
 				if(this.$route.params.fromc=='order'){
@@ -104,9 +113,11 @@ export default {
                             tokenId:'',
                             time:time,
                             rd:rd,
-                            inCode:140022,
+                            inCode:140021,
+
                             content:{
-                                    // phoneNumber:18253175771,
+                                    mobilePhone:Cookies.get('xdtPhne'),
+                                    userId:Cookies.get('xdtuseid'),
                                     page:1,
                                     count:10,
                                     orderState:3,

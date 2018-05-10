@@ -40,7 +40,8 @@
         font-size: 0.2rem;
         position: fixed;
         bottom: 2.5rem;
-        left: 1.7rem;
+        left: 1.8rem;
+        color: #999;
     }
 
     .usericon {

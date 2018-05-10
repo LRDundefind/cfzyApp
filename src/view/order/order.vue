@@ -10,7 +10,7 @@
             </router-link>
 		</mt-header>
 		<!--下单-->
-		<div class="page-main">
+		<div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
 			<div class="order-detail" v-if="trainInfo">
 				<div class="ub ub-ac term no-border right-icon" @click="choosetrainNumber()">
 					<div class="ub-f1">{{trainsNum}}</div>
@@ -191,6 +191,7 @@ export default {
 	components: { Autograph },
     data () {
         return {
+        	wrapperHeight: 0,//容器高度
         	gearName:'', //档位
         	
         	numberNum:null,   //点击获取索引
@@ -254,10 +255,13 @@ export default {
 			
 			//备注信息
 			beizhu: '',
-
+			
+			//防止连续下单的变量
+			permit: true,
         }
     },
     mounted () {
+    	this.wrapperHeight = document.documentElement.clientHeight+190;
     	//档位
     	if(JSON.parse(Cookies.get('gidOwnID_lists')).gearName){
             this.gearName = JSON.parse(Cookies.get('gidOwnID_lists')).gearName;
@@ -626,7 +630,7 @@ export default {
     			});
     			return false;
 			}
-
+			
 			//非 赊账暂存(szType != 'Y')时，判断填写了购买量的货品都填写了单价
 			if(szType != 'Y'){
                 for(var i = 0, len = this.goodsInfo.length; i < this.goodsInfo.length; i ++){
@@ -642,7 +646,8 @@ export default {
 			}
 
         	//现结（下单）和赊账（暂存、下单）验证三轮车费
-			if(this.totalCost.deliveryCost == '' || this.totalCost.deliveryCost == null){
+			if(this.totalCost.deliveryCost == null){
+				//console.log(this.totalCost.deliveryCost)
     			Toast({
 					message: '请输入三轮费',  //输入的时候做是否为数字的验证，此处不需要了
 					position: 'middle',
@@ -669,6 +674,7 @@ export default {
     			});
         		return false;
         	}
+        	if (this.permit == false) return false; //this.permit控制是否下单的变量，防止连续下单
         	var params = {
     			tid: this.tid,//车次if
     			cid: this.customerId,//客户id
@@ -688,8 +694,12 @@ export default {
         		params.deposit = szType;
         		params.signImg = this.autographInfo;//赊账签名
         	};
+
+        	this.permit = false;
+        	
         	order.submitorder(params)
         		.then(response => {
+        			this.permit = true;
         			Toast({
 						message: '下单成功',
 						position: 'middle',
@@ -731,6 +741,10 @@ export default {
 i{
 	font-style: normal;
 }
+.page-loadmore-wrappe{
+   overflow: scroll;
+    -webkit-overflow-scrolling : touch;
+}
 .header_img{
     width: 0.32rem;
     padding-top: 0.1rem;
@@ -758,6 +772,7 @@ i{
 		    padding-bottom: 0.6rem;
 		    line-height: 0.38rem;
     		margin-top: 0.2rem;
+    		word-break: break-all;
 		}
 		.edu{
 			color: #333;

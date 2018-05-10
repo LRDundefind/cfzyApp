@@ -32,7 +32,7 @@
             <div v-if="selected == 'basic'">
                 <div class="">
                     <div class="basic-list" @click="gologistics">
-                        <p class="clearfix">车次
+                        <p class="clearfix">物流
                             <span class="name">{{trainShow}}<img class="right-icon"
                                                             src="../../assets/index/gray-right-icon.png"/></span>
                         </p>

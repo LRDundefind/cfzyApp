@@ -11,7 +11,7 @@
 					<div class="ub-f1">订单号&nbsp;&nbsp;{{detail.orderNo}}</div>
 					<div class="c-6" :class="{tobepaid: noComplete}">{{status}}</div>
 				</div>
-				<div class="ub ub-ac term customer-head" @click="customerDetail(detail.cid)">
+				<div v-if="detail.cid" class="ub ub-ac term customer-head" @click="customerDetail(detail.cid)">
 					<div class="ub-f1">客户</div>
 					<!--<img src="../../assets/index/shouye_touxiang_img@2x.png" class="head">-->
 					<span>{{detail.nickname}}</span>
@@ -101,6 +101,7 @@
 </template>
 
 <script>
+import { Toast } from 'mint-ui'
 import { orders } from '@/services/apis/orders.js';
 export default {
     data () {
@@ -235,6 +236,7 @@ i{
 		    padding-bottom: 0.6rem;
 		    line-height: 0.38rem;
     		margin-top: 0.2rem;
+    		word-break: break-all;
 		}
 	}
 	.customer-head{

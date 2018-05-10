@@ -89,6 +89,7 @@
 </style>
 <script>
  import { Toast } from 'mint-ui';
+ import {logistics} from '@/services/apis/logistics'
   import Bus from '@/components/bus.js'
  import { login } from '@/services/apis/login'
  import Cookies from 'js-cookie'
@@ -136,6 +137,34 @@ export default {
            }
            
        },
+       XDTlogin(){
+                let rd=parseInt(100*Math.random());  //需要的随机数
+                if(rd>900){
+                    rd
+                }
+                else{
+                    rd=rd+100
+                }
+                let time=new Date().getTime();     //生成时间戳
+                let uId= Cookies.get('sid');
+                let params = {
+                            uId:'',
+                            tokenId:'',
+                            time:time,
+                            rd:rd,
+                            inCode:100017,
+                            content:{
+                                    mobilePhone:Cookies.get('xdtPhne'),
+                                    xdyUserId:uId,
+                            }
+                    };
+                logistics.auth(params).then(response => {
+                    let ss=JSON.parse(response.data.results)
+                    Cookies.set('xdtuseid', ss.content.userId); 
+                    // console.log(ss)
+                    
+                })
+            },
        loginBtn(){
            
             if(this.userName==''){
@@ -176,21 +205,25 @@ export default {
                     
                     login.auth(params).then(response => {
                         if(response.data.status=='Y'){
+                            
                             let result = response.data.results;
                             Cookies.set('Token', result.token);
                             Cookies.set('randomKey', result.randomKey);
-                             
+                             Cookies.set('xdtPhne', result.phone); 
                              Cookies.set('roleId', result.roleId);          //身份区分，档主还是财务
                              Cookies.set('sid', result.sid);                //登录用户ID
                              Cookies.set('userName', result.userName);     //姓名
                              Cookies.set('compayName', result.compayName); //公司名称
                              Cookies.set('uid', result.uid);
+
                             if(result.stalls_list.length==0){
+                                this.XDTlogin();
                                 this.$router.push({name:'noStalls'});
                             }
                             else{
                                 let gidOwnID_list=JSON.stringify(result.stalls_list[0]);
                                 Cookies.set('gidOwnID_lists', gidOwnID_list);                 //档位信息集合
+                                this.XDTlogin();
                                 this.$router.push({name:'home'});
                             }
                             

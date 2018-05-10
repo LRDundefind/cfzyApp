@@ -2,7 +2,7 @@
     <div class="page-content storage">
 
         <mt-header fixed title="消费记录">
-            <mt-button icon="back" slot="left" @click="goDetail" v-if="selected == 'basic'"></mt-button>
+            <mt-button icon="back" slot="left" @click="goBack" v-if="selected == 'basic'"></mt-button>
             <!--<mt-button slot="right" style="font-size: 0.32rem">-->
                 <!--切换档位-->
             <!--</mt-button>-->
@@ -110,14 +110,15 @@
                     this.payType = this.keyValueData.pay_type;
                     this.orderKnot = this.keyValueData.order_knot_status;
                     this.orderRemit = this.keyValueData.order_remit_status;
-                })
+                    //查看消费记录
+                    this.getConsume();
+                    //查看还款记录
+                    this.getRepayment()
+                    })
         },
 
         mounted () {
-            //查看消费记录
-            this.getConsume();
-            //查看还款记录
-            this.getRepayment();
+            
         },
         methods: {
             //初始化数据--查看消费记录
@@ -172,7 +173,8 @@
 //            },
 
             goDetail(){
-                this.$router.push({name: 'client_detail', params: {ids: this.cid}});
+                // this.$router.push({name: 'client_detail', params: {ids: this.cid}});
+
             },
             goBasic(){
                 this.selected = 'basic';
@@ -295,6 +297,7 @@
                 line-height: 0.48rem;
                 .remarks {
                     margin-right: 0.15rem;
+                    word-break: break-all;
                 }
             }
         }
