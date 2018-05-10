@@ -692,10 +692,17 @@ export default {
         		params.deposit = szType;
         		params.signImg = this.autographInfo;//赊账签名
         	};
+        	
+        	alert('设置前'+this.permit);
         	this.permit = false;
+        	alert('设置后'+this.permit);
+        	
         	order.submitorder(params)
         		.then(response => {
+        			alert('下单成功-设置前'+this.permit);
         			this.permit = true;
+        			alert('下单成功-设置后'+this.permit);
+        			
         			Toast({
 						message: '下单成功',
 						position: 'middle',
