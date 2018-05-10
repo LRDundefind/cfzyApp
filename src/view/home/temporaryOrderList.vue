@@ -82,7 +82,7 @@ export default {
 }
 .page-loadmore-wrappe{
    overflow: scroll;
-    -webkit-overflow-scrolling : touch;
+   -webkit-overflow-scrolling : touch;
 }
 i{
 	font-style: normal;

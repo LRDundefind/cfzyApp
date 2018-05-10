@@ -4,7 +4,7 @@
 	    	<mt-button icon="back" slot="left" @click="goBack()"></mt-button>
 		</mt-header>
 		<!--订单列表-->
-		<div class="page-main">
+		<div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }">
 			<!--信息一-->
 			<div class="order-detail">
 				<div class="ub term">
@@ -125,6 +125,7 @@ export default {
 
     data () {
         return {
+        	wrapperHeight: 0,//容器高度
             dialoags: false, //设置价格的弹框
             detailInfo: [], //暂存订单详情数据
             orderStatus: '', //订单付款状态
@@ -145,6 +146,7 @@ export default {
         }
     },
     mounted () {
+    	this.wrapperHeight = document.documentElement.clientHeight - 100;
 		this.getTemporaryOrderDetail();
     },
     filters: {
@@ -324,6 +326,10 @@ export default {
 }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
+.page-loadmore-wrappe{
+   overflow: scroll;
+    -webkit-overflow-scrolling : touch;
+}
 i{
 	font-style: normal;
 }

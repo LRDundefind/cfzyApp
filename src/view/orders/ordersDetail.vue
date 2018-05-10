@@ -4,7 +4,7 @@
 		    <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
 		</mt-header>
 		<!--订单列表-->
-		<div class="page-main">
+		<div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }">
 			<!--信息一-->
 			<div class="order-detail">
 				<div class="ub term">
@@ -106,6 +106,7 @@ import { orders } from '@/services/apis/orders.js';
 export default {
     data () {
         return {
+        	wrapperHeight: 0,//容器高度
             detail: [],//订单详情数据
             status: '',//订单状态
             pay_type: '',//支付方式
@@ -113,6 +114,7 @@ export default {
         }
     },
     mounted () {
+    	this.wrapperHeight = document.documentElement.clientHeight - 100;
 		this.ordersDetail();
     },
     methods: {
@@ -206,6 +208,10 @@ export default {
 }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
+.page-loadmore-wrappe{
+   overflow: scroll;
+   -webkit-overflow-scrolling : touch;
+}
 i{
 	font-style: normal;
 }
