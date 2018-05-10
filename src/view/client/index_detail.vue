@@ -74,7 +74,7 @@
             }
         },
         mounted () {
-           this.wrapperHeight = document.documentElement.clientHeight - 40;
+           this.wrapperHeight = document.documentElement.clientHeight - 300;
             // this.$nextTick(() => {
             //    this.scroll = new BScroll(this.$refs.wrapper,{});
             // })
@@ -121,7 +121,7 @@
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
 .wrapper{
-     height: 100vh;
+    //  height: 100vh;
     //  overflow:hidden;
      -webkit-overflow-scrolling : touch;
 }
