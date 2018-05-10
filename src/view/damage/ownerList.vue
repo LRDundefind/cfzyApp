@@ -3,10 +3,7 @@
         <search-box @getSmeage="searchBlack" :msg="msg" ref="search"/>
 
         <div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
-            <div v-if="noData" class="noData">
-                <!--<img src="../../assets/com_wushuju_icon.png" alt="">-->
-                暂无数据
-            </div>
+            <no-Date v-show="listStore=='' || listStore.length==0"/>
             <mt-loadmore
                     :auto-fill="false"
                     :top-method="loadTop"
@@ -55,10 +52,13 @@
     import searchBox from '@/components/searchBox/search'
     import {damage} from '@/services/apis/damage.api'
     import { Loadmore , Indicator} from 'mint-ui'
+    import noDate from '@/components/noData/noDate'
 
     export default {
-        components: {searchBox},
-        name: 'owner',
+        components:{
+            noDate,
+            searchBox
+        },        name: 'owner',
         data () {
             return {
                 msg: '',
