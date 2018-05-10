@@ -65,6 +65,7 @@
     export default {
         data () {
             return {
+            	heightNum: 0,
                 allLoaded: false,
                 msg:'',
                 wrapperHeight: 0,//容器高度
@@ -85,7 +86,7 @@
             noDate
         },
         mounted () {
-            this.wrapperHeight = document.documentElement.clientHeight - 140;
+            this.wrapperHeight = document.documentElement.clientHeight - this.heightNum;
 
             this.type = this.$route.params.type || false;
         },
@@ -136,6 +137,12 @@
                         }
                         Indicator.close();
                     })
+                
+                if(this.$route.params.type == 'order'){
+                	this.heightNum = 140;
+                }else{
+                	this.heightNum = 175;
+                }
                     
             },
             //跳转到添加客户
