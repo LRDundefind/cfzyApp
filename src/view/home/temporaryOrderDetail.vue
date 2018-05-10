@@ -4,7 +4,7 @@
 	    	<mt-button icon="back" slot="left" @click="goBack()"></mt-button>
 		</mt-header>
 		<!--订单列表-->
-		<div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }">
+		<div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
 			<!--信息一-->
 			<div class="order-detail">
 				<div class="ub term">
@@ -146,7 +146,7 @@ export default {
         }
     },
     mounted () {
-    	this.wrapperHeight = document.documentElement.clientHeight - 100;
+    	this.wrapperHeight = document.documentElement.clientHeight - 60;
 		this.getTemporaryOrderDetail();
     },
     filters: {
@@ -174,6 +174,7 @@ export default {
 			
 						//提交设定价格所需货品参数 ：订单详情内货品详情的返回数据
 						//goodId -- goodId
+						//id -- id
 						//price -- price
 						//goodNum -- goodNum
 						//weight -- weight
@@ -234,6 +235,7 @@ export default {
 				//设置价格以后重新计算货品的价格（金额、包装费、过磅费）
         		var params = {
 					goodId: this.goodsInfo[this.numberNum].goodId,//单个货品id
+					id: this.goodsInfo[this.numberNum].id,//单个货品id
 					price: this.price,//单价
 					goodNum: this.goodsInfo[this.numberNum].goodNum,//件数
 					weight: this.goodsInfo[this.numberNum].weight,//重量
@@ -241,6 +243,7 @@ export default {
 					sellUnit: this.goodsInfo[this.numberNum].priceUnit,//售卖单位
 					slabWeight: this.goodsInfo[this.numberNum].slabWeight,//平板重
 				};
+
 				order.goodsCost(params)
 					.then(response => {
 						
@@ -257,6 +260,7 @@ export default {
 						    	price: this.price,//---界面展示、提交传参所需
 						    	//原数据重复set进集合
 						    	goodId: this.goodsInfo[this.numberNum].goodId,//-----提交传参所需
+						    	id: this.goodsInfo[this.numberNum].id,//-----提交传参所需
 						    	goodName: this.goodsInfo[this.numberNum].goodName,//-----提交传参所需
 								weight: this.goodsInfo[this.numberNum].weight,//重量-----提交传参所需
 								weight_util: this.goodsInfo[this.numberNum].weight_util,//重量单位 -----提交传参所需
@@ -326,7 +330,7 @@ export default {
 }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
-.page-loadmore-wrappe{
+.page-loadmore-wrapper{
    overflow: scroll;
     -webkit-overflow-scrolling : touch;
 }

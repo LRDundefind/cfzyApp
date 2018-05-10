@@ -4,7 +4,7 @@
 			    <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
 		</mt-header>
 		<!--赊账规则-->
-		<div class="page-main rules">
+		<div class="page-main rules page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
 			{{rules.rules}}
 		</div>
 	</div>
@@ -18,10 +18,12 @@ export default {
     data () {
         return {
         	rules: [],
+            wrapperHeight: 0,//容器高度
         }
     },
     mounted () {
 		this.getRules();
+		this.wrapperHeight = document.documentElement.clientHeight - 140;
     },
     methods: {
     	//赊账规则
@@ -47,6 +49,9 @@ export default {
     line-height: 0.45rem;
     padding: 0.4rem 0.3rem;
 }
-
+.page-loadmore-wrapper{
+    overflow: scroll;
+    -webkit-overflow-scrolling : touch;
+}
 
 </style>
