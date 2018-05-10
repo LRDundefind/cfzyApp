@@ -4,6 +4,7 @@ import axios from 'axios'
 import qs from 'qs'
 import Cookies from 'js-cookie'
 import { serverMoudle } from '@/util/fetch'
+import {Toast} from 'mint-ui'
 
 
 let instance = axios.create({
@@ -47,8 +48,12 @@ instance.interceptors.response.use(function (response) {
 
 }, function (error) {
     //  对响应错误做点什么
+    Toast({
+        message: error.response.data.message,
+        position: 'middle',
+        duration: 3000
+    });
 
- 
     return Promise.reject(error);
 });
 
