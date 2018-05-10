@@ -85,7 +85,7 @@
             noDate
         },
         mounted () {
-            this.wrapperHeight = document.documentElement.clientHeight - 175;
+            this.wrapperHeight = document.documentElement.clientHeight - 140;
 
             this.type = this.$route.params.type || false;
         },
