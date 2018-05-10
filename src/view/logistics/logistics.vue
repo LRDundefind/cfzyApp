@@ -83,7 +83,10 @@ export default {
     },
     methods: {
             sendXDT(){
-                XDYApp.startXDT();
+                if(typeOf(XDYApp)!=undefined){
+                    XDYApp.startXDT();
+                }
+                console.log('请去真机上点击')
             },
 			// 跳转区分
 			goDetail(item){

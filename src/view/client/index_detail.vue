@@ -15,36 +15,41 @@
                 </div>
             </div>
             
+             <!-- :style="{ height: wrapperHeight + 'px' }"  -->
+            <div class="page-main page-loadmore-wrappe wrapper " ref="wrapper">
+                <ul class="content">
+                    <li>
+                        <div class="main-list">
+                            <p class="clearfix">消费次数<span>{{listdata.consum_num}}</span></p>
+                            <p class="clearfix">最后消费时间<span>{{listdata.consum_ltime}}</span></p>
+                        </div>
 
-            <div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }">
-                <div class="main-list">
-                    <p class="clearfix">消费次数<span>{{listdata.consum_num}}</span></p>
-                    <p class="clearfix">最后消费时间<span>{{listdata.consum_ltime}}</span></p>
-                </div>
+                        <div class="main-list">
+                            <p class="clearfix">赊账总金额<span>{{listdata.notPayAmount}}</span></p>
+                            <p class="clearfix">赊账最长时间<span>{{listdata.creditTime}}</span></p>
+                        </div>
 
-                <div class="main-list">
-                    <p class="clearfix">赊账总金额<span>{{listdata.notPayAmount}}</span></p>
-                    <p class="clearfix">赊账最长时间<span>{{listdata.creditTime}}</span></p>
-                </div>
+                        <div class="main-list">
+                            <p class="clearfix">姓名<span>{{listdata.cusName}}</span></p>
+                            <p class="clearfix">昵称<span>{{listdata.nickname}}</span></p>
+                            <p class="clearfix">电话<span>{{listdata.phone}}</span></p>
+                            <p class="clearfix">身份证号<span>{{listdata.idCard}}</span></p>
+                            <p style="border:none;text-align: right;line-height: 0.3rem;font-size:0.22rem;color:#808080;">
+                                "身份证号"首次编辑后将无法修改</p>
+                        </div>
 
-                <div class="main-list">
-                    <p class="clearfix">姓名<span>{{listdata.cusName}}</span></p>
-                    <p class="clearfix">昵称<span>{{listdata.nickname}}</span></p>
-                    <p class="clearfix">电话<span>{{listdata.phone}}</span></p>
-                    <p class="clearfix">身份证号<span>{{listdata.idCard}}</span></p>
-                    <p style="border:none;text-align: right;line-height: 0.3rem;font-size:0.22rem;color:#808080;">
-                        "身份证号"首次编辑后将无法修改</p>
-                </div>
+                        <div class="main-list">
+                            <p class="clearfix">公司<span>{{listdata.company}}</span></p>
+                            <p class="clearfix">地址<span>{{listdata.address}}</span></p>
+                        </div>
 
-                <div class="main-list">
-                    <p class="clearfix">公司<span>{{listdata.company}}</span></p>
-                    <p class="clearfix">地址<span>{{listdata.address}}</span></p>
-                </div>
-
-                <div class="main-list">
-                    <p class="clearfix">备注</p>
-                    <div class="remark" style="ling-height:0.4rem;">{{listdata.remark}}</div>
-                </div>
+                        <div class="main-list">
+                            <p class="clearfix">备注</p>
+                            <div class="remark" style="ling-height:0.4rem;">{{listdata.remark}}</div>
+                        </div>
+                    </li>
+                </ul>
+                
             </div>
             <div class='update clearfix'>
                 <mt-button type="primary" size="large" class='f-l' @click="consumptionRecords(3)">查看消费记录</mt-button>
@@ -69,10 +74,13 @@
             }
         },
         mounted () {
-            this.wrapperHeight = document.documentElement.clientHeight - 40;
+            // this.wrapperHeight = document.documentElement.clientHeight - 40;
             // this.$nextTick(() => {
             //    this.scroll = new BScroll(this.$refs.wrapper,{});
             // })
+            this.$nextTick(() => {
+                this.scroll = new BScroll(this.$refs.wrapper, {})
+            })
 
         }, 
         created(){
