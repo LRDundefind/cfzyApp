@@ -44,6 +44,7 @@
     export default {
         data () {
             return {
+                getImage:'',
                 personalData: [],
                 phone: this.$route.params.phone,
                 yanNumber: this.$route.params.yanNumber,
@@ -72,6 +73,8 @@
                 my.getInfo(params).then(response => {
                     if (response.data.status == 'Y') {
                         this.personalData = response.data.results;
+                        this.getImage = this.personalData.headImg;
+
                         let doMain = process.env.BASE_PATH;
                         let defaultImg = require('../../assets/my/my_head.png');
                         let headImg = this.personalData.headImg;
@@ -220,6 +223,9 @@
             //保存用户资料
             savePersonal(){
                 let data = this.personalData;
+                delete data.headImg;
+                data.headImg = this.getImage;
+
                 delete data.createTime;
                 delete data.password;
                 delete data.salt;
@@ -238,7 +244,7 @@
                         this.info();
                         setTimeout(() => {
                             this.$router.push({name: 'my'})
-                        }, 2000)
+                        }, 500)
 
                     } else {
                         Toast({
