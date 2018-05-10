@@ -16,7 +16,7 @@
             </div>
             
              <!-- :style="{ height: wrapperHeight + 'px' }"  ref="wrapper"-->
-            <div class="page-main page-loadmore-wrappe wrapper " >
+            <div class="page-main page-loadmore-wrappe wrapper " :style="{ height: wrapperHeight + 'px' }">
                 <ul class="content">
                     <li>
                         <div class="main-list">
@@ -74,7 +74,7 @@
             }
         },
         mounted () {
-            // this.wrapperHeight = document.documentElement.clientHeight - 40;
+           this.wrapperHeight = document.documentElement.clientHeight - 330;
             // this.$nextTick(() => {
             //    this.scroll = new BScroll(this.$refs.wrapper,{});
             // })
@@ -121,7 +121,7 @@
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
 .wrapper{
-     height: 100vh;
+    //  height: 100vh;
     //  overflow:hidden;
      -webkit-overflow-scrolling : touch;
 }
