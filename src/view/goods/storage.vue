@@ -1,9 +1,7 @@
 <template>
     <div class="page-content storage">
         <mt-header fixed title="货品入库" v-if="selected">
-            <router-link to="/home" slot="left">
-                <mt-button icon="back"></mt-button>
-            </router-link>
+            <mt-button icon="back" slot="left" @click="goHome"></mt-button>
             <mt-button slot="right" style="font-size: 0.32rem" @click="confirmStorage">
                 确认入库
             </mt-button>
@@ -133,7 +131,7 @@
     import ownerList from '@/view/damage/ownerList'
     import goodsDetails from '@/view/goods/goodsDetails'
     import {damage} from '@/services/apis/damage.api'
-    import {Toast} from 'mint-ui';
+    import { MessageBox , Toast } from 'mint-ui';
     import Exif from 'exif-js';
 
     export default {
@@ -306,7 +304,11 @@
 
             //跳转到首页
             goHome(){
-                this.$router.push({name: 'home'});
+                MessageBox.confirm('确认返回？','').then(() => {
+                    this.$router.push({name: 'home'});
+                },() => {
+
+                });
             },
 
             //确认入库
