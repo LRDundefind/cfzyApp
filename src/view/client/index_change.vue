@@ -7,7 +7,7 @@
             <mt-button @click="handleSave" slot="right" style="color:#333;">保存</mt-button>
         </mt-header>
 
-        <div class="page-main">
+        <div class="page-main wrapper"  :style="{ height: wrapperHeight + 'px' }">
             <div class="main-list">
                 <div class="">
                     <div class="sc">
@@ -104,6 +104,7 @@
     export default {
         data () {
             return {
+                 wrapperHeight: 0,//容器高度
                 headerImage: '',     //   头 像
                 headerImageUP: '',     //   头 像
                 addPerson:false,
@@ -136,7 +137,7 @@
             }
         },
         mounted () {
-           
+            this.wrapperHeight = document.documentElement.clientHeight - 40;
             //create添加  update是修改
             this.typeW = this.$route.params.type || false;
             this.cid = this.$route.params.id || false;
