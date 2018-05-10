@@ -10,7 +10,7 @@
             </router-link>
 		</mt-header>
 		<!--下单-->
-		<div class="page-main">
+		<div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
 			<div class="order-detail" v-if="trainInfo">
 				<div class="ub ub-ac term no-border right-icon" @click="choosetrainNumber()">
 					<div class="ub-f1">{{trainsNum}}</div>
@@ -191,6 +191,7 @@ export default {
 	components: { Autograph },
     data () {
         return {
+        	wrapperHeight: 0,//容器高度
         	gearName:'', //档位
         	
         	numberNum:null,   //点击获取索引
@@ -260,6 +261,7 @@ export default {
         }
     },
     mounted () {
+    	this.wrapperHeight = document.documentElement.clientHeight+190;
     	//档位
     	if(JSON.parse(Cookies.get('gidOwnID_lists')).gearName){
             this.gearName = JSON.parse(Cookies.get('gidOwnID_lists')).gearName;
@@ -738,6 +740,10 @@ export default {
 <style scoped rel="stylesheet/scss" lang="scss">
 i{
 	font-style: normal;
+}
+.page-loadmore-wrappe{
+   overflow: scroll;
+    -webkit-overflow-scrolling : touch;
 }
 .header_img{
     width: 0.32rem;
