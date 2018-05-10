@@ -6,6 +6,8 @@
             </router-link>
         </mt-header>
         <div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
+            <no-Date v-show="listStore=='' || listStore.length==0"/>
+
             <mt-loadmore
                     :auto-fill="false"
                     :top-method="loadTop"
@@ -43,6 +45,7 @@
 
 <script>
     import {damage} from '@/services/apis/damage.api'
+    import noDate from '@/components/noData/noDate'
 
     export default {
         data () {
@@ -56,6 +59,9 @@
                     page_size: 10
                 }
             }
+        },
+        components:{
+            noDate,
         },
 
         mounted () {
