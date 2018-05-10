@@ -157,6 +157,7 @@ i,em,strong{
 }
 .page-loadmore-wrapper{
     overflow: scroll;
+    -webkit-overflow-scrolling : touch;
 	.order-list{
 		font-size: 0.24rem;
 		color: #333;

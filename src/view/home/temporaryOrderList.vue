@@ -9,7 +9,7 @@
 		<search-box ref="search" @getSmeage="searchHandler"/>
         <noDate v-if="counts == null"></noDate>  
 		<!--订单列表-->
-		<div class="page-main">
+		<div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }">
 			<ul class="order-list">
 				<li v-for="temporary in temporaryList" @click="orderDetail(temporary.oid)" :key="temporary.oid">
 					<div class="ub list-top">
@@ -32,12 +32,14 @@ export default {
 	components: { searchBox, noDate },
     data () {
         return {
+        	wrapperHeight: 0,//容器高度
             temporaryList: [],
             val: '', //搜索
             counts: null,
         }
     },
     mounted () {
+    	this.wrapperHeight = document.documentElement.clientHeight - 100;
 		this.getTemporaryList();
     },
     methods: {
@@ -75,6 +77,13 @@ export default {
 }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
+.page-main{
+	overflow: scroll;
+}
+.page-loadmore-wrappe{
+   overflow: scroll;
+   -webkit-overflow-scrolling : touch;
+}
 i{
 	font-style: normal;
 }

@@ -54,6 +54,7 @@
 
 <script>
 import { Toast } from 'mint-ui'
+import Cookies from 'js-cookie'
 // import "@/styles/index.scss"
 export default {
     name: 'application',
@@ -104,6 +105,7 @@ export default {
         selected:{
             handler(val,oldval){
                 //console.log(oldval+'->'+val)
+                
                 if(val=='order'){
                     this.$router.push({name:'order'})
                 }
@@ -111,6 +113,8 @@ export default {
                     this.$router.push({
                         name: val
                     })
+                    Cookies.remove('customerName');
+        			Cookies.remove('customerId');
                 }
                 
             },

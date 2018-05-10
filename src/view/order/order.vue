@@ -10,7 +10,7 @@
             </router-link>
 		</mt-header>
 		<!--下单-->
-		<div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
+		<div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }">
 			<div class="order-detail" v-if="trainInfo">
 				<div class="ub ub-ac term no-border right-icon" @click="choosetrainNumber()">
 					<div class="ub-f1">{{trainsNum}}</div>
@@ -21,15 +21,16 @@
 			<div class="order-detail" v-if="trainInfo" id="chooseCustomer">
 				<div class="ub ub-ac term right-icon input-choose">
 					<input id="kh" type="radio" name="choose" value="Nottemporary" v-model="customerType">
-					<label for="kh" class="customer"></label>
-					<div class="ub-f1">客户</div>
-					<span @click="chooseCustomer()">{{customerName}}</span>
-					<img src="../../assets/my/icon_right.png" class="icon" @click="chooseCustomer()">
+					<label for="kh" class="customer ub ub-pj">
+						<div class="kehu f-l">客户</div>
+						<img src="../../assets/my/icon_right.png" class="icon f-r" @click="chooseCustomer()">
+						<span @click="chooseCustomer()" class="f-r">{{customerName}}</span>
+					</label>
+					
 				</div>
 				<div class="ub ub-ac term no-border input-choose">
 					<input id="sk" type="radio" name="choose" value="temporary" v-model="customerType">
-					<label for="sk" class="individual"></label>
-					<div class="ub-f1">临时客户</div>					
+					<label for="sk" class="individual"><div class="kehu">临时客户</div></label>				
 				</div>
 			</div>
 			
@@ -86,15 +87,13 @@
 			<div class="order-detail" v-if="otherInfo" id="orderTypes">
 				<div class="ub ub-ac term no-border right-icon input-choose">
 					<input id="xj" type="radio" name="choosetype" value="order_knot" v-model="orderType">
-					<label for="xj" class="individual"></label>
-					<div class="ub-f1"></div>					
-					<div>现结</div>					
+					<label for="xj" class="individual"><div class="f-r">现结</div></label>
+										
 				</div>
 				<div class="ub ub-ac term border-top input-choose" v-if="customerType == 'Nottemporary'"> <!--临时客户不可以赊账-->
 					<input id="sz" type="radio" name="choosetype" value="order_credit" v-model="orderType">
-					<label for="sz" class="individual"></label>
-					<div class="ub-f1"></div>					
-					<div>赊账</div>					
+					<label for="sz" class="individual"><div class="f-r">赊账</div></label>
+										
 				</div>
 			</div>
 			<!--备注信息-->
@@ -729,7 +728,7 @@ export default {
         		//确保默认选中现结 而非赊账
         		this.orderType = 'order_knot';
     		}
-    		console.log(this.orderType)
+    		//console.log(this.orderType)
     	},
         '$route'(to, from) {
 			alert('..')
@@ -740,6 +739,9 @@ export default {
 <style scoped rel="stylesheet/scss" lang="scss">
 i{
 	font-style: normal;
+}
+.page-main{
+	overflow: scroll;
 }
 .page-loadmore-wrappe{
    overflow: scroll;
@@ -798,17 +800,24 @@ i{
 			display: none;
 		}	
 		input[type='radio']+label{
+			display: block;
 			margin-right: 0.26rem;
-			width: 0.42rem;
-			height: 0.42rem;
+			width: 100%;
 			cursor: pointer;
-			border-radius: 50%;
-		    background: url(../../assets/xiadan_weixuanzhong_btn@2x.png) no-repeat center;
-		    background-size: contain;
+		    background: url(../../assets/xiadan_weixuanzhong_btn@2x.png) no-repeat left center;
+		    background-size: auto 0.42rem;
+		    div{
+		    	line-height: 0.96rem;
+		    	color: #333;
+		    	font-size: 0.28rem;
+		    }
+		    .kehu{
+				padding-left: 0.68rem;
+		    }
 		}
 		input[type='radio']:checked+label{
-		    background: url(../../assets/xiadan_xuanzhong_btn@2x.png) no-repeat center;
-		    background-size: contain;
+		    background: url(../../assets/xiadan_xuanzhong_btn@2x.png) no-repeat left center;
+		    background-size: auto 0.42rem;
 		}
 	}
 	
@@ -828,7 +837,8 @@ i{
 	.right-icon{
 		img.icon{
 			width: 0.18rem;
-			display: block;
+			display: inline-block;
+			margin-top: 0.3rem;
 		}
 		span{
 			margin: 0 .2rem 0 .15rem;

@@ -285,6 +285,7 @@ body{
 /*订单车次列表*/
 .page-loadmore-wrapper{
     overflow: scroll;
+    -webkit-overflow-scrolling : touch;
 	.orders-ul{
 		font-size: 0.26rem;
 		color: #4c4c4c;
