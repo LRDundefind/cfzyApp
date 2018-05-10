@@ -33,12 +33,12 @@
                         <div class="ub">
                             <div class="ub ub-f2">
                                 <div>已结算
-                                    <span class="number">{{item.tradeAmount}}</span>
+                                    <span class="number">￥{{item.tradeAmount}}</span>
                                 </div>
                             </div>
                             <div class="ub ub-f1">
                                 <div>尚欠款
-                                    <span class="number pay">{{item.notPayAmount}}</span>
+                                    <span class="number pay">￥{{item.notPayAmount}}</span>
                                 </div>
                             </div>
                         </div>
@@ -147,7 +147,7 @@
         .name {
             font-size: $fons_size_30;
             color: $main_color333;
-            border-bottom: $main_border;
+            border-bottom: 1px #f0f0f0 solid;
             line-height: 0.8rem;
             min-height: 0.8rem;
         }
