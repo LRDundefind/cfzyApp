@@ -82,7 +82,7 @@
                         duration: 5000
                     });
                 }
-                else if (!(new RegExp(/^1[3|4|5|7|8][0-9]{9}$/).test(this.phoneNumber))) {
+                else if (!(new RegExp(/^1[3|4|5|6|7|8|9][0-9]{9}$/).test(this.phoneNumber))) {
                     Toast({
                         message: '手机号输入格式有误',
                         position: 'middle',
