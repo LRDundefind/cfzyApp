@@ -10,7 +10,7 @@
             </router-link>
 		</mt-header>
 		<!--下单-->
-		<div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }">
+		<div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
 			<div class="order-detail" v-if="trainInfo">
 				<div class="ub ub-ac term no-border right-icon" @click="choosetrainNumber()">
 					<div class="ub-f1">{{trainsNum}}</div>
@@ -45,7 +45,7 @@
 						<span>金额</span>
 						<span>包装费</span>
 					</li>
-					<li class="con" v-for=" (goods,index) in goodsInfo" @click="goodsInfoSet(index, goods.goodId, goods.goodName, goods.sellUnit, goods.numUnit, goods.surplusNum, goods.tid, trainsNum)" :key="goods.id">
+					<li class="con" v-for=" (goods,index) in goodsInfo" @click="goodsInfoSet(index, goods.goodId, goods.id, goods.goodName, goods.sellUnit, goods.numUnit, goods.surplusNum, goods.tid, trainsNum)" :key="goods.id">
 						<span>{{goods.goodName}}</span>
 						<span>{{goods.weight}}</span>
 						<span>{{goods.price}}</span>
@@ -225,6 +225,7 @@ export default {
 			goodsweight: '',  //设置货品价格-重量
 			pbweight: '',  //设置货品价格-平板重, 提交订单所需
 			goodId: '',//货品id, 提交订单所需
+			id: '',//货品id, 提交订单所需
 			numUnit: '',//重量单位, 提交订单所需
 			have_goodsunit: false, //默认为false,用来判断每项货品是否填写了单价
 
@@ -358,10 +359,11 @@ export default {
 			
 		},
 		//设置货品重量件数信息的弹框
-        goodsInfoSet(i, id, name, sellunit, numUnit, surplusNum, tid, trainsNum){
+        goodsInfoSet(i, goodid, id, name, sellunit, numUnit, surplusNum, tid, trainsNum){
 			this.numberNum = i;
         	this.dialoags = true;
-        	this.goodId = id;//货品id 提交订单传参所需
+        	this.goodId = goodid;//货品id 提交订单传参所需
+        	this.id = id;//货品id 提交订单传参所需
         	this.goodName = name;
         	this.sellUnit = sellunit;//提交订单传参所需 售卖单位
         	this.numUnit = numUnit;//提交订单传参所需  重量单位
@@ -474,6 +476,7 @@ export default {
 				this.$set(this.goodsInfo,this.numberNum,
 					    {	goodName:this.goodName,
 					     	goodId:this.goodId, //提交订单所需，列表不展示
+					     	id:this.id, //提交订单所需，列表不展示
 					     	price:this.goodsunit,
 					     	goodNum:this.goodsnum,
 					     	weight:this.goodsweight,
@@ -494,6 +497,7 @@ export default {
 	        	//填写单价，计算当前所设置货品的货款包装过磅费， 
 				var params = {
 					goodId: this.goodId,//单个货品id
+					id: this.id,//单个货品id
 					price: this.goodsunit,//单价
 					goodNum: this.goodsnum,//件数
 					weight: this.goodsweight,//重量
@@ -513,6 +517,7 @@ export default {
 						
 						//		this.goodsInfo中下单所需货品参数对照表  勿删，，， 左：获取 ，右： 传参名
 						//		this.goodId  货品id  goodId
+						//		this.id  货品id  id
 						//		this.goodName 货品名称 goodName 
 						//		this.goodsunit 货品单价 price
 						//		this.goodsnum 货品件数 goodNum
@@ -524,6 +529,7 @@ export default {
 						this.$set(this.goodsInfo,this.numberNum,
 							    {	goodName:this.goodName,
 							     	goodId:this.goodId, //提交订单所需，列表不展示
+							     	id:this.id, //提交订单所需，列表不展示
 							    	price:this.goodsunit,
 							     	goodNum:this.goodsnum,
 							     	weight:this.goodsweight,
@@ -743,7 +749,7 @@ i{
 .page-main{
 	overflow: scroll;
 }
-.page-loadmore-wrappe{
+.page-loadmore-wrapper{
    overflow: scroll;
     -webkit-overflow-scrolling : touch;
 }
