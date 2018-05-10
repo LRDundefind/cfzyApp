@@ -10,7 +10,7 @@
             </router-link>
 		</mt-header>
 		<!--下单-->
-		<div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
+		<div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }">
 			<div class="order-detail" v-if="trainInfo">
 				<div class="ub ub-ac term no-border right-icon" @click="choosetrainNumber()">
 					<div class="ub-f1">{{trainsNum}}</div>
@@ -728,7 +728,7 @@ export default {
         		//确保默认选中现结 而非赊账
         		this.orderType = 'order_knot';
     		}
-    		console.log(this.orderType)
+    		//console.log(this.orderType)
     	},
         '$route'(to, from) {
 			alert('..')
