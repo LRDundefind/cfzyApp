@@ -159,6 +159,7 @@
 <style scoped lang="scss">
 .page-loadmore-wrappe{
    overflow: scroll;
+    -webkit-overflow-scrolling : touch;
 }
     .im {
         width: 0.8rem;
