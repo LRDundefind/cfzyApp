@@ -1,6 +1,6 @@
 <template>
     <div class="page-content">
-        <mt-header fixed title="客 户">
+        <mt-header fixed title="客户">
             <router-link :to="{name:'order'}" slot="left" v-if="type=='order'">
                 <mt-button icon="back"></mt-button>
             </router-link>

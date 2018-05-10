@@ -86,7 +86,7 @@
                 storageData:{
 //                    trainNum:'',//当日入库量
 //                    order_quantity:'',//当日下单量
-//                    deposit:'',//暂存订单量
+                    deposit:'',//暂存订单量
                 }
             }
         },

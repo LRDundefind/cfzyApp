@@ -7,7 +7,7 @@
             <mt-button @click="handleSave" slot="right" style="color:#333;">保存</mt-button>
         </mt-header>
 
-        <div class="page-main">
+        <div class="page-main wrapper"  :style="{ height: wrapperHeight + 'px' }">
             <div class="main-list">
                 <div class="">
                     <div class="sc">
@@ -104,6 +104,7 @@
     export default {
         data () {
             return {
+                 wrapperHeight: 0,//容器高度
                 headerImage: '',     //   头 像
                 headerImageUP: '',     //   头 像
                 addPerson:false,
@@ -136,7 +137,7 @@
             }
         },
         mounted () {
-           
+            this.wrapperHeight = document.documentElement.clientHeight - 40;
             //create添加  update是修改
             this.typeW = this.$route.params.type || false;
             this.cid = this.$route.params.id || false;
@@ -593,10 +594,12 @@
     .phonemobil{
         border: 1px solid #dedede;
         color: #4c4c4c;
-        line-height: 0.8rem;
+        padding: 0.2rem 0;
+        line-height: 0.5rem;
         margin-bottom: 0.5rem;
         box-sizing: border-box;
         padding-left: 2px;
+        box-sizing: border-box;
     }
     .Unchange{
         display: block;
@@ -628,7 +631,8 @@
                 float: right;
                 color: #4c4c4c;
                 text-align: right;
-                line-height: 1rem;
+                line-height: 0.5rem;
+                margin-top: 0.25rem;
             }
         }
         > p:nth-child(1) {

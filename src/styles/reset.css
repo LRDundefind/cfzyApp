@@ -401,3 +401,7 @@ body {
 .mint-button::after{
 	background: none !important;
 }
+.wrapper{
+	-webkit-overflow-scrolling : touch;
+	overflow: scroll;
+}
