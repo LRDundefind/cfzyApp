@@ -78,8 +78,9 @@
 
                         let doMain = process.env.BASE_PATH;
                         let defaultImg = require('../../assets/my/my_head.png');
+                        let headImg = this.personalData.headImg;
                         //返回头像的处理
-                        if (this.personalData.headImg == '') {
+                        if (headImg == '') {
                             this.personalData.headImg = defaultImg;
                         } else {
                             this.personalData.headImg = this.doMain + headImg;
@@ -274,20 +275,14 @@
             },
             //保存用户资料
             savePersonal(){
-                let data = this.personalData;
-                // if(this.getImage){
-                //     delete data.headImg;
-                //     data.headImg = this.getImage;    
-                // }
-
-                delete data.createTime;
-                delete data.password;
-                delete data.salt;
-                delete data.sid;
+                let data ={
+                    phone:this.personalData.phone,
+                    selName:this.personalData.selName,
+                    headImg:this.headerImage,
+                };
                 if (this.yanNumber) {
                     data.code = this.yanNumber;
                 }
-                //console.log(data);
                 my.alterPersonal(data).then(response => {
                     if (response.data.status == 'Y') {
                         Toast({
