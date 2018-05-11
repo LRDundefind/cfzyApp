@@ -44,6 +44,7 @@
     export default {
         data () {
             return {
+                getImage:'',
                 personalData: [],
                 phone: this.$route.params.phone,
                 yanNumber: this.$route.params.yanNumber,
@@ -51,6 +52,7 @@
                 picValue: '',
                 selName: this.$route.params.selName,
                 headImg: this.$route.params.headImg,
+                doMain:process.env.BASE_PATH,
             }
         },
         mounted () {
@@ -72,6 +74,8 @@
                 my.getInfo(params).then(response => {
                     if (response.data.status == 'Y') {
                         this.personalData = response.data.results;
+                        this.getImage = this.personalData.headImg;
+
                         let doMain = process.env.BASE_PATH;
                         let defaultImg = require('../../assets/my/my_head.png');
                         let headImg = this.personalData.headImg;
@@ -79,7 +83,7 @@
                         if (headImg == '') {
                             this.personalData.headImg = defaultImg;
                         } else {
-                            this.personalData.headImg = doMain + headImg;
+                            this.personalData.headImg = this.doMain + headImg;
                         }
 
                         if (this.phone) {
@@ -99,7 +103,9 @@
             upload1 (e) {
                 let files = e.target.files || e.dataTransfer.files;
                 if (!files.length) return;
+                 
                 this.picValue = files[0];
+
                 this.imgPreview(this.picValue);
             },
             imgPreview (file) {
@@ -107,9 +113,10 @@
                 let Orientation;
 
                 //去获取拍照时的信息，解决拍出来的照片旋转问题  
-                Exif.getData(file, function () {
-                    Orientation = Exif.getTag(this, 'Orientation');
-                });
+                // Exif.getData(file, function () {
+                //     Orientation = Exif.getTag(this, 'Orientation');
+                //     alert(Orientation)
+                // });
 
                 // 看支持不支持FileReader  
                 // if (!file || !window.FileReader) return;
@@ -143,6 +150,55 @@
             },
             postImg(){
                 // console.log(this.headerImage)
+            },
+                rotateImg (img, direction,canvas) {
+                //最小与最大旋转方向，图片旋转4次后回到原方向
+                const min_step = 0;
+                const max_step = 3;
+                if (img == null)return;
+                //img的高度和宽度不能在img元素隐藏后获取，否则会出错
+                let height = img.height;
+                let width = img.width;
+                let step = 2;
+                if (step == null) {
+                step = min_step;
+                }
+                if (direction == 'right') {
+                step++;
+                //旋转到原位置，即超过最大值
+                step > max_step && (step = min_step);
+                } else {
+                step--;
+                step < min_step && (step = max_step);
+                }
+                //旋转角度以弧度值为参数
+                let degree = step * 90 * Math.PI / 180;
+                let ctx = canvas.getContext('2d');
+                switch (step) {
+                case 0:
+                    canvas.width = width;
+                    canvas.height = height;
+                    ctx.drawImage(img, 0, 0);
+                    break;
+                case 1:
+                    canvas.width = height;
+                    canvas.height = width;
+                    ctx.rotate(degree);
+                    ctx.drawImage(img, 0, -height);
+                    break;
+                case 2:
+                    canvas.width = width;
+                    canvas.height = height;
+                    ctx.rotate(degree);
+                    ctx.drawImage(img, -width, -height);
+                    break;
+                case 3:
+                    canvas.width = height;
+                    canvas.height = width;
+                    ctx.rotate(degree);
+                    ctx.drawImage(img, -width, 0);
+                    break;
+                }
             },
             compress(img, Orientation) {
                 let canvas = document.createElement("canvas");
@@ -219,15 +275,14 @@
             },
             //保存用户资料
             savePersonal(){
-                let data = this.personalData;
-                delete data.createTime;
-                delete data.password;
-                delete data.salt;
-                delete data.sid;
+                let data ={
+                    phone:this.personalData.phone,
+                    selName:this.personalData.selName,
+                    headImg:this.headerImage,
+                };
                 if (this.yanNumber) {
                     data.code = this.yanNumber;
                 }
-                //console.log(data);
                 my.alterPersonal(data).then(response => {
                     if (response.data.status == 'Y') {
                         Toast({
@@ -238,7 +293,7 @@
                         this.info();
                         setTimeout(() => {
                             this.$router.push({name: 'my'})
-                        }, 2000)
+                        }, 500)
 
                     } else {
                         Toast({

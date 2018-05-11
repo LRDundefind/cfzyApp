@@ -2,7 +2,7 @@
     <div class="page-content storage">
         <mt-header fixed title="货品入库" v-if="selected">
             <mt-button icon="back" slot="left" @click="goHome"></mt-button>
-            <mt-button slot="right" style="font-size: 0.32rem" @click="confirmStorage">
+            <mt-button slot="right" style="font-size: 0.32rem" @click="confirmStorage" :disabled="confirmDisabled">
                 确认入库
             </mt-button>
         </mt-header>
@@ -20,110 +20,121 @@
             </router-link>
         </mt-header>
 
+        <div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }">
 
-        <mt-navbar v-model="selected" v-if="selected">
-            <mt-tab-item id="basic">基本信息</mt-tab-item>
-            <mt-tab-item id="goods">货品信息</mt-tab-item>
-        </mt-navbar>
-        <mt-tab-container>
-            <!--基本信息-->
-            <div v-if="selected == 'basic'">
-                <div class="">
-                    <div class="basic-list" @click="gologistics">
-                        <p class="clearfix">物流
-                            <span class="name">{{trainShow}}<img class="right-icon"
-                                                            src="../../assets/index/gray-right-icon.png"/></span>
-                        </p>
-                    </div>
-                    <div class="basic-list" @click="goList">
-                        <p class="clearfix">货主
-                            <span class="name">{{stall.name}}<img class="right-icon"
-                                                                  src="../../assets/index/gray-right-icon.png"/></span>
-                        </p>
-                    </div>
+            <mt-navbar v-model="selected" v-if="selected">
+                <mt-tab-item id="basic">基本信息</mt-tab-item>
+                <mt-tab-item id="goods">货品信息</mt-tab-item>
+            </mt-navbar>
+            <mt-tab-container>
+                <!--基本信息-->
+                <div v-if="selected == 'basic'">
+                    <div class="">
+                        <div class="basic-list" @click="gologistics">
+                            <p class="clearfix">物流
+                                <span class="name">{{trainShow}}<img class="right-icon"
+                                                                     src="../../assets/index/gray-right-icon.png"/></span>
+                            </p>
+                        </div>
+                        <div class="basic-list" @click="goList">
+                            <p class="clearfix">货主
+                                <span class="name">{{stall.name}}<img class="right-icon"
+                                                                      src="../../assets/index/gray-right-icon.png"/></span>
+                            </p>
+                        </div>
 
-                    <div class="basic-list">
-                        <p class="clearfix">司机姓名<input type="text" v-model="stall.driverName" :disabled = "item.carDriverMan != ''"></p>
-                        <p class="clearfix">司机电话<input type="number" v-model="stall.driverPhone" :disabled = "item.carDriverPhone != ''"></p>
-                    </div>
+                        <div class="basic-list">
+                            <p class="clearfix">司机姓名<input type="text" v-model="stall.driverName"
+                                                           :disabled="item.carDriverMan != ''"></p>
+                            <p class="clearfix">司机电话<input type="number" v-model="stall.driverPhone"
+                                                           :disabled="item.carDriverPhone != ''"></p>
+                        </div>
 
-                    <div class="basic-list">
-                        <p class="clearfix">车牌号<input type="text" v-model="stall.plateNum" :disabled = "item.plateNumber != ''"></p>
-                        <p class="clearfix">发货地点<input style="width: 80%" type="text" v-model="stall.startAddress" :disabled = "item.sourceAddr != ''"></p>
-                    </div>
+                        <div class="basic-list">
+                            <p class="clearfix">车牌号<input type="text" v-model="stall.plateNum"
+                                                          :disabled="item.plateNumber != ''"></p>
+                            <p class="clearfix">发货地点<input style="width: 80%" type="text" v-model="stall.startAddress"
+                                                           :disabled="item.sourceAddr != ''"></p>
+                        </div>
 
-                    <div class="basic-list">
-                        <p class="clearfix">产地<input type="text" v-model="stall.origin" :disabled = "item.productAddr != ''"></p>
-                        <p class="clearfix" style="position: relative">产地证明
-                            <input type="file" class="upload-picture" accept="image" @change="upload1($event,'source')"
-                                   style="opacity: 0">
-                            <span class="upload">
+                        <div class="basic-list">
+                            <p class="clearfix">产地<input type="text" v-model="stall.origin"
+                                                         :disabled="item.productAddr != ''"></p>
+                            <p class="clearfix" style="position: relative">产地证明
+                                <input type="file" class="upload-picture" accept="image"
+                                       @change="upload1($event,'source')"
+                                       style="opacity: 0">
+                                <span class="upload">
                                 <span v-if="stall.originProve == ''">点击上传</span>
                                 <span v-if="stall.originProve != ''">已经上传</span>
                                 <img class="right-icon"
                                      src="../../assets/index/gray-right-icon.png"/></span>
-                        </p>
-                        <p class="clearfix" style="position: relative">检验证明
-                            <input type="file" class="upload-picture" accept="image" @change="upload1($event,'detect')"
-                                   style="opacity: 0">
-                            <span class="upload">
+                            </p>
+                            <p class="clearfix" style="position: relative">检验证明
+                                <input type="file" class="upload-picture" accept="image"
+                                       @change="upload1($event,'detect')"
+                                       style="opacity: 0">
+                                <span class="upload">
                                 <span v-if="stall.checkProve == ''">点击上传</span>
                                 <span v-if="stall.checkProve != ''">已经上传</span>
                                 <img class="right-icon"
                                      src="../../assets/index/gray-right-icon.png"/></span>
-                        </p>
-                        <p class="clearfix" style="position: relative"  v-if="item.contractBigUrl == ''">承运合同
-                            <input type="file" class="upload-picture" accept="image" @change="upload1($event,'ship')"
-                                   style="opacity: 0">
-                            <span class="upload">
+                            </p>
+                            <p class="clearfix" style="position: relative" v-if="item.contractBigUrl == ''">承运合同
+                                <input type="file" class="upload-picture" accept="image"
+                                       @change="upload1($event,'ship')"
+                                       style="opacity: 0">
+                                <span class="upload">
                                 <span v-if="stall.carrierContract == ''">点击上传</span>
                                 <span v-if="stall.carrierContract != ''">已经上传</span>
                                 <img class="right-icon"
                                      src="../../assets/index/gray-right-icon.png"/></span>
-                        </p>
+                            </p>
 
-                        <p class="clearfix" style="position: relative" v-if="item.contractBigUrl != ''">承运合同
-                            <span class="upload">
+                            <p class="clearfix" style="position: relative" v-if="item.contractBigUrl != ''">承运合同
+                                <span class="upload">
                                 <span>已经上传</span>
                                 <img class="right-icon"
                                      src="../../assets/index/gray-right-icon.png"/></span>
-                        </p>
+                            </p>
 
 
-                    </div>
+                        </div>
 
-                    <div class="basic-list">
-                        <p class="clearfix">备注</p>
-                        <div class="remark">
+                        <div class="basic-list">
+                            <p class="clearfix">备注</p>
+                            <div class="remark">
                             <textarea name="" id="" cols="30" rows="3" placeholder="备注信息"
-                                      v-model="stall.remark" :disabled = "item.goodsRemark != ''"></textarea>
+                                      v-model="stall.remark" :disabled="item.goodsRemark != ''"></textarea>
+                            </div>
                         </div>
                     </div>
+
+                </div>
+                <!--货品信息-->
+                <div v-if="selected == 'goods'">
+                    <div v-for="item in goods" :key='item.goodId' class="goods-list">
+                        <p @click="editGoods(item)" class="clearfix">{{item.goodName}}
+                            <span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
+                            <span>{{item.goodNum}} {{item.numUnit | sellNnit}}</span>
+                        </p>
+                    </div>
+                    <div class="login_cont">
+                        <div @click="createGoods" class="loginbtn">添加货品</div>
+                    </div>
+                </div>
+                <!--货主列表-->
+                <div v-if="ownerList">
+                    <owner-list ref="owner" @choiceOwner="oNchoiceOwner"></owner-list>
+                </div>
+                <!--入库货品信息-->
+                <div v-if="goodsDetails">
+                    <goods-details :edit="editItem" @addGoods="onAddGoods"></goods-details>
                 </div>
 
-            </div>
-            <!--货品信息-->
-            <div v-if="selected == 'goods'">
-                <div v-for="item in goods" :key='item.goodId' class="goods-list">
-                    <p @click="editGoods(item)" class="clearfix">{{item.goodName}}
-                        <span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
-                        <span>{{item.goodNum}} {{item.numUnit | sellNnit}}</span>
-                    </p>
-                </div>
-                <div class="login_cont">
-                    <div @click="createGoods" class="loginbtn">添加货品</div>
-                </div>
-            </div>
-            <!--货主列表-->
-            <div v-if="ownerList">
-                <owner-list ref="owner" @choiceOwner="oNchoiceOwner"></owner-list>
-            </div>
-            <!--入库货品信息-->
-            <div v-if="goodsDetails">
-                <goods-details :edit="editItem" @addGoods="onAddGoods"></goods-details>
-            </div>
+            </mt-tab-container>
 
-        </mt-tab-container>
+        </div>
     </div>
 </template>
 
@@ -131,13 +142,16 @@
     import ownerList from '@/view/damage/ownerList'
     import goodsDetails from '@/view/goods/goodsDetails'
     import {damage} from '@/services/apis/damage.api'
-    import { MessageBox , Toast } from 'mint-ui';
+    import {MessageBox, Toast} from 'mint-ui';
     import Exif from 'exif-js';
 
     export default {
         data () {
             return {
-                trainShow:'请选择',
+                confirmDisabled:false,
+//                wrapperHeight: 0,//容器高度
+
+                trainShow: '请选择',
                 source: '',//产地证明
                 detect: '',//检验证明
                 ship: '',//乘运证明
@@ -168,7 +182,7 @@
 
                 goodsDetails: false,//货品列表详情
                 ownerList: false,//货主列表
-                item:[],//物流信息
+                item: [],//物流信息
             }
         },
         components: {
@@ -176,11 +190,12 @@
             'goods-details': goodsDetails,
         },
         mounted () {
+//            this.wrapperHeight = document.documentElement.clientHeight - 40;
 
             console.log(this.item);
-            if(this.$route.params.item) {
+            if (this.$route.params.item) {
                 this.item = this.$route.params.item;
-                if(this.item.orderId){
+                if (this.item.orderId) {
 //                    this.trainShow = this.item.orderId
                     this.trainShow = '已选择';
                 }
@@ -202,21 +217,32 @@
                 if (this.item.goodsRemark) {
                     this.stall.remark = this.item.goodsRemark;
                 }
-                if(this.item.contractBigUrl){
+                if (this.item.contractBigUrl) {
                     this.stall.carrierContract = this.item.contractBigUrl;
                 }
 
                 console.log(this.item);
-            }else {
-                this.item={
-                    carDriverMan:'',
-                    carDriverPhone:'',
-                    plateNumber:'',
-                    sourceAddr:'',
-                    productAddr:'',
-                    goodsRemark:'',
-                    contractBigUrl:'',
+            } else {
+                this.item = {
+                    carDriverMan: '',
+                    carDriverPhone: '',
+                    plateNumber: '',
+                    sourceAddr: '',
+                    productAddr: '',
+                    goodsRemark: '',
+                    contractBigUrl: '',
                 }
+            }
+        },
+        computed:{
+            wrapperHeight:function(){
+                let height = 0
+                if(this.selected == 'goods'){
+                    height = document.documentElement.clientHeight - 120;
+                }else {
+                    height = document.documentElement.clientHeight - 40;
+                }
+                return height;
             }
         },
         methods: {
@@ -304,9 +330,9 @@
 
             //跳转到首页
             goHome(){
-                MessageBox.confirm('确认返回？','').then(() => {
+                MessageBox.confirm('确认返回？', '').then(() => {
                     this.$router.push({name: 'home'});
-                },() => {
+                }, () => {
 
                 });
             },
@@ -364,6 +390,7 @@
                         duration: 2000
                     });
                 } else {
+                    this.confirmDisabled = true;
                     console.log(data);
                     delete data.name;
                     damage.submitGoods(data).then(response => {
@@ -374,9 +401,11 @@
                                 duration: 1000
                             });
                             setTimeout(() => {
+                                this.confirmDisabled = false;
                                 this.$router.push({name: 'home'});
-                            }, 1500)
+                            }, 1000)
                         } else {
+                            this.confirmDisabled = false;
                             Toast({
                                 message: response.data.results,
                                 position: 'middle',
@@ -451,6 +480,55 @@
                 this.source = '';
                 this.detect = '';
                 this.ship = '';
+            },
+                rotateImg (img, direction,canvas) {
+                //最小与最大旋转方向，图片旋转4次后回到原方向
+                const min_step = 0;
+                const max_step = 3;
+                if (img == null)return;
+                //img的高度和宽度不能在img元素隐藏后获取，否则会出错
+                let height = img.height;
+                let width = img.width;
+                let step = 2;
+                if (step == null) {
+                step = min_step;
+                }
+                if (direction == 'right') {
+                step++;
+                //旋转到原位置，即超过最大值
+                step > max_step && (step = min_step);
+                } else {
+                step--;
+                step < min_step && (step = max_step);
+                }
+                //旋转角度以弧度值为参数
+                let degree = step * 90 * Math.PI / 180;
+                let ctx = canvas.getContext('2d');
+                switch (step) {
+                case 0:
+                    canvas.width = width;
+                    canvas.height = height;
+                    ctx.drawImage(img, 0, 0);
+                    break;
+                case 1:
+                    canvas.width = height;
+                    canvas.height = width;
+                    ctx.rotate(degree);
+                    ctx.drawImage(img, 0, -height);
+                    break;
+                case 2:
+                    canvas.width = width;
+                    canvas.height = height;
+                    ctx.rotate(degree);
+                    ctx.drawImage(img, -width, -height);
+                    break;
+                case 3:
+                    canvas.width = height;
+                    canvas.height = width;
+                    ctx.rotate(degree);
+                    ctx.drawImage(img, -width, 0);
+                    break;
+                }
             },
             compress(img, Orientation) {
                 let canvas = document.createElement("canvas");
@@ -528,9 +606,13 @@
     }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
+    .page-loadmore-wrappe{
+        overflow: scroll;
+        -webkit-overflow-scrolling : touch;
+    }
     .storage {
         input:disabled, textarea:disabled {
-            background-color: white!important;
+            background-color: white !important;
         }
         .mint-navbar {
             margin-top: 0.2rem;

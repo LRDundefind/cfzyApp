@@ -7,7 +7,7 @@
             <span @click="addCustomer" style="font-size: 0.32rem" slot="right">添加客户</span>
         </mt-header>
         <search-box  @getSmeage="searchstart"  ref="search"/>
-        <noDate v-show="counts == null"></noDate>  
+        <noDate v-show="noWdata"></noDate>  
         <div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }" >
 
             <mt-loadmore 
@@ -67,6 +67,7 @@
             return {
             	heightNum: 0,
                 allLoaded: false,
+                noWdata:false,
                 msg:'',
                 wrapperHeight: 0,//容器高度
                 type: '',
@@ -92,6 +93,7 @@
         },
         created(){
             this.getList();
+            app.Vwaiting();
         },
         methods: {
             searchstart(msg){
@@ -122,7 +124,12 @@
                
                 client.dataList(this.params)
                     .then(response => {
+                        
                         this.listdata = response.data.results;
+                        if(this.listdata==''){
+                            this.noWdata=true;
+                         app.Cwaiting();
+                        }
                         if(this.listdata.length==this.params.page_size){  
                             //判断是否应该加载下一页
                             this.params.current_page+=1 ;
@@ -133,7 +140,7 @@
                         if (this.listdata) {
                             this.listStore.push(...this.listdata)
                             this.counts = this.listStore.length;
-                            console.log(this.counts)
+                             app.Cwaiting()
                         }
                         Indicator.close();
                     })

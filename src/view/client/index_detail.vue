@@ -7,7 +7,7 @@
                 </mt-header>
                 <div class="blackbg">
                     <div class="headimg">
-                        <img v-show="listdata.headImg!=''" :src="imgpath+listdata.headImg" alt="图片" style="height: 100%;width: 100%;border-radius: 50%;">
+                        <img v-show="listdata.headImg!=''" :src="imgpath+listdata.headImg" alt="图片" style="height: 1.24rem;width: 1.24rem;border-radius: 50%;">
                         <img v-show="listdata.headImg==''" src="../../assets/my/my_head.png" alt="">
                     </div> 
                     <h2 v-if="listdata.sys_status=='Y'" class="titstyle">已被系统加入黑名单<br>请谨慎合作</h2>
@@ -140,10 +140,9 @@
         color: #fff;
     }
     .headimg{
-        width: 1rem;
-        height: 1rem;
+        width: 1.24rem;
+        height: 1.24rem;
         margin: 0 auto;
-        border-radius: 50%;
         overflow: hidden;
         padding: 1rem 0 0.5rem;
     }
