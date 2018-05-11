@@ -275,14 +275,14 @@
                 if (Orientation != "" && Orientation != 1) {
                     switch (Orientation) {
                         case 6://需要顺时针（向左）90度旋转
-                            tCanvas.rotateImg(img, 'left', canvas);
+                            this.rotateImg(img, 'left', canvas);
                             break;
                         case 8://需要逆时针（向右）90度旋转
-                            tCanvas.rotateImg(img, 'right', canvas);
+                            this.rotateImg(img, 'right', canvas);
                             break;
                         case 3://需要180度旋转
-                            tCanvas.rotateImg(img, 'right', canvas);//转两次
-                            tCanvas.rotateImg(img, 'right', canvas);
+                            this.rotateImg(img, 'right', canvas);//转两次
+                            this.rotateImg(img, 'right', canvas);
                             break;
                     }
                 }
@@ -292,7 +292,9 @@
                 console.log('压缩后：' + ndata.length);
                 console.log('压缩率：' + ~~(100 * (initSize - ndata.length) / initSize) + "%");
                 tCanvas.width = tCanvas.height = canvas.width = canvas.height = 0;
+                alert(ndata)
                 return ndata;
+                
             },
 
 
