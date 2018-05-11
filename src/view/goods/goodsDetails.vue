@@ -22,8 +22,8 @@
                         <div class="choice" v-if="goods.goodName !=''">
                             <select v-model="goods.numUnit">
                                 <option value="unit_pie">件</option>
-                                <option v-show="Unit=='unit_kg' " value="unit_kg">公斤</option>
-                                <option v-show="Unit=='unit_jin'" value="unit_jin">斤</option>
+                                <option v-if="Unit=='unit_kg' " value="unit_kg">公斤</option>
+                                <option v-else-if="Unit=='unit_jin'" value="unit_jin">斤</option>
                             </select>
                             <img class="jin-right"
                                  src="../../assets/index/gray-right-icon.png"/>
