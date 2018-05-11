@@ -2,8 +2,8 @@
 export var Vwaiting = function(){
 		if(document.getElementById('loaderWrap')){
 			document.getElementById('loaderWrap').style.opacity = '1';
-			document.getElementById('loaderWrap').style.zIndex = '1000';
-//			document.getElementById('loaderWrap').style.display = 'block';			
+			// document.getElementById('loaderWrap').style.zIndex = '1000';
+			document.getElementById('loaderWrap').style.display = 'block';			
 			return;
 		}
 		var screen = document.createElement("div");
@@ -14,7 +14,7 @@ export var Vwaiting = function(){
 export var Cwaiting = function(){
 		if(document.getElementById('loaderWrap')){
 			document.getElementById('loaderWrap').style.opacity = '0';
-			document.getElementById('loaderWrap').style.zIndex = '0';
-//			document.getElementById('loaderWrap').style.display = 'none'
+			// document.getElementById('loaderWrap').style.zIndex = '-1';
+			document.getElementById('loaderWrap').style.display = 'none'
 		}
 	}
