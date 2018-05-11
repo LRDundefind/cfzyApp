@@ -143,7 +143,7 @@
         width: 1rem;
         height: 1rem;
         margin: 0 auto;
-        border-radius: 50%;
+        // border-radius: 50%;
         overflow: hidden;
         padding: 1rem 0 0.5rem;
     }
