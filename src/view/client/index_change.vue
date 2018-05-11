@@ -275,14 +275,14 @@
                 if (Orientation != "" && Orientation != 1) {
                     switch (Orientation) {
                         case 6://需要顺时针（向左）90度旋转
-                            this.headerImage(img, 'left', canvas);
+                            canvas.rotateImg(img, 'left', canvas);
                             break;
                         case 8://需要逆时针（向右）90度旋转
-                            this.headerImage(img, 'right', canvas);
+                            canvas.rotateImg(img, 'right', canvas);
                             break;
                         case 3://需要180度旋转
-                            this.headerImage(img, 'right', canvas);//转两次
-                            this.headerImage(img, 'right', canvas);
+                            canvas.rotateImg(img, 'right', canvas);//转两次
+                            canvas.rotateImg(img, 'right', canvas);
                             break;
                     }
                 }
