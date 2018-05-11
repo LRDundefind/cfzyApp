@@ -101,9 +101,10 @@
             },
             upload1 (e) {
                 let files = e.target.files || e.dataTransfer.files;
-                alert(files)
                 if (!files.length) return;
+                 
                 this.picValue = files[0];
+
                 this.imgPreview(this.picValue);
             },
             imgPreview (file) {
@@ -113,6 +114,7 @@
                 //去获取拍照时的信息，解决拍出来的照片旋转问题  
                 Exif.getData(file, function () {
                     Orientation = Exif.getTag(this, 'Orientation');
+                    alert(Orientation)
                 });
 
                 // 看支持不支持FileReader  
