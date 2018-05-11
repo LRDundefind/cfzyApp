@@ -11,7 +11,7 @@
 
             <div class="login_header">
                 <img src="../../assets/logo1.png" alt="">
-                <h2>上传头像</h2>
+                <h2>鲜道赢.卖手帮</h2>
             </div>
 
             <div class="login_cont">
