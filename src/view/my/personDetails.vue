@@ -112,10 +112,10 @@
                 let Orientation;
 
                 //去获取拍照时的信息，解决拍出来的照片旋转问题  
-                Exif.getData(file, function () {
-                    Orientation = Exif.getTag(this, 'Orientation');
-                    alert(Orientation)
-                });
+                // Exif.getData(file, function () {
+                //     Orientation = Exif.getTag(this, 'Orientation');
+                //     alert(Orientation)
+                // });
 
                 // 看支持不支持FileReader  
                 // if (!file || !window.FileReader) return;
