@@ -136,10 +136,13 @@
                             duration: 1000
                         });
                     } else {
-                        let data = this.goods;
-                        delete data.goodName;
-                        data.tid = this.tid;
-                        data.id = this.id;
+                        let data={
+                            goodId:this.goods.goodId,
+                            id:this.id,
+                            tid:this.tid,
+                            lossRemark:this.goods.lossRemark,
+                            quantity:this.goods.quantity,
+                        };
                         damage.submitDamage(data)
                             .then(response => {
                                 if (response.data.status == 'Y') {
