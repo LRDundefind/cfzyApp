@@ -224,8 +224,10 @@
             //保存用户资料
             savePersonal(){
                 let data = this.personalData;
-                delete data.headImg;
-                data.headImg = this.getImage;
+                // if(this.getImage){
+                //     delete data.headImg;
+                //     data.headImg = this.getImage;    
+                // }
 
                 delete data.createTime;
                 delete data.password;
