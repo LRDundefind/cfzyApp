@@ -2,7 +2,7 @@
     <div class="page-content storage">
         <mt-header fixed title="货品入库" v-if="selected">
             <mt-button icon="back" slot="left" @click="goHome"></mt-button>
-            <mt-button slot="right" style="font-size: 0.32rem" @click="confirmStorage">
+            <mt-button slot="right" style="font-size: 0.32rem" @click="confirmStorage" :disabled="confirmDisabled">
                 确认入库
             </mt-button>
         </mt-header>
@@ -148,6 +148,7 @@
     export default {
         data () {
             return {
+                confirmDisabled:false,
 //                wrapperHeight: 0,//容器高度
 
                 trainShow: '请选择',
@@ -389,6 +390,7 @@
                         duration: 2000
                     });
                 } else {
+                    this.confirmDisabled = true;
                     console.log(data);
                     delete data.name;
                     damage.submitGoods(data).then(response => {
@@ -399,9 +401,11 @@
                                 duration: 1000
                             });
                             setTimeout(() => {
+                                this.confirmDisabled = false;
                                 this.$router.push({name: 'home'});
-                            }, 1500)
+                            }, 1000)
                         } else {
+                            this.confirmDisabled = false;
                             Toast({
                                 message: response.data.results,
                                 position: 'middle',
