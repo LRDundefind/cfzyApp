@@ -14,7 +14,7 @@
 
 const my = resolve => require([ '@/view/my/my'],resolve)
 const alterPassword = resolve => require([ '@/view/my/alterPassword'],resolve)
-const feedBack = resolve => require([ '@/view/my/my'],resolve)
+const feedBack = resolve => require([ '@/view/my/feedBack'],resolve)
 const replacePhone = resolve => require([ '@/view/my/replacePhone'],resolve)
 const verification = resolve => require([ '@/view/my/verification'],resolve)
 const about = resolve => require([ '@/view/my/about'],resolve)
