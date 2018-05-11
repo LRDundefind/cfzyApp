@@ -140,10 +140,9 @@
         color: #fff;
     }
     .headimg{
-        width: 1rem;
-        height: 1rem;
+        width: 1.24rem;
+        height: 1.24rem;
         margin: 0 auto;
-        // border-radius: 50%;
         overflow: hidden;
         padding: 1rem 0 0.5rem;
     }
