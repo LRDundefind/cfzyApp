@@ -100,6 +100,7 @@
                 this.params.search=msg;
                 this.listStore = [];
                 this.params.current_page=1 ;
+                this.noWdata = false;
                 this.getList();
             },
             loadTop(){

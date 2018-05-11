@@ -7,7 +7,7 @@
            </router-link>
 		</mt-header>
 		<search-box ref="search" @getSmeage="searchHandler"/>
-        <noDate v-if="counts == null"></noDate>  
+        <noDate v-if="counts"></noDate>  
 		<div class="page-main earning page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
 			<mt-loadmore 
 				:auto-fill="false"
@@ -119,7 +119,7 @@ export default {
             listStore: [],
 			//车次销售列表数据
 			listdata: [],
-			counts: null,
+			counts: false,
 			val: '', //搜索
         }
     },
@@ -128,12 +128,11 @@ export default {
     	if(JSON.parse(Cookies.get('gidOwnID_lists')).gearName){
             this.gearName = JSON.parse(Cookies.get('gidOwnID_lists')).gearName;
         }
-    	
-		this.getList();
 		this.wrapperHeight = document.documentElement.clientHeight - 175;
     },
 	created(){
-		
+		this.getList();
+		app.Vwaiting();
 	},
     methods: {
     	//车次销售列表数据
@@ -146,6 +145,10 @@ export default {
             orders.getTrainSaleList(params)
                 .then(response => {
                     this.listdata = response.data.results;
+                    if(this.listdata==''){
+                        this.counts = true;
+                        app.Cwaiting();
+                    }
 					if(this.listdata.length == this.params.page_size){  
                         //判断是否应该加载下一页
                         this.params.current_page += 1 ;
@@ -155,7 +158,7 @@ export default {
                     }
                     if (this.listdata) {
                         this.listStore.push(...this.listdata);
-                    	this.counts = this.listStore.length;
+                    	app.Cwaiting()
                     }
                     Indicator.close();
                     
@@ -168,7 +171,7 @@ export default {
 		searchHandler(value){
 			this.params.current_page = 1 ;
         	this.listStore = [];
-        	this.counts = null;
+        	this.counts = false;
 			this.getList(value);
 		},
 		

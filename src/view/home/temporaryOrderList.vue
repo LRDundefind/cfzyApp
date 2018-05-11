@@ -7,7 +7,7 @@
 		</mt-header>
 		<!--子emit发送触发事件this.$emit('getSmeage',this.searchValue)  父监听getSmeage，并接收值-->
 		<search-box ref="search" @getSmeage="searchHandler"/>
-        <noDate v-if="counts == null"></noDate>  
+        <noDate v-if="counts"></noDate>  
 		<!--订单列表-->
 		<div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
 			<ul class="order-list">
@@ -35,13 +35,16 @@ export default {
         	wrapperHeight: 0,//容器高度
             temporaryList: [],
             val: '', //搜索
-            counts: null,
+            counts: false,
         }
     },
     mounted () {
     	this.wrapperHeight = document.documentElement.clientHeight - 140;
-		this.getTemporaryList();
     },
+    created(){
+		this.getTemporaryList();
+		app.Vwaiting();
+	},
     methods: {
 		//获取暂存订单列表
 		getTemporaryList(val){
@@ -51,7 +54,10 @@ export default {
 			home.temporaryOrderList(params)
 				.then(response => {
 					this.temporaryList = response.data.results;
-					this.counts = this.temporaryList.length;
+					if(this.temporaryList==''){
+                        this.counts = true;
+                    }
+					app.Cwaiting();
 				})
 				.catch(function (response) {
 					console.log(response);
@@ -59,9 +65,8 @@ export default {
 		},
 		searchHandler(value){
 			this.temporaryList = [],
-			this.counts = null;
+			this.counts = false;
 			this.getTemporaryList(value);
-			console.log(this.counts)
 		},
 	    //跳转到订单详情
         orderDetail(oid){

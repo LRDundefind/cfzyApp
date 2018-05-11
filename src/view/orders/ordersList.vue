@@ -4,7 +4,7 @@
 		    <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
 		</mt-header>
 		<search-box ref="search" @getSmeage="searchHandler"/>
-		<noDate v-if="counts == null"></noDate>  
+		<noDate v-if="counts"></noDate>  
 		<!--订单列表-->
 		<div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
 			<mt-loadmore 
@@ -68,15 +68,17 @@ export default {
                 
             listStore: [],
 			listdata: [],
-			counts: null,
+			counts: false,
 			val: '', //搜索
         }
     },
     mounted () {
-		this.getOrders();
-		
 		this.wrapperHeight = document.documentElement.clientHeight - 140;
     },
+    created(){
+		this.getOrders();
+		app.Vwaiting();
+	},
     methods: {  
     	//车次销售列表数据
         getOrders(val){
@@ -90,6 +92,10 @@ export default {
             orders.getOrdersList(params)
                 .then(response => {
                     this.listdata = response.data.results;
+                    if(this.listdata==''){
+                        this.counts = true;
+                        app.Cwaiting();
+                    }
 					if(this.listdata.length == this.params.page_size){  
                         //判断是否应该加载下一页
                         this.params.current_page += 1 ;
@@ -99,7 +105,7 @@ export default {
                     }
                     if (this.listdata) {
                         this.listStore.push(...this.listdata)
-                    	this.counts = this.listStore.length;
+                        app.Cwaiting()
                     }
                     Indicator.close();
                     
@@ -112,7 +118,7 @@ export default {
         searchHandler(value){
         	this.params.current_page = 1 ;
         	this.listStore = [];
-        	this.counts = null;
+        	this.counts = false;
 			this.getOrders(value);
 		},
 		
