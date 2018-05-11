@@ -10,7 +10,7 @@
             </mt-header>
 
             <div class="login_header">
-                <img src="../../assets/logo.png" alt="">
+                <img src="../../assets/logo1.png" alt="">
                 <h2>上传头像</h2>
             </div>
 
