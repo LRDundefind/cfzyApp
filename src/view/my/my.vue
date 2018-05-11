@@ -34,7 +34,7 @@
                 <div class=" p-re  content ub bd-b">
                     <span class="phone-icon"></span>
                     <div class="title">
-                        <a href="tel:18236911783">联系我们</a>
+                        <a href="tel:18236911783" style="display: block;width: 8rem">联系我们</a>
                     </div>
                     <div class="">
                         <img src="../../assets/my/icon_right.png" class="my_icon"/>
