@@ -123,9 +123,7 @@
                 </div>
                
 
-                <div class="login_cont" v-if="selected == 'goods'">
-                    <div @click="createGoods" class="loginbtn">添加货品</div>
-                </div>
+
                 
                 <!--货主列表-->
                 <div v-if="ownerList">
@@ -138,6 +136,9 @@
 
             </mt-tab-container>
 
+        </div>
+       <div class="login_cont" v-if="selected == 'goods'">
+            <div @click="createGoods" class="loginbtn">添加货品</div>
         </div>
     </div>
 </template>
