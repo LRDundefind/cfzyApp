@@ -52,6 +52,7 @@
                 picValue: '',
                 selName: this.$route.params.selName,
                 headImg: this.$route.params.headImg,
+                doMain:process.env.BASE_PATH,
             }
         },
         mounted () {
@@ -82,7 +83,7 @@
                         if (headImg == '') {
                             this.personalData.headImg = defaultImg;
                         } else {
-                            this.personalData.headImg = doMain + headImg;
+                            this.personalData.headImg = this.doMain + headImg;
                         }
 
                         if (this.phone) {
@@ -274,20 +275,14 @@
             },
             //保存用户资料
             savePersonal(){
-                let data = this.personalData;
-                // if(this.getImage){
-                //     delete data.headImg;
-                //     data.headImg = this.getImage;    
-                // }
-
-                delete data.createTime;
-                delete data.password;
-                delete data.salt;
-                delete data.sid;
+                let data ={
+                    phone:this.personalData.phone,
+                    selName:this.personalData.selName,
+                    headImg:this.headerImage,
+                };
                 if (this.yanNumber) {
                     data.code = this.yanNumber;
                 }
-                //console.log(data);
                 my.alterPersonal(data).then(response => {
                     if (response.data.status == 'Y') {
                         Toast({

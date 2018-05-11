@@ -76,7 +76,7 @@
 				</div>
 				<div class="ub term no-border">
 					<div class="ub-f1">车号</div>
-					<div class="F26C4c">{{plateNum}}</div>
+					<input type="text" class="F26C4c trainNum" v-model="trainNumber" placeholder="请输入车号">
 				</div>
 				<div class="ub term border-top" v-if="have_goodsunit">
 					<div class="ub-f1">合计金额</div>
@@ -203,6 +203,7 @@ export default {
 			trainsNum: '', //车次信息展示
 			plateNum: '',
 			tid:'',//车次id
+			trainNumber: '',
 			
 			customerName: '', //客户信息
 			
@@ -684,7 +685,7 @@ export default {
     			tid: this.tid,//车次if
     			cid: this.customerId,//客户id
     			deliveryCost: this.totalCost.deliveryCost,//三轮车费
-    			tricycleNo: this.plateNum,//车号
+    			tricycleNo: this.trainNumber,//车号
     			orderType: this.orderType,//订单类型  order_knot：现结订单 order_credit：赊账订单
     			remark: this.beizhu,//备注
     			deposit: 'N',//是否暂存 Y暂存 N普通
@@ -796,6 +797,11 @@ i{
 		.F26C4c{
 			font-size: 0.26rem;
 			color: #4c4c4c;
+		}
+		.trainNum{
+			color: #333;
+		    font-size: 0.28rem;
+		    text-align: right;
 		}
 	}
 	.input-choose{
