@@ -96,7 +96,7 @@ export default {
 				}
                 else if(!(new RegExp(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/).test(this.passwordnew1))){
 					Toast({
-                        message: '密码格式不正确',
+                        message: '密码格式不正确，请输入6-16位数字和字母的组合',
                         position: 'middle',
                         duration: 5000
                         });
@@ -105,7 +105,7 @@ export default {
 				}
                  else if(!(new RegExp(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/).test(this.passwordnew2))){
 					Toast({
-                        message: '密码格式不正确',
+                        message: '密码格式不正确，请输入6-16位数字和字母的组合',
                         position: 'middle',
                         duration: 5000
                         });
