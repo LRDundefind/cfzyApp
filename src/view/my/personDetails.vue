@@ -52,6 +52,7 @@
                 picValue: '',
                 selName: this.$route.params.selName,
                 headImg: this.$route.params.headImg,
+                doMain:process.env.BASE_PATH,
             }
         },
         mounted () {
@@ -77,12 +78,11 @@
 
                         let doMain = process.env.BASE_PATH;
                         let defaultImg = require('../../assets/my/my_head.png');
-                        let headImg = this.personalData.headImg;
                         //返回头像的处理
-                        if (headImg == '') {
+                        if (this.personalData.headImg == '') {
                             this.personalData.headImg = defaultImg;
                         } else {
-                            this.personalData.headImg = doMain + headImg;
+                            this.personalData.headImg = this.doMain + headImg;
                         }
 
                         if (this.phone) {
