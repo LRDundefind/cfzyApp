@@ -101,6 +101,7 @@
             },
             upload1 (e) {
                 let files = e.target.files || e.dataTransfer.files;
+                alert(files)
                 if (!files.length) return;
                 this.picValue = files[0];
                 this.imgPreview(this.picValue);
