@@ -91,7 +91,7 @@
         </div>
          <!-- 保存时候的遮罩 -->
         <div class="dialoag" v-show="addover">
-            <h5 class="wenzi">保存中，请稍后</h5>
+            <h5 class="wenzi">{{tiopmessage}}</h5>
         </div>
     </div>
 </template>
@@ -104,6 +104,7 @@
     export default {
         data () {
             return {
+                tiopmessage:'保存中，请稍后',
                  wrapperHeight: 0,//容器高度
                 headerImage: '',     //   头 像
                 headerImageUP: '',     //   头 像
@@ -439,11 +440,12 @@
                                 // this.xiTdata=response.data.results;
                                 if(response.data.status=='Y'){
                                     this.addover=false;
-                                     Toast({
-                                        message: '客户添加成功',
-                                        position: 'middle',
-                                        duration: 3000
-                                        });
+                                    //  Toast({
+                                    //     message: '客户添加成功',
+                                    //     position: 'middle',
+                                    //     duration: 3000
+                                    //     });
+                                        this.tiopmessage='客户添加成功'
                                         setTimeout(() => {
                                             this.$router.push({name: 'client'});
                                         }, 3000)
@@ -515,11 +517,12 @@
                     client.Cgemessage(params)
                         .then(response => {
                             if(response.data.status=='Y'){
-                                Toast({
-                                        message: '更新成功',
-                                        position: 'middle',
-                                        duration: 3000
-                                        });
+                                // Toast({
+                                //         message: '更新成功',
+                                //         position: 'middle',
+                                //         duration: 3000
+                                //         });
+                                this.tiopmessage='更新成功'
                                 setTimeout(() => {
                                     this.addover=false;
                                     this.$router.push({name: 'client'});
