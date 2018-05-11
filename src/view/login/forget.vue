@@ -85,6 +85,15 @@ export default {
                         duration: 5000
                         });
 				}
+                else if(this.passwordnew1!=this.passwordnew2){
+					Toast({
+                        message: '两次输入密码不同请重新输入',
+                        position: 'middle',
+                        duration: 5000
+                        });
+                    this.passwordnew1='';
+                    this.passwordnew2='';
+				}
 				else{
                     Cookies.set('Fpassword',this.passwordnew2);
                     Cookies.set('Fphone',this.phoneNumber);
