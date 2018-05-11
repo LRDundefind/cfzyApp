@@ -78,7 +78,7 @@ export default {
                         duration: 5000
                         });
 				}
-				else if(!(new RegExp( /^1[3|4|5|7|8][0-9]{9}$/).test(this.phoneNumber))){
+				else if(!(new RegExp( /^1[3|4|5|6|7|8|9][0-9]{9}$/).test(this.phoneNumber))){
 					Toast({
                         message: '手机号输入格式有误',
                         position: 'middle',
@@ -88,6 +88,24 @@ export default {
                 else if(this.passwordnew1!=this.passwordnew2){
 					Toast({
                         message: '两次输入密码不同请重新输入',
+                        position: 'middle',
+                        duration: 5000
+                        });
+                    this.passwordnew1='';
+                    this.passwordnew2='';
+				}
+                else if(!(new RegExp(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/).test(this.passwordnew1))){
+					Toast({
+                        message: '密码格式不正确',
+                        position: 'middle',
+                        duration: 5000
+                        });
+                    this.passwordnew1='';
+                    this.passwordnew2='';
+				}
+                 else if(!(new RegExp(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/).test(this.passwordnew2))){
+					Toast({
+                        message: '密码格式不正确',
                         position: 'middle',
                         duration: 5000
                         });
