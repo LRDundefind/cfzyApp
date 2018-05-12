@@ -93,10 +93,20 @@ body {
 }
 .page-content{
   width: 100%;
+  height: 100vh;
 }
 
 .pos-r{
   position: relative;
+}
+.wxy{
+  z-index: 999;
+  height: 40px;
+  top: 0;
+}
+.maintop{
+  position: relative;
+  top: 40px;
 }
 .pos-a{
   position: absolute;
@@ -381,7 +391,7 @@ body {
 	background-color: #fff
 }
 .page_wrap{
-	padding: 40px 0 55px 0;
+	/* padding: 40px 0 55px 0; */
 }
 .nopage_wrap{
 	padding: 40px 0 20px 0;
