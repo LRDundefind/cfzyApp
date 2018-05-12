@@ -238,6 +238,13 @@
             },
             //退出登录
             goLogin(){
+                var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
+                if (keys) {
+                    var q = keys;
+                    q.forEach(function(value){
+                        Cookies.remove(value);
+                    });
+                }
                 this.$router.push({name: 'login'})
             },
             //跳转到个人编辑页
