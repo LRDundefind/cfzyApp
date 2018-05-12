@@ -22,21 +22,26 @@
                         <div class="choice" v-if="goods.goodName !=''">
                             <select v-model="goods.numUnit">
                                 <option value="unit_pie">件</option>
-                                <option v-show="Unit=='unit_kg' " value="unit_kg">公斤</option>
-                                <option v-show="Unit=='unit_jin'" value="unit_jin">斤</option>
+                                <option v-if="Unit=='unit_kg' " value="unit_kg">公斤</option>
+                                <option v-else-if="Unit=='unit_jin'" value="unit_jin">斤</option>
                             </select>
                             <img class="jin-right"
                                  src="../../assets/index/gray-right-icon.png"/>
                         </div>
                     </div>
                 </div>
-
-                <div class='update clearfix'>
+                <div v-if="deleteDisabled == 'edit'">
+                    <div class="login_cont">
+                        <div @click="addGoods('add')" class="loginbtn">确定</div>
+                    </div>
+                </div>
+                <div class='update clearfix' v-else>
                     <mt-button type="primary" :disabled="deleteDisabled == 'edit'" size="large" class='f-l'
                                @click="addGoods('delete')">删除
                     </mt-button>
                     <mt-button type="primary" size="large" class='f-l' @click="addGoods('add')">确定</mt-button>
                 </div>
+
             </div>
             <div class="" v-if="showList == true">
                 <div v-for="item in goodsData" :key='item.id' class="type-list">
@@ -233,6 +238,17 @@
             text-align: right;
         }
 
+    }
+
+    .login_cont {
+        width: 5.5rem;
+        margin: 0 auto;
+    }
+    .loginbtn {
+        width: 80% !important;
+        @include login_btn(fixed);
+        background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
+        margin: 0 !important;
     }
 
     .update {

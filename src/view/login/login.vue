@@ -109,7 +109,9 @@ export default {
         }
     },
     mounted () {
-       
+       if (typeof Cookies.get('Token') !=='undefined') {
+            this.$router.push({name:'home'});
+        }
     },
     created(){
         // let _this = this;
@@ -219,16 +221,47 @@ export default {
                             if(result.stalls_list.length==0){
                                 this.XDTlogin();
                                 this.$router.push({name:'noStalls'});
+                                   //原生端接到信息后，将信息直接存储到手机端
+                                let loginMessage = {
+                                    'token': result.token,
+                                    'randomKey': result.randomKey,
+                                    'roleId': result.roleId,
+                                    'sid': result.sid,
+                                    'userName': result.userName,
+                                    'compayName': result.compayName,
+                                    'uid': result.uid,
+                                    'gidOwnID_lists': '',
+                                    "haveTrainInfo":"N"
+                                }
+                                if (typeof XDYApp !== 'undefined') {
+                                    XDYApp.saveLoginMessage(JSON.stringify(loginMessage))
+                                } 
                             }
                             else{
                                 let gidOwnID_list=JSON.stringify(result.stalls_list[0]);
                                 Cookies.set('gidOwnID_lists', gidOwnID_list);                 //档位信息集合
                                 this.XDTlogin();
+                                  //原生端接到信息后，将信息直接存储到手机端
+                                let loginMessage = {
+                                    'token': result.token,
+                                    'randomKey': result.randomKey,
+                                    'roleId': result.roleId,
+                                    'sid': result.sid,
+                                    'userName': result.userName,
+                                    'compayName': result.compayName,
+                                    'uid': result.uid,
+                                    'gidOwnID_lists': gidOwnID_list,
+                                    "haveTrainInfo":"N"
+                                }
+                                if (typeof XDYApp !== 'undefined') {
+                                    XDYApp.saveLoginMessage(JSON.stringify(loginMessage))
+                                }  
                                 this.$router.push({name:'home'});
+                                
                             }
                             
                             
-                             
+                            
                             
 
                              
