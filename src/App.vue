@@ -1,6 +1,11 @@
 <template>
   <div id="app">
-    <router-view/>
+     <transition 
+            enter-active-class="animated bounceInLeft"
+            leave-active-class="animated bounceOutRight"
+     >
+           <router-view></router-view>
+     </transition>
   </div>
 </template>
 
@@ -10,8 +15,26 @@ export default {
   	name: 'App',
   	data() {
         return {
-            
+          
         }
+    },
+    watch:{
+            '$route' (to, from) {
+              
+        }
+    },
+    methods:{
+   
+      // leave: function (el, done) {
+      //   Velocity(el, { translateX: '15px', rotateZ: '50deg' }, { duration: 600 })
+      //   Velocity(el, { rotateZ: '100deg' }, { loop: 2 })
+      //   Velocity(el, {
+      //     rotateZ: '45deg',
+      //     translateY: '30px',
+      //     translateX: '30px',
+      //     opacity: 0
+      //   }, { complete: done })
+      // }
     },
   	created() {
         if (typeof XDYApp !== 'undefined') {
@@ -41,4 +64,8 @@ export default {
 body{
   margin:0; 
 }
+
+    
+   
+
 </style>
