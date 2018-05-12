@@ -4,7 +4,7 @@
         <mt-tab-container>
              <transition 
                     enter-active-class="animated bounceInLeft"
-                    leave-active-class="animated bounceOutRight"
+                    
             >
                  <router-view name="mainView" />
             </transition>
