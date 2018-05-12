@@ -47,7 +47,8 @@
 					</li>
 					<li class="con" v-for=" (goods,index) in goodsInfo" @click="goodsInfoSet(index, goods.goodId, goods.id, goods.goodName, goods.sellUnit, goods.numUnit, goods.surplusNum, goods.tid, trainsNum)" :key="goods.id">
 						<span>{{goods.goodName}}</span>
-						<span>{{goods.weight}}</span>
+						<span v-if="goods.netWeight == null">{{goods.weight}}</span>
+						<span v-if="goods.netWeight != null">{{goods.netWeight}}</span>
 						<span>{{goods.price}}</span>
 						<span>{{goods.goodNum}}</span>
 						<span>{{goods.goodAmount}}</span>
@@ -339,6 +340,7 @@ export default {
 						this.goodsInfo[i]['goodNum'] = null; 
 						this.goodsInfo[i]['weight'] = null; 
 						this.goodsInfo[i]['goodAmount'] = null;
+                        this.goodsInfo[i]['netWeight'] = null; //净重 用于页面展示
                         this.goodsInfo[i]['packCost'] = null;
 						this.goodsInfo[i]['weighCost'] = null; //过磅费，表格里不展示，下方列表展示
 						this.goodsInfo[i]['slabWeight'] = null; //平板重 提交订单所需，列表不展示
@@ -482,6 +484,7 @@ export default {
 					     	goodNum:this.goodsnum,
 					     	weight:this.goodsweight,
 					     	goodAmount: null, //货品金额
+					     	netWeight: null, //净重
 					     	packCost: null, //货品打包费
 					     	weighCost: null, //货品过磅费 下方列表展示
 					     	slabWeight:this.pbweight, //提交订单所需，列表不展示
@@ -535,6 +538,7 @@ export default {
 							     	goodNum:this.goodsnum,
 							     	weight:this.goodsweight,
 							     	goodAmount:response.data.results.goodAmount, //货品金额
+							     	netWeight:response.data.results.netWeight, //净重
 							     	packCost:response.data.results.packCost, //货品打包费
 							     	weighCost:response.data.results.weighCost, //货品过磅费 下方列表展示
 							     	slabWeight:this.pbweight, //提交订单所需，列表不展示
