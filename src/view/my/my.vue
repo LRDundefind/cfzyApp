@@ -12,7 +12,7 @@
                     </div>
                     <div class="ub ub-pc">
                         <div class="name  ">
-                            <span>{{userName}}</span>
+                            <span>{{personalData.selName}}</span>
                         </div>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
             </div>
 
             <div class="m-t-10 row">
-                <div class=" p-re  content ub bd-b">
+                <div class=" p-re  content ub bd-b" @click="update">
                     <span class="update-icon" style="width: 0.4rem;top:0.3rem;"></span>
                     <div class="title">系统升级</div>
                     <div class="">
@@ -109,6 +109,7 @@
                 padding: 0.22rem 0 0.34rem 0;
                 color: #ffffff;
                 font-size: 0.26rem;
+                border-bottom: 1px solid;
             }
         }
         .loginbtn {
@@ -215,6 +216,12 @@
                     }
                 })
             },
+            //更新升级
+            update(){
+                if (typeof XDYApp !== 'undefined') {
+                    XDYApp.versionDetection();
+                }
+            },
             //跳转到首页
             goHome(){
                 if(this.black == 'nostall'){
@@ -237,6 +244,16 @@
             },
             //退出登录
             goLogin(){
+                var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
+                if (keys) {
+                    var q = keys;
+                    q.forEach(function(value){
+                        Cookies.remove(value);
+                    });
+                }
+                if (typeof XDYApp !== 'undefined') {
+                    XDYApp.appExit()
+                }
                 this.$router.push({name: 'login'})
             },
             //跳转到个人编辑页
