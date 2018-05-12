@@ -27,11 +27,18 @@
                     <span v-show="show" @click="getphoneNumber();daojishi()"  class="getNumber">获取验证码</span>
          			<span v-show="!show" class="getNumber">重新获取（{{count}}）</span>
                 </div>
-        <div @click="loginBtn" class="findbtn">确 定</div>
+                <!-- :class="[isActive ? 'activeClass' : 'errorClass' ]" -->
+        <div @click="loginBtn" class="findbtn" >确 定</div>
     </div>
     </div>
 </template>
 <style scoped lang='scss'>
+.activeClass{
+    z-index: 1000;
+}
+.errorClass{
+    z-index: -1;
+}
     .security-code-wrap {
         overflow: hidden;
     }
@@ -140,6 +147,7 @@
         data () {
             return {
                 code:'',
+                isActive:true, //确定是够可以点击
                 logintime: this.$route.params.firstlogin,
                 phoneNumber: this.$route.params.phone,
                 form: {},
@@ -229,9 +237,10 @@
                         duration: 5000
                     });
                 }
-                else {
+                else if(this.isActive){
                     // let yanNumber = this.phoneNumber1 + this.phoneNumber2 + this.phoneNumber3 + this.phoneNumber4;
                     let yanNumber=this.code;
+                    this.isActive=false;
                     if (this.logintime == 'Y') {
                         // 注册
                         this.zhuce(yanNumber);
@@ -268,6 +277,7 @@
                             duration: 3000
                         });
                         setTimeout(() => {
+                            this.isActive=true;
                             // Bus.$emit('sendPhone', this.phoneNumber);
                             Cookies.set('loginPhone',this.phoneNumber)
                             this.$router.push({name: 'login'});
@@ -282,6 +292,7 @@
                         })
                         this.code='';
                         setTimeout(() => {
+                            this.isActive=true;
                             this.$router.push({name: 'zhuce'});
                         }, 3000)
 
@@ -299,8 +310,7 @@
                     'str': strEnc(JSON.stringify(datalist), this.auth.key, this.auth.key, this.auth.key)
                 };
                 login.findpass(params).then(response => {
-                    Cookies.remove('Fpassword');
-                    Cookies.remove('Fphone');
+                    
                     if (response.data.error_code == '200') {
                         Toast({
                             message: '修改成功，请重新登录',
@@ -308,6 +318,9 @@
                             duration: 3000
                         })
                         setTimeout(() => {
+                            this.isActive=true;
+                            Cookies.remove('Fpassword');
+                            Cookies.remove('Fphone');
                             this.$router.push({name: 'login'});
                         }, 3000)
 
@@ -319,10 +332,12 @@
                             position: 'middle',
                             duration: 3000
                         })
-                        this.code='';
-                        // setTimeout(() => {
-                        //     this.$router.push({name: 'forget'});
-                        // }, 3000)
+                        Bus.$emit('clearY','')
+                        // this.code='';
+                        setTimeout(() => {
+                            // this.$router.push({name: 'forget'});
+                            this.isActive=true;
+                        }, 3000)
 
 
                     }

@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import Bus from '@/components/bus.js'
   export default {
     name: 'SecurityCode',
     // component properties
@@ -36,6 +37,13 @@
       return {
         value: ''
       }
+    },
+    cteated(){
+       Bus.$on('clearY', (msg)=>{　  
+                     this.value=msg;
+                     console.log(this.value)
+                    //  alert(this.userName)
+                })
     },
     computed: {
       uuid () {
