@@ -6,7 +6,8 @@
             </router-link>
             <span @click="addCustomer" style="font-size: 0.32rem" slot="right">添加客户</span>
         </mt-header>
-        <search-box  @getSmeage="searchstart"  ref="search"/>
+        <div class="maintop">
+            <search-box  @getSmeage="searchstart"  ref="search"/>
         <noDate v-show="noWdata"></noDate>  
         <div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }" >
 
@@ -52,6 +53,8 @@
 		  
 			</mt-loadmore>
         </div>
+        </div>
+        
 
     </div>
 </template>
@@ -65,7 +68,7 @@
     export default {
         data () {
             return {
-            	heightNum: 0,
+            	heightNum: 40,
                 allLoaded: false,
                 noWdata:false,
                 msg:'',

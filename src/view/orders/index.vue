@@ -6,7 +6,8 @@
                 <img class="header_img" src="../../assets/index/down_icon.png"/>
            </router-link>
 		</mt-header>
-		<search-box ref="search" @getSmeage="searchHandler"/>
+		<div class="maintop">
+			<search-box ref="search" @getSmeage="searchHandler"/>
         <noDate v-if="counts"></noDate>  
 		<div class="page-main earning page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
 			<mt-loadmore 
@@ -86,6 +87,8 @@
 				<div></div>
 			</mt-loadmore>
 		</div>
+		</div>
+		
 	</div>
 </template>
 

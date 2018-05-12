@@ -2,7 +2,13 @@
 
     <div :class="mainClass">
         <mt-tab-container>
-            <router-view name="mainView" />
+             <transition 
+                    enter-active-class="animated bounceInLeft"
+                    
+            >
+                 <router-view name="mainView" />
+            </transition>
+           
             <!-- <mt-tab-container-item id="home">
                 <home></home>
                 <mt-cell v-for="n in 20" :key='n' title="tab-container 1"><h3 style="font-size:0.5rem;margin-top:1rem;">我</h3></mt-cell>

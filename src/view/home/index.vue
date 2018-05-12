@@ -1,18 +1,19 @@
 <template>
     <div class="main">
-        <mt-header fixed title="首页" style="z-index:400;">
-            <router-link to="/ownerChoice" slot="left">
-                <span class="c-3 f-s-16">{{gearName}}</span>
-                <img class="header_img" src="../../assets/index/down_icon.png"/>
-            </router-link>
-            <div class=" personal" @click="goMy()" slot="right">
-                <img class="personal_img" :src="personalData.headImg"/>
-            </div>
-        </mt-header>
-
+        <div class="pos-r wxy">
+            <mt-header fixed title="首页" style="z-index:400;">
+                <router-link to="/ownerChoice" slot="left">
+                    <span class="c-3 f-s-16">{{gearName}}</span>
+                    <img class="header_img" src="../../assets/index/down_icon.png"/>
+                </router-link>
+                <div class=" personal" @click="goMy()" slot="right">
+                    <img class="personal_img" :src="personalData.headImg"/>
+                </div>
+            </mt-header>
+       </div>
         <div class="">
 
-            <div class="home" @click="goBlack">
+            <div class="home pos-r" @click="goBlack">
                 <span class="black-title">黑名单</span>
                 <img class="p-re" src="../../assets/index/black_img.png"/>
             </div>

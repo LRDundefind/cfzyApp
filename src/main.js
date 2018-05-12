@@ -8,7 +8,7 @@ import Cookies from 'js-cookie'
 let Base64 = require('js-base64').Base64;
 import Mint from 'mint-ui'
 import 'mint-ui/lib/style.css'
-
+import 'animate.css'
 // import '@/styles/globalScssVarables.scss';
 // 使用rem布局，rem函数便于移动端快速开发布局
 import '@/assets/rem.js'

@@ -1,5 +1,6 @@
 <template>
 	<div class="page-content">
+		<div class="pos-r wxy">
 		<mt-header fixed  title="下单">
 			<router-link to="/ownerChoice" slot="left">
                 <span class="c-3 f-s-16">{{gearName}}</span>
@@ -9,6 +10,7 @@
                 <span class="c-3 f-s-16">赊账规则</span>
             </router-link>
 		</mt-header>
+		</div>
 		<!--下单-->
 		<div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
 			<div class="order-detail" v-if="trainInfo">
