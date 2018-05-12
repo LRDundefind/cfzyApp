@@ -1059,6 +1059,7 @@ i{
 			input::-webkit-input-placeholder{
 				color: #33d57c;
 				font-size: 0.26rem;
+				line-height: 0.6rem;
 			}
 		}
 		.btn{

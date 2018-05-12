@@ -64,7 +64,7 @@
 						<span>包装费</span>
 					</li>
 					<li v-for="goods in detail.goods" class="con">
-						<span>{{goods.goodName}}<br />({{goods.goodNum}})</span>
+						<span>{{goods.goodName}}({{goods.goodNum}})</span>
 						<span>{{goods.weight}}
 							<i v-if="goods.weightUnit == 'unit_jin'">斤</i>
 							<i v-if="goods.weightUnit == 'unit_kg'">公斤</i>
@@ -290,16 +290,17 @@ i{
 		li{
 			overflow: hidden;
 			span{
-				width: 19%;
+				width: 18.5%;
 				display: block;
 				float: left;
-				text-overflow:ellipsis;
+				/*text-overflow:ellipsis;
 				overflow:hidden;
 				white-space:nowrap; 
-				display:block;
+				display:block;*/
 			}
 			span:first-child{
-				padding-left: 0.25rem;
+				padding-left: 0.2rem;
+				width: 21%;
 			}
 		}
 		.title{
@@ -312,11 +313,11 @@ i{
 			}
 		}
 		.con{
-			height: 0.96rem;
+			min-height: 0.96rem;
 			line-height: 0.96rem;
 			border-bottom: 1px solid #dedede;
 			span{
-				height: 0.96rem;
+				/*height: 0.96rem;*/
 			}
 			span:first-child{
 				line-height: 0.3rem;

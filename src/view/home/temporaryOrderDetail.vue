@@ -71,7 +71,7 @@
 					</thead>
 					<tbody>
 						<tr v-for="(goods,index) in detailInfo.goods">
-							<td>{{goods.goodName}}<br />({{goods.goodNum}})</td>
+							<td>{{goods.goodName}}({{goods.goodNum}})</td>
 							<td>{{goods.weight}}</td>
 							<td class="set-price" @click = "setPrice(index)" v-if="goods.price">{{goodsInfo[index].price || goods.price}}</td>
 							<!--<td class="set-price" @click = "setPrice(index)" v-if="!goods.price">{{goodsInfo[index].price || '设置单价'}}</td>-->
@@ -413,8 +413,9 @@ i{
 					text-align: left;
 				}
 				th:first-child{
-					width: 1.7rem;
+					width: 1.8rem;
 					padding-left: 0.2rem;
+					padding-right: 0.2rem;
 					span{
 						font-size: 0.24rem;
 					}
@@ -426,12 +427,13 @@ i{
 				height: 0.96rem;
 				border-bottom: 1px solid #dedede;
 				td:first-child{
-					width: 1.7rem;
+					width: 1.8rem;
 					padding-left: 0.2rem;
-					text-overflow:ellipsis;
+					padding-right: 0.2rem;
+					/*text-overflow:ellipsis;
 					overflow:hidden;
 					white-space:nowrap; 
-					display:block;
+					display:block;*/
 					margin-top: 0.15rem;
 				}
 				td.set-price{
