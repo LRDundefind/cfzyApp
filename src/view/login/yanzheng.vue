@@ -290,10 +290,10 @@
                             position: 'middle',
                             duration: 3000
                         })
-                        this.code='';
+                        // this.code='';
                         setTimeout(() => {
                             this.isActive=true;
-                            this.$router.push({name: 'zhuce'});
+                            // this.$router.push({name: 'zhuce'});
                         }, 3000)
 
 
