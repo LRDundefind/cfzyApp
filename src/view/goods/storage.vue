@@ -119,10 +119,12 @@
                             <span>{{item.goodNum}} {{item.numUnit | sellNnit}}</span>
                         </p>
                     </div>
-                    <div class="login_cont">
-                        <div @click="createGoods" class="loginbtn">添加货品</div>
-                    </div>
+
                 </div>
+               
+
+
+                
                 <!--货主列表-->
                 <div v-if="ownerList">
                     <owner-list ref="owner" @choiceOwner="oNchoiceOwner"></owner-list>
@@ -134,6 +136,9 @@
 
             </mt-tab-container>
 
+        </div>
+       <div class="login_cont" v-if="selected == 'goods'">
+            <div @click="createGoods" class="loginbtn">添加货品</div>
         </div>
     </div>
 </template>
