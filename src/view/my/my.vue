@@ -12,7 +12,7 @@
                     </div>
                     <div class="ub ub-pc">
                         <div class="name  ">
-                            <span>{{userName}}</span>
+                            <span>{{personalData.selName}}</span>
                         </div>
                     </div>
                 </div>
@@ -109,6 +109,7 @@
                 padding: 0.22rem 0 0.34rem 0;
                 color: #ffffff;
                 font-size: 0.26rem;
+                border-bottom: 1px solid;
             }
         }
         .loginbtn {
