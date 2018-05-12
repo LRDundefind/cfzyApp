@@ -130,10 +130,7 @@
                     .then(response => {
                         
                         this.listdata = response.data.results;
-                        if(this.listdata==''){
-                            this.noWdata=true;
-                         app.Cwaiting();
-                        }
+                        app.Cwaiting();
                         if(this.listdata.length==this.params.page_size){  
                             //判断是否应该加载下一页
                             this.params.current_page+=1 ;
@@ -143,8 +140,10 @@
                         }
                         if (this.listdata) {
                             this.listStore.push(...this.listdata)
-                            this.counts = this.listStore.length;
-                             app.Cwaiting()
+                            if(this.listStore==''){
+	                            this.noWdata=true;
+	                        	app.Cwaiting();
+	                        }
                         }
                         Indicator.close();
                     })
