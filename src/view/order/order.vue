@@ -1050,7 +1050,8 @@ i{
    			overflow: hidden;
 			input{
 				width: 100%;
-				height: 100%;
+				height: 0.7rem;
+				line-height: 0.7rem;
 				background: #e1fcef;
 			    border-radius: 1rem;
 				text-align: center;
@@ -1059,7 +1060,9 @@ i{
 			input::-webkit-input-placeholder{
 				color: #33d57c;
 				font-size: 0.26rem;
-				line-height: 0.6rem;
+				height: 0.7rem;
+				line-height: 0.7rem;
+				font-family: "microsoft yahei";
 			}
 		}
 		.btn{
