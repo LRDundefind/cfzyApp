@@ -213,10 +213,10 @@
             },
             getphoneNumber(){
                 // 重新获取短信验证码
-                this.phoneNumber1 = '';
-                this.phoneNumber2 = '';
-                this.phoneNumber3 = '';
-                this.phoneNumber4 = '';
+                // this.phoneNumber1 = '';
+                // this.phoneNumber2 = '';
+                // this.phoneNumber3 = '';
+                // this.phoneNumber4 = '';
                 this.code='';
                 this.getmessage();
             },
@@ -280,6 +280,7 @@
                             position: 'middle',
                             duration: 3000
                         })
+                        this.code='';
                         setTimeout(() => {
                             this.$router.push({name: 'zhuce'});
                         }, 3000)
@@ -318,9 +319,10 @@
                             position: 'middle',
                             duration: 3000
                         })
-                        setTimeout(() => {
-                            this.$router.push({name: 'forget'});
-                        }, 3000)
+                        this.code='';
+                        // setTimeout(() => {
+                        //     this.$router.push({name: 'forget'});
+                        // }, 3000)
 
 
                     }
