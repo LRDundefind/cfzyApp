@@ -7,7 +7,7 @@
             <span @click="addCustomer" style="font-size: 0.32rem" slot="right">添加客户</span>
         </mt-header>
         <div class="maintop">
-            <search-box  @getSmeage='searchstart' :message='kehutext'></search-box>
+            <search-box  @getSmeage='searchstart' :message='placeMessage'></search-box>
             <noDate v-show="noWdata"></noDate>  
             <div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }" >
 
@@ -68,7 +68,7 @@
     export default {
         data () {
             return {
-                kehutext:'请输入客户名称、电话或身份证号',
+                placeMessage:'请输入客户名称、电话或身份证号',
             	heightNum: 40,
                 allLoaded: false,
                 noWdata:false,

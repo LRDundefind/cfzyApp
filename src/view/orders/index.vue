@@ -7,7 +7,7 @@
            </router-link>
 		</mt-header>
 		<div class="maintop">
-			<search-box ref="search" @getSmeage="searchHandler"/>
+			<search-box ref="search" @getSmeage="searchHandler" :message='placeMessage'/>
         <noDate v-if="counts"></noDate>  
 		<div class="page-main earning page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
 			<mt-loadmore 
@@ -110,7 +110,7 @@ export default {
         	//cycleActive: '',
         	//goodsActive: '',
         	//ownerActive: '',
-        	
+        	placeMessage:'请输入要检索的车次或车牌号',
         	gearName:'',//档位
         	
         	allLoaded: false,

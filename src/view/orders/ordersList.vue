@@ -3,7 +3,7 @@
 		<mt-header fixed  title="订单">
 		    <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
 		</mt-header>
-		<search-box ref="search" @getSmeage="searchHandler"/>
+		<search-box ref="search" @getSmeage="searchHandler" :message='placeMessage'/>
 		<noDate v-if="counts"></noDate>  
 		<!--订单列表-->
 		<div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
@@ -59,6 +59,7 @@ export default {
 	components: { searchBox, noDate },
     data () {
         return {
+			placeMessage:'请输入要检索的订单编号',
         	allLoaded: false,
             wrapperHeight: 0,//容器高度
             params:{
