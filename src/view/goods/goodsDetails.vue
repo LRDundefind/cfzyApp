@@ -1,7 +1,7 @@
 <template>
     <div class="page-content">
         <!--还款记录列表-->
-        <div class="page-main">
+        <div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
             <div class="" v-show="showList==false">
                 <div class="main-list" @click="showType">
                     <div class="clearfix goods">货品分类
@@ -74,6 +74,7 @@
         },
         data () {
             return {
+                wrapperHeight: 0,//容器高度
                 Unit: '',
                 deleteDisabled: '',
                 goods: {
@@ -104,6 +105,7 @@
         },
 
         mounted () {
+            this.wrapperHeight = document.documentElement.clientHeight - 160;
             this.getlist()
         },
         methods: {
