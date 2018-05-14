@@ -489,7 +489,7 @@
                             .then(response => {
                                 // this.xiTdata=response.data.results;
                                 if(response.data.status=='Y'){
-                                    this.addover=false;
+                                   
                                     //  Toast({
                                     //     message: '客户添加成功',
                                     //     position: 'middle',
@@ -497,7 +497,9 @@
                                     //     });
                                         this.tiopmessage='客户添加成功'
                                         setTimeout(() => {
+                                            
                                             this.$router.push({name: 'client'});
+                                            this.addover=false;
                                         }, 3000)
                                     
                                 }
@@ -507,6 +509,9 @@
                                         position: 'middle',
                                         duration: 3000
                                         });
+                                    setTimeout(() => {
+                                            this.$router.push({name: 'client'});
+                                        }, 3000)
                                 }
                             })
                         }
@@ -552,7 +557,7 @@
                 }
                 else{
                     // 修改信息
-                    this.addover=true;
+                   this.addover=true;
                    let params = {
                         cid:this.cid,    //客户id
                         cusName:this.nameRead, //姓名

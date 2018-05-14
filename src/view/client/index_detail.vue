@@ -1,5 +1,5 @@
 <template>
-    <div class="page-content" id="client_detail">
+    <div class="page-content page-main" id="client_detail">
        
             <div style="height:4rem">
                 <mt-header fixed title="客户">
@@ -14,11 +14,11 @@
                     <h2 v-else>{{listdata.nickname}}</h2>
                 </div>
             </div>
-            
-             <!-- :style="{ height: wrapperHeight + 'px' }"  ref="wrapper"-->
-            <div class="page-main page-loadmore-wrappe wrapper " :style="{ height: wrapperHeight + 'px' }">
-                <ul class="content">
-                    <li>
+          
+             <!-- :style="{ height: wrapperHeight + 'px' }"  ref="wrapper" :style="{ height: wrapperHeight + 'px' }"-->
+            <div class=" page-loadmore-wrappe wrapper topScroll">
+                <!-- <ul class="content">
+                    <li> -->
                         <div class="main-list">
                             <p class="clearfix">消费次数<span>{{listdata.consum_num}}</span></p>
                             <p class="clearfix">最后消费时间<span>{{listdata.consum_ltime}}</span></p>
@@ -47,14 +47,14 @@
                             <p class="clearfix">备注</p>
                             <div class="remark">{{listdata.remark}}</div>
                         </div>
-                    </li>
-                </ul>
-                
+                    <!-- </li>
+                </ul> -->
+                 <div class='update clearfix'>
+                    <mt-button type="primary" size="large" class='f-l' @click="consumptionRecords(3)">查看消费记录</mt-button>
+                    <mt-button type="primary" size="large" class='f-l' @click="goChange()">更新资料</mt-button>
+                </div>
             </div>
-            <div class='update clearfix'>
-                <mt-button type="primary" size="large" class='f-l' @click="consumptionRecords(3)">查看消费记录</mt-button>
-                <mt-button type="primary" size="large" class='f-l' @click="goChange()">更新资料</mt-button>
-            </div>
+           
         </div>
     
 </template>

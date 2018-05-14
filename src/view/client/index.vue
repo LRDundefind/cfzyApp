@@ -9,7 +9,8 @@
         <div class="maintop">
             <search-box  @getSmeage='searchstart' :message='placeMessage'></search-box>
             <noDate v-show="noWdata"></noDate>  
-            <div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }" >
+            <!-- :style="{ height: wrapperHeight + 'px' }" -->
+            <div class="page-main page-loadmore-wrappe topScroll"  >
 
             <mt-loadmore 
 				:auto-fill="false"
@@ -178,8 +179,12 @@
     }
 </script>
 <style scoped lang="scss">
+.topScroll{
+    top: 2.2rem;
+    bottom: 1.1rem;
+}
 .page-loadmore-wrappe{
-   overflow: scroll;
+   overflow: auto;
     -webkit-overflow-scrolling : touch;
 }
     .im {
