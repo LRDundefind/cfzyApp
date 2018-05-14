@@ -530,3 +530,6 @@ input,textarea {
   position: fixed;
   overflow: auto;
 }
+。bottom0{
+  bottom: 0;  
+}

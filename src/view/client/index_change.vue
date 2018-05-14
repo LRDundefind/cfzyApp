@@ -1,5 +1,5 @@
 <template>
-    <div class="page-content page-main">
+    <div class="page-content page-main bottom0">
         <mt-header fixed title="客户">
             <router-link to="/client" slot="left">
                 <mt-button icon="back"> </mt-button>
