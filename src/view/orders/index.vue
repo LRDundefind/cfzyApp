@@ -9,7 +9,7 @@
 		<div class="maintop">
 			<search-box ref="search" @getSmeage="searchHandler" :message='placeMessage'/>
         <noDate v-if="counts || count"></noDate>  
-		<div class="page-main earning page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
+		<div class="page-main earning page-loadmore-wrapper">
 			<mt-loadmore 
 				:auto-fill="false"
 				:top-method="loadTop" 
@@ -285,6 +285,10 @@ export default {
 i,b{
 	font-style: normal;
 	font-weight: normal;
+}
+.page-main{
+	top: 2.3rem;
+	bottom: 60px;
 }
 body{
 	font-size: 0.3rem;
