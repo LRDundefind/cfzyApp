@@ -1,19 +1,19 @@
 <template>
 	<div class="searchBox pos-r">
 
-		<input v-model="searchValue"  v-bind:placeholder='sendGet'  @input="searchChange"/>
+		<input v-model="searchValue"  v-bind:placeholder='message'  @input="searchChange"/>
 		<div class="clearSearch pos-a" @click="clearSearch"></div>
-		<a class="searchBtn pos-a" @click="searAll">搜索{{sendGet}}</a>
+		<a class="searchBtn pos-a" @click="searAll">搜索</a>
 	</div>
 </template>
 <script>
 
 export default {
 	name:'search-box',
-	props:['sendGet'],
+	props:["message"],
     data () {
         return {
-            searchValue:''
+            searchValue:'',
         }
     },
     mounted () {
