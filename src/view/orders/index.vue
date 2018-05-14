@@ -8,7 +8,7 @@
 		</mt-header>
 		<div class="maintop">
 			<search-box ref="search" @getSmeage="searchHandler" :message='placeMessage'/>
-        <noDate v-if="counts"></noDate>  
+        <noDate v-if="counts || count"></noDate>  
 		<div class="page-main earning page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
 			<mt-loadmore 
 				:auto-fill="false"
@@ -123,6 +123,7 @@ export default {
 			//车次销售列表数据
 			listdata: [],
 			counts: false,
+			count: false,
 			val: '', //搜索
         }
     },
@@ -148,6 +149,9 @@ export default {
             orders.getTrainSaleList(params)
                 .then(response => {
                     this.listdata = response.data.results;
+                    if(this.listdata=='' && this.params.current_page == 1){
+                		this.count = true;
+                    }
                     app.Cwaiting();
                     
 					if(this.listdata.length == this.params.page_size){  
@@ -176,6 +180,7 @@ export default {
 			this.params.current_page = 1 ;
         	this.listStore = [];
         	this.counts = false;
+        	this.count = false;
 			this.getList(value);
 		},
 		

@@ -6,7 +6,7 @@
 			</router-link>
 		</mt-header>
 		<!--子emit发送触发事件this.$emit('getSmeage',this.searchValue)  父监听getSmeage，并接收值-->
-		<search-box ref="search" @getSmeage="searchHandler"/>
+		<search-box ref="search" @getSmeage="searchHandler" :message='placeMessage'/>
         <noDate v-if="counts"></noDate>  
 		<!--订单列表-->
 		<div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
@@ -32,6 +32,7 @@ export default {
 	components: { searchBox, noDate },
     data () {
         return {
+        	placeMessage:'请输入要检索的订单编号',
         	wrapperHeight: 0,//容器高度
             temporaryList: [],
             val: '', //搜索
