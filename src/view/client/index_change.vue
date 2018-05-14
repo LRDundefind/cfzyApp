@@ -1,13 +1,13 @@
 <template>
-    <div class="page-content">
+    <div class="page-content page-main">
         <mt-header fixed title="客户">
             <router-link to="/client" slot="left">
                 <mt-button icon="back"> </mt-button>
             </router-link>
             <mt-button @click="handleSave" slot="right" style="color:#333;">保存</mt-button>
         </mt-header>
-
-        <div class="page-main wrapper"  :style="{ height: wrapperHeight + 'px' }">
+        <!-- :style="{ height: wrapperHeight + 'px' }" -->
+        <div class="wrapper"  >
             <div class="main-list">
                 <div class="">
                     <div class="sc">
