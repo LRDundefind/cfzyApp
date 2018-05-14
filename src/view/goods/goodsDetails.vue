@@ -30,17 +30,7 @@
                         </div>
                     </div>
                 </div>
-                <div v-if="deleteDisabled == 'edit'">
-                    <div class="login_cont">
-                        <div @click="addGoods('add')" class="loginbtn">确定</div>
-                    </div>
-                </div>
-                <div class='update clearfix' v-else>
-                    <mt-button type="primary" :disabled="deleteDisabled == 'edit'" size="large" class='f-l'
-                               @click="addGoods('delete')">删除
-                    </mt-button>
-                    <mt-button type="primary" size="large" class='f-l' @click="addGoods('add')">确定</mt-button>
-                </div>
+
 
             </div>
             <div class="" v-if="showList == true">
@@ -56,6 +46,19 @@
                 </div>
             </div>
         </div>
+
+        <div v-if="deleteDisabled == 'edit'">
+            <div class="login_cont">
+                <div @click="addGoods('add')" class="loginbtn">确定</div>
+            </div>
+        </div>
+        <div class='update clearfix' v-else>
+            <mt-button type="primary" :disabled="deleteDisabled == 'edit'" size="large" class='f-l'
+                       @click="addGoods('delete')">删除
+            </mt-button>
+            <mt-button type="primary" size="large" class='f-l' @click="addGoods('add')">确定</mt-button>
+        </div>
+        
     </div>
 </template>
 
