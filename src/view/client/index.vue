@@ -8,11 +8,12 @@
         </mt-header>
         <div class="maintop">
             <search-box  @getSmeage='searchstart' :message='placeMessage'></search-box>
-            <noDate v-show="noWdata"></noDate>  
+            
             <!-- :style="{ height: wrapperHeight + 'px' }" -->
             <div class="page-main page-loadmore-wrappe topScroll"  >
-
+             <noDate v-if="noWdata"></noDate>  
             <mt-loadmore 
+                v-else
 				:auto-fill="false"
 				:top-method="loadTop" 
 				:bottom-method="loadBottom"

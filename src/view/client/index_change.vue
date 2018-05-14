@@ -1,13 +1,13 @@
 <template>
-    <div class="page-content page-main">
+    <div class="page-content">
         <mt-header fixed title="客户">
             <router-link to="/client" slot="left">
                 <mt-button icon="back"> </mt-button>
             </router-link>
-            <mt-button @click="handleSave" slot="right" style="color:#333;">保存</mt-button>
+            <mt-button @click="handleSave" slot="right" style="color:#333;" :disable="ONbtn">保存</mt-button>
         </mt-header>
-        <!-- :style="{ height: wrapperHeight + 'px' }" -->
-        <div class="wrapper"  >
+
+        <div class="page-main wrapper"  :style="{ height: wrapperHeight + 'px' }">
             <div class="main-list">
                 <div class="">
                     <div class="sc">
@@ -104,6 +104,7 @@
     export default {
         data () {
             return {
+                ONbtn:false,
                 tiopmessage:'保存中，请稍后',
                  wrapperHeight: 0,//容器高度
                 headerImage: '',     //   头 像
@@ -472,6 +473,7 @@
                             
                         }
                         else{
+                        this.ONbtn=true;
                         this.addover=true;
                         let params = {
                             cusName:this.nameRead,
@@ -499,7 +501,7 @@
                                         setTimeout(() => {
                                             
                                             this.$router.push({name: 'client'});
-                                            this.addover=false;
+                                            // this.addover=false;
                                         }, 3000)
                                     
                                 }
@@ -518,6 +520,7 @@
                     }
                     else{
                         this.addover=true;
+                        this.ONbtn=true;
                         let params = {
                             cusName:this.nameRead,
                             nickname:this.nicheng,
@@ -533,7 +536,7 @@
                             .then(response => {
                                 // this.xiTdata=response.data.results;
                                 if(response.data.status=='Y'){
-                                    this.addover=false;
+                                   
                                      Toast({
                                         message: '客户添加成功',
                                         position: 'middle',
@@ -541,6 +544,7 @@
                                         });
                                         setTimeout(() => {
                                             this.$router.push({name: 'client'});
+                                             this.addover=false;
                                         }, 3000)
                                     
                                 }
