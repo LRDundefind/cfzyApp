@@ -131,6 +131,9 @@
                     .then(response => {
                         
                         this.listdata = response.data.results;
+                        if(this.listdata==''&& this.params.current_page == 1){
+                            this.noWdata=true;
+                        }
                         app.Cwaiting();
                         if(this.listdata.length==this.params.page_size){  
                             //判断是否应该加载下一页
