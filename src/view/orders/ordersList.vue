@@ -3,8 +3,8 @@
 		<mt-header fixed  title="订单">
 		    <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
 		</mt-header>
-		<search-box ref="search" @getSmeage="searchHandler"/>
-		<noDate v-if="counts"></noDate>  
+		<search-box ref="search" @getSmeage="searchHandler" :message='placeMessage'/>
+		<noDate v-if="counts || count"></noDate>  
 		<!--订单列表-->
 		<div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
 			<mt-loadmore 
@@ -59,6 +59,7 @@ export default {
 	components: { searchBox, noDate },
     data () {
         return {
+			placeMessage:'请输入要检索的订单编号',
         	allLoaded: false,
             wrapperHeight: 0,//容器高度
             params:{
@@ -69,6 +70,7 @@ export default {
             listStore: [],
 			listdata: [],
 			counts: false,
+			count: false,
 			val: '', //搜索
         }
     },
@@ -92,6 +94,9 @@ export default {
             orders.getOrdersList(params)
                 .then(response => {
                     this.listdata = response.data.results;
+                    if(this.listdata=='' && this.params.current_page == 1){
+                		this.count = true;
+                    }
                     app.Cwaiting();
                     
 					if(this.listdata.length == this.params.page_size){  
@@ -120,6 +125,7 @@ export default {
         	this.params.current_page = 1 ;
         	this.listStore = [];
         	this.counts = false;
+        	this.count = false;
 			this.getOrders(value);
 		},
 		

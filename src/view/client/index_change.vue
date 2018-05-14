@@ -1,13 +1,13 @@
 <template>
-    <div class="page-content">
+    <div class="page-content page-main">
         <mt-header fixed title="客户">
             <router-link to="/client" slot="left">
                 <mt-button icon="back"> </mt-button>
             </router-link>
             <mt-button @click="handleSave" slot="right" style="color:#333;">保存</mt-button>
         </mt-header>
-
-        <div class="page-main wrapper"  :style="{ height: wrapperHeight + 'px' }">
+        <!-- :style="{ height: wrapperHeight + 'px' }" -->
+        <div class="wrapper"  >
             <div class="main-list">
                 <div class="">
                     <div class="sc">
@@ -489,7 +489,7 @@
                             .then(response => {
                                 // this.xiTdata=response.data.results;
                                 if(response.data.status=='Y'){
-                                    this.addover=false;
+                                   
                                     //  Toast({
                                     //     message: '客户添加成功',
                                     //     position: 'middle',
@@ -497,7 +497,9 @@
                                     //     });
                                         this.tiopmessage='客户添加成功'
                                         setTimeout(() => {
+                                            
                                             this.$router.push({name: 'client'});
+                                            this.addover=false;
                                         }, 3000)
                                     
                                 }
@@ -507,6 +509,9 @@
                                         position: 'middle',
                                         duration: 3000
                                         });
+                                    setTimeout(() => {
+                                            this.$router.push({name: 'client'});
+                                        }, 3000)
                                 }
                             })
                         }
@@ -552,7 +557,7 @@
                 }
                 else{
                     // 修改信息
-                    this.addover=true;
+                   this.addover=true;
                    let params = {
                         cid:this.cid,    //客户id
                         cusName:this.nameRead, //姓名

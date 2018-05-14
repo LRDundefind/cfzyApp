@@ -3,7 +3,7 @@
         <mt-header fixed title="平台黑名单">
             <mt-button icon="back" @click="goMy()" slot="left"></mt-button>
         </mt-header>
-        <search-box @getSmeage="searchBlack" :msg="msg" ref="search"/>
+        <search-box @getSmeage="searchBlack" :message='placeMessage' ref="search"/>
         
         <div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
             <no-Date v-show="listStore=='' || listStore.length==0"/>
@@ -47,6 +47,7 @@
     export default {
         data () {
             return {
+                placeMessage:'请输入客户名称、电话或身份证号',
                 msg:'',
                 black: '',
                 allLoaded: false,
