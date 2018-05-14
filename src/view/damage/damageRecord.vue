@@ -5,7 +5,7 @@
         </mt-header>
 
         <!--还款记录列表-->
-        <div class="page-main">
+        <div class="page-main page-loadmore-wrappe topScroll"  >
             <div class="" v-show="showList==false">
                 <div class="main-list">
                     <p class="clearfix">货品分类
@@ -178,7 +178,16 @@
     }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
-
+    .topScroll{
+        position: fixed;
+        width: 100%;
+        top: 1rem;
+        bottom: 60px;
+    }
+    .page-loadmore-wrappe{
+        overflow: auto;
+        -webkit-overflow-scrolling : touch;
+    }
     .main-list {
         background: #fff;
         margin-top: 0.2rem;
