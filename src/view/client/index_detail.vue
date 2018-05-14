@@ -61,6 +61,7 @@
 
 <script>
     import { client } from '@/services/apis/client'
+     import { Toast } from 'mint-ui';
     import BScroll from 'better-scroll'
     export default {
         name: 'client_detail',
@@ -93,8 +94,16 @@
                 };
                 client.Listmessage(params)
                     .then(response => {
-
-                        this.listdata=response.data.results;
+                        if(response.data.status=='Y'){
+                            this.listdata=response.data.results;
+                        }
+                        else{
+                            Toast({
+                                message: response.data.error_msg,
+                                position: 'middle',
+                                duration: 5000
+                                });
+                                }
 
                     })
 
