@@ -47,7 +47,8 @@ export default {
     font-size: 0.26rem;
     color: #4c4c4c;
     line-height: 0.45rem;
-    padding: 0.4rem 0.3rem;
+    margin: 0.4rem 0.3rem;
+    width: auto;
 }
 .page-loadmore-wrapper{
     overflow: scroll;
