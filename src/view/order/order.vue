@@ -1060,9 +1060,8 @@ i{
 			}
 			input::-webkit-input-placeholder{
 				color: #33d57c;
-				font-size: 0.26rem;
 				height: 0.7rem;
-				line-height: 0.7rem;
+				font-size: 0.26rem;
 				font-family: "microsoft yahei";
 			}
 		}
