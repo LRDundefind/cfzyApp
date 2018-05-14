@@ -17,9 +17,8 @@
                 <div v-for="item in listStore" :key='item.cid' class="main-list" @click="goDetail(item.cid)">
                     <ul class="ub">
                         <li class="ub-f1" style="padding-top: 0.3rem">
-                            <img v-show="item.headImg!=''" :src="imgpath+item.headImg">
-                            <img v-show="item.headImg==''" src="../../assets/my/my_head.png" alt="">
-                            <img class="black-img" :src="item.headImg"/>
+                            <img class="black-img" v-show="item.headImg!=''" :src="imgpath+item.headImg">
+                            <img class="black-img" v-show="item.headImg==''" src="../../assets/my/my_head.png" alt="">
                         </li>
                         <li class="ub-f2">
                             <div class="name">{{item.cusName}}</div>
@@ -154,6 +153,7 @@
         margin-top: 0.2rem;
         padding: 0 0.3rem;
         color: #333;
+        height: 1.66rem;
         .heade {
             font-size: 0.4rem;
             border-bottom: 1px #f0f0f0 solid;
