@@ -148,10 +148,8 @@ export default {
             orders.getTrainSaleList(params)
                 .then(response => {
                     this.listdata = response.data.results;
-                    if(this.listdata==''){
-                        this.counts = true;
-                        app.Cwaiting();
-                    }
+                    app.Cwaiting();
+                    
 					if(this.listdata.length == this.params.page_size){  
                         //判断是否应该加载下一页
                         this.params.current_page += 1 ;
@@ -161,7 +159,10 @@ export default {
                     }
                     if (this.listdata) {
                         this.listStore.push(...this.listdata);
-                    	app.Cwaiting()
+                    	if(this.listStore==''){
+	                        this.counts = true;
+	                        app.Cwaiting();
+	                    }
                     }
                     Indicator.close();
                     
