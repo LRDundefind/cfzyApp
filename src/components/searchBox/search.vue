@@ -1,22 +1,23 @@
 <template>
 	<div class="searchBox pos-r">
 
-		<input v-model="searchValue"  placeholder="请输入筛选内容" @input="searchChange"/>
+		<input v-model="searchValue"  v-bind:placeholder='sendGet'  @input="searchChange"/>
 		<div class="clearSearch pos-a" @click="clearSearch"></div>
-		<a class="searchBtn pos-a" @click="searAll">搜索</a>
+		<a class="searchBtn pos-a" @click="searAll">搜索{{sendGet}}</a>
 	</div>
 </template>
 <script>
 
 export default {
 	name:'search-box',
+	props:['sendGet'],
     data () {
         return {
             searchValue:''
         }
     },
     mounted () {
-
+		console.log(this.sendGet)
 	},
     methods: {
         clearSearch() {

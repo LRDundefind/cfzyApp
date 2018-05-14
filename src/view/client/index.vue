@@ -7,7 +7,7 @@
             <span @click="addCustomer" style="font-size: 0.32rem" slot="right">添加客户</span>
         </mt-header>
         <div class="maintop">
-            <search-box  @getSmeage="searchstart"  ref="search"/>
+            <search-box  @getSmeage="searchstart" :message="sendGet"  ref="search"/>
         <noDate v-show="noWdata"></noDate>  
         <div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }" >
 
@@ -68,6 +68,7 @@
     export default {
         data () {
             return {
+                sendGet:'请搜索客户的姓名',
             	heightNum: 40,
                 allLoaded: false,
                 noWdata:false,
