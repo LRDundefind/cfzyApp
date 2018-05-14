@@ -53,7 +53,7 @@
             </div>
 
             <div class="m-t-10 row">
-                <div class=" p-re  content ub bd-b">
+                <div class=" p-re  content ub bd-b" @click="update">
                     <span class="update-icon" style="width: 0.4rem;top:0.3rem;"></span>
                     <div class="title">系统升级</div>
                     <div class="">
@@ -216,6 +216,12 @@
                     }
                 })
             },
+            //更新升级
+            update(){
+                if (typeof XDYApp !== 'undefined') {
+                    XDYApp.versionDetection();
+                }
+            },
             //跳转到首页
             goHome(){
                 if(this.black == 'nostall'){
@@ -244,6 +250,9 @@
                     q.forEach(function(value){
                         Cookies.remove(value);
                     });
+                }
+                if (typeof XDYApp !== 'undefined') {
+                    XDYApp.appExit()
                 }
                 this.$router.push({name: 'login'})
             },

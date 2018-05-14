@@ -1052,8 +1052,7 @@ i{
    			overflow: hidden;
 			input{
 				width: 100%;
-				height: 0.7rem;
-				line-height: 0.7rem;
+				height: 100%;
 				background: #e1fcef;
 			    border-radius: 1rem;
 				text-align: center;
