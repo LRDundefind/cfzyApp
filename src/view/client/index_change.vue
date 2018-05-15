@@ -537,11 +537,12 @@
                                 // this.xiTdata=response.data.results;
                                 if(response.data.status=='Y'){
                                    
-                                     Toast({
-                                        message: '客户添加成功',
-                                        position: 'middle',
-                                        duration: 3000
-                                        });
+                                    //  Toast({
+                                    //     message: '客户添加成功',
+                                    //     position: 'middle',
+                                    //     duration: 3000
+                                    //     });
+                                         this.tiopmessage='客户添加成功'
                                         setTimeout(() => {
                                             this.$router.push({name: 'client'});
                                              this.addover=false;

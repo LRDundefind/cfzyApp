@@ -1,5 +1,5 @@
 <template>
-    <div class="page-content " id="client_detail">
+    <div class="page-content" id="client_detail">
        
             <div style="height:4rem">
                 <mt-header fixed title="客户">
@@ -49,12 +49,12 @@
                         </div>
                     <!-- </li>
                 </ul> -->
-                 <div class='update clearfix'>
-                    <mt-button type="primary" size="large" class='f-l' @click="consumptionRecords(3)">查看消费记录</mt-button>
-                    <mt-button type="primary" size="large" class='f-l' @click="goChange()">更新资料</mt-button>
-                </div>
+                
             </div>
-           
+            <div class='update clearfix'>
+                <mt-button type="primary" size="large" class='f-l' @click="consumptionRecords(3)">查看消费记录</mt-button>
+                <mt-button type="primary" size="large" class='f-l' @click="goChange()">更新资料</mt-button>
+            </div>
         </div>
     
 </template>
@@ -75,7 +75,7 @@
             }
         },
         mounted () {
-           this.wrapperHeight = document.documentElement.clientHeight - 330;
+           this.wrapperHeight = document.documentElement.clientHeight - 315;
             // this.$nextTick(() => {
             //    this.scroll = new BScroll(this.$refs.wrapper,{});
             // })
@@ -129,8 +129,14 @@
     }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
+.update{
+    position: fixed;
+    bottom: 0.1rem;
+    width: 100%;
+    background: #f5f5f5;
+}
 .wrapper{
-    //  height: 100vh;
+     height: 100vh;
     //  overflow:hidden;
      -webkit-overflow-scrolling : touch;
 }
