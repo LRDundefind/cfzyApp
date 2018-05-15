@@ -7,12 +7,8 @@
             <span class="c-3 f-s-16" slot="right" @click="sendXDT">发布货源</span>
 		</mt-header>
 		<!--物流-->
-		<div class="page-main logistics">
-			<!-- <div class="not-online">
-				<img src="../../assets/wuliu.png">
-				<div>敬请期待...</div>
-			</div> -->
-			<div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }" >
+		<div class="logistics">
+			<div class="page-main page-loadmore-wrappe" :class= "[this.$route.params.fromc=='order'? 'topScroll0' : 'topScroll'] ">
             <noDate v-show="Xdtlist.length=='0'"></noDate>  
           
             <!-- <mt-loadmore 
@@ -137,7 +133,15 @@ export default {
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
 .page-loadmore-wrappe{
-   overflow: scroll;
+   overflow: auto;
+}
+.topScroll{
+    top: 0.8rem;
+    bottom: 1.1rem;
+}
+.topScroll0{
+    top:0.8rem;
+    bottom: 0rem;
 }
 .ft28{font-size: 0.36rem;}
 .col33d547{color: #33d547;border:1px solid #33d547;padding: 0.05rem 0.25rem;border-radius: 25px;}
