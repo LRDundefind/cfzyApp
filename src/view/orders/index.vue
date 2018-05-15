@@ -16,30 +16,7 @@
 				:bottom-method="loadBottom"
 				:bottom-all-loaded="allLoaded"
 				ref="loadmore">
-				<!--筛选title-----本期不做select筛选-->
-				<!--<div class="choose-title ub ub-pj" v-show="false">
-					<div @click="cycleScreens" :class="cycleActive">周期</div>
-					<div @click="goodsScreens" :class="goodsActive">货品</div>
-					<div @click="ownerScreens" :class="ownerActive">货主</div>
-				</div>-->
-				<!--分类筛选 定位-----本期不做select筛选-->
-				<!--<div class="earing-choose" v-if="isScreen" v-show="false">
-					<div class="type-owner">
-						<ul v-if="cycleScreen">
-							<li v-for="n in 15">这里不对</li>
-						</ul>
-						<ul v-if="goodsScreen">
-							<li v-for="n in 15">苹果果</li>
-						</ul>
-						<ul v-if="ownerScreen">
-							<li v-for="n in 15">货主一</li>
-						</ul>
-						<div class="choose-btn">
-							<div class="reset" @click="resetBtn">重置</div>
-							<div class="submit" @click="submitBtn">确定</div>
-						</div>
-					</div>
-				</div>-->
+
 				<!--订单车次列表-->
 				<ul 
 				    infinite-scroll-disabled="loading"
@@ -103,13 +80,6 @@ export default {
 	components: { searchBox, noDate },
     data () {
         return {
-        	//isScreen: false, //-----本期不做select筛选-
-        	//cycleScreen: false,
-        	//goodsScreen: false,
-        	//ownerScreen: false,
-        	//cycleActive: '',
-        	//goodsActive: '',
-        	//ownerActive: '',
         	placeMessage:'请输入要检索的车次或车牌号',
         	gearName:'',//档位
         	
@@ -219,64 +189,7 @@ export default {
         sildeDown(){
         	
         },
-        
 
-        
-        //展开筛选-----本期不做select筛选----暂不删除
-//      cycleScreens: function(){
-//			this.cycleActive = 'active';
-//			this.goodsActive = '';
-//			this.ownerActive = '';
-//			
-//      	this.goodsScreen = false;
-//      	this.ownerScreen = false;
-//      	this.cycleScreen = !this.cycleScreen;
-//      	this.isScreen = this.cycleScreen;
-//      },
-//      goodsScreens: function(){
-//			this.cycleActive = '';
-//			this.goodsActive = 'active';
-//			this.ownerActive = '';
-//			
-//      	this.cycleScreen = false;
-//      	this.ownerScreen = false;
-//      	this.goodsScreen = !this.goodsScreen;
-//      	this.isScreen = this.goodsScreen;
-//      	
-//      },
-//      ownerScreens: function(){
-//			this.cycleActive = '';
-//			this.goodsActive = '';
-//			this.ownerActive = 'active';
-//			
-//      	this.cycleScreen = false;
-//      	this.goodsScreen = false;
-//      	this.ownerScreen = !this.ownerScreen;
-//      	this.isScreen = this.ownerScreen;
-//      	
-//      },
-        //重置选择
-//      resetBtn: function(){
-//      	this.cycleActive = '';
-//			this.goodsActive = '';
-//			this.ownerActive = '';
-//			
-//      	this.cycleScreen = false;
-//      	this.goodsScreen = false;
-//      	this.ownerScreen = false;
-//      	this.isScreen = false;
-//      },
-        //提交筛选
-//      submitBtn: function(){
-//      	this.cycleActive = '';
-//			this.goodsActive = '';
-//			this.ownerActive = '';
-//			
-//      	this.cycleScreen = false;
-//      	this.goodsScreen = false;
-//      	this.ownerScreen = false;
-//      	this.isScreen = false;
-//      },
     }
 }
 </script>
