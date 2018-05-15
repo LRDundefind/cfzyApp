@@ -416,7 +416,7 @@ export default {
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.goodsnum))){
+    		}else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.goodsnum)) || this.goodsnum > 9999.99){
     			Toast({
 					message: '请正确输入件数',
 					position: 'middle',
@@ -428,7 +428,7 @@ export default {
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.goodsweight))){
+    		}else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.goodsweight)) || this.goodsweight > 9999.99){
     			Toast({
 					message: '请正确输入重量',
 					position: 'middle',
@@ -440,7 +440,7 @@ export default {
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.pbweight))){
+    		}else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.pbweight)) || this.pbweight > 9999.99){
     			Toast({
 					message: '请正确输入平板重',
 					position: 'middle',
@@ -448,7 +448,7 @@ export default {
     			});
     		}else{
     			if(this.goodsunit != ''){
-	    			if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.goodsunit))){
+	    			if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.goodsunit))|| this.goodsunit > 9999.99){
 		    			Toast({
 							message: '请正确输入单价',
 							position: 'middle',
@@ -591,7 +591,7 @@ export default {
         },
         //设置三轮费-确定按钮
         setSanlunfei(){
-        	if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.deliveryCost))){
+        	if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.deliveryCost)) || this.deliveryCost > 9999.99){
     			Toast({
 					message: '请正确输入三轮费',
 					position: 'middle',

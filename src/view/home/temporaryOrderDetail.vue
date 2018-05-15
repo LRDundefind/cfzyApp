@@ -223,7 +223,7 @@ export default {
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.price))){
+    		}else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.price)) || this.price > 9999.99){
     			Toast({
 					message: '请正确输入单价',
 					position: 'middle',
