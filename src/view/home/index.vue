@@ -7,7 +7,9 @@
                     <img class="header_img" src="../../assets/index/down_icon.png"/>
                 </router-link>
                 <div class=" personal" @click="goMy()" slot="right">
-                    <img class="personal_img" :src="personalData.headImg"/>
+                    <!--<img class="personal_img" :src="personalData.headImg"/>-->
+                    <img class="personal_img" v-show="personalData.headImg!=''" :src="imgpath + personalData.headImg" >
+                    <img class="personal_img" v-show="personalData.headImg==''" src="../../assets/my/my_head.png" alt="">
                 </div>
             </mt-header>
        </div>
@@ -82,8 +84,11 @@
      export default {
         data () {
             return {
-                gearName:'',
-                personalData:[],
+                imgpath: process.env.BASE_PATH,
+                gearName: '',
+                personalData: {
+                    headImg: '',
+                },
                 storageData:{
 //                    trainNum:'',//当日入库量
 //                    order_quantity:'',//当日下单量
@@ -108,15 +113,6 @@
                 my.getInfo(params).then(response => {
                     if (response.data.status == 'Y') {
                         this.personalData = response.data.results;
-                        let doMain = process.env.BASE_PATH;
-                        let defaultImg = require('../../assets/my/my_head.png');
-                        let headImg = this.personalData.headImg;
-                        //返回头像的处理
-                        if (headImg == '') {
-                            this.personalData.headImg = defaultImg;
-                        } else {
-                            this.personalData.headImg = doMain + headImg;
-                        }
                     } else {
 
                     }
