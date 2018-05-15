@@ -5,7 +5,7 @@
                 <mt-button icon="back"></mt-button>
             </router-link>
         </mt-header>
-        <div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
+        <div class="page-main page-loadmore-wrappe topScroll">
             <noDate v-if="noWdata"></noDate>
 
             <mt-loadmore
@@ -118,8 +118,13 @@
     }
 </script>
 <style scoped lang="scss">
-    .page-loadmore-wrapper {
-        overflow: scroll
+    .topScroll{
+        top: 0.8rem;
+        bottom: 0.2rem;
+    }
+    .page-loadmore-wrappe{
+        overflow: auto;
+        -webkit-overflow-scrolling : touch;
     }
     .main-list {
         background: #fff;
