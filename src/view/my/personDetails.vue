@@ -14,7 +14,10 @@
                                  :style="'backgroundImage:url('+headerImage+')'"></div>
                             <input type="file" id="upload" accept="image" @change="upload1" style="opacity: 0">
                             <div>
-                                <img class="header-img" :src="personalData.headImg"/>
+                                <!--<img class="header-img" :src="personalData.headImg"/>-->
+                                <img class="header-img" v-show="personalData.headImg!=''" :src="imgpath+personalData.headImg" >
+                                <img class="header-img" v-show="personalData.headImg==''" src="../../assets/my/my_head.png" alt="">
+
                             </div>
 
                         </div>
@@ -45,14 +48,16 @@
         data () {
             return {
                 getImage:'',
-                personalData: [],
+                personalData: {
+                    headImg:'',
+                },
                 phone: this.$route.params.phone,
                 yanNumber: this.$route.params.yanNumber,
                 headerImage: '',
                 picValue: '',
                 selName: this.$route.params.selName,
                 headImg: this.$route.params.headImg,
-                doMain:process.env.BASE_PATH,
+                imgpath:process.env.BASE_PATH,
             }
         },
         mounted () {
@@ -76,15 +81,15 @@
                         this.personalData = response.data.results;
                         this.getImage = this.personalData.headImg;
 
-                        let doMain = process.env.BASE_PATH;
-                        let defaultImg = require('../../assets/my/my_head.png');
-                        let headImg = this.personalData.headImg;
-                        //返回头像的处理
-                        if (headImg == '') {
-                            this.personalData.headImg = defaultImg;
-                        } else {
-                            this.personalData.headImg = this.doMain + headImg;
-                        }
+//                        let doMain = process.env.BASE_PATH;
+//                        let defaultImg = require('../../assets/my/my_head.png');
+//                        let headImg = this.personalData.headImg;
+//                        //返回头像的处理
+//                        if (headImg == '') {
+//                            this.personalData.headImg = defaultImg;
+//                        } else {
+//                            this.personalData.headImg = this.doMain + headImg;
+//                        }
 
                         if (this.phone) {
                             this.personalData.phone = this.phone;
