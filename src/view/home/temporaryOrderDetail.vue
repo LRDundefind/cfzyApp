@@ -4,7 +4,7 @@
 	    	<mt-button icon="back" slot="left" @click="goBack()"></mt-button>
 		</mt-header>
 		<!--订单列表-->
-		<div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
+		<div class="page-main page-loadmore-wrapper">
 			<!--信息一-->
 			<div class="order-detail">
 				<div class="ub term">
@@ -330,6 +330,10 @@ export default {
 }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
+.page-main{
+	top: 0.8rem;
+	bottom: 0px;
+}
 .page-loadmore-wrapper{
    overflow: scroll;
     -webkit-overflow-scrolling : touch;
@@ -459,7 +463,7 @@ i{
 	color: #fff;
 	font-size: 0.3rem;
 	font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
-	margin: 0.45rem auto 0;
+	margin: 0.45rem auto 0.3rem;
 }
 /*设置单价模态框*/
 .dialoag{

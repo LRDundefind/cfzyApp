@@ -8,62 +8,63 @@
 		</mt-header>
 		<div class="maintop">
 			<search-box ref="search" @getSmeage="searchHandler" :message='placeMessage'/>
-        <noDate v-if="counts || count"></noDate>  
-		<div class="page-main earning page-loadmore-wrapper">
-			<mt-loadmore 
-				:auto-fill="false"
-				:top-method="loadTop" 
-				:bottom-method="loadBottom"
-				:bottom-all-loaded="allLoaded"
-				ref="loadmore">
-
-				<!--订单车次列表-->
-				<ul 
-				    infinite-scroll-disabled="loading"
-				    infinite-scroll-distance="10"
-				    class="orders-ul"><!--v-infinite-scroll="loadMore"-->
-					<li v-for="list in listStore" class="orders-li" :key="list.id" @click="orderList(list.tid, list.sell_day)">
-				  		<div class="orders-t ub ub-ac" @click="orderList(list.tid, list.sell_day)">
-				  			<div class="ub-f1">{{list.trainsNum}}</div>
-				  			<div class="status" v-if="list.settleStatus == 'status_selling'">售卖中</div>
-				  			<div class="status" v-if="list.settleStatus == 'status_topay'">售卖中</div>
-				  			<div class="status" v-if="list.settleStatus == 'status_toremit'">待汇款</div>
-				  			<div class="status" v-if="list.settleStatus == 'status_complete'">已完成</div>
-				  		</div>
-				  		<div class="orders-c" @click="orderList(list.tid, list.sell_day)">{{list.plateNum}}</div>
-				  		<div class="orders-b ub ub-ac" @click="orderList(list.tid, list.sell_day)">
-				  			<div class="ub-f1">{{list.sell_day}}</div>
-				  			<div>销售总额</div>
-				  			<div class="edu">￥{{list.day_salesAmount}}</div>
-				  		</div>
-						<ul class="table-ul">
-							<li class="title">
-								<span>品名</span>
-								<span>销售量</span>
-								<span>库存量</span>
-								<span>销售金额</span>
-							</li>
-							<li v-for="goods in list.goods" class="con">
-								<span>{{goods.goodName}}</span>
-								<span>{{goods.sell_quantity}}
-									<i v-if="goods.priceUnit == 'unit_jin'">斤</i>
-									<i v-if="goods.priceUnit == 'unit_kg'">公斤</i>
-									<i v-if="goods.priceUnit == 'unit_pie'">件</i>
-								</span>
-								<span>{{goods.surplusNum}}
-									<i v-if="goods.priceUnit == 'unit_jin'">斤</i>
-									<i v-if="goods.priceUnit == 'unit_kg'">公斤</i>
-									<i v-if="goods.priceUnit == 'unit_pie'">件</i>
-								</span>
-								<span>￥{{goods.sell_amount}}</span>
-							</li>
-						</ul>
-				  		<div class="slide-btn" v-if="list.goods.length >= 1" @click="sildeDown">展开</div>
-					</li>
-				</ul>
-				<div></div>
-			</mt-loadmore>
-		</div>
+			<div class="page-main earning page-loadmore-wrapper">
+				<noDate v-if="counts || count"></noDate>  
+				<mt-loadmore 
+					v-else
+					:auto-fill="false"
+					:top-method="loadTop" 
+					:bottom-method="loadBottom"
+					:bottom-all-loaded="allLoaded"
+					ref="loadmore">
+	
+					<!--订单车次列表-->
+					<ul 
+					    infinite-scroll-disabled="loading"
+					    infinite-scroll-distance="10"
+					    class="orders-ul"><!--v-infinite-scroll="loadMore"-->
+						<li v-for="list in listStore" class="orders-li" :key="list.id" @click="orderList(list.tid, list.sell_day)">
+					  		<div class="orders-t ub ub-ac" @click="orderList(list.tid, list.sell_day)">
+					  			<div class="ub-f1">{{list.trainsNum}}</div>
+					  			<div class="status" v-if="list.settleStatus == 'status_selling'">售卖中</div>
+					  			<div class="status" v-if="list.settleStatus == 'status_topay'">售卖中</div>
+					  			<div class="status" v-if="list.settleStatus == 'status_toremit'">待汇款</div>
+					  			<div class="status" v-if="list.settleStatus == 'status_complete'">已完成</div>
+					  		</div>
+					  		<div class="orders-c" @click="orderList(list.tid, list.sell_day)">{{list.plateNum}}</div>
+					  		<div class="orders-b ub ub-ac" @click="orderList(list.tid, list.sell_day)">
+					  			<div class="ub-f1">{{list.sell_day}}</div>
+					  			<div>销售总额</div>
+					  			<div class="edu">￥{{list.day_salesAmount}}</div>
+					  		</div>
+							<ul class="table-ul">
+								<li class="title">
+									<span>品名</span>
+									<span>销售量</span>
+									<span>库存量</span>
+									<span>销售金额</span>
+								</li>
+								<li v-for="goods in list.goods" class="con">
+									<span>{{goods.goodName}}</span>
+									<span>{{goods.sell_quantity}}
+										<i v-if="goods.priceUnit == 'unit_jin'">斤</i>
+										<i v-if="goods.priceUnit == 'unit_kg'">公斤</i>
+										<i v-if="goods.priceUnit == 'unit_pie'">件</i>
+									</span>
+									<span>{{goods.surplusNum}}
+										<i v-if="goods.priceUnit == 'unit_jin'">斤</i>
+										<i v-if="goods.priceUnit == 'unit_kg'">公斤</i>
+										<i v-if="goods.priceUnit == 'unit_pie'">件</i>
+									</span>
+									<span>￥{{goods.sell_amount}}</span>
+								</li>
+							</ul>
+					  		<div class="slide-btn" v-if="list.goods.length >= 1" @click="sildeDown">展开</div>
+						</li>
+					</ul>
+					<div></div>
+				</mt-loadmore>
+			</div>
 		</div>
 		
 	</div>
@@ -200,7 +201,7 @@ i,b{
 	font-weight: normal;
 }
 .page-main{
-	top: 2.3rem;
+	top: 2.2rem;
 	bottom: 60px;
 }
 body{
@@ -219,6 +220,9 @@ body{
 		font-size: 0.26rem;
 		color: #4c4c4c;
 		/*padding-top: 1.1rem;*/ /*select搜索本期不做*/
+		.orders-li:first-child{
+			margin-top: 0.2rem;
+		}
 		.orders-li{
 			background: #fff;
 			margin: 0 0 0.2rem;
