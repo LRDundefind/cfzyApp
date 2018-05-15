@@ -1,5 +1,5 @@
 <template>
-    <div class="page-content page-main" id="client_detail">
+    <div class="page-content " id="client_detail">
        
             <div style="height:4rem">
                 <mt-header fixed title="客户">
@@ -15,8 +15,8 @@
                 </div>
             </div>
           
-             <!-- :style="{ height: wrapperHeight + 'px' }"  ref="wrapper" :style="{ height: wrapperHeight + 'px' }"-->
-            <div class=" page-loadmore-wrappe wrapper topScroll">
+             <!-- :style="{ height: wrapperHeight + 'px' }"  ref="wrapper" -->
+            <div class="page-main page-loadmore-wrappe wrapper topScroll" :style="{ height: wrapperHeight + 'px' }">
                 <!-- <ul class="content">
                     <li> -->
                         <div class="main-list">
