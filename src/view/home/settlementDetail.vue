@@ -181,6 +181,7 @@
         }
 
         .login_cont {
+            height: 0.9rem;
             width: 5.5rem;
             margin: 0 auto;
         }
