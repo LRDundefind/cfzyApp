@@ -52,8 +52,8 @@
                 
             </div>
             <div class='update clearfix'>
-                <mt-button type="primary" size="large" class='f-l' @click="consumptionRecords(3)">查看消费记录</mt-button>
-                <mt-button type="primary" size="large" class='f-l' @click="goChange()">更新资料</mt-button>
+                <mt-button type="primary" size="large" class='f-l' @click="consumptionRecords()">查看消费记录</mt-button>
+                <mt-button type="primary" size="large" class='f-l' @click="goChange()" v-show="showUpdate!='black'">更新资料</mt-button>
             </div>
         </div>
     
@@ -71,10 +71,12 @@
                 listdata:{},
                 wrapperHeight: 0,//容器高度
                 cid:this.$route.params.ids,
-                imgpath:process.env.BASE_PATH
+                imgpath:process.env.BASE_PATH,
+                showUpdate:''
             }
         },
         mounted () {
+           this.showUpdate=this.$route.params.come;
            this.wrapperHeight = document.documentElement.clientHeight - 315;
             // this.$nextTick(() => {
             //    this.scroll = new BScroll(this.$refs.wrapper,{});
