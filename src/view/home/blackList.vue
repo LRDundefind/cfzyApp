@@ -4,26 +4,26 @@
             <mt-button icon="back" @click="goMy()" slot="left"></mt-button>
         </mt-header>
         <search-box @getSmeage="searchBlack" :message='placeMessage' ref="search"/>
-        
+
         <div class="page-main page-loadmore-wrapper topScroll">
-                <div v-for="item in listData" :key='item.cid' class="main-list" @click="goDetail(item.cid)">
-                    <ul class="ub">
-                        <li class="ub-f1" style="padding-top: 0.3rem">
-                            <img class="black-img" v-show="item.headImg!=''" :src="imgpath+item.headImg">
-                            <img class="black-img" v-show="item.headImg==''" src="../../assets/my/my_head.png" alt="">
-                        </li>
-                        <li class="ub-f2">
-                            <div class="name">{{item.cusName}}</div>
-                            <div class="reason">拉黑原因：{{item.blockingReason}}</div>
-                        </li>
-                        <li class="ub-f3 ub ub-pe">
-                            <div>
-                                <div class="date">{{item.createTime}}</div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <no-Date v-show="listData=='' || listData.length==0"/>
+            <div v-for="item in listData" :key='item.cid' class="main-list" @click="goDetail(item.cid)">
+                <ul class="ub">
+                    <li class="ub-f1" style="padding-top: 0.3rem">
+                        <img class="black-img" v-show="item.headImg!=''" :src="imgpath+item.headImg">
+                        <img class="black-img" v-show="item.headImg==''" src="../../assets/my/my_head.png" alt="">
+                    </li>
+                    <li class="ub-f2">
+                        <div class="name">{{item.cusName}}</div>
+                        <div class="reason">拉黑原因：{{item.blockingReason}}</div>
+                    </li>
+                    <li class="ub-f3 ub ub-pe">
+                        <div>
+                            <div class="date">{{item.createTime}}</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <noDate v-if="noWdata"></noDate>
         </div>
     </div>
 </template>
@@ -31,36 +31,38 @@
 <script>
     import searchBox from '@/components/searchBox/search'
     import {home} from '@/services/apis/home.api'
-    import { Loadmore , Indicator} from 'mint-ui'
+    import {Loadmore, Indicator} from 'mint-ui'
     import noDate from '@/components/noData/noDate'
 
     export default {
         data () {
             return {
-                placeMessage:'请输入客户名称、电话或身份证号',
-                msg:'',
+                placeMessage: '请输入客户名称、电话或身份证号',
+                msg: '',
                 black: '',
                 allLoaded: false,
                 wrapperHeight: 0,//容器高度
-                noData:false,
-                params:{
-                    search:''
+                noData: false,
+                params: {
+                    search: ''
                 },
-                listData:[],
-                imgpath: process.env.BASE_PATH
+                listData: [],
+                imgpath: process.env.BASE_PATH,
+                noWdata:false,
 
             }
         },
-         components:{
+        components: {
             noDate,
-             searchBox
+            searchBox
         },
         created(){
             this.black = this.$route.params.black || false;
-        },
-        mounted () {
             this.wrapperHeight = document.documentElement.clientHeight - 100;
             this.getList();
+            app.Vwaiting();
+        },
+        mounted () {
         },
 
         methods: {
@@ -72,13 +74,17 @@
                 }
             },
             searchBlack(msg){
-                this.params.search=msg;
+                this.params.search = msg;
                 this.listData = [];
                 this.getList();
             },
             getList(){
                 home.blacklist(this.params).then(response => {
-                    this.listData=response.data.results;
+                    this.listData = response.data.results;
+                    if(this.listData==''){
+                        this.noWdata=true;
+                    }
+                    app.Cwaiting();
                 })
             },
 
@@ -90,14 +96,16 @@
     }
 </script>
 <style scoped lang="scss">
-    .topScroll{
+    .topScroll {
         top: 2.2rem;
         bottom: 0.3rem;
     }
+
     .page-loadmore-wrapper {
         overflow: auto;
-        -webkit-overflow-scrolling : touch;
+        -webkit-overflow-scrolling: touch;
     }
+
     .im {
         width: 0.8rem;
         height: 0.8rem;
