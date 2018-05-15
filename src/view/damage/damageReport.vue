@@ -5,7 +5,7 @@
                 <mt-button icon="back"></mt-button>
             </router-link>
         </mt-header>
-        <div class="page-main">
+        <div class="page-main page-loadmore-wrappe topScroll">
             <div class="information">
                 <span>{{trainsNum}}</span>
             </div>
@@ -84,6 +84,14 @@
     }
 </script>
 <style scoped lang="scss">
+    .topScroll{
+        top: 0.8rem;
+        bottom: 0.2rem;
+    }
+    .page-loadmore-wrappe{
+        overflow: auto;
+        -webkit-overflow-scrolling : touch;
+    }
     .information {
         font-size: 0.28rem;
         color: #4c4c4c;
