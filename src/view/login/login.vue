@@ -163,7 +163,6 @@ export default {
                 logistics.auth(params).then(response => {
                     let ss=JSON.parse(response.data.results)
                     Cookies.set('xdtuseid', ss.content.userId); 
-                    // console.log(ss)
                     
                 })
             },

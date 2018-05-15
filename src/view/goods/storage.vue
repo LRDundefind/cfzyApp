@@ -20,7 +20,7 @@
             </router-link>
         </mt-header>
 
-        <div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }">
+        <div class="page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }">
 
             <mt-navbar v-model="selected" v-if="selected">
                 <mt-tab-item id="basic">基本信息</mt-tab-item>
@@ -612,6 +612,7 @@
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
     .page-loadmore-wrappe{
+        width:100%;
         overflow: scroll;
         -webkit-overflow-scrolling : touch;
     }
