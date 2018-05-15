@@ -3,18 +3,20 @@
         <mt-header fixed title="意见反馈">
             <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
         </mt-header>
+        <div class="page-main page-loadmore-wrappe topScroll">
 
-        <div class="main-list">
-            <div class="remark c-9">
-                <textarea name="" id="" cols="30" rows="10" placeholder="请输入您的宝贵意见" v-model="ideaInfo"></textarea>
+            <div class="main-list">
+                <div class="remark c-9">
+                    <textarea name="" id="" cols="30" rows="10" placeholder="请输入您的宝贵意见" v-model="ideaInfo"></textarea>
+                </div>
             </div>
-        </div>
 
-        <div class="">
-            <input v-model="phone" placeholder="请输入您的联系方式" class="phone ">
-        </div>
+            <div class="">
+                <input v-model="phone" placeholder="请输入您的联系方式" class="phone ">
+            </div>
 
-        <div @click="submit" class="findbtn">提交</div>
+            <div @click="submit" class="findbtn">提交</div>
+        </div>
     </div>
 
 </template>
@@ -22,6 +24,14 @@
     .feedBack {
         width: 100%;
         display: block;
+        .topScroll{
+            top: 0.9rem;
+            bottom: 0.2rem;
+        }
+        .page-loadmore-wrappe{
+            overflow: auto;
+            -webkit-overflow-scrolling : touch;
+        }
         .main-list {
             background: #fff;
             margin-top: 0.2rem;
