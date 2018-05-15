@@ -8,7 +8,7 @@
         <!--车次结算详情-->
         <div class="page-main page-loadmore-wrappe topScroll" style="height:100vh;">
 
-            <div class="page-main settlement-detail">
+            <div class=" settlement-detail">
                 <div class="ub detail-top">
                     <div class="ub-f3">{{trainsNum}}</div>
                     <div class="number ub-f2"><span class="carNumber">车牌号</span>{{plateNum}}</div>
@@ -187,6 +187,7 @@
         }
 
         .loginbtn {
+            z-index:99;
             width: 80% !important;
             @include login_btn(fixed);
             background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
