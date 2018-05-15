@@ -294,7 +294,7 @@ export default {
 	    //保存
         preservation(){
             for(var i = 0, len = this.goodsInfo.length; i < this.goodsInfo.length; i ++){
-            	if(this.goodsInfo[i].weight != '' && this.goodsInfo[i].price == ''){
+            	if(this.goodsInfo[i].price == ''){
 					Toast({
 						message: '请完善货品单价',
 						position: 'middle',
