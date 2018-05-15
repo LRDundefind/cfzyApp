@@ -133,6 +133,7 @@
     position: fixed;
     bottom: 0.1rem;
     width: 100%;
+    background: #f5f5f5;
 }
 .wrapper{
      height: 100vh;
