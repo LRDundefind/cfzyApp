@@ -8,11 +8,12 @@
                 </router-link>
                 <div class=" personal" @click="goMy()" slot="right">
                     <!--<img class="personal_img" :src="personalData.headImg"/>-->
-                    <img class="personal_img" v-show="personalData.headImg!=''" :src="imgpath + personalData.headImg" >
-                    <img class="personal_img" v-show="personalData.headImg==''" src="../../assets/my/my_head.png" alt="">
+                    <img class="personal_img" v-show="personalData.headImg!=''" :src="imgpath + personalData.headImg">
+                    <img class="personal_img" v-show="personalData.headImg==''" src="../../assets/my/my_head.png"
+                         alt="">
                 </div>
             </mt-header>
-       </div>
+        </div>
         <div class="page-main page-loadmore-wrappe topScroll">
 
             <div class="home pos-r" @click="goBlack">
@@ -48,8 +49,10 @@
                         </div>
                         <div class="" @click="goTemporaryOrderList">
                             <div>
-                                <img v-if="this.storageData.deposit == 0" class="goods-image left-imge" src="../../assets/index/no_dot_total_income_icon.png"/>
-                                <img v-else class="goods-image left-imge" src="../../assets/index/dot_total_income_icon.png"/>
+                                <img v-if="this.storageData.deposit == 0" class="goods-image left-imge"
+                                     src="../../assets/index/no_dot_total_income_icon.png"/>
+                                <img v-else class="goods-image left-imge"
+                                     src="../../assets/index/dot_total_income_icon.png"/>
                             </div>
                             <div class="name">暂存订单</div>
                         </div>
@@ -76,12 +79,12 @@
     </div>
 </template>
 
-<script> 
-     import { home } from '@/services/apis/home.api'
-     import Cookies from 'js-cookie'
-     import {my} from '@/services/apis/my'
+<script>
+    import {home} from '@/services/apis/home.api'
+    import Cookies from 'js-cookie'
+    import {my} from '@/services/apis/my'
 
-     export default {
+    export default {
         data () {
             return {
                 imgpath: process.env.BASE_PATH,
@@ -89,22 +92,23 @@
                 personalData: {
                     headImg: '',
                 },
-                storageData:{
+                storageData: {
 //                    trainNum:'',//当日入库量
 //                    order_quantity:'',//当日下单量
-                    deposit:'',//暂存订单量
+                    deposit: '',//暂存订单量
                 }
             }
         },
-        mounted () {
-            if (typeof Cookies.get('Token') =='undefined') {
-                this.$router.push({name:'login'});
+        created () {
+            if (typeof Cookies.get('Token') == 'undefined') {
+                this.$router.push({name: 'login'});
             }
-            if(JSON.parse(Cookies.get('gidOwnID_lists')).gearName){
+            if (JSON.parse(Cookies.get('gidOwnID_lists')).gearName) {
                 this.gearName = JSON.parse(Cookies.get('gidOwnID_lists')).gearName;
             }
-            this.getlist();
             this.info();
+            this.getlist();
+            app.Vwaiting();
         },
         methods: {
             //获取头像
@@ -121,9 +125,10 @@
 
             //获取当日交易情况
             getlist(){
-                let params={};
-                home.index(params).then(response=>{
+                let params = {};
+                home.index(params).then(response => {
                     this.storageData = response.data.results;
+                    app.Cwaiting();
 //                    console.log(response.data.results);
                 })
             },
@@ -167,24 +172,28 @@
     }
 </script>
 <style scoped lang="scss">
-    .topScroll{
+    .topScroll {
         top: 0.8rem;
         bottom: 60px;
     }
-    .page-loadmore-wrappe{
+
+    .page-loadmore-wrappe {
         overflow: auto;
-        -webkit-overflow-scrolling : touch;
+        -webkit-overflow-scrolling: touch;
     }
+
     .header_img {
         width: 0.32rem;
         padding-top: 0.1rem;
         padding-left: 0.05rem;
     }
-    .bb{
+
+    .bb {
         box-sizing: border-box;
     }
+
     .personal {
-        .personal_img{
+        .personal_img {
             width: 0.68rem;
             height: 0.68rem;
             border-radius: 50%;
@@ -226,7 +235,7 @@
         background-color: white;
         padding: 0 0.56rem;
 
-        .order-left:after{
+        .order-left:after {
             content: '';
             position: absolute;
             top: 0.52rem;
