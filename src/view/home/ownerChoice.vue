@@ -3,7 +3,7 @@
         <mt-header fixed title="档位选择">
             <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
         </mt-header>
-        <div class="page-main">
+        <div class="page-main page-loadmore-wrappe topScroll">
             <div v-for="item in ownerList" :key='item.gid' class="main-list">
                 <div @click="handleCommand(item)">
                     <div class="stall ub">
@@ -62,6 +62,14 @@
     }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
+    .topScroll{
+        top: 0.8rem;
+        bottom: 0.2rem;
+    }
+    .page-loadmore-wrappe{
+        overflow: auto;
+        -webkit-overflow-scrolling : touch;
+    }
 
     .main-list {
         background: #fff;

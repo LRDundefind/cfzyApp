@@ -32,7 +32,7 @@ export default {
 	components: { searchBox, noDate },
     data () {
         return {
-        	placeMessage:'请输入要检索的订单编号',
+        	placeMessage:'请输入要检索的客户地址或昵称',
         	wrapperHeight: 0,//容器高度
             temporaryList: [],
             val: '', //搜索
