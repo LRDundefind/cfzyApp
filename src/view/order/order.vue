@@ -365,6 +365,14 @@ export default {
 		},
 		//设置货品重量件数信息的弹框
         goodsInfoSet(i, goodid, id, name, sellunit, numUnit, surplusNum, tid, trainsNum){
+        	//提示优先选择客户--在选中了非临时客户的时候
+        	if(this.customerType == 'Nottemporary' && this.customerId == undefined){
+				Toast({
+					message: '请优先选择客户',
+					position: 'middle',
+					duration: 3000
+    			});
+        	}
 			this.numberNum = i;
         	this.dialoags = true;
         	this.goodId = goodid;//货品id 提交订单传参所需
@@ -1061,8 +1069,9 @@ i{
 			input::-webkit-input-placeholder{
 				color: #33d57c;
 				height: 0.7rem;
-				font-size: 0.26rem;
+				font-size: 0.24rem;
 				font-family: "microsoft yahei";
+				/*font-family: 'SimSun';*//*SimHei NSimSun FangSong*/
 			}
 		}
 		.btn{

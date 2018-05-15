@@ -11,7 +11,7 @@
                 </div>
             </mt-header>
        </div>
-        <div class="">
+        <div class="page-main page-loadmore-wrappe topScroll">
 
             <div class="home pos-r" @click="goBlack">
                 <span class="black-title">黑名单</span>
@@ -168,6 +168,14 @@
     }
 </script>
 <style scoped lang="scss">
+    .topScroll{
+        top: 0.8rem;
+        bottom: 60px;
+    }
+    .page-loadmore-wrappe{
+        overflow: auto;
+        -webkit-overflow-scrolling : touch;
+    }
     .header_img {
         width: 0.32rem;
         padding-top: 0.1rem;
