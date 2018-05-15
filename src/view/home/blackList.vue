@@ -5,16 +5,8 @@
         </mt-header>
         <search-box @getSmeage="searchBlack" :message='placeMessage' ref="search"/>
         
-        <div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
-            <no-Date v-show="listStore=='' || listStore.length==0"/>
-            <mt-loadmore
-                    :auto-fill="false"
-                    :top-method="loadTop"
-                    :bottom-method="loadBottom"
-                    :bottom-all-loaded="allLoaded"
-                    ref="loadmore">
-
-                <div v-for="item in listStore" :key='item.cid' class="main-list" @click="goDetail(item.cid)">
+        <div class="page-main page-loadmore-wrapper topScroll">
+                <div v-for="item in listData" :key='item.cid' class="main-list" @click="goDetail(item.cid)">
                     <ul class="ub">
                         <li class="ub-f1" style="padding-top: 0.3rem">
                             <img class="black-img" v-show="item.headImg!=''" :src="imgpath+item.headImg">
@@ -31,9 +23,7 @@
                         </li>
                     </ul>
                 </div>
-                <div v-if="allLoaded" class="m-t-10" style="text-align:center;font-size: 0.18rem">没有更多数据了</div>
-            </mt-loadmore>
-
+                <no-Date v-show="listData=='' || listData.length==0"/>
         </div>
     </div>
 </template>
@@ -53,10 +43,7 @@
                 allLoaded: false,
                 wrapperHeight: 0,//容器高度
                 noData:false,
-                listStore: [],
                 params:{
-                    page_size: 10,
-                    current_page: 1,
                     search:''
                 },
                 listData:[],
@@ -85,51 +72,16 @@
                 }
             },
             searchBlack(msg){
-                Indicator.open({
-                    text: 'Loading...',
-                    spinnerType: 'fading-circle'
-                });
-                this.params.current_page = 1;
                 this.params.search=msg;
-                this.listStore = [];
+                this.listData = [];
                 this.getList();
             },
             getList(){
                 home.blacklist(this.params).then(response => {
                     this.listData=response.data.results;
-                    if(this.listData.length==this.params.page_size){
-                        //判断是否应该加载下一页
-                        this.params.current_page+=1 ;
-                    }else{
-                        //禁用上拉加载
-                        this.allLoaded = true;
-                    }
-                    if (this.listData) {
-
-                        this.listStore.push(...this.listData);
-                    }
-                    if (!this.listStore) this.noData = true;
-                    Indicator.close();
                 })
             },
-            loadTop(){
-                Indicator.open({
-                    text: 'Loading...',
-                    spinnerType: 'fading-circle'
-                });
-                this.listStore = [];
-                this.params.current_page = 1;
-                this.getList();
-                this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
-                this.allLoaded = false;//下拉刷新时解除上拉加载的禁用
-            },
-            loadBottom() {
-                Indicator.open({
-                    text: 'Loading...',
-                    spinnerType: 'fading-circle'
-                });
-                this.getList();
-            },
+
             goDetail(cid){
                 this.$router.push({name: 'client_detail', params: {ids: cid, come: 'black'}});
             }
@@ -138,8 +90,13 @@
     }
 </script>
 <style scoped lang="scss">
+    .topScroll{
+        top: 2.2rem;
+        bottom: 0.3rem;
+    }
     .page-loadmore-wrapper {
-        overflow: scroll
+        overflow: auto;
+        -webkit-overflow-scrolling : touch;
     }
     .im {
         width: 0.8rem;
