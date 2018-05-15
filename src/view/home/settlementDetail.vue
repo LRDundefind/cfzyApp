@@ -37,9 +37,9 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="login_cont">
-                    <div @click="settlement" class="loginbtn">申请结算</div>
-                </div>
+
+                <div @click="settlement" class="loginbtn">申请结算</div>
+
             </div>
         </div>
     </div>
@@ -117,9 +117,9 @@
     i {
         font-style: normal;
     }
-    .topScroll{
+    .page-main{
         top: 0.8rem;
-        bottom: 2.5rem;
+        bottom: 1.8rem;
     }
     .page-loadmore-wrappe{
         overflow: auto;
