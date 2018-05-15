@@ -6,7 +6,7 @@
             </router-link>
         </mt-header>
         <div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
-            <no-Date v-show="listStore=='' || listStore.length==0"/>
+            <noDate v-if="noWdata"></noDate>
 
             <mt-loadmore
                     :auto-fill="false"
@@ -57,14 +57,15 @@
                 params:{
                     current_page: 1,
                     page_size: 10
-                }
+                },
+                noWdata:false,
             }
         },
         components:{
             noDate,
         },
 
-        mounted () {
+        created () {
             let windowWidth = document.documentElement.clientWidth;//获取屏幕高度
             if(windowWidth>768){//这里根据自己的实际情况设置容器的高度
                 this.wrapperHeight = document.documentElement.clientHeight - 130;
@@ -72,11 +73,16 @@
                 this.wrapperHeight = document.documentElement.clientHeight - 40;
             }
             this.getList();
+            app.Vwaiting();
         },
         methods: {
             getList(){
                 damage.damageList(this.params).then(response => {
                     this.trainList = response.data.results;
+                    if(this.trainList==''&& this.params.current_page == 1){
+                        this.noWdata=true;
+                    }
+                    app.Cwaiting();
                     if(this.trainList.length==this.params.page_size){
                         //判断是否应该加载下一页
                         this.params.current_page+=1 ;
@@ -86,6 +92,10 @@
                     }
                     if (this.trainList) {
                         this.listStore.push(...this.trainList)
+                        if(this.listStore==''){
+                            this.noWdata=true;
+                            app.Cwaiting();
+                        }
                     }
                     console.log(response.data.results);
                 })
