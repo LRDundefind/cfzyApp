@@ -181,8 +181,8 @@
     .topScroll{
         position: fixed;
         width: 100%;
-        top: 1rem;
-        bottom: 60px;
+        top: 0.8rem;
+        bottom: 0.2rem;
     }
     .page-loadmore-wrappe{
         overflow: auto;
