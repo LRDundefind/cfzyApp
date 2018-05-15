@@ -3,10 +3,11 @@
 		<mt-header fixed  title="车次">
 		    <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
 		</mt-header>
-		<noDate v-if="counts || count"></noDate>  
 		<!--车次列表-->
-		<div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
+		<div class="page-main page-loadmore-wrapper">
+			<noDate v-if="counts || count"></noDate>  
 			<mt-loadmore 
+				v-else
 				:auto-fill="false"
 				:top-method="loadTop" 
 				:bottom-method="loadBottom"
@@ -127,6 +128,10 @@ export default {
 <style scoped rel="stylesheet/scss" lang="scss">
 i{
 	font-style: normal;
+}
+.page-main{
+	top: 0.8rem;
+	bottom: 0px;
 }
 .order-list{
 	font-size: 0.24rem;

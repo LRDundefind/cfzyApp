@@ -6,11 +6,11 @@
             </router-link>
             <span @click="addCustomer" style="font-size: 0.32rem" slot="right">添加客户</span>
         </mt-header>
-        <div class="maintop">
+        <div :class= "[ this.$route.params.type=='order'? 'maintop0' : 'maintop'] ">
             <search-box  @getSmeage='searchstart' :message='placeMessage'></search-box>
             
             <!-- :style="{ height: wrapperHeight + 'px' }" -->
-            <div class="page-main page-loadmore-wrappe topScroll"  >
+            <div class="page-main page-loadmore-wrappe "  :class= "[ this.$route.params.type=='order'? 'topScroll0' : 'topScroll'] ">
              <noDate v-if="noWdata"></noDate>  
             <mt-loadmore 
                 v-else
@@ -70,6 +70,7 @@
     export default {
         data () {
             return {
+                comeFrom:true,
                 placeMessage:'请输入客户名称、电话或身份证号',
             	heightNum: 40,
                 allLoaded: false,
@@ -183,6 +184,10 @@
 .topScroll{
     top: 2.2rem;
     bottom: 1.1rem;
+}
+.topScroll0{
+    top: 2.2rem;
+    bottom: 0rem;
 }
 .page-loadmore-wrappe{
    overflow: auto;

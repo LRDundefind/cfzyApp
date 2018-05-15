@@ -92,6 +92,9 @@
             }
         },
         mounted () {
+            if (typeof Cookies.get('Token') =='undefined') {
+                this.$router.push({name:'login'});
+            }
             if(JSON.parse(Cookies.get('gidOwnID_lists')).gearName){
                 this.gearName = JSON.parse(Cookies.get('gidOwnID_lists')).gearName;
             }

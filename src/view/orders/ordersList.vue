@@ -4,10 +4,12 @@
 		    <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
 		</mt-header>
 		<search-box ref="search" @getSmeage="searchHandler" :message='placeMessage'/>
-		<noDate v-if="counts || count"></noDate>  
+
 		<!--订单列表-->
-		<div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
+		<div class="page-main page-loadmore-wrapper">
+			<noDate v-if="counts || count"></noDate>  
 			<mt-loadmore 
+				v-else
 				:auto-fill="false"
 				:top-method="loadTop" 
 				:bottom-method="loadBottom"
@@ -167,6 +169,10 @@ export default {
 i,em,strong{
 	font-style: normal;
 	font-weight: normal;
+}
+.page-main{
+	top: 2.2rem;
+	bottom: 0px;
 }
 .page-loadmore-wrapper{
     overflow: scroll;

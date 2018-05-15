@@ -12,7 +12,7 @@
 		</mt-header>
 		</div>
 		<!--下单-->
-		<div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
+		<div class="page-main page-loadmore-wrapper">
 			<div class="order-detail" v-if="trainInfo">
 				<div class="ub ub-ac term no-border right-icon" @click="choosetrainNumber()">
 					<div class="ub-f1">{{trainsNum}}</div>
@@ -762,7 +762,8 @@ i{
 	font-style: normal;
 }
 .page-main{
-	overflow: scroll;
+	top: 0.8rem;
+	bottom: 60px;
 }
 .page-loadmore-wrapper{
    overflow: scroll;
@@ -927,7 +928,7 @@ i{
 }
 .orderBtn{
 	padding: 0 0.3rem;
-	margin: 0.27rem 0 0.5rem;
+	margin: 0.27rem 0 0.3rem;
     box-sizing: border-box;
 	div{
 		height: 0.9rem;
