@@ -53,7 +53,7 @@
             </div>
             <div class='update clearfix'>
                 <mt-button type="primary" size="large" class='f-l' @click="consumptionRecords()">查看消费记录</mt-button>
-                <mt-button type="primary" size="large" class='f-l' @click="goChange()" v-show="showUpdate!='black'">更新资料</mt-button>
+                <mt-button type="primary" size="large" class='f-l' @click="goChange()" :disabled="showUpdate!='black'">更新资料</mt-button>
             </div>
         </div>
     
