@@ -17,7 +17,7 @@
                 <ul class="settlement-list">
                     <li v-for="item in listStore" :key='item.tid' @click="settlementDetail(item)">
                         <div class="ub list-top">
-                            <div class="ub-f3">{{item.trainsNum}}</div>
+                            <div class="ub-f3 trainsNum">{{item.trainsNum}}</div>
                             <div class="number ub-f2"><span class="carNumber">车牌号</span>{{item.plateNum}}</div>
                         </div>
                         <div class="list-bottom  ">
@@ -138,6 +138,7 @@
                 border-bottom: 1px solid #dedede;
                 font-size: 0.3rem;
                 color: #333333;
+
                 .number {
                     font-size: 0.24rem;
                     color: #4c4c4c;
@@ -145,6 +146,12 @@
                     .carNumber {
                         padding-right: 0.12rem;
                     }
+                }
+                .trainsNum{
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    display: block;
                 }
             }
 
