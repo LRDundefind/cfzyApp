@@ -72,7 +72,11 @@
 					<tbody>
 						<tr v-for="(goods,index) in detailInfo.goods">
 							<td>{{goods.goodName}}({{goods.goodNum}})</td>
-							<td>{{goods.weight}}</td>
+							
+							<!--<td>{{goods.weight}}</td>-->
+							<td v-if="goodsInfo[index].price == ''">{{goods.weight}}</td>
+							<td v-if="goodsInfo[index].price != ''">{{goods.netWeight}}</td>
+							
 							<td class="set-price" @click = "setPrice(index)" v-if="goods.price">{{goodsInfo[index].price || goods.price}}</td>
 							<!--<td class="set-price" @click = "setPrice(index)" v-if="!goods.price">{{goodsInfo[index].price || '设置单价'}}</td>-->
 							<td class="set-price" @click = "setPrice(index)" v-if="!goods.price && goodsInfo[index].price">{{goodsInfo[index].price}}</td>
@@ -273,6 +277,8 @@ export default {
 						    	packCost: response.data.results.packCost,//单件包装费------界面展示所需、计算总和所需
 						    	goodAmount: response.data.results.goodAmount, //单件金额---界面展示所需、计算总和所需
 								weighCost: response.data.results.weighCost,//单件过磅费------计算总和所需
+								
+								netWeight:response.data.results.netWeight, //净重
 						    });
 						//计算
 	                    for(var i=0,len = this.goodsInfo.length; i<this.goodsInfo.length;i++){

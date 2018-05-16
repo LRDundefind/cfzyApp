@@ -65,7 +65,7 @@
 					</li>
 					<li v-for="goods in detail.goods" class="con">
 						<span>{{goods.goodName}}({{goods.goodNum}})</span>
-						<span>{{goods.weight}}
+						<span>{{goods.netWeight}}<!--weight-->
 							<i v-if="goods.weightUnit == 'unit_jin'">斤</i>
 							<i v-if="goods.weightUnit == 'unit_kg'">公斤</i>
 							<i v-if="goods.weightUnit == 'unit_pie'">件</i>
