@@ -499,8 +499,14 @@
                                     //     });
                                         this.tiopmessage='客户添加成功'
                                         setTimeout(() => {
+                                            if(Cookies.get('froms')){
+                                                Cookies.remove('froms');
+                                                this.$router.push({name: 'order'});
+                                            }
+                                            else{
+                                                this.$router.push({name: 'client'});
+                                            }
                                             
-                                            this.$router.push({name: 'client'});
                                             // this.addover=false;
                                         }, 3000)
                                     

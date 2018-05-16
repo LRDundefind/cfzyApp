@@ -42,7 +42,9 @@ instance.interceptors.response.use(function (response) {
         //     type: 'error',
         //     duration: 3 * 1000
         // });
+        app.Cwaiting();
        }
+      
     return response;
    
 
@@ -53,7 +55,7 @@ instance.interceptors.response.use(function (response) {
         position: 'middle',
         duration: 3000
     });
-
+    app.Cwaiting();
     return Promise.reject(error);
 });
 
