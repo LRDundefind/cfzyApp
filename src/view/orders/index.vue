@@ -35,7 +35,7 @@
 					  		<div class="orders-b ub ub-ac" @click="orderList(list.tid, list.sell_day)">
 					  			<div class="ub-f1">{{list.sell_day}}</div>
 					  			<div>销售总额</div>
-					  			<div class="edu">￥{{list.day_salesAmount}}</div>
+					  			<div class="edu">￥{{list.day_salesAmount | keepTwoNum}}</div>
 					  		</div>
 							<ul class="table-ul">
 								<li class="title">

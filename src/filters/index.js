@@ -25,3 +25,8 @@ export function sellNnit(value) {
     }
     return unit[value]
 }
+//金额保留两位小数
+export function keepTwoNum(value) {
+    value = Number(value);
+	return value.toFixed(2);
+}
