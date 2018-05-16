@@ -104,7 +104,7 @@
                         <div class="basic-list">
                             <p class="clearfix">备注</p>
                             <div class="remark">
-                            <textarea name="" id="" cols="30" rows="3" placeholder="备注信息"
+                            <textarea maxlength="420" name="" id="" cols="30" rows="3" placeholder="备注信息"
                                       v-model="stall.remark" :disabled="item.goodsRemark != ''"></textarea>
                             </div>
                         </div>
