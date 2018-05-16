@@ -11,7 +11,7 @@
                 </div>
             </div>
 
-            <div class="">
+            <div class="contact">
                 <input v-model="phone" placeholder="请输入您的联系方式" class="phone ">
             </div>
 
@@ -40,17 +40,27 @@
             height: 4.32rem;
             .remark {
                 textarea {
+                    color: #999999;
                     border: none;
                     width: 100%;
                 }
             }
         }
-        .phone {
-            width: 100%;
-            border: none;
-            padding: 0.3rem;
-            height: 0.48rem;
+
+        .contact{
+            background: #fff;
+            margin-top: 0.2rem;
+            padding: 0 0.3rem;
+            color: #999;
+            font-size: 0.28rem;
+            line-height: 0.96rem;
+            .phone {
+                width: 100%;
+                color: #999999;
+                border: none;
+            }
         }
+
 
         .findbtn {
             width: 80% !important;
@@ -87,23 +97,30 @@
                         duration: 5000
                     });
                     return false;
-                } else if (data.phone != '') {
-                    if (!(new RegExp(/^1[3|4|5|7|8][0-9]{9}$/).test(data.phone))) {
-                        Toast({
-                            message: '手机号输入有误',
-                            position: 'middle',
-                            duration: 5000
-                        });
-                    }
                 } else {
+                    if (data.phone != '') {
+                        if (!(new RegExp(/^1[3|4|5|7|8][0-9]{9}$/).test(data.phone))) {
+                            Toast({
+                                message: '手机号输入有误',
+                                position: 'middle',
+                                duration: 1000
+                            });
+                            return false;
+                        }
+                    }
                     my.feedBack(data).then(response => {
                         if (response.data.status == 'Y') {
+                            Toast({
+                                message:'意见反馈提交成功！' ,
+                                position: 'middle',
+                                duration: 2000
+                            });
                             this.$router.push({name: 'my'});
                         } else {
                             Toast({
                                 message: response.data.results,
                                 position: 'middle',
-                                duration: 5000
+                                duration: 2000
                             });
                         }
                     })
