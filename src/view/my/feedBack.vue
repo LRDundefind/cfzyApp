@@ -97,23 +97,30 @@
                         duration: 5000
                     });
                     return false;
-                } else if (data.phone != '') {
-                    if (!(new RegExp(/^1[3|4|5|7|8][0-9]{9}$/).test(data.phone))) {
-                        Toast({
-                            message: '手机号输入有误',
-                            position: 'middle',
-                            duration: 5000
-                        });
-                    }
                 } else {
+                    if (data.phone != '') {
+                        if (!(new RegExp(/^1[3|4|5|7|8][0-9]{9}$/).test(data.phone))) {
+                            Toast({
+                                message: '手机号输入有误',
+                                position: 'middle',
+                                duration: 1000
+                            });
+                            return false;
+                        }
+                    }
                     my.feedBack(data).then(response => {
                         if (response.data.status == 'Y') {
+                            Toast({
+                                message:'意见反馈提交成功！' ,
+                                position: 'middle',
+                                duration: 2000
+                            });
                             this.$router.push({name: 'my'});
                         } else {
                             Toast({
                                 message: response.data.results,
                                 position: 'middle',
-                                duration: 5000
+                                duration: 2000
                             });
                         }
                     })
