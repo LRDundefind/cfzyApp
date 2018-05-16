@@ -6,9 +6,9 @@
                 <span class="c-3 f-s-16">{{gearName}}</span>
                 <img class="header_img" src="../../assets/index/down_icon.png"/>
             </router-link>
-            <router-link to="/creditRules" slot="right">
+            <div @click="szRulesDialoags" slot="right">
                 <span class="c-3 f-s-16">赊账规则</span>
-            </router-link>
+            </div>
 		</mt-header>
 		</div>
 		<!--下单-->
@@ -47,7 +47,7 @@
 						<span>金额</span>
 						<span>包装费</span>
 					</li>
-					<li class="con" v-for=" (goods,index) in goodsInfo" @click="goodsInfoSet(index, goods.goodId, goods.id, goods.goodName, goods.sellUnit, goods.numUnit, goods.surplusNum, goods.tid, trainsNum)" :key="goods.id">
+					<li class="con" v-for=" (goods,index) in goodsInfo" @click="goodsInfoSet(index, goods.goodId, goods.id, goods.goodName, goods.sellUnit, goods.numUnit, goods.surplusNum, goods.slushing, goods.tid, trainsNum)" :key="goods.id">
 						<span>{{goods.goodName}}</span>
 						<span v-if="goods.netWeight == null">{{goods.weight}}</span>
 						<span v-if="goods.netWeight != null">{{goods.netWeight}}</span>
@@ -158,6 +158,11 @@
 							<option>公斤</option>
 						</select>-->
 					</div>
+					<div class="goods-item ub ub-ac">
+						<div>减水重</div>
+						<input readonly="readonly" v-model="slushing" />
+						<div>斤 / 件</div>
+					</div>
 				</div>
 				<mt-button type="primary" size="large" class="submit-btn" @click="submitGoodsInfo">确定</mt-button>
 			</div>
@@ -174,6 +179,14 @@
 					<div class="center"></div>
 					<div class="rights" @click="setSanlunfei">确定</div>
 				</div>
+			</div>
+		</div>
+		<!-- 赊账规则模态框 -->
+		<div class="setSanlunfei szRules" v-if="showRules">
+			<div class="dialoag_cont">
+				<div @click="showRules = false" class="close">关闭</div>
+				<div class="name">赊账规则</div>
+				<div class="content">{{rules.rules}}</div>
 			</div>
 		</div>
 		<div class="autograph-con" v-if="showAutograph">
@@ -230,6 +243,7 @@ export default {
 			pbweight: '0',  //设置货品价格-平板重, 提交订单所需  //需求：平板重默认为0
 			goodId: '',//货品id, 提交订单所需
 			id: '',//货品id, 提交订单所需
+			slushing: '', //减水重，只作展示
 			numUnit: '',//重量单位, 提交订单所需
 			have_goodsunit: false, //默认为false,用来判断每项货品是否填写了单价
 
@@ -240,6 +254,10 @@ export default {
 			//设置三轮费弹框
 			sanlunfei: false,
 			deliveryCost: null,
+			
+			//赊账规则弹框
+			showRules: false,
+			rules: [],
 			
 			//费用总和
 			totalCost: {
@@ -298,6 +316,20 @@ export default {
 			this.totalCost.totalWeigh = 0;
 			this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost; //合计费用
 		},
+		
+		//赊账规则
+		szRulesDialoags(){
+			this.showRules = true;
+			var params = {};
+			order.creditRules(params)
+				.then(response => {
+					this.rules = response.data.results;
+				})
+				.catch(function (response) {
+					console.log(response);
+				});
+		},
+		
 	    //选择车次
         choosetrainNumber(){
         	Cookies.remove('trainTid');//----------------------待修改
@@ -366,7 +398,7 @@ export default {
 			
 		},
 		//设置货品重量件数信息的弹框
-        goodsInfoSet(i, goodid, id, name, sellunit, numUnit, surplusNum, tid, trainsNum){
+        goodsInfoSet(i, goodid, id, name, sellunit, numUnit, surplusNum, slushing, tid, trainsNum){
         	//提示优先选择客户--在选中了非临时客户的时候
         	if(this.customerType == 'Nottemporary' && this.customerId == undefined){
 				Toast({
@@ -382,6 +414,7 @@ export default {
         	this.goodName = name;
         	this.sellUnit = sellunit;//提交订单传参所需 售卖单位
         	this.numUnit = numUnit;//提交订单传参所需  重量单位
+        	this.slushing = slushing || '减水重';//减水重 只作展示，
         	if(numUnit == 'unit_pie'){
         		this.surplusHeavy = '';
         		this.surplusPiece = surplusNum; //显示货品剩余量，入库单位为件时
@@ -1103,6 +1136,36 @@ i{
 			}
 		}
 
+	}
+}
+/*赊账规则*/
+.szRules{
+	.dialoag_cont{
+		box-sizing: border-box;
+		margin: 2rem auto 0;
+	    padding: 0.3rem;
+	    text-align: center;
+		font-size: 0.28rem;
+		position: relative;
+		.close{
+			width: 1rem;
+			line-height: 0.5rem;
+			position: absolute;
+			right: 0.1rem;
+			top: 0.15rem;
+		}
+		.name{
+			font-size: 0.3rem;
+			line-height: 3;
+		}
+		.content{
+			word-break: break-all;
+			line-height: 1.5;
+			text-align: left;
+			height: 5rem;
+			overflow: scroll;
+		    padding-left: 0.1rem;
+		}
 	}
 }
 /*签名*/
