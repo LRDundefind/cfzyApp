@@ -308,7 +308,8 @@ export default {
 		//选择客户
         chooseCustomer(){
         	Cookies.remove('customerName'); //----------------------待修改
-        	Cookies.remove('customerId'); //-----------------------待修改
+			Cookies.remove('customerId'); //-----------------------待修改
+			Cookies.set('froms','Y');
             this.$router.push({name: 'client_order', params: {type: 'order'}});
         },
         //选择完车次后获取车次货品详细信息
