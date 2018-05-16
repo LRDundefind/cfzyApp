@@ -11,7 +11,7 @@
                 </div>
             </div>
 
-            <div class="">
+            <div class="contact">
                 <input v-model="phone" placeholder="请输入您的联系方式" class="phone ">
             </div>
 
@@ -40,17 +40,27 @@
             height: 4.32rem;
             .remark {
                 textarea {
+                    color: #999999;
                     border: none;
                     width: 100%;
                 }
             }
         }
-        .phone {
-            width: 100%;
-            border: none;
-            padding: 0.3rem;
-            height: 0.48rem;
+
+        .contact{
+            background: #fff;
+            margin-top: 0.2rem;
+            padding: 0 0.3rem;
+            color: #999;
+            font-size: 0.28rem;
+            line-height: 0.96rem;
+            .phone {
+                width: 100%;
+                color: #999999;
+                border: none;
+            }
         }
+
 
         .findbtn {
             width: 80% !important;
