@@ -8,7 +8,7 @@
         <!--车次结算详情-->
         <div class="page-main page-loadmore-wrappe topScroll" style="height:100vh;">
 
-            <div class="page-main settlement-detail">
+            <div class=" settlement-detail">
                 <div class="ub detail-top">
                     <div class="ub-f3">{{trainsNum}}</div>
                     <div class="number ub-f2"><span class="carNumber">车牌号</span>{{plateNum}}</div>
@@ -37,9 +37,9 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="login_cont">
-                    <div @click="settlement" class="loginbtn">申请结算</div>
-                </div>
+
+                <div @click="settlement" class="loginbtn">申请结算</div>
+
             </div>
         </div>
     </div>
@@ -117,9 +117,9 @@
     i {
         font-style: normal;
     }
-    .topScroll{
+    .page-main{
         top: 0.8rem;
-        bottom: 2.5rem;
+        bottom: 1.8rem;
     }
     .page-loadmore-wrappe{
         overflow: auto;
@@ -181,11 +181,13 @@
         }
 
         .login_cont {
+            height: 0.9rem;
             width: 5.5rem;
             margin: 0 auto;
         }
 
         .loginbtn {
+            z-index:99;
             width: 80% !important;
             @include login_btn(fixed);
             background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);

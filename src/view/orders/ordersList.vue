@@ -32,13 +32,13 @@
 						<div class="ub list-bottom">
 							<span class="ub-f1 c-6">{{list.placeOrderTime}}</span>
 							<strong class="ub" v-if="list.orderType == 'order_knot'"><!--现结-->
-								<i>￥{{list.salesAmount}}</i>
+								<i>￥{{list.salesAmount | keepTwoNum}}</i>
 							</strong>
 							<strong class="ub" v-if="list.orderType == 'order_credit' && list.status != 'status_deposit'"><!--赊账 且 设置了单价（非暂存状态即为设置了单价）-->
 								<em>总价</em>
-								<i>￥{{list.salesAmount}}</i>
+								<i>￥{{list.salesAmount | keepTwoNum}}</i>
 								<em class="repaid">已还</em>
-								<em>￥{{list.returned}}</em>
+								<em>￥{{list.returned | keepTwoNum}}</em>
 							</strong>
 							<strong v-if="list.status == 'status_deposit'"><!--赊账 且 未设置单价-->
 								<i class="noset">未设置</i>

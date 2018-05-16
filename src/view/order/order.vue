@@ -51,8 +51,8 @@
 						<span>{{goods.goodName}}</span>
 						<span v-if="goods.netWeight == null">{{goods.weight}}</span>
 						<span v-if="goods.netWeight != null">{{goods.netWeight}}</span>
-						<span>{{goods.price}}</span>
-						<span>{{goods.goodNum}}</span>
+						<span>{{goods.price || '' | numberRules}}</span>
+						<span>{{goods.goodNum || '' | numberRules}}</span>
 						<span>{{goods.goodAmount}}</span>
 						<span>{{goods.packCost}}</span>
 					</li>
@@ -227,7 +227,7 @@ export default {
 			goodsunit: '', //设置货品价格-单价
 			goodsnum: '',  //设置货品价格-件数
 			goodsweight: '',  //设置货品价格-重量
-			pbweight: '',  //设置货品价格-平板重, 提交订单所需
+			pbweight: '0',  //设置货品价格-平板重, 提交订单所需  //需求：平板重默认为0
 			goodId: '',//货品id, 提交订单所需
 			id: '',//货品id, 提交订单所需
 			numUnit: '',//重量单位, 提交订单所需
@@ -246,7 +246,7 @@ export default {
 				totalAmount: 0,  //货款费用总和-金额总和
 				totalPack: 0,  //包装费总和
 				totalWeigh: 0,  //过磅费总和
-				deliveryCost: null, //三轮费--手动输入
+				deliveryCost: 0, //三轮费--手动输入 需求：默认为0
 				tatol: 0,  //合计金额
 			},
 			
@@ -276,9 +276,11 @@ export default {
 		
 	},
 	filters: {
-		keepTwoNum: function(value){
-			value = Number(value);
-			return value.toFixed(2);
+		//输入的数字展示时的规范
+		numberRules: function(value){
+			//为0、0.1、0.01、 00、00.03、0003、0003.01
+			value = value.replace(/^0+([0-9])/,'$1');
+			return value;
 		}
 	},
     methods: {
@@ -287,7 +289,7 @@ export default {
 			this.goodsunit = '';
 			this.goodsnum = '';
 			this.goodsweight = '';
-			this.pbweight = '';
+			this.pbweight = '0'; //需求：平板重默认为0
 		},
 		//重置各项费用总和-关闭弹框调取单项货品接口计算价格时使用
 		resetTotalCost(){
@@ -412,7 +414,7 @@ export default {
     	submitGoodsInfo(){
     		if(this.goodsnum == '' ){
     			Toast({
-					message: '请完善购买信息',
+					message: '请完善购买信息（件数）',
 					position: 'middle',
 					duration: 1000
     			});
@@ -424,7 +426,7 @@ export default {
     			});
     		}else if(this.goodsweight == ''){
     			Toast({
-					message: '请完善购买信息',
+					message: '请完善购买信息（重量）',
 					position: 'middle',
 					duration: 1000
     			});
@@ -436,7 +438,7 @@ export default {
     			});
     		}else if(this.pbweight == ''){
     			Toast({
-					message: '请完善购买信息',
+					message: '请完善购买信息（平板重）',
 					position: 'middle',
 					duration: 1000
     			});

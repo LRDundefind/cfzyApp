@@ -35,7 +35,7 @@
 					  		<div class="orders-b ub ub-ac" @click="orderList(list.tid, list.sell_day)">
 					  			<div class="ub-f1">{{list.sell_day}}</div>
 					  			<div>销售总额</div>
-					  			<div class="edu">￥{{list.day_salesAmount}}</div>
+					  			<div class="edu">￥{{list.day_salesAmount | keepTwoNum}}</div>
 					  		</div>
 							<ul class="table-ul">
 								<li class="title">
@@ -59,7 +59,7 @@
 									<span>￥{{goods.sell_amount}}</span>
 								</li>
 							</ul>
-					  		<div class="slide-btn" v-if="list.goods.length >= 1" @click="sildeDown">展开</div>
+					  		<!--<div class="slide-btn" v-if="list.goods.length >= 1" @click="sildeDown">展开</div>-->
 						</li>
 					</ul>
 					<div></div>
@@ -227,6 +227,7 @@ body{
 			background: #fff;
 			margin: 0 0 0.2rem;
 			padding: 0 0.3rem 0.3rem;
+			padding-bottom: 0; /*如果展开显示 则删掉这行*/
 			.orders-t{
 				font-size: 0.3rem;
 				color: #333;

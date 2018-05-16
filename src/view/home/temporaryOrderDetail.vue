@@ -27,26 +27,26 @@
 				<div class="ub term">
 					<div class="ub-f1">合计金额</div>
 					<div class="total" v-if = "totalCost.tatol">￥{{totalCost.tatol | keepTwoNum}}</div>
-					<div class="total" v-if = "!totalCost.tatol">￥{{detailInfo.salesAmount}}</div>
+					<div class="total" v-if = "!totalCost.tatol">￥{{detailInfo.salesAmount | keepTwoNum}}</div>
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">货款</div>
 					<div class="edu" v-if = "totalCost.totalAmount">￥{{totalCost.totalAmount | keepTwoNum}}</div>
-					<div class="edu" v-if = "!totalCost.totalAmount">￥{{defaultAmount}}</div>
+					<div class="edu" v-if = "!totalCost.totalAmount">￥{{defaultAmount | keepTwoNum}}</div>
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">包装费</div>
 					<div class="edu" v-if = "totalCost.totalPack">￥{{totalCost.totalPack | keepTwoNum}}</div><!--totalCost.totalPack-->
-					<div class="edu" v-if = "!totalCost.totalPack">￥{{detailInfo.packCost}}</div><!--totalCost.totalPack-->
+					<div class="edu" v-if = "!totalCost.totalPack">￥{{detailInfo.packCost | keepTwoNum}}</div><!--totalCost.totalPack-->
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">过磅费</div>
 					<div class="edu" v-if = "totalCost.totalWeigh">￥{{totalCost.totalWeigh | keepTwoNum}}</div><!--totalCost.totalWeigh-->
-					<div class="edu" v-if = "!totalCost.totalWeigh">￥{{detailInfo.weighCost}}</div><!--totalCost.totalWeigh-->
+					<div class="edu" v-if = "!totalCost.totalWeigh">￥{{detailInfo.weighCost | keepTwoNum}}</div><!--totalCost.totalWeigh-->
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">三轮费</div>
-					<div class="edu">￥{{detailInfo.deliveryCost}}</div>
+					<div class="edu">￥{{detailInfo.deliveryCost | keepTwoNum}}</div>
 				</div>
 				<div class="ub term no-border">
 					<div class="ub-f1">车号</div>
@@ -72,7 +72,11 @@
 					<tbody>
 						<tr v-for="(goods,index) in detailInfo.goods">
 							<td>{{goods.goodName}}({{goods.goodNum}})</td>
-							<td>{{goods.weight}}</td>
+							
+							<!--<td>{{goods.weight}}</td>-->
+							<td v-if="goodsInfo[index].price == ''">{{goods.weight}}</td>
+							<td v-if="goodsInfo[index].price != ''">{{goods.netWeight}}</td>
+							
 							<td class="set-price" @click = "setPrice(index)" v-if="goods.price">{{goodsInfo[index].price || goods.price}}</td>
 							<!--<td class="set-price" @click = "setPrice(index)" v-if="!goods.price">{{goodsInfo[index].price || '设置单价'}}</td>-->
 							<td class="set-price" @click = "setPrice(index)" v-if="!goods.price && goodsInfo[index].price">{{goodsInfo[index].price}}</td>
@@ -149,12 +153,6 @@ export default {
     	this.wrapperHeight = document.documentElement.clientHeight - 60;
 		this.getTemporaryOrderDetail();
     },
-    filters: {
-		keepTwoNum: function(value){
-			value = Number(value);
-			return value.toFixed(2);
-		}
-	},
     methods: {
 		//暂存订单-详情
 		getTemporaryOrderDetail(){
@@ -273,6 +271,8 @@ export default {
 						    	packCost: response.data.results.packCost,//单件包装费------界面展示所需、计算总和所需
 						    	goodAmount: response.data.results.goodAmount, //单件金额---界面展示所需、计算总和所需
 								weighCost: response.data.results.weighCost,//单件过磅费------计算总和所需
+								
+								netWeight:response.data.results.netWeight, //净重
 						    });
 						//计算
 	                    for(var i=0,len = this.goodsInfo.length; i<this.goodsInfo.length;i++){
