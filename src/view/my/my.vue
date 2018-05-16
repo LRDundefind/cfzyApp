@@ -7,7 +7,8 @@
                 <div class="information">
                     <div class="ub ub-pc">
                         <div @click="goDetails()">
-                            <img class="header-img" :src="personalData.headImg"/>
+                            <img v-show="personalData.headImg!=''" class="header-img" :src="personalData.headImg"/>
+                            <img v-show="personalData.headImg ==''" class="header-img" src="../../assets/my/my_head.png"/>
                         </div>
                     </div>
                     <div class="ub ub-pc">
@@ -183,7 +184,9 @@
                 black:'',
                 phone: '',
                 userName: '',
-                personalData:[],
+                personalData: {
+                    headImg:'',
+                },
             }
         },
         created(){

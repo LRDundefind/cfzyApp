@@ -14,7 +14,8 @@
                                  :style="'backgroundImage:url('+headerImage+')'"></div>
                             <input type="file" id="upload" accept="image" @change="upload1" style="opacity: 0">
                             <div>
-                                <img class="header-img" :src="personalData.headImg"/>
+                                <img v-show="personalData.headImg!=''" class="header-img" :src="personalData.headImg"/>
+                                <img v-show="personalData.headImg ==''" class="header-img" src="../../assets/my/my_head.png"/>
                             </div>
 
                         </div>
@@ -45,7 +46,9 @@
         data () {
             return {
                 getImage:'',
-                personalData: [],
+                personalData: {
+                    headImg:'',
+                },
                 phone: this.$route.params.phone,
                 yanNumber: this.$route.params.yanNumber,
                 headerImage: '',
@@ -55,14 +58,13 @@
                 doMain:process.env.BASE_PATH,
             }
         },
-        mounted () {
+        created () {
             if (this.$route.params.phone) {
                 this.phone = this.$route.params.phone;
             }
             if (this.$route.params.yanNumber) {
                 this.yanNumber = this.$route.params.yanNumber;
             }
-
             this.info();
         },
         methods: {
@@ -95,6 +97,7 @@
                         if (this.headImg) {
                             this.personalData.headImg = this.headImg;
                         }
+
                     } else {
 
                     }
