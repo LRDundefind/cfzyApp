@@ -276,9 +276,18 @@ export default {
 		
 	},
 	filters: {
+		//计算的值保留两位
 		keepTwoNum: function(value){
 			value = Number(value);
 			return value.toFixed(2);
+		},
+		//输入的数字展示时的规范
+		numberRules: function(value){
+			//为0时,
+			if(value == '0') return false;
+			//为0.几的时候也不做规范
+			//....https://blog.csdn.net/zhaileilei1/article/details/77671318  v-model不能使用过滤器
+			return value.replace(/\b(0+)/gi,"");
 		}
 	},
     methods: {
@@ -533,12 +542,12 @@ export default {
 						//		this.goodId  货品id  goodId
 						//		this.id  货品id  id
 						//		this.goodName 货品名称 goodName 
-						//		this.goodsunit 货品单价 price
-						//		this.goodsnum 货品件数 goodNum
-						//		this.goodsweight 货品重量 Weight
+						//		this.goodsunit 货品单价 price-----------
+						//		this.goodsnum 货品件数 goodNum----------
+						//		this.goodsweight 货品重量 Weight-------
 						//		this.numUnit  重量单位 weight_util
 						//		this.sellUnit  售卖单位  sellUnit
-						//		this.pbweight 平板重  slabWeight						
+						//		this.pbweight 平板重  slabWeight	----------					
 						
 						this.$set(this.goodsInfo,this.numberNum,
 							    {	goodName:this.goodName,
@@ -562,6 +571,9 @@ export default {
 							this.totalCost.totalPack += this.goodsInfo[i]['packCost']; //总包装费
 							this.totalCost.totalWeigh += this.goodsInfo[i]['weighCost']; //总过磅费
 							this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost;
+							
+							console.log('price:'+this.goodsInfo[i]['price'] + ',goodNum:'+this.goodsInfo[i]['goodNum'] + ',weight:'+this.goodsInfo[i]['weight'] + ',slabWeight:'+this.goodsInfo[i]['slabWeight'])
+							console.log('不对，0输入不进去了')
 	                    }
 						
 	                    //重置弹框数据
@@ -581,7 +593,7 @@ export default {
 						console.log(response);
 					});
 			}
-			
+			console.log(this.goodsInfo)
         },
         //关闭输入信息的按钮
         closeInfo(){

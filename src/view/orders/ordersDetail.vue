@@ -26,19 +26,19 @@
 			<div class="order-detail item-two">
 				<div class="ub term">
 					<div class="ub-f1">合计金额</div>
-					<div class="total">￥{{detail.salesAmount}}</div>
+					<div class="total">￥{{detail.salesAmount | keepTwoNum}}</div>
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">包装费</div>
-					<div class="edu">￥{{detail.packCost}}</div>
+					<div class="edu">￥{{detail.packCost | keepTwoNum}}</div>
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">过磅费</div>
-					<div class="edu">￥{{detail.weighCost}}</div>
+					<div class="edu">￥{{detail.weighCost | keepTwoNum}}</div>
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">三轮费</div>
-					<div class="edu">￥{{detail.deliveryCost}}</div>
+					<div class="edu">￥{{detail.deliveryCost | keepTwoNum}}</div>
 				</div>
 				<div class="ub term" v-if="detail.payType">
 					<div class="ub-f1">支付方式</div>

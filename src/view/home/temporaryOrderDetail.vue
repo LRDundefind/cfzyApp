@@ -27,26 +27,26 @@
 				<div class="ub term">
 					<div class="ub-f1">合计金额</div>
 					<div class="total" v-if = "totalCost.tatol">￥{{totalCost.tatol | keepTwoNum}}</div>
-					<div class="total" v-if = "!totalCost.tatol">￥{{detailInfo.salesAmount}}</div>
+					<div class="total" v-if = "!totalCost.tatol">￥{{detailInfo.salesAmount | keepTwoNum}}</div>
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">货款</div>
 					<div class="edu" v-if = "totalCost.totalAmount">￥{{totalCost.totalAmount | keepTwoNum}}</div>
-					<div class="edu" v-if = "!totalCost.totalAmount">￥{{defaultAmount}}</div>
+					<div class="edu" v-if = "!totalCost.totalAmount">￥{{defaultAmount | keepTwoNum}}</div>
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">包装费</div>
 					<div class="edu" v-if = "totalCost.totalPack">￥{{totalCost.totalPack | keepTwoNum}}</div><!--totalCost.totalPack-->
-					<div class="edu" v-if = "!totalCost.totalPack">￥{{detailInfo.packCost}}</div><!--totalCost.totalPack-->
+					<div class="edu" v-if = "!totalCost.totalPack">￥{{detailInfo.packCost | keepTwoNum}}</div><!--totalCost.totalPack-->
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">过磅费</div>
 					<div class="edu" v-if = "totalCost.totalWeigh">￥{{totalCost.totalWeigh | keepTwoNum}}</div><!--totalCost.totalWeigh-->
-					<div class="edu" v-if = "!totalCost.totalWeigh">￥{{detailInfo.weighCost}}</div><!--totalCost.totalWeigh-->
+					<div class="edu" v-if = "!totalCost.totalWeigh">￥{{detailInfo.weighCost | keepTwoNum}}</div><!--totalCost.totalWeigh-->
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">三轮费</div>
-					<div class="edu">￥{{detailInfo.deliveryCost}}</div>
+					<div class="edu">￥{{detailInfo.deliveryCost | keepTwoNum}}</div>
 				</div>
 				<div class="ub term no-border">
 					<div class="ub-f1">车号</div>
@@ -153,12 +153,6 @@ export default {
     	this.wrapperHeight = document.documentElement.clientHeight - 60;
 		this.getTemporaryOrderDetail();
     },
-    filters: {
-		keepTwoNum: function(value){
-			value = Number(value);
-			return value.toFixed(2);
-		}
-	},
     methods: {
 		//暂存订单-详情
 		getTemporaryOrderDetail(){
