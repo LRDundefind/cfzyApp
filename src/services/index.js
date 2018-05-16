@@ -50,12 +50,12 @@ instance.interceptors.response.use(function (response) {
 
 }, function (error) {
     //  对响应错误做点什么
+    app.Cwaiting();
     Toast({
         message: error.response.data.message,
         position: 'middle',
         duration: 3000
     });
-    app.Cwaiting();
     return Promise.reject(error);
 });
 
