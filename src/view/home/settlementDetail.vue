@@ -171,6 +171,10 @@
                         border-bottom: 1px solid #dedede;
                         td:first-child {
                             padding-left: 0.2rem;
+                            width: 1.8rem;
+                            padding-right: 0.2rem;
+                            margin-top: 0.15rem;
+                            word-break: break-all;
                         }
                     }
                     tr:last-child {
