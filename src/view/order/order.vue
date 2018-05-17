@@ -418,12 +418,11 @@ export default {
         	this.slushing = slushing || '减水重';//减水重 只作展示，
         	if(numUnit == 'unit_pie'){
         		this.surplusHeavy = '';
-        		this.surplusPiece = surplusNum; //显示货品剩余量，入库单位为件时
+        		this.surplusPiece = surplusNum; // 入库单位为件时，在件数位置-显示货品剩余量
         	}else{
         		this.surplusPiece = '';
-        		this.surplusHeavy = surplusNum; //显示货品剩余量，入库单位为斤/公斤时
+        		this.surplusHeavy = surplusNum; // 入库单位为斤/公斤时，在重量位置-显示货品剩余量
         	}
-
 
 			if(this.sellUnit == 'unit_jin'){
 				this.goodsUnit = '斤';
@@ -432,6 +431,7 @@ export default {
 			}else{
 				//unit_pie 件
 				this.goodsUnit = '件';
+				this.goodsweight = '0'; //入库单位为件时，重量默认输入0  //不需要在resetPriceNum中设置
 			};
 			
 			//编辑弹框的值  price 单价 、goodNum 件数、weight 重量、slabWeight 平板重
@@ -1048,6 +1048,7 @@ i{
 				input{
 					font-size: 0.26rem;
 					color: #808080;
+					color: #666;
 					width: 1.8rem;
 				}
 				select{
