@@ -14,7 +14,7 @@
                     :bottom-method="loadBottom"
                     :bottom-all-loaded="allLoaded"
                     ref="loadmore">
-                <noDate v-if="noWdata"></noDate>
+                <!--<noDate v-if="noWdata"></noDate-->
 
                 <div v-for="item in listStore" :key='item.cid' class="main-list" @click="goDetail(item.cid)">
                     <ul class="ub">
@@ -33,8 +33,9 @@
                         </li>
                     </ul>
                 </div>
+                <div v-if="allLoaded" class="m-t-10" style="text-align:center;font-size: 0.18rem;display: none">没有更多数据了</div>
             </mt-loadmore>
-            <div v-if="allLoaded" class="m-t-10" style="text-align:center;font-size: 0.18rem;display: none">没有更多数据了</div>
+
 
         </div>
     </div>
@@ -99,7 +100,7 @@
                     this.listStore = [];
                     this.getList();
                 },
-            
+
             loadTop(){
                 Indicator.open({
                     text: 'Loading...',
@@ -134,10 +135,11 @@
                     }
                     if (this.listdata) {
                         this.listStore.push(...this.listdata)
-                        if(this.listStore==''){
-                            this.noWdata=true;
-                            app.Cwaiting();
-                        }
+
+                    }
+                    if(this.listStore==''){
+                        this.noWdata=true;
+                        app.Cwaiting();
                     }
                     Indicator.close();
                 })
