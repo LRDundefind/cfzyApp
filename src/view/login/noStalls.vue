@@ -2,7 +2,7 @@
     <div class="main">
         <mt-header fixed title="首页" style="z-index:400;">
             <div class=" personal" slot="right">
-                <img @click="goMy" src="../../assets/index/shouye_touxiang_img@2x.png"/>
+                <img @click="goMy" src="../../assets/my/my_head.png"/>
             </div>
         </mt-header>
 

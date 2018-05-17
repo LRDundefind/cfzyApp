@@ -6,7 +6,7 @@
             </router-link>
         </mt-header>
         <!--车次结算详情-->
-        <div class="page-main page-loadmore-wrappe topScroll" style="height:100vh;">
+        <div class="page-main page-loadmore-wrappe topScroll">
 
             <div class=" settlement-detail">
                 <div class="ub detail-top">
@@ -171,6 +171,10 @@
                         border-bottom: 1px solid #dedede;
                         td:first-child {
                             padding-left: 0.2rem;
+                            width: 1.8rem;
+                            padding-right: 0.2rem;
+                            margin-top: 0.15rem;
+                            word-break: break-all;
                         }
                     }
                     tr:last-child {

@@ -135,6 +135,12 @@
                             position: 'middle',
                             duration: 1000
                         });
+                    }else if(!(new RegExp(/^([0-9]*[1-9][0-9]*(.[0-9]+)?|[0]+.[0-9]*[1-9][0-9]*)$/).test(this.goods.quantity))){
+                        Toast({
+                            message: '请输入大于0的数字',
+                            position: 'middle',
+                            duration: 1000
+                        });
                     } else {
                         let data={
                             goodId:this.goods.goodId,
