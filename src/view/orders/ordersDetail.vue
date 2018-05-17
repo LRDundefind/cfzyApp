@@ -4,7 +4,7 @@
 		    <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
 		</mt-header>
 		<!--订单列表-->
-		<div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
+		<div class="page-main page-loadmore-wrapper">
 			<!--信息一-->
 			<div class="order-detail">
 				<div class="ub term">
@@ -26,19 +26,19 @@
 			<div class="order-detail item-two">
 				<div class="ub term">
 					<div class="ub-f1">合计金额</div>
-					<div class="total">￥{{detail.salesAmount}}</div>
+					<div class="total">￥{{detail.salesAmount | keepTwoNum}}</div>
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">包装费</div>
-					<div class="edu">￥{{detail.packCost}}</div>
+					<div class="edu">￥{{detail.packCost | keepTwoNum}}</div>
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">过磅费</div>
-					<div class="edu">￥{{detail.weighCost}}</div>
+					<div class="edu">￥{{detail.weighCost | keepTwoNum}}</div>
 				</div>
 				<div class="ub term">
 					<div class="ub-f1">三轮费</div>
-					<div class="edu">￥{{detail.deliveryCost}}</div>
+					<div class="edu">￥{{detail.deliveryCost | keepTwoNum}}</div>
 				</div>
 				<div class="ub term" v-if="detail.payType">
 					<div class="ub-f1">支付方式</div>
@@ -65,7 +65,7 @@
 					</li>
 					<li v-for="goods in detail.goods" class="con">
 						<span>{{goods.goodName}}({{goods.goodNum}})</span>
-						<span>{{goods.weight}}
+						<span>{{goods.netWeight}}<!--weight-->
 							<i v-if="goods.weightUnit == 'unit_jin'">斤</i>
 							<i v-if="goods.weightUnit == 'unit_kg'">公斤</i>
 							<i v-if="goods.weightUnit == 'unit_pie'">件</i>
@@ -208,6 +208,10 @@ export default {
 }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
+.page-main{
+	top: 0.8rem;
+	bottom: 0px;
+}
 .page-loadmore-wrapper{
    overflow: scroll;
    -webkit-overflow-scrolling : touch;
@@ -339,7 +343,7 @@ i{
 	color: #fff;
 	font-size: 0.3rem;
 	font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
-	margin: 0.45rem auto 0;
+	margin: 0.45rem auto 0.3rem;
 }
 
 </style>

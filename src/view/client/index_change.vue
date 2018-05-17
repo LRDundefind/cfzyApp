@@ -4,7 +4,7 @@
             <router-link to="/client" slot="left">
                 <mt-button icon="back"> </mt-button>
             </router-link>
-            <mt-button @click="handleSave" slot="right" style="color:#333;">保存</mt-button>
+            <mt-button @click="handleSave" slot="right" style="color:#333;" :disable="ONbtn">保存</mt-button>
         </mt-header>
 
         <div class="page-main wrapper"  :style="{ height: wrapperHeight + 'px' }">
@@ -104,6 +104,7 @@
     export default {
         data () {
             return {
+                ONbtn:false,
                 tiopmessage:'保存中，请稍后',
                  wrapperHeight: 0,//容器高度
                 headerImage: '',     //   头 像
@@ -472,6 +473,7 @@
                             
                         }
                         else{
+                        this.ONbtn=true;
                         this.addover=true;
                         let params = {
                             cusName:this.nameRead,
@@ -489,7 +491,7 @@
                             .then(response => {
                                 // this.xiTdata=response.data.results;
                                 if(response.data.status=='Y'){
-                                    this.addover=false;
+                                   
                                     //  Toast({
                                     //     message: '客户添加成功',
                                     //     position: 'middle',
@@ -497,7 +499,15 @@
                                     //     });
                                         this.tiopmessage='客户添加成功'
                                         setTimeout(() => {
-                                            this.$router.push({name: 'client'});
+                                            if(Cookies.get('froms')){
+                                                Cookies.remove('froms');
+                                                this.$router.push({name: 'order'});
+                                            }
+                                            else{
+                                                this.$router.push({name: 'client'});
+                                            }
+                                            
+                                            // this.addover=false;
                                         }, 3000)
                                     
                                 }
@@ -507,12 +517,16 @@
                                         position: 'middle',
                                         duration: 3000
                                         });
+                                    setTimeout(() => {
+                                            this.$router.push({name: 'client'});
+                                        }, 3000)
                                 }
                             })
                         }
                     }
                     else{
                         this.addover=true;
+                        this.ONbtn=true;
                         let params = {
                             cusName:this.nameRead,
                             nickname:this.nicheng,
@@ -528,14 +542,16 @@
                             .then(response => {
                                 // this.xiTdata=response.data.results;
                                 if(response.data.status=='Y'){
-                                    this.addover=false;
-                                     Toast({
-                                        message: '客户添加成功',
-                                        position: 'middle',
-                                        duration: 3000
-                                        });
+                                   
+                                    //  Toast({
+                                    //     message: '客户添加成功',
+                                    //     position: 'middle',
+                                    //     duration: 3000
+                                    //     });
+                                         this.tiopmessage='客户添加成功'
                                         setTimeout(() => {
                                             this.$router.push({name: 'client'});
+                                             this.addover=false;
                                         }, 3000)
                                     
                                 }
@@ -552,7 +568,7 @@
                 }
                 else{
                     // 修改信息
-                    this.addover=true;
+                   this.addover=true;
                    let params = {
                         cid:this.cid,    //客户id
                         cusName:this.nameRead, //姓名

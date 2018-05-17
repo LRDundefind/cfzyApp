@@ -7,86 +7,64 @@
            </router-link>
 		</mt-header>
 		<div class="maintop">
-			<search-box ref="search" @getSmeage="searchHandler"/>
-        <noDate v-if="counts"></noDate>  
-		<div class="page-main earning page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
-			<mt-loadmore 
-				:auto-fill="false"
-				:top-method="loadTop" 
-				:bottom-method="loadBottom"
-				:bottom-all-loaded="allLoaded"
-				ref="loadmore">
-				<!--筛选title-----本期不做select筛选-->
-				<!--<div class="choose-title ub ub-pj" v-show="false">
-					<div @click="cycleScreens" :class="cycleActive">周期</div>
-					<div @click="goodsScreens" :class="goodsActive">货品</div>
-					<div @click="ownerScreens" :class="ownerActive">货主</div>
-				</div>-->
-				<!--分类筛选 定位-----本期不做select筛选-->
-				<!--<div class="earing-choose" v-if="isScreen" v-show="false">
-					<div class="type-owner">
-						<ul v-if="cycleScreen">
-							<li v-for="n in 15">这里不对</li>
-						</ul>
-						<ul v-if="goodsScreen">
-							<li v-for="n in 15">苹果果</li>
-						</ul>
-						<ul v-if="ownerScreen">
-							<li v-for="n in 15">货主一</li>
-						</ul>
-						<div class="choose-btn">
-							<div class="reset" @click="resetBtn">重置</div>
-							<div class="submit" @click="submitBtn">确定</div>
-						</div>
-					</div>
-				</div>-->
-				<!--订单车次列表-->
-				<ul 
-				    infinite-scroll-disabled="loading"
-				    infinite-scroll-distance="10"
-				    class="orders-ul"><!--v-infinite-scroll="loadMore"-->
-					<li v-for="list in listStore" class="orders-li" :key="list.id" @click="orderList(list.tid, list.sell_day)">
-				  		<div class="orders-t ub ub-ac" @click="orderList(list.tid, list.sell_day)">
-				  			<div class="ub-f1">{{list.trainsNum}}</div>
-				  			<div class="status" v-if="list.settleStatus == 'status_selling'">售卖中</div>
-				  			<div class="status" v-if="list.settleStatus == 'status_topay'">售卖中</div>
-				  			<div class="status" v-if="list.settleStatus == 'status_toremit'">待汇款</div>
-				  			<div class="status" v-if="list.settleStatus == 'status_complete'">已完成</div>
-				  		</div>
-				  		<div class="orders-c" @click="orderList(list.tid, list.sell_day)">{{list.plateNum}}</div>
-				  		<div class="orders-b ub ub-ac" @click="orderList(list.tid, list.sell_day)">
-				  			<div class="ub-f1">{{list.sell_day}}</div>
-				  			<div>销售总额</div>
-				  			<div class="edu">￥{{list.day_salesAmount}}</div>
-				  		</div>
-						<ul class="table-ul">
-							<li class="title">
-								<span>品名</span>
-								<span>销售量</span>
-								<span>库存量</span>
-								<span>销售金额</span>
-							</li>
-							<li v-for="goods in list.goods" class="con">
-								<span>{{goods.goodName}}</span>
-								<span>{{goods.sell_quantity}}
-									<i v-if="goods.priceUnit == 'unit_jin'">斤</i>
-									<i v-if="goods.priceUnit == 'unit_kg'">公斤</i>
-									<i v-if="goods.priceUnit == 'unit_pie'">件</i>
-								</span>
-								<span>{{goods.surplusNum}}
-									<i v-if="goods.priceUnit == 'unit_jin'">斤</i>
-									<i v-if="goods.priceUnit == 'unit_kg'">公斤</i>
-									<i v-if="goods.priceUnit == 'unit_pie'">件</i>
-								</span>
-								<span>￥{{goods.sell_amount}}</span>
-							</li>
-						</ul>
-				  		<div class="slide-btn" v-if="list.goods.length >= 1" @click="sildeDown">展开</div>
-					</li>
-				</ul>
-				<div></div>
-			</mt-loadmore>
-		</div>
+			<search-box ref="search" @getSmeage="searchHandler" :message='placeMessage'/>
+			<div class="page-main earning page-loadmore-wrapper">
+				<noDate v-if="counts || count"></noDate>  
+				<mt-loadmore 
+					v-else
+					:auto-fill="false"
+					:top-method="loadTop" 
+					:bottom-method="loadBottom"
+					:bottom-all-loaded="allLoaded"
+					ref="loadmore">
+	
+					<!--订单车次列表-->
+					<ul 
+					    infinite-scroll-disabled="loading"
+					    infinite-scroll-distance="10"
+					    class="orders-ul"><!--v-infinite-scroll="loadMore"-->
+						<li v-for="list in listStore" class="orders-li" :key="list.id" @click="orderList(list.tid, list.sell_day)">
+					  		<div class="orders-t ub ub-ac" @click="orderList(list.tid, list.sell_day)">
+					  			<div class="ub-f1">{{list.trainsNum}}</div>
+					  			<div class="status" v-if="list.settleStatus == 'status_selling'">售卖中</div>
+					  			<div class="status" v-if="list.settleStatus == 'status_topay'">售卖中</div>
+					  			<div class="status" v-if="list.settleStatus == 'status_toremit'">待汇款</div>
+					  			<div class="status" v-if="list.settleStatus == 'status_complete'">已完成</div>
+					  		</div>
+					  		<div class="orders-c" @click="orderList(list.tid, list.sell_day)">{{list.plateNum}}</div>
+					  		<div class="orders-b ub ub-ac" @click="orderList(list.tid, list.sell_day)">
+					  			<div class="ub-f1">{{list.sell_day}}</div>
+					  			<div>销售总额</div>
+					  			<div class="edu">￥{{list.day_salesAmount | keepTwoNum}}</div>
+					  		</div>
+							<ul class="table-ul">
+								<li class="title">
+									<span>品名</span>
+									<span>销售量</span>
+									<span>库存量</span>
+									<span>销售金额</span>
+								</li>
+								<li v-for="goods in list.goods" class="con">
+									<span>{{goods.goodName}}</span>
+									<span>{{goods.sell_quantity}}
+										<i v-if="goods.priceUnit == 'unit_jin'">斤</i>
+										<i v-if="goods.priceUnit == 'unit_kg'">公斤</i>
+										<i v-if="goods.priceUnit == 'unit_pie'">件</i>
+									</span>
+									<span>{{goods.surplusNum}}
+										<i v-if="goods.priceUnit == 'unit_jin'">斤</i>
+										<i v-if="goods.priceUnit == 'unit_kg'">公斤</i>
+										<i v-if="goods.priceUnit == 'unit_pie'">件</i>
+									</span>
+									<span>￥{{goods.sell_amount}}</span>
+								</li>
+							</ul>
+					  		<!--<div class="slide-btn" v-if="list.goods.length >= 1" @click="sildeDown">展开</div>-->
+						</li>
+					</ul>
+					<div></div>
+				</mt-loadmore>
+			</div>
 		</div>
 		
 	</div>
@@ -103,14 +81,7 @@ export default {
 	components: { searchBox, noDate },
     data () {
         return {
-        	//isScreen: false, //-----本期不做select筛选-
-        	//cycleScreen: false,
-        	//goodsScreen: false,
-        	//ownerScreen: false,
-        	//cycleActive: '',
-        	//goodsActive: '',
-        	//ownerActive: '',
-        	
+        	placeMessage:'请输入要检索的车次或车牌号',
         	gearName:'',//档位
         	
         	allLoaded: false,
@@ -123,6 +94,7 @@ export default {
 			//车次销售列表数据
 			listdata: [],
 			counts: false,
+			count: false,
 			val: '', //搜索
         }
     },
@@ -148,6 +120,9 @@ export default {
             orders.getTrainSaleList(params)
                 .then(response => {
                     this.listdata = response.data.results;
+                    if(this.listdata=='' && this.params.current_page == 1){
+                		this.count = true;
+                    }
                     app.Cwaiting();
                     
 					if(this.listdata.length == this.params.page_size){  
@@ -176,6 +151,7 @@ export default {
 			this.params.current_page = 1 ;
         	this.listStore = [];
         	this.counts = false;
+        	this.count = false;
 			this.getList(value);
 		},
 		
@@ -214,64 +190,7 @@ export default {
         sildeDown(){
         	
         },
-        
 
-        
-        //展开筛选-----本期不做select筛选----暂不删除
-//      cycleScreens: function(){
-//			this.cycleActive = 'active';
-//			this.goodsActive = '';
-//			this.ownerActive = '';
-//			
-//      	this.goodsScreen = false;
-//      	this.ownerScreen = false;
-//      	this.cycleScreen = !this.cycleScreen;
-//      	this.isScreen = this.cycleScreen;
-//      },
-//      goodsScreens: function(){
-//			this.cycleActive = '';
-//			this.goodsActive = 'active';
-//			this.ownerActive = '';
-//			
-//      	this.cycleScreen = false;
-//      	this.ownerScreen = false;
-//      	this.goodsScreen = !this.goodsScreen;
-//      	this.isScreen = this.goodsScreen;
-//      	
-//      },
-//      ownerScreens: function(){
-//			this.cycleActive = '';
-//			this.goodsActive = '';
-//			this.ownerActive = 'active';
-//			
-//      	this.cycleScreen = false;
-//      	this.goodsScreen = false;
-//      	this.ownerScreen = !this.ownerScreen;
-//      	this.isScreen = this.ownerScreen;
-//      	
-//      },
-        //重置选择
-//      resetBtn: function(){
-//      	this.cycleActive = '';
-//			this.goodsActive = '';
-//			this.ownerActive = '';
-//			
-//      	this.cycleScreen = false;
-//      	this.goodsScreen = false;
-//      	this.ownerScreen = false;
-//      	this.isScreen = false;
-//      },
-        //提交筛选
-//      submitBtn: function(){
-//      	this.cycleActive = '';
-//			this.goodsActive = '';
-//			this.ownerActive = '';
-//			
-//      	this.cycleScreen = false;
-//      	this.goodsScreen = false;
-//      	this.ownerScreen = false;
-//      	this.isScreen = false;
-//      },
     }
 }
 </script>
@@ -280,6 +199,10 @@ export default {
 i,b{
 	font-style: normal;
 	font-weight: normal;
+}
+.page-main{
+	top: 2.2rem;
+	bottom: 60px;
 }
 body{
 	font-size: 0.3rem;
@@ -297,10 +220,14 @@ body{
 		font-size: 0.26rem;
 		color: #4c4c4c;
 		/*padding-top: 1.1rem;*/ /*select搜索本期不做*/
+		.orders-li:first-child{
+			margin-top: 0.2rem;
+		}
 		.orders-li{
 			background: #fff;
 			margin: 0 0 0.2rem;
 			padding: 0 0.3rem 0.3rem;
+			padding-bottom: 0; /*如果展开显示 则删掉这行*/
 			.orders-t{
 				font-size: 0.3rem;
 				color: #333;

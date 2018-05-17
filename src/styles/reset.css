@@ -108,6 +108,10 @@ body {
   position: relative;
   top: 40px;
 }
+.maintop0{
+  position: relative;
+  top: 0px;
+}
 .pos-a{
   position: absolute;
 }
@@ -518,4 +522,18 @@ body {
 }
 input,textarea {
   -webkit-user-select:auto; /*webkit浏览器*/
+}
+/*中间内容固定*/
+
+.page-content{
+  position: fixed;
+  height: calc(100vh - 1rem);
+}
+.page-main{
+  width: 100%;
+  position: fixed;
+  overflow: auto;
+}
+.bottom0{
+  bottom: 0;  
 }

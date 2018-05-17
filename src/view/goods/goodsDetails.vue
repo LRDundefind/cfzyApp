@@ -1,7 +1,7 @@
 <template>
     <div class="page-content">
         <!--还款记录列表-->
-        <div class="page-main">
+        <div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
             <div class="" v-show="showList==false">
                 <div class="main-list" @click="showType">
                     <div class="clearfix goods">货品分类
@@ -30,17 +30,7 @@
                         </div>
                     </div>
                 </div>
-                <div v-if="deleteDisabled == 'edit'">
-                    <div class="login_cont">
-                        <div @click="addGoods('add')" class="loginbtn">确定</div>
-                    </div>
-                </div>
-                <div class='update clearfix' v-else>
-                    <mt-button type="primary" :disabled="deleteDisabled == 'edit'" size="large" class='f-l'
-                               @click="addGoods('delete')">删除
-                    </mt-button>
-                    <mt-button type="primary" size="large" class='f-l' @click="addGoods('add')">确定</mt-button>
-                </div>
+
 
             </div>
             <div class="" v-if="showList == true">
@@ -56,6 +46,19 @@
                 </div>
             </div>
         </div>
+
+        <div v-if="deleteDisabled == 'edit'">
+            <div class="login_cont">
+                <div @click="addGoods('add')" class="loginbtn">确定</div>
+            </div>
+        </div>
+        <div class='update clearfix' v-else>
+            <mt-button type="primary" :disabled="deleteDisabled == 'edit'" size="large" class='f-l'
+                       @click="addGoods('delete')">删除
+            </mt-button>
+            <mt-button type="primary" size="large" class='f-l' @click="addGoods('add')">确定</mt-button>
+        </div>
+        
     </div>
 </template>
 
@@ -74,6 +77,7 @@
         },
         data () {
             return {
+                wrapperHeight: 0,//容器高度
                 Unit: '',
                 deleteDisabled: '',
                 goods: {
@@ -104,6 +108,7 @@
         },
 
         mounted () {
+            this.wrapperHeight = document.documentElement.clientHeight - 160;
             this.getlist()
         },
         methods: {

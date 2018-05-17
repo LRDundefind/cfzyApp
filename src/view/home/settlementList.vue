@@ -6,8 +6,8 @@
             </router-link>
         </mt-header>
         <!--车次结算列表-->
-        <div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
-            <no-Date v-show="listStore=='' || listStore.length==0"/>
+        <div class="page-main page-loadmore-wrappe topScroll">
+            <noDate v-if="noWdata"></noDate>
             <mt-loadmore
                     :auto-fill="false"
                     :top-method="loadTop"
@@ -17,7 +17,7 @@
                 <ul class="settlement-list">
                     <li v-for="item in listStore" :key='item.tid' @click="settlementDetail(item)">
                         <div class="ub list-top">
-                            <div class="ub-f3">{{item.trainsNum}}</div>
+                            <div class="ub-f3 trainsNum">{{item.trainsNum}}</div>
                             <div class="number ub-f2"><span class="carNumber">车牌号</span>{{item.plateNum}}</div>
                         </div>
                         <div class="list-bottom  ">
@@ -49,12 +49,13 @@
                     current_page: 1,
                     page_size: 10
                 },
+                noWdata:false,
             }
         },
         components:{
             noDate,
         },
-        mounted () {
+        created () {
             let windowWidth = document.documentElement.clientWidth;//获取屏幕高度
             if(windowWidth>768){//这里根据自己的实际情况设置容器的高度
                 this.wrapperHeight = document.documentElement.clientHeight - 130;
@@ -62,11 +63,16 @@
                 this.wrapperHeight = document.documentElement.clientHeight - 40;
             }
             this.getList();
+            app.Vwaiting();
         },
         methods: {
             getList(){
                 damage.damageList(this.params).then(response => {
                     this.trainList = response.data.results;
+                    if(this.trainList==''&& this.params.current_page == 1){
+                        this.noWdata=true;
+                    }
+                    app.Cwaiting();
                     if(this.trainList.length==this.params.page_size){
                         //判断是否应该加载下一页
                         this.params.current_page+=1 ;
@@ -76,6 +82,10 @@
                     }
                     if (this.trainList) {
                         this.listStore.push(...this.trainList)
+                        if(this.listStore==''){
+                            this.noWdata=true;
+                            app.Cwaiting();
+                        }
                     }
                 })
             },
@@ -107,9 +117,13 @@
     i {
         font-style: normal;
     }
-
-    .page-loadmore-wrapper {
-        overflow: scroll
+    .topScroll{
+        top: 0.8rem;
+        bottom: 0.2rem;
+    }
+    .page-loadmore-wrappe{
+        overflow: auto;
+        -webkit-overflow-scrolling : touch;
     }
 
     .settlement-list {
@@ -124,6 +138,7 @@
                 border-bottom: 1px solid #dedede;
                 font-size: 0.3rem;
                 color: #333333;
+
                 .number {
                     font-size: 0.24rem;
                     color: #4c4c4c;
@@ -131,6 +146,12 @@
                     .carNumber {
                         padding-right: 0.12rem;
                     }
+                }
+                .trainsNum{
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    display: block;
                 }
             }
 

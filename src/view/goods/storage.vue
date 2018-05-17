@@ -20,7 +20,7 @@
             </router-link>
         </mt-header>
 
-        <div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }">
+        <div class="page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }">
 
             <mt-navbar v-model="selected" v-if="selected">
                 <mt-tab-item id="basic">基本信息</mt-tab-item>
@@ -104,7 +104,7 @@
                         <div class="basic-list">
                             <p class="clearfix">备注</p>
                             <div class="remark">
-                            <textarea name="" id="" cols="30" rows="3" placeholder="备注信息"
+                            <textarea maxlength="420" name="" id="" cols="30" rows="3" placeholder="备注信息"
                                       v-model="stall.remark" :disabled="item.goodsRemark != ''"></textarea>
                             </div>
                         </div>
@@ -364,7 +364,7 @@
                         position: 'middle',
                         duration: 2000
                     });
-                } else if (!(new RegExp(/^1[3|4|5|7|8][0-9]{9}$/).test(data.driverPhone))) {
+                } else if (!(new RegExp(/^1[3|4|5|6|7|8|9][0-9]{9}$/).test(data.driverPhone))) {
                     Toast({
                         message: '司机电话输入有误',
                         position: 'middle',
@@ -612,6 +612,7 @@
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
     .page-loadmore-wrappe{
+        width:100%;
         overflow: scroll;
         -webkit-overflow-scrolling : touch;
     }
@@ -661,11 +662,12 @@
                     padding-left: 0.24rem;
                 }
                 > input {
-                    float: right;
                     font-size: 0.26rem;
+                    float: right;
                     color: #4c4c4c;
                     text-align: right;
-                    line-height: 0.98rem;
+                    line-height: 0.4rem;
+                    margin-top: 0.35rem
                 }
                 .upload {
                     color: #33d570;

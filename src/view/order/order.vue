@@ -6,13 +6,13 @@
                 <span class="c-3 f-s-16">{{gearName}}</span>
                 <img class="header_img" src="../../assets/index/down_icon.png"/>
             </router-link>
-            <router-link to="/creditRules" slot="right">
+            <div @click="szRulesDialoags" slot="right">
                 <span class="c-3 f-s-16">赊账规则</span>
-            </router-link>
+            </div>
 		</mt-header>
 		</div>
 		<!--下单-->
-		<div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
+		<div class="page-main page-loadmore-wrapper">
 			<div class="order-detail" v-if="trainInfo">
 				<div class="ub ub-ac term no-border right-icon" @click="choosetrainNumber()">
 					<div class="ub-f1">{{trainsNum}}</div>
@@ -47,12 +47,12 @@
 						<span>金额</span>
 						<span>包装费</span>
 					</li>
-					<li class="con" v-for=" (goods,index) in goodsInfo" @click="goodsInfoSet(index, goods.goodId, goods.id, goods.goodName, goods.sellUnit, goods.numUnit, goods.surplusNum, goods.tid, trainsNum)" :key="goods.id">
+					<li class="con" v-for=" (goods,index) in goodsInfo" @click="goodsInfoSet(index, goods.goodId, goods.id, goods.goodName, goods.sellUnit, goods.numUnit, goods.surplusNum, goods.slushing, goods.tid, trainsNum)" :key="goods.id">
 						<span>{{goods.goodName}}</span>
 						<span v-if="goods.netWeight == null">{{goods.weight}}</span>
 						<span v-if="goods.netWeight != null">{{goods.netWeight}}</span>
-						<span>{{goods.price}}</span>
-						<span>{{goods.goodNum}}</span>
+						<span>{{goods.price || '' | numberRules}}</span>
+						<span>{{goods.goodNum || '' | numberRules}}</span>
 						<span>{{goods.goodAmount}}</span>
 						<span>{{goods.packCost}}</span>
 					</li>
@@ -158,6 +158,11 @@
 							<option>公斤</option>
 						</select>-->
 					</div>
+					<div class="goods-item ub ub-ac">
+						<div>减水重</div>
+						<input readonly="readonly" v-model="slushing" />
+						<div>斤 / 件</div>
+					</div>
 				</div>
 				<mt-button type="primary" size="large" class="submit-btn" @click="submitGoodsInfo">确定</mt-button>
 			</div>
@@ -174,6 +179,14 @@
 					<div class="center"></div>
 					<div class="rights" @click="setSanlunfei">确定</div>
 				</div>
+			</div>
+		</div>
+		<!-- 赊账规则模态框 -->
+		<div class="setSanlunfei szRules" v-if="showRules">
+			<div class="dialoag_cont">
+				<div @click="showRules = false" class="close">关闭</div>
+				<div class="name">赊账规则</div>
+				<div class="content">{{rules.rules}}</div>
 			</div>
 		</div>
 		<div class="autograph-con" v-if="showAutograph">
@@ -227,9 +240,10 @@ export default {
 			goodsunit: '', //设置货品价格-单价
 			goodsnum: '',  //设置货品价格-件数
 			goodsweight: '',  //设置货品价格-重量
-			pbweight: '',  //设置货品价格-平板重, 提交订单所需
+			pbweight: '0',  //设置货品价格-平板重, 提交订单所需  //需求：平板重默认为0
 			goodId: '',//货品id, 提交订单所需
 			id: '',//货品id, 提交订单所需
+			slushing: '', //减水重，只作展示
 			numUnit: '',//重量单位, 提交订单所需
 			have_goodsunit: false, //默认为false,用来判断每项货品是否填写了单价
 
@@ -241,12 +255,16 @@ export default {
 			sanlunfei: false,
 			deliveryCost: null,
 			
+			//赊账规则弹框
+			showRules: false,
+			rules: [],
+			
 			//费用总和
 			totalCost: {
 				totalAmount: 0,  //货款费用总和-金额总和
 				totalPack: 0,  //包装费总和
 				totalWeigh: 0,  //过磅费总和
-				deliveryCost: null, //三轮费--手动输入
+				deliveryCost: 0, //三轮费--手动输入 需求：默认为0
 				tatol: 0,  //合计金额
 			},
 			
@@ -276,9 +294,11 @@ export default {
 		
 	},
 	filters: {
-		keepTwoNum: function(value){
-			value = Number(value);
-			return value.toFixed(2);
+		//输入的数字展示时的规范
+		numberRules: function(value){
+			//为0、0.1、0.01、 00、00.03、0003、0003.01
+			value = value.replace(/^0+([0-9])/,'$1');
+			return value;
 		}
 	},
     methods: {
@@ -287,7 +307,7 @@ export default {
 			this.goodsunit = '';
 			this.goodsnum = '';
 			this.goodsweight = '';
-			this.pbweight = '';
+			this.pbweight = '0'; //需求：平板重默认为0
 		},
 		//重置各项费用总和-关闭弹框调取单项货品接口计算价格时使用
 		resetTotalCost(){
@@ -296,6 +316,20 @@ export default {
 			this.totalCost.totalWeigh = 0;
 			this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost; //合计费用
 		},
+		
+		//赊账规则
+		szRulesDialoags(){
+			this.showRules = true;
+			var params = {};
+			order.creditRules(params)
+				.then(response => {
+					this.rules = response.data.results;
+				})
+				.catch(function (response) {
+					console.log(response);
+				});
+		},
+		
 	    //选择车次
         choosetrainNumber(){
         	Cookies.remove('trainTid');//----------------------待修改
@@ -306,7 +340,8 @@ export default {
 		//选择客户
         chooseCustomer(){
         	Cookies.remove('customerName'); //----------------------待修改
-        	Cookies.remove('customerId'); //-----------------------待修改
+			Cookies.remove('customerId'); //-----------------------待修改
+			Cookies.set('froms','Y');
             this.$router.push({name: 'client_order', params: {type: 'order'}});
         },
         //选择完车次后获取车次货品详细信息
@@ -364,7 +399,15 @@ export default {
 			
 		},
 		//设置货品重量件数信息的弹框
-        goodsInfoSet(i, goodid, id, name, sellunit, numUnit, surplusNum, tid, trainsNum){
+        goodsInfoSet(i, goodid, id, name, sellunit, numUnit, surplusNum, slushing, tid, trainsNum){
+        	//提示优先选择客户--在选中了非临时客户的时候
+        	if(this.customerType == 'Nottemporary' && this.customerId == undefined){
+				Toast({
+					message: '请优先选择客户',
+					position: 'middle',
+					duration: 3000
+    			});
+        	}
 			this.numberNum = i;
         	this.dialoags = true;
         	this.goodId = goodid;//货品id 提交订单传参所需
@@ -372,14 +415,14 @@ export default {
         	this.goodName = name;
         	this.sellUnit = sellunit;//提交订单传参所需 售卖单位
         	this.numUnit = numUnit;//提交订单传参所需  重量单位
+        	this.slushing = slushing || '减水重';//减水重 只作展示，
         	if(numUnit == 'unit_pie'){
         		this.surplusHeavy = '';
-        		this.surplusPiece = surplusNum; //显示货品剩余量，入库单位为件时
+        		this.surplusPiece = surplusNum; // 入库单位为件时，在件数位置-显示货品剩余量
         	}else{
         		this.surplusPiece = '';
-        		this.surplusHeavy = surplusNum; //显示货品剩余量，入库单位为斤/公斤时
+        		this.surplusHeavy = surplusNum; // 入库单位为斤/公斤时，在重量位置-显示货品剩余量
         	}
-
 
 			if(this.sellUnit == 'unit_jin'){
 				this.goodsUnit = '斤';
@@ -388,6 +431,7 @@ export default {
 			}else{
 				//unit_pie 件
 				this.goodsUnit = '件';
+				this.goodsweight = '0'; //入库单位为件时，重量默认输入0  //不需要在resetPriceNum中设置
 			};
 			
 			//编辑弹框的值  price 单价 、goodNum 件数、weight 重量、slabWeight 平板重
@@ -404,11 +448,11 @@ export default {
     	submitGoodsInfo(){
     		if(this.goodsnum == '' ){
     			Toast({
-					message: '请完善购买信息',
+					message: '请完善购买信息（件数）',
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.goodsnum))){
+    		}else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.goodsnum)) || this.goodsnum > 9999.99){
     			Toast({
 					message: '请正确输入件数',
 					position: 'middle',
@@ -416,11 +460,11 @@ export default {
     			});
     		}else if(this.goodsweight == ''){
     			Toast({
-					message: '请完善购买信息',
+					message: '请完善购买信息（重量）',
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.goodsweight))){
+    		}else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.goodsweight)) || this.goodsweight > 9999.99){
     			Toast({
 					message: '请正确输入重量',
 					position: 'middle',
@@ -428,11 +472,11 @@ export default {
     			});
     		}else if(this.pbweight == ''){
     			Toast({
-					message: '请完善购买信息',
+					message: '请完善购买信息（平板重）',
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.pbweight))){
+    		}else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.pbweight)) || this.pbweight > 9999.99){
     			Toast({
 					message: '请正确输入平板重',
 					position: 'middle',
@@ -440,7 +484,7 @@ export default {
     			});
     		}else{
     			if(this.goodsunit != ''){
-	    			if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.goodsunit))){
+	    			if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.goodsunit))|| this.goodsunit > 9999.99){
 		    			Toast({
 							message: '请正确输入单价',
 							position: 'middle',
@@ -583,7 +627,7 @@ export default {
         },
         //设置三轮费-确定按钮
         setSanlunfei(){
-        	if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.deliveryCost))){
+        	if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.deliveryCost)) || this.deliveryCost > 9999.99){
     			Toast({
 					message: '请正确输入三轮费',
 					position: 'middle',
@@ -754,7 +798,8 @@ i{
 	font-style: normal;
 }
 .page-main{
-	overflow: scroll;
+	top: 0.8rem;
+	bottom: 60px;
 }
 .page-loadmore-wrapper{
    overflow: scroll;
@@ -919,7 +964,7 @@ i{
 }
 .orderBtn{
 	padding: 0 0.3rem;
-	margin: 0.27rem 0 0.5rem;
+	margin: 0.27rem 0 0.3rem;
     box-sizing: border-box;
 	div{
 		height: 0.9rem;
@@ -1003,6 +1048,7 @@ i{
 				input{
 					font-size: 0.26rem;
 					color: #808080;
+					color: #666;
 					width: 1.8rem;
 				}
 				select{
@@ -1060,10 +1106,10 @@ i{
 			}
 			input::-webkit-input-placeholder{
 				color: #33d57c;
-				font-size: 0.26rem;
 				height: 0.7rem;
-				line-height: 0.7rem;
+				font-size: 0.24rem;
 				font-family: "microsoft yahei";
+				/*font-family: 'SimSun';*//*SimHei NSimSun FangSong*/
 			}
 		}
 		.btn{
@@ -1092,6 +1138,36 @@ i{
 			}
 		}
 
+	}
+}
+/*赊账规则*/
+.szRules{
+	.dialoag_cont{
+		box-sizing: border-box;
+		margin: 2rem auto 0;
+	    padding: 0.3rem;
+	    text-align: center;
+		font-size: 0.28rem;
+		position: relative;
+		.close{
+			width: 1rem;
+			line-height: 0.5rem;
+			position: absolute;
+			right: 0.1rem;
+			top: 0.15rem;
+		}
+		.name{
+			font-size: 0.3rem;
+			line-height: 3;
+		}
+		.content{
+			word-break: break-all;
+			line-height: 1.5;
+			text-align: left;
+			height: 5rem;
+			overflow: scroll;
+		    padding-left: 0.1rem;
+		}
 	}
 }
 /*签名*/

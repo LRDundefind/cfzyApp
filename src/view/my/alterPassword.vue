@@ -5,31 +5,40 @@
         <mt-header fixed title="修改密码">
             <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
         </mt-header>
+        <div class="page-main page-loadmore-wrappe topScroll">
 
-        <div class="login_cont p-t-40">
-            <div class="bg1">
-                <span class="usericonBg"></span>
-                <input v-model="params.old_password" placeholder="旧密码" type="password" class="usericon ">
+            <div class="login_cont p-t-40">
+                <div class="bg1">
+                    <span class="usericonBg"></span>
+                    <input v-model="params.old_password" placeholder="旧密码" type="password" class="usericon ">
+                </div>
+
+                <div class="bg3">
+                    <span class="usericonBg"></span>
+                    <input v-model="params.password" placeholder="新密码" type="password" class="usericonPhone">
+                </div>
+
+                <div class="bg2">
+                    <span class="passIconBg"></span>
+                    <input v-model="params.confirmPassword" placeholder="确认密码" type="password" class="passIcon ">
+                </div>
+
+                <div @click="alterPass" class="findbtn">更改登录密码</div>
+
             </div>
-
-            <div class="bg3">
-                <span class="usericonBg"></span>
-                <input v-model="params.password" placeholder="新密码" type="password" class="usericonPhone">
-            </div>
-
-            <div class="bg2">
-                <span class="passIconBg"></span>
-                <input v-model="params.confirmPassword" placeholder="确认密码" type="password" class="passIcon ">
-            </div>
-
-            <div @click="alterPass" class="findbtn">更改登录密码</div>
-
         </div>
-
     </div>
 
 </template>
 <style scoped lang='scss'>
+    .topScroll{
+        top: 0.9rem;
+        bottom: 0.2rem;
+    }
+    .page-loadmore-wrappe{
+        overflow: auto;
+        -webkit-overflow-scrolling : touch;
+    }
     .findbtn {
         width: 80% !important;
         @include login_btn(fixed);

@@ -3,16 +3,18 @@
         <mt-header fixed title="平台黑名单">
             <mt-button icon="back" @click="goMy()" slot="left"></mt-button>
         </mt-header>
-        <search-box @getSmeage="searchBlack" :msg="msg" ref="search"/>
-        
-        <div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
-            <no-Date v-show="listStore=='' || listStore.length==0"/>
+        <search-box @getSmeage="searchBlack" :message='placeMessage' ref="search"/>
+
+        <div class="page-main page-loadmore-wrapper topScroll">
+            <noDate v-if="noWdata"></noDate>
             <mt-loadmore
+                    v-else
                     :auto-fill="false"
                     :top-method="loadTop"
                     :bottom-method="loadBottom"
                     :bottom-all-loaded="allLoaded"
                     ref="loadmore">
+                <!--<noDate v-if="noWdata"></noDate-->
 
                 <div v-for="item in listStore" :key='item.cid' class="main-list" @click="goDetail(item.cid)">
                     <ul class="ub">
@@ -31,8 +33,9 @@
                         </li>
                     </ul>
                 </div>
-                <div v-if="allLoaded" class="m-t-10" style="text-align:center;font-size: 0.18rem">没有更多数据了</div>
+                <div v-if="allLoaded" class="m-t-10" style="text-align:center;font-size: 0.18rem;display: none">没有更多数据了</div>
             </mt-loadmore>
+
 
         </div>
     </div>
@@ -41,38 +44,41 @@
 <script>
     import searchBox from '@/components/searchBox/search'
     import {home} from '@/services/apis/home.api'
-    import { Loadmore , Indicator} from 'mint-ui'
+    import {Loadmore, Indicator} from 'mint-ui'
     import noDate from '@/components/noData/noDate'
 
     export default {
         data () {
             return {
-                msg:'',
+                placeMessage: '请输入客户名称、电话或身份证号',
+                msg: '',
                 black: '',
                 allLoaded: false,
                 wrapperHeight: 0,//容器高度
-                noData:false,
-                listStore: [],
-                params:{
-                    page_size: 10,
+                noData: false,
+                params: {
                     current_page: 1,
+                    page_size: 10,
                     search:''
                 },
-                listData:[],
-                imgpath: process.env.BASE_PATH
+                listStore: [],
+                listdata:null,
+                imgpath: process.env.BASE_PATH,
+                noWdata: false,
 
             }
         },
-         components:{
+        components: {
             noDate,
-             searchBox
+            searchBox
         },
         created(){
             this.black = this.$route.params.black || false;
-        },
-        mounted () {
             this.wrapperHeight = document.documentElement.clientHeight - 100;
             this.getList();
+            app.Vwaiting();
+        },
+        mounted () {
         },
 
         methods: {
@@ -83,34 +89,18 @@
                     this.$router.push({name: 'home'});
                 }
             },
-            searchBlack(msg){
-                Indicator.open({
-                    text: 'Loading...',
-                    spinnerType: 'fading-circle'
-                });
-                this.params.current_page = 1;
-                this.params.search=msg;
-                this.listStore = [];
-                this.getList();
-            },
-            getList(){
-                home.blacklist(this.params).then(response => {
-                    this.listData=response.data.results;
-                    if(this.listData.length==this.params.page_size){
-                        //判断是否应该加载下一页
-                        this.params.current_page+=1 ;
-                    }else{
-                        //禁用上拉加载
-                        this.allLoaded = true;
-                    }
-                    if (this.listData) {
 
-                        this.listStore.push(...this.listData);
-                    }
-                    if (!this.listStore) this.noData = true;
-                    Indicator.close();
-                })
-            },
+                searchBlack(msg){
+                    Indicator.open({
+                        text: 'Loading...',
+                        spinnerType: 'fading-circle'
+                    });
+                    this.params.current_page = 1;
+                    this.params.search=msg;
+                    this.listStore = [];
+                    this.getList();
+                },
+
             loadTop(){
                 Indicator.open({
                     text: 'Loading...',
@@ -129,6 +119,32 @@
                 });
                 this.getList();
             },
+            getList(){
+                home.blacklist(this.params).then(response => {
+                    this.listdata = response.data.results;
+                    if(this.listdata==''&& this.params.current_page == 1){
+                        this.noWdata=true;
+                    }
+                    app.Cwaiting();
+                    if(this.listdata.length==this.params.page_size){
+                        //判断是否应该加载下一页
+                        this.params.current_page+=1 ;
+                    }else{
+                        //禁用上拉加载
+                        this.allLoaded = true;
+                    }
+                    if (this.listdata) {
+                        this.listStore.push(...this.listdata)
+
+                    }
+                    if(this.listStore==''){
+                        this.noWdata=true;
+                        app.Cwaiting();
+                    }
+                    Indicator.close();
+                })
+            },
+
             goDetail(cid){
                 this.$router.push({name: 'client_detail', params: {ids: cid, come: 'black'}});
             }
@@ -137,9 +153,16 @@
     }
 </script>
 <style scoped lang="scss">
-    .page-loadmore-wrapper {
-        overflow: scroll
+    .topScroll {
+        top: 2.2rem;
+        bottom: 0.3rem;
     }
+
+    .page-loadmore-wrapper {
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
     .im {
         width: 0.8rem;
         height: 0.8rem;

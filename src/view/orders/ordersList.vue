@@ -3,11 +3,13 @@
 		<mt-header fixed  title="订单">
 		    <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
 		</mt-header>
-		<search-box ref="search" @getSmeage="searchHandler"/>
-		<noDate v-if="counts"></noDate>  
+		<search-box ref="search" @getSmeage="searchHandler" :message='placeMessage'/>
+
 		<!--订单列表-->
-		<div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
+		<div class="page-main page-loadmore-wrapper">
+			<noDate v-if="counts || count"></noDate>  
 			<mt-loadmore 
+				v-else
 				:auto-fill="false"
 				:top-method="loadTop" 
 				:bottom-method="loadBottom"
@@ -30,13 +32,13 @@
 						<div class="ub list-bottom">
 							<span class="ub-f1 c-6">{{list.placeOrderTime}}</span>
 							<strong class="ub" v-if="list.orderType == 'order_knot'"><!--现结-->
-								<i>￥{{list.salesAmount}}</i>
+								<i>￥{{list.salesAmount | keepTwoNum}}</i>
 							</strong>
 							<strong class="ub" v-if="list.orderType == 'order_credit' && list.status != 'status_deposit'"><!--赊账 且 设置了单价（非暂存状态即为设置了单价）-->
 								<em>总价</em>
-								<i>￥{{list.salesAmount}}</i>
+								<i>￥{{list.salesAmount | keepTwoNum}}</i>
 								<em class="repaid">已还</em>
-								<em>￥{{list.returned}}</em>
+								<em>￥{{list.returned | keepTwoNum}}</em>
 							</strong>
 							<strong v-if="list.status == 'status_deposit'"><!--赊账 且 未设置单价-->
 								<i class="noset">未设置</i>
@@ -59,6 +61,7 @@ export default {
 	components: { searchBox, noDate },
     data () {
         return {
+			placeMessage:'请输入要检索的订单编号',
         	allLoaded: false,
             wrapperHeight: 0,//容器高度
             params:{
@@ -69,6 +72,7 @@ export default {
             listStore: [],
 			listdata: [],
 			counts: false,
+			count: false,
 			val: '', //搜索
         }
     },
@@ -92,6 +96,9 @@ export default {
             orders.getOrdersList(params)
                 .then(response => {
                     this.listdata = response.data.results;
+                    if(this.listdata=='' && this.params.current_page == 1){
+                		this.count = true;
+                    }
                     app.Cwaiting();
                     
 					if(this.listdata.length == this.params.page_size){  
@@ -120,6 +127,7 @@ export default {
         	this.params.current_page = 1 ;
         	this.listStore = [];
         	this.counts = false;
+        	this.count = false;
 			this.getOrders(value);
 		},
 		
@@ -161,6 +169,10 @@ export default {
 i,em,strong{
 	font-style: normal;
 	font-weight: normal;
+}
+.page-main{
+	top: 2.2rem;
+	bottom: 0px;
 }
 .page-loadmore-wrapper{
     overflow: scroll;

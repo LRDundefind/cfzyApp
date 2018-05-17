@@ -2,12 +2,12 @@
 
     <div :class="mainClass">
         <mt-tab-container>
-             <transition 
+             <!-- <transition 
                     enter-active-class="animated bounceInLeft"
                     
-            >
+            > -->
                  <router-view name="mainView" />
-            </transition>
+            <!-- </transition> -->
            
             <!-- <mt-tab-container-item id="home">
                 <home></home>

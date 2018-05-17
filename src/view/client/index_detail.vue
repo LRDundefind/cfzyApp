@@ -14,11 +14,11 @@
                     <h2 v-else>{{listdata.nickname}}</h2>
                 </div>
             </div>
-            
-             <!-- :style="{ height: wrapperHeight + 'px' }"  ref="wrapper"-->
-            <div class="page-main page-loadmore-wrappe wrapper " :style="{ height: wrapperHeight + 'px' }">
-                <ul class="content">
-                    <li>
+          
+             <!-- :style="{ height: wrapperHeight + 'px' }"  ref="wrapper" -->
+            <div class="page-main page-loadmore-wrappe wrapper topScroll" :style="{ height: wrapperHeight + 'px' }">
+                <!-- <ul class="content">
+                    <li> -->
                         <div class="main-list">
                             <p class="clearfix">消费次数<span>{{listdata.consum_num}}</span></p>
                             <p class="clearfix">最后消费时间<span>{{listdata.consum_ltime}}</span></p>
@@ -47,13 +47,13 @@
                             <p class="clearfix">备注</p>
                             <div class="remark">{{listdata.remark}}</div>
                         </div>
-                    </li>
-                </ul>
+                    <!-- </li>
+                </ul> -->
                 
             </div>
             <div class='update clearfix'>
-                <mt-button type="primary" size="large" class='f-l' @click="consumptionRecords(3)">查看消费记录</mt-button>
-                <mt-button type="primary" size="large" class='f-l' @click="goChange()">更新资料</mt-button>
+                <mt-button type="primary" size="large" class='f-l' @click="consumptionRecords()">查看消费记录</mt-button>
+                <mt-button type="primary" size="large" class='f-l' @click="goChange()" :disabled="showUpdate=='black'">更新资料</mt-button>
             </div>
         </div>
     
@@ -61,6 +61,7 @@
 
 <script>
     import { client } from '@/services/apis/client'
+     import { Toast } from 'mint-ui';
     import BScroll from 'better-scroll'
     export default {
         name: 'client_detail',
@@ -70,11 +71,13 @@
                 listdata:{},
                 wrapperHeight: 0,//容器高度
                 cid:this.$route.params.ids,
-                imgpath:process.env.BASE_PATH
+                imgpath:process.env.BASE_PATH,
+                showUpdate:''
             }
         },
         mounted () {
-           this.wrapperHeight = document.documentElement.clientHeight - 330;
+           this.showUpdate=this.$route.params.come;
+           this.wrapperHeight = document.documentElement.clientHeight - 315;
             // this.$nextTick(() => {
             //    this.scroll = new BScroll(this.$refs.wrapper,{});
             // })
@@ -93,8 +96,16 @@
                 };
                 client.Listmessage(params)
                     .then(response => {
-
-                        this.listdata=response.data.results;
+                        if(response.data.status=='Y'){
+                            this.listdata=response.data.results;
+                        }
+                        else{
+                            Toast({
+                                message: response.data.error_msg,
+                                position: 'middle',
+                                duration: 5000
+                                });
+                                }
 
                     })
 
@@ -120,8 +131,14 @@
     }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
+.update{
+    position: fixed;
+    bottom: 0.1rem;
+    width: 100%;
+    background: #f5f5f5;
+}
 .wrapper{
-    //  height: 100vh;
+     height: 100vh;
     //  overflow:hidden;
      -webkit-overflow-scrolling : touch;
 }

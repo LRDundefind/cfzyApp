@@ -6,12 +6,14 @@
             </router-link>
             <span @click="addCustomer" style="font-size: 0.32rem" slot="right">添加客户</span>
         </mt-header>
-        <div class="maintop">
-            <search-box  @getSmeage='searchstart' :message='kehutext'></search-box>
-            <noDate v-show="noWdata"></noDate>  
-            <div class="page-main page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }" >
-
+        <div :class= "[ this.$route.params.type=='order'? 'maintop0' : 'maintop'] ">
+            <search-box  @getSmeage='searchstart' :message='placeMessage'></search-box>
+            
+            <!-- :style="{ height: wrapperHeight + 'px' }" -->
+            <div class="page-main page-loadmore-wrappe "  :class= "[ this.$route.params.type=='order'? 'topScroll0' : 'topScroll'] ">
+             <noDate v-if="noWdata"></noDate>  
             <mt-loadmore 
+                v-else
 				:auto-fill="false"
 				:top-method="loadTop" 
 				:bottom-method="loadBottom"
@@ -68,7 +70,8 @@
     export default {
         data () {
             return {
-                kehutext:'请输入客户名称、电话或身份证号',
+                comeFrom:true,
+                placeMessage:'请输入客户名称、电话或身份证号',
             	heightNum: 40,
                 allLoaded: false,
                 noWdata:false,
@@ -131,6 +134,9 @@
                     .then(response => {
                         
                         this.listdata = response.data.results;
+                        if(this.listdata==''&& this.params.current_page == 1){
+                            this.noWdata=true;
+                        }
                         app.Cwaiting();
                         if(this.listdata.length==this.params.page_size){  
                             //判断是否应该加载下一页
@@ -175,8 +181,16 @@
     }
 </script>
 <style scoped lang="scss">
+.topScroll{
+    top: 2.2rem;
+    bottom: 1.1rem;
+}
+.topScroll0{
+    top: 2.2rem;
+    bottom: 0rem;
+}
 .page-loadmore-wrappe{
-   overflow: scroll;
+   overflow: auto;
     -webkit-overflow-scrolling : touch;
 }
     .im {

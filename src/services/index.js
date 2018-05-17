@@ -42,18 +42,20 @@ instance.interceptors.response.use(function (response) {
         //     type: 'error',
         //     duration: 3 * 1000
         // });
+        app.Cwaiting();
        }
+      
     return response;
    
 
 }, function (error) {
     //  对响应错误做点什么
+    app.Cwaiting();
     Toast({
         message: error.response.data.message,
         position: 'middle',
         duration: 3000
     });
-
     return Promise.reject(error);
 });
 

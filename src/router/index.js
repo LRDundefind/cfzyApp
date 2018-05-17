@@ -66,7 +66,7 @@ const router = new Router({
             path: '/',
             name: 'application',
             component: application,
-            redirect: '/login',
+            redirect: '/home',
             children: [
               ...home,
               ...order,
