@@ -1,6 +1,6 @@
 <template>
-    <div class="page-content">
-        <mt-header fixed title="客户">
+    <div class="page-content" style="top:0;">
+        <mt-header title="客户">
             <router-link to="/client" slot="left">
                 <mt-button icon="back"> </mt-button>
             </router-link>
