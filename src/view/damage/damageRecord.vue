@@ -200,7 +200,8 @@
         padding: 0 0.3rem;
         color: #333;
         font-size: 0.28rem;
-        line-height: 0.98rem;
+        line-height: 0.4rem;
+        margin-top: 0.35rem;
         > p {
             border-bottom: 1px #f0f0f0 solid;
 

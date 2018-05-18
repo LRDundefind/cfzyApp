@@ -364,7 +364,8 @@
                 float: right;
                 color: #4c4c4c;
                 text-align: right;
-                line-height: 1rem;
+                line-height: 0.4rem;
+                margin-top: 0.35rem;
             }
         }
         > p:nth-child(1) {

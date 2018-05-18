@@ -215,7 +215,8 @@
                 color: #4c4c4c;
                 font-size: 0.26rem;
                 text-align: right;
-                line-height: 0.98rem;
+                line-height: 0.4rem;
+                margin-top: 0.35rem;
                 .right-icon {
                     width: 0.18rem;
                     padding-top: 0.3294rem;
