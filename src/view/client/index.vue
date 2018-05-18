@@ -167,15 +167,26 @@
                 this.$router.push({name: 'index_change/create', params: {type: 'create'}})
             },
             goDetail(id, nickname){
-                if (this.type == 'order') {
+                // 这是从新增跳转过来的，进入到下单页面
+                if(Cookies.get('froms')){
                     Cookies.set('customerId',id);
                     Cookies.set('customerName',nickname);
-                    //下单
+                    Cookies.remove('froms');
                     this.$router.push({name: 'order'});
-                } else {
-                    // 客户详情
-                    this.$router.push({name: 'client_detail', params: {ids: id}});
                 }
+                else{
+                    if (this.type == 'order') {
+                        // 这个直接进入的返回到下单页面
+                        Cookies.set('customerId',id);
+                        Cookies.set('customerName',nickname);
+                        //下单
+                        this.$router.push({name: 'order'});
+                    } else {
+                        // 客户详情
+                        this.$router.push({name: 'client_detail', params: {ids: id}});
+                    }
+                }
+                
             }
         }
     }

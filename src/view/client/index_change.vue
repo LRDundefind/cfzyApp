@@ -501,8 +501,8 @@
                                         this.tiopmessage='客户添加成功'
                                         setTimeout(() => {
                                             if(Cookies.get('froms')=='Y'){
-                                                this.$router.push({name: 'order'});
-                                                Cookies.remove('froms');
+                                               this.$router.push({name: 'client'});
+                                                // Cookies.remove('froms');
                                             }
                                             else{
                                                 this.$router.push({name: 'client'});
@@ -552,8 +552,8 @@
                                          this.tiopmessage='客户添加成功'
                                         setTimeout(() => {
                                             if(Cookies.get('froms')=='Y'){
-                                                this.$router.push({name: 'order'});
-                                                Cookies.remove('froms');
+                                                 this.$router.push({name: 'client'});
+                                                // Cookies.remove('froms');
                                             }
                                             else{
                                                 this.$router.push({name: 'client'});
