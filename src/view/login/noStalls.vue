@@ -48,7 +48,7 @@
                     if(response.data.results == ''){
 //                        console.log(123);
                     }else {
-                        let gidOwnID_list=JSON.stringify(response.data.results);
+                        let gidOwnID_list=JSON.stringify(response.data.results[0]);
                         Cookies.set('gidOwnID_lists', gidOwnID_list);                 //档位信息集合
                         this.$router.push({name:'home'});
                     }
