@@ -19,43 +19,43 @@
 				:bottom-method="loadBottom"
 				:bottom-all-loaded="allLoaded"
 				ref="loadmore">
-                <div
+                <ul
                         infinite-scroll-disabled="loading"
 					    infinite-scroll-distance="10"
                 >
-                        <div  v-for="n in listStore" :key='n.id' class="main-list" @click="goDetail(n.cid, n.nickname)">
-                        <div class="ub ub-ac heade">
-                            <div class='lis-icon ub-img im'>
-                                <img v-show="n.headImg!=''" :src="imgpath+n.headImg" >
-                                <img v-show="n.headImg==''" src="../../assets/my/my_head.png" alt="">
+                        <li  v-for="n in listStore" :key='n.id' class="main-list" @click="goDetail(n.cid, n.nickname)">
+                            <div class="ub ub-ac heade">
+                                <div class='lis-icon ub-img im'>
+                                    <img v-show="n.headImg!=''" :src="imgpath+n.headImg" >
+                                    <img v-show="n.headImg==''" src="../../assets/my/my_head.png" alt="">
+                                </div>
+                                <div class='ub-f1 ut-s'>{{n.nickname}}</div>
+                                <!-- 正常客户状态 -->
+                                <div class=' res8 lis-sw ub-img im2' v-show="n.status=='Y'"></div>
+                                <!-- 平台状态 -->
+                                <div class=' res8 lis-sw ub-img im3' v-show="n.sys_status=='Y'"></div>
                             </div>
-                            <div class='ub-f1 ut-s'>{{n.nickname}}</div>
-                            <!-- 正常客户状态 -->
-                            <div class=' res8 lis-sw ub-img im2' v-show="n.status=='Y'"></div>
-                            <!-- 平台状态 -->
-                            <div class=' res8 lis-sw ub-img im3' v-show="n.sys_status=='Y'"></div>
-                        </div>
-                        <ul >
-                            <li class="ub ub-pj">
-                                <div class="ub-f1">消费次数</div>
-                                <div class="ub-f1">{{n.consum_num}}次</div>
-                            </li>
-                            <li class="ub ub-pj">
-                                <div class="ub-f1">最后消费时间</div>
-                                <div class="ub-f1">{{n.consum_ltime}}</div>
-                            </li>
-                            <li class="ub ub-pj">
-                                <div class="ub-f1">赊账总金额</div>
-                                <div class="ub-f1">{{n.notPayAmount}}元</div>
-                            </li>
-                            <li class="ub ub-pc">
-                                <div class="ub-f1">赊账最长时间</div>
-                                <div class="ub-f1">{{n.creditTime}}</div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div  style="text-align:center;font-size: 0.18rem;display:none"></div>
-                    </div> 
+                            <div class="listStyle">
+                                <div class="ub ub-pj stylea">
+                                    <div class="ub-f1">消费次数</div>
+                                    <div class="ub-f1">{{n.consum_num}}次</div>
+                                </div>
+                                <div class="ub ub-pj stylea">
+                                    <div class="ub-f1">最后消费时间</div>
+                                    <div class="ub-f1">{{n.consum_ltime}}</div>
+                                </div>
+                                <div class="ub ub-pj stylea">
+                                    <div class="ub-f1">赊账总金额</div>
+                                    <div class="ub-f1">{{n.notPayAmount}}元</div>
+                                </div>
+                                <div class="ub ub-pc stylea">
+                                    <div class="ub-f1">赊账最长时间</div>
+                                    <div class="ub-f1">{{n.creditTime}}</div>
+                                </div>
+                            </div>
+                    </li>
+                    <!-- <div  style="text-align:center;font-size: 0.18rem;display:none"></div> -->
+                </ul> 
                 
 		  
 			</mt-loadmore>
@@ -246,9 +246,9 @@
 
             line-height: 0.8rem;
         }
-        ul {
+        .listStyle {
 
-            li {
+            .stylea {
                 font-size: 0.3rem;
                 margin-top: 0.1rem;
                 padding-bottom: 0.1rem;
