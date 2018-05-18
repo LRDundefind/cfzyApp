@@ -219,7 +219,6 @@
                 margin-top: 0.35rem;
                 .right-icon {
                     width: 0.18rem;
-                    padding-top: 0.3294rem;
                     padding-left: 0.24rem;
                 }
             }
