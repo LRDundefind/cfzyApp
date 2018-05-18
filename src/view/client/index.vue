@@ -19,39 +19,44 @@
 				:bottom-method="loadBottom"
 				:bottom-all-loaded="allLoaded"
 				ref="loadmore">
-
-                <div v-for="n in listStore" :key='n.id' class="main-list" @click="goDetail(n.cid, n.nickname)">
-                    <div class="ub ub-ac heade">
-                        <div class='lis-icon ub-img im'>
-                            <img v-show="n.headImg!=''" :src="imgpath+n.headImg" >
-                            <img v-show="n.headImg==''" src="../../assets/my/my_head.png" alt="">
+                <div
+                        infinite-scroll-disabled="loading"
+					    infinite-scroll-distance="10"
+                >
+                        <div  v-for="n in listStore" :key='n.id' class="main-list" @click="goDetail(n.cid, n.nickname)">
+                        <div class="ub ub-ac heade">
+                            <div class='lis-icon ub-img im'>
+                                <img v-show="n.headImg!=''" :src="imgpath+n.headImg" >
+                                <img v-show="n.headImg==''" src="../../assets/my/my_head.png" alt="">
+                            </div>
+                            <div class='ub-f1 ut-s'>{{n.nickname}}</div>
+                            <!-- 正常客户状态 -->
+                            <div class=' res8 lis-sw ub-img im2' v-show="n.status=='Y'"></div>
+                            <!-- 平台状态 -->
+                            <div class=' res8 lis-sw ub-img im3' v-show="n.sys_status=='Y'"></div>
                         </div>
-                        <div class='ub-f1 ut-s'>{{n.nickname}}</div>
-                        <!-- 正常客户状态 -->
-                        <div class=' res8 lis-sw ub-img im2' v-show="n.status=='Y'"></div>
-                        <!-- 平台状态 -->
-                        <div class=' res8 lis-sw ub-img im3' v-show="n.sys_status=='Y'"></div>
+                        <ul >
+                            <li class="ub ub-pj">
+                                <div class="ub-f1">消费次数</div>
+                                <div class="ub-f1">{{n.consum_num}}次</div>
+                            </li>
+                            <li class="ub ub-pj">
+                                <div class="ub-f1">最后消费时间</div>
+                                <div class="ub-f1">{{n.consum_ltime}}</div>
+                            </li>
+                            <li class="ub ub-pj">
+                                <div class="ub-f1">赊账总金额</div>
+                                <div class="ub-f1">{{n.notPayAmount}}元</div>
+                            </li>
+                            <li class="ub ub-pc">
+                                <div class="ub-f1">赊账最长时间</div>
+                                <div class="ub-f1">{{n.creditTime}}</div>
+                            </li>
+                        </ul>
                     </div>
-                    <ul >
-                        <li class="ub ub-pj">
-                            <div class="ub-f1">消费次数</div>
-                            <div class="ub-f1">{{n.consum_num}}次</div>
-                        </li>
-                        <li class="ub ub-pj">
-                            <div class="ub-f1">最后消费时间</div>
-                            <div class="ub-f1">{{n.consum_ltime}}</div>
-                        </li>
-                        <li class="ub ub-pj">
-                            <div class="ub-f1">赊账总金额</div>
-                            <div class="ub-f1">{{n.notPayAmount}}元</div>
-                        </li>
-                        <li class="ub ub-pc">
-                            <div class="ub-f1">赊账最长时间</div>
-                            <div class="ub-f1">{{n.creditTime}}</div>
-                        </li>
-                    </ul>
-                </div>
-                <div  style="text-align:center;font-size: 0.18rem;display:none"></div>
+                    <div  style="text-align:center;font-size: 0.18rem;display:none"></div>
+                    </div> 
+                
 		  
 			</mt-loadmore>
         </div>
@@ -168,15 +173,26 @@
                 this.$router.push({name: 'index_change/create', params: {type: 'create'}})
             },
             goDetail(id, nickname){
-                if (this.type == 'order') {
+                // 这是从新增跳转过来的，进入到下单页面
+                if(Cookies.get('froms')){
                     Cookies.set('customerId',id);
                     Cookies.set('customerName',nickname);
-                    //下单
+                    Cookies.remove('froms');
                     this.$router.push({name: 'order'});
-                } else {
-                    // 客户详情
-                    this.$router.push({name: 'client_detail', params: {ids: id}});
                 }
+                else{
+                    if (this.type == 'order') {
+                        // 这个直接进入的返回到下单页面
+                        Cookies.set('customerId',id);
+                        Cookies.set('customerName',nickname);
+                        //下单
+                        this.$router.push({name: 'order'});
+                    } else {
+                        // 客户详情
+                        this.$router.push({name: 'client_detail', params: {ids: id}});
+                    }
+                }
+                
             }
         }
     }
@@ -223,7 +239,7 @@
         color: #333;
         .heade {
             font-size: 0.4rem;
-            border-bottom: 1px #f0f0f0 solid;
+            border-bottom: 1px #dedede solid;
             padding-bottom: 0.2rem;
         }
         h3 {

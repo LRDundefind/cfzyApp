@@ -1,6 +1,6 @@
 <template>
-    <div class="page-content">
-        <mt-header fixed title="客户">
+    <div class="page-content" style="top:0;">
+        <mt-header title="客户">
             <router-link to="/client" slot="left">
                 <mt-button icon="back"> </mt-button>
             </router-link>
@@ -501,8 +501,8 @@
                                         this.tiopmessage='客户添加成功'
                                         setTimeout(() => {
                                             if(Cookies.get('froms')=='Y'){
-                                                this.$router.push({name: 'order'});
-                                                Cookies.remove('froms');
+                                               this.$router.push({name: 'client'});
+                                                // Cookies.remove('froms');
                                             }
                                             else{
                                                 this.$router.push({name: 'client'});
@@ -552,8 +552,8 @@
                                          this.tiopmessage='客户添加成功'
                                         setTimeout(() => {
                                             if(Cookies.get('froms')=='Y'){
-                                                this.$router.push({name: 'order'});
-                                                Cookies.remove('froms');
+                                                 this.$router.push({name: 'client'});
+                                                // Cookies.remove('froms');
                                             }
                                             else{
                                                 this.$router.push({name: 'client'});

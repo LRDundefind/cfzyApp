@@ -2,11 +2,11 @@
 	<div class="page-content">
 		<div class="pos-r wxy">
 		<mt-header fixed  title="下单">
-			<router-link to="/ownerChoice" slot="left">
+			<!--<router-link to="/ownerChoice" slot="left">
                 <span class="c-3 f-s-16">{{gearName}}</span>
                 <img class="header_img" src="../../assets/index/down_icon.png"/>
-            </router-link>
-            <div @click="szRulesDialoags" slot="right">
+            </router-link>-->
+            <div @click="szRulesDialoags" slot="right" v-if="!showAutograph">
                 <span class="c-3 f-s-16">赊账规则</span>
             </div>
 		</mt-header>
@@ -378,6 +378,7 @@ export default {
 						this.goodsInfo[i]['weight'] = null; 
 						this.goodsInfo[i]['goodAmount'] = null;
                         this.goodsInfo[i]['netWeight'] = null; //净重 用于页面展示
+                        this.goodsInfo[i]['slushing'] = this.goodsInfo[i].slushing; //减水重 用于页面展示
                         this.goodsInfo[i]['packCost'] = null;
 						this.goodsInfo[i]['weighCost'] = null; //过磅费，表格里不展示，下方列表展示
 						this.goodsInfo[i]['slabWeight'] = null; //平板重 提交订单所需，列表不展示
@@ -440,6 +441,7 @@ export default {
 				this.goodsnum = this.goodsInfo[i].goodNum;
 				this.goodsweight = this.goodsInfo[i].weight;
 				this.pbweight = this.goodsInfo[i].slabWeight;
+				this.slushing = this.goodsInfo[i].slushing;
 				
 			}
 		},
@@ -531,6 +533,7 @@ export default {
 					     	weight:this.goodsweight,
 					     	goodAmount: null, //货品金额
 					     	netWeight: null, //净重
+					     	slushing: this.slushing, //减水重
 					     	packCost: null, //货品打包费
 					     	weighCost: null, //货品过磅费 下方列表展示
 					     	slabWeight:this.pbweight, //提交订单所需，列表不展示
@@ -585,6 +588,7 @@ export default {
 							     	weight:this.goodsweight,
 							     	goodAmount:response.data.results.goodAmount, //货品金额
 							     	netWeight:response.data.results.netWeight, //净重
+					     			slushing: this.slushing, //减水重
 							     	packCost:response.data.results.packCost, //货品打包费
 							     	weighCost:response.data.results.weighCost, //货品过磅费 下方列表展示
 							     	slabWeight:this.pbweight, //提交订单所需，列表不展示
@@ -1080,7 +1084,7 @@ i{
 	left: 0;
 	top: 0;
 	background: rgba(0, 0, 0, 0.6);
-	z-index: 99;
+	z-index: 999;
 	.dialoag_cont{
 		width: 80%;
 		margin: 3rem auto 0;
