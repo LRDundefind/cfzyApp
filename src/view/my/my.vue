@@ -235,15 +235,39 @@
             },
             //跳转到修改密码
             goPassword(){
-                this.$router.push({name: 'alterPassword'})
+                if(this.black == 'nostall'){
+                    Toast({
+                        message: '当前档位未上班！',
+                        position: 'middle',
+                        duration: 5000
+                    });
+                }else {
+                    this.$router.push({name: 'alterPassword'})
+                }
             },
             //跳转到意见反馈
             gofeedBack(){
-                this.$router.push({name: 'feedBack'})
+                if(this.black == 'nostall'){
+                    Toast({
+                        message: '当前档位未上班！',
+                        position: 'middle',
+                        duration: 5000
+                    });
+                }else {
+                    this.$router.push({name: 'feedBack'})
+                }
             },
             //跳转到关于我们
             goAbout(){
-                this.$router.push({name: 'about'})
+                if(this.black == 'nostall'){
+                    Toast({
+                        message: '当前档位未上班！',
+                        position: 'middle',
+                        duration: 5000
+                    });
+                }else{
+                    this.$router.push({name: 'about'})
+                }
             },
             //退出登录
             goLogin(){
@@ -261,7 +285,15 @@
             },
             //跳转到个人编辑页
             goDetails(){
-                this.$router.push({name: 'personDetails'})
+                if(this.black == 'nostall'){
+                    Toast({
+                        message: '当前档位未上班！',
+                        position: 'middle',
+                        duration: 5000
+                    });
+                }else {
+                    this.$router.push({name: 'personDetails'})
+                }
             },
         }
     }
