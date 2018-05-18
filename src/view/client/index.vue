@@ -67,6 +67,7 @@
 </template>
 
 <script>
+    import { InfiniteScroll } from 'mint-ui';
     import searchBox from '@/components/searchBox/search'
     import noDate from '@/components/noData/noDate'
     import { client } from '@/services/apis/client'
