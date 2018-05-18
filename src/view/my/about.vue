@@ -5,7 +5,7 @@
         </mt-header>
         <div class="page-main page-loadmore-wrappe topScroll">
             <div class="about_cont">
-                {{aboutList.sell_protocol}}
+                {{aboutList.sys_about}}
             </div>
         </div>
     </div>
