@@ -168,7 +168,7 @@
 
         .table-list {
             font-size:0.26rem;
-            padding: 0.32rem 0.3rem 0;
+            padding: 0.32rem 0.3rem 0.2rem;
             background: #fff;
             table {
                 width: 100%;
