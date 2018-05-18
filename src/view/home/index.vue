@@ -1,6 +1,7 @@
 <template>
     <div class="main">
         <div class="pos-r wxy">
+
             <mt-header fixed title="首页" style="z-index:400;">
                 <router-link to="/ownerChoice" slot="left">
                     <span class="c-3 f-s-16">{{gearName}}</span>

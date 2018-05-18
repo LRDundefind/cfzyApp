@@ -22,7 +22,7 @@ const temporaryOrderDetail = resolve => require([ '@/view/home/temporaryOrderDet
 //车次列表
 const settlementList = resolve => require([ '@/view/home/settlementList'],resolve)
 //车次详情
-const settlementDetail = resolve => require([ '@/view/home/settlementDetail'],resolve)
+const settlementDetail = resolve => require([ '@/view/home/settlementDe'],resolve)
 
 export default [{
 	path: 'home',
