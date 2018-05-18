@@ -6,42 +6,40 @@
             </router-link>
         </mt-header>
         <!--车次结算详情-->
-        <div class="page-main page-loadmore-wrappe topScroll">
+        <div class="page-main page-loadmore-wrappe topScroll settlement-detail">
 
-            <div class=" settlement-detail">
-                <div class="ub detail-bottom">
-                    <div class="ub-f3" style="width: 1rem ;word-break: break-all">{{trainsNum}}</div>
-                    <div class="number ub-f2"><span class="carNumber">车牌号</span>{{plateNum}}</div>
-                </div>
-                <div class="detail-top ub ub-ac">
-                    <div class="ub-f1 time">入库时间</div>
-                    <div class="number">{{putStorageTime}}</div>
+            <div class="ub detail-bottom">
+                <div class="ub-f3" style="width: 1rem ;word-break: break-all">{{trainsNum}}</div>
+                <div class="number ub-f2"><span class="carNumber">车牌号</span>{{plateNum}}</div>
+            </div>
+            <div class="detail-top ub ub-ac">
+                <div class="ub-f1 time">入库时间</div>
+                <div class="number">{{putStorageTime}}</div>
 
 
-                </div>
-                <div class="table-list">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>品名</th>
-                            <th>库存量</th>
-                            <th>销售量</th>
-                            <th>损坏量</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="item in goodsList" :key='item.tid'>
-                            <td>{{item.goodName}}</td>
-                            <td>{{item.surplusNum}}</td>
-                            <td>{{item.sell_quantity}}</td>
-                            <td>{{item.lossNum}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="login_cont">
-                    <div @click="settlement" class="loginbtn">申请结算</div>
-                </div>
+            </div>
+            <div class="table-list">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>品名</th>
+                        <th>库存量</th>
+                        <th>销售量</th>
+                        <th>损坏量</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="item in goodsList" :key='item.tid'>
+                        <td>{{item.goodName}}</td>
+                        <td>{{item.surplusNum}}</td>
+                        <td>{{item.sell_quantity}}</td>
+                        <td>{{item.lossNum}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="login_cont">
+                <div @click="settlement" class="loginbtn">申请结算</div>
             </div>
         </div>
     </div>
@@ -119,19 +117,21 @@
     i {
         font-style: normal;
     }
-    .topScroll{
+
+    .topScroll {
         top: 0.8rem;
         bottom: 0;
     }
-    .page-loadmore-wrappe{
+
+    .page-loadmore-wrappe {
         overflow: auto;
-        -webkit-overflow-scrolling : touch;
+        -webkit-overflow-scrolling: touch;
     }
+
     .settlement-detail {
-        font-size: 0.26rem;
         color: #4c4c4c;
         margin-top: 0.2rem;
-        .detail-height{
+        .detail-height {
         }
         .detail-top {
             line-height: 0.98rem;
@@ -150,7 +150,7 @@
             }
         }
 
-        .detail-bottom{
+        .detail-bottom {
             margin-bottom: 0.2rem;
             padding: 0.3rem 0.3rem;
             background: #fff;
@@ -165,7 +165,6 @@
                 }
             }
         }
-
 
         .table-list {
             padding: 0.32rem 0.3rem 0;
