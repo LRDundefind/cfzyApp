@@ -29,11 +29,11 @@
                 </p>
                 <p class="clearfix" @click="goPhone()">手机号<input type="text" v-model="personalData.phone" readonly></p>
             </div>
+            <div class="login_cont">
+                <div @click="savePersonal" class="loginbtn">保存</div>
+            </div>
+        </div>
 
-        </div>
-        <div class="login_cont">
-            <div @click="savePersonal" class="loginbtn">保存</div>
-        </div>
     </div>
 </template>
 
@@ -373,15 +373,14 @@
     }
 
     .loginbtn {
-        width: 80% !important;
-        @include login_btn(fixed);
+        @include login_btn;
         background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
         margin: 0 !important;
     }
 
     .login_cont {
         width: 5.5rem;
-        margin: 0 auto;
+        margin: 4rem auto 0;
     }
 
 </style>

@@ -6,24 +6,37 @@
         <search-box @getSmeage="searchBlack" :message='placeMessage' ref="search"/>
 
         <div class="page-main page-loadmore-wrapper topScroll">
-            <div v-for="item in listData" :key='item.cid' class="main-list" @click="goDetail(item.cid)">
-                <ul class="ub">
-                    <li class="ub-f1" style="padding-top: 0.3rem">
-                        <img class="black-img" v-show="item.headImg!=''" :src="imgpath+item.headImg">
-                        <img class="black-img" v-show="item.headImg==''" src="../../assets/my/my_head.png" alt="">
-                    </li>
-                    <li class="ub-f2">
-                        <div class="name">{{item.cusName}}</div>
-                        <div class="reason">拉黑原因：{{item.blockingReason}}</div>
-                    </li>
-                    <li class="ub-f3 ub ub-pe">
-                        <div>
-                            <div class="date">{{item.createTime}}</div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
             <noDate v-if="noWdata"></noDate>
+            <mt-loadmore
+                    v-else
+                    :auto-fill="false"
+                    :top-method="loadTop"
+                    :bottom-method="loadBottom"
+                    :bottom-all-loaded="allLoaded"
+                    ref="loadmore">
+                <!--<noDate v-if="noWdata"></noDate-->
+
+                <div v-for="item in listStore" :key='item.cid' class="main-list" @click="goDetail(item.cid)">
+                    <ul class="ub">
+                        <li class="ub-f1" style="padding-top: 0.3rem">
+                            <img class="black-img" v-show="item.headImg!=''" :src="imgpath+item.headImg">
+                            <img class="black-img" v-show="item.headImg==''" src="../../assets/my/my_head.png" alt="">
+                        </li>
+                        <li class="ub-f2">
+                            <div class="name">{{item.cusName}}</div>
+                            <div class="reason">拉黑原因：{{item.blockingReason}}</div>
+                        </li>
+                        <li class="ub-f3 ub ub-pe">
+                            <div>
+                                <div class="date">{{item.createTime}}</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div v-if="allLoaded" class="m-t-10" style="text-align:center;font-size: 0.18rem;display: none">没有更多数据了</div>
+            </mt-loadmore>
+
+
         </div>
     </div>
 </template>
@@ -44,11 +57,14 @@
                 wrapperHeight: 0,//容器高度
                 noData: false,
                 params: {
-                    search: ''
+                    current_page: 1,
+                    page_size: 10,
+                    search:''
                 },
-                listData: [],
+                listStore: [],
+                listdata:null,
                 imgpath: process.env.BASE_PATH,
-                noWdata:false,
+                noWdata: false,
 
             }
         },
@@ -73,18 +89,59 @@
                     this.$router.push({name: 'home'});
                 }
             },
-            searchBlack(msg){
-                this.params.search = msg;
-                this.listData = [];
+
+                searchBlack(msg){
+                    Indicator.open({
+                        text: 'Loading...',
+                        spinnerType: 'fading-circle'
+                    });
+                    this.params.current_page = 1;
+                    this.params.search=msg;
+                    this.listStore = [];
+                    this.getList();
+                },
+
+            loadTop(){
+                Indicator.open({
+                    text: 'Loading...',
+                    spinnerType: 'fading-circle'
+                });
+                this.listStore = [];
+                this.params.current_page = 1;
+                this.getList();
+                this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
+                this.allLoaded = false;//下拉刷新时解除上拉加载的禁用
+            },
+            loadBottom() {
+                Indicator.open({
+                    text: 'Loading...',
+                    spinnerType: 'fading-circle'
+                });
                 this.getList();
             },
             getList(){
                 home.blacklist(this.params).then(response => {
-                    this.listData = response.data.results;
-                    if(this.listData==''){
+                    this.listdata = response.data.results;
+                    if(this.listdata==''&& this.params.current_page == 1){
                         this.noWdata=true;
                     }
                     app.Cwaiting();
+                    if(this.listdata.length==this.params.page_size){
+                        //判断是否应该加载下一页
+                        this.params.current_page+=1 ;
+                    }else{
+                        //禁用上拉加载
+                        this.allLoaded = true;
+                    }
+                    if (this.listdata) {
+                        this.listStore.push(...this.listdata)
+
+                    }
+                    if(this.listStore==''){
+                        this.noWdata=true;
+                        app.Cwaiting();
+                    }
+                    Indicator.close();
                 })
             },
 

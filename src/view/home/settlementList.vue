@@ -22,7 +22,7 @@
                         </div>
                         <div class="list-bottom  ">
                             <div class="ub-ac ub">
-                                <div class="ub-f2">入库时间&nbsp;&nbsp;{{item.putStorageTime}}</div>
+                                <div class="ub-f2">入库时间&nbsp;&nbsp;{{item.putStorageTime | capitalize}}</div>
                                 <div class="btn">申请结算</div>
                             </div>
                         </div>
@@ -65,6 +65,12 @@
             this.getList();
             app.Vwaiting();
         },
+        filters: {
+            capitalize: function (value) {
+                return value.slice(-6);
+            }
+        },
+
         methods: {
             getList(){
                 damage.damageList(this.params).then(response => {

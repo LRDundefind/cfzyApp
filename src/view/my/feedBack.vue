@@ -15,7 +15,10 @@
                 <input v-model="phone" placeholder="请输入您的联系方式" class="phone ">
             </div>
 
-            <div @click="submit" class="findbtn">提交</div>
+            <div class="login_pass">
+                <div @click="submit" class="loginbtn">提交</div>
+            </div>
+
         </div>
     </div>
 
@@ -61,11 +64,14 @@
             }
         }
 
-
-        .findbtn {
-            width: 80% !important;
-            @include login_btn(fixed);
-            background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
+        .login_pass{
+            width: 5.5rem;
+            margin: 4.5rem auto 0;
+            .loginbtn {
+                @include login_btn;
+                background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
+                margin: 0 !important;
+            }
         }
     }
 </style>

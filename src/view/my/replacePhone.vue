@@ -4,25 +4,41 @@
         <mt-header fixed title="修改手机号">
             <mt-button icon="back" @click="goPersonal" slot="left"></mt-button>
         </mt-header>
-
-        <div class="login_cont m-t-20">
-            <div class="bg1">
-                <span class="usericonBg"></span>
-                <input v-model="phoneNumber" type="Number" placeholder="手机号" class="usericon ">
+        <div class="page-main page-loadmore-wrappe topScroll">
+            <div class="login_cont m-t-20">
+                <div class="bg1">
+                    <span class="usericonBg"></span>
+                    <input v-model="phoneNumber" type="Number" placeholder="手机号" class="usericon ">
+                </div>
             </div>
-            <div>
+            <div class="login_phone">
                 <div class="text">单个手机仅可用作一个账户使用</div>
+                <div @click="loginBtn" class="loginbtn">更改手机号</div>
             </div>
-            <div @click="loginBtn" class="findbtn">更改手机号</div>
+
+
         </div>
 
     </div>
 
 </template>
 <style scoped lang='scss'>
+    .topScroll{
+        top: 0.9rem;
+        bottom: 0.2rem;
+    }
+    .page-loadmore-wrappe{
+        overflow: auto;
+        -webkit-overflow-scrolling : touch;
+    }
     .login_cont {
         width: 5.5rem;
         margin: 0.5rem auto;
+        .loginbtn {
+            @include login_btn;
+            background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
+            margin: 0 !important;
+        }
     }
 
     .bg1 {
@@ -34,25 +50,26 @@
         background-image: url(../../assets/login/dl_yonghuming_icon.png);
     }
 
-    .text {
-        width: 80%;
-        display: block;
-        font-size: 0.2rem;
-        position: fixed;
-        bottom: 2.5rem;
-        left: 1.8rem;
-        color: #999;
+    .login_phone{
+        width: 5.5rem;
+        margin: 8rem auto 0;
+        .text {
+            display: block;
+            font-size: 0.2rem;
+            text-align: center;
+            color: #999;
+            margin-bottom: 0.5rem;
+        }
+        .loginbtn {
+            @include login_btn;
+            background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
+            margin: 0 !important;
+        }
     }
-
     .usericon {
         @include login_input;
     }
 
-    .findbtn {
-        width: 80% !important;
-        @include login_btn(fixed);
-        background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
-    }
 </style>
 <script>
     import {Toast} from 'mint-ui';
@@ -90,7 +107,8 @@
                     });
                 }
                 else {
-                    this.$router.push({name: 'yanzheng',
+                    this.$router.push({
+                        name: 'yanzheng',
                         params: {
                             phone: this.phoneNumber,
                             firstlogin: 'Info',

@@ -49,8 +49,8 @@
 		@include login_input;
     }
     .findbtn{
-        width: 80% !important;
-        @include login_btn(fixed);
+        // width: 80% !important;
+        @include login_btn;
         background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
     }
 </style>

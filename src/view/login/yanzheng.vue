@@ -116,8 +116,7 @@
     }
 
     .findbtn {
-        width: 80% !important;
-        @include login_btn(fixed);
+        @include login_btn;
         background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
     }
     
@@ -267,10 +266,11 @@
                     'str': strEnc(JSON.stringify(datalist), this.auth.key, this.auth.key, this.auth.key)
                 };
                 login.zhuce(params).then(response => {
-                    Cookies.remove('Zname');
-                    Cookies.remove('Zphone');
-                    Cookies.remove('Zpassword');
+                    
                     if (response.data.error_code == '200') {
+                        Cookies.remove('Zname');
+                        Cookies.remove('Zphone');
+                        Cookies.remove('Zpassword');
                         Toast({
                             message: '注册成功',
                             position: 'middle',
