@@ -72,10 +72,11 @@
                     </div>
                 </div>
             </div>
+            <div class="login_cont">
+                <div @click="goLogin" class="loginbtn">退出登录</div>
+            </div>
         </div>
-        <div class="login_cont">
-            <div @click="goLogin" class="loginbtn">退出登录</div>
-        </div>
+
 
     </div>
 
@@ -114,14 +115,13 @@
             }
         }
         .loginbtn {
-            width: 80% !important;
-            @include login_btn(fixed);
+            @include login_btn;
             background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
             margin: 0 !important;
         }
         .login_cont {
             width: 5.5rem;
-            margin: 0 auto;
+            margin: 1.8rem auto 0;
         }
         .list {
             .row {
