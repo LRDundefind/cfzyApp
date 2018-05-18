@@ -2,11 +2,11 @@
 	<div class="page-content">
 		<div class="pos-r wxy">
 		<mt-header fixed  title="下单">
-			<router-link to="/ownerChoice" slot="left">
+			<!--<router-link to="/ownerChoice" slot="left">
                 <span class="c-3 f-s-16">{{gearName}}</span>
                 <img class="header_img" src="../../assets/index/down_icon.png"/>
-            </router-link>
-            <div @click="szRulesDialoags" slot="right">
+            </router-link>-->
+            <div @click="szRulesDialoags" slot="right" v-if="!showAutograph">
                 <span class="c-3 f-s-16">赊账规则</span>
             </div>
 		</mt-header>
@@ -1084,7 +1084,7 @@ i{
 	left: 0;
 	top: 0;
 	background: rgba(0, 0, 0, 0.6);
-	z-index: 99;
+	z-index: 999;
 	.dialoag_cont{
 		width: 80%;
 		margin: 3rem auto 0;
