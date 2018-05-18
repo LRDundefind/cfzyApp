@@ -42,7 +42,9 @@
         },
         methods: {
             getlist(){
-                login.stalls().then(response => {
+                let params = {};
+                login.stalls(params).then(response => {
+
                     if(response.data.results == ''){
 //                        console.log(123);
                     }else {
