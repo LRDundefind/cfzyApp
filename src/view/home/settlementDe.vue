@@ -6,7 +6,7 @@
             </router-link>
         </mt-header>
         <!--车次结算详情-->
-        <div class="page-main page-loadmore-wrappe topScroll settlement-detail">
+        <div class="page-main page-loadmore-wrappe settlement-detail" :style="{ height: wrapperHeight + 'px' }">
 
             <div class="ub detail-bottom">
                 <div class="ub-f3" style="width: 1rem ;word-break: break-all">{{trainsNum}}</div>
@@ -52,6 +52,7 @@
     export default {
         data () {
             return {
+                wrapperHeight: 0,//容器高度
                 item: "",
                 tid: '',//车次id
                 trainsNum: '', //车次信息
@@ -61,6 +62,7 @@
             }
         },
         mounted () {
+            this.wrapperHeight = document.documentElement.clientHeight - 60;
             this.item = this.$route.params.item;
             this.tid = this.item.tid;
             this.trainsNum = this.item.trainsNum;
