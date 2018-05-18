@@ -117,9 +117,9 @@
     i {
         font-style: normal;
     }
-    .page-main{
+    .topScroll{
         top: 0.8rem;
-        bottom: 1.8rem;
+        bottom: 0;
     }
     .page-loadmore-wrappe{
         overflow: auto;
