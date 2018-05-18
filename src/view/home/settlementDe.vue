@@ -13,7 +13,7 @@
                     <div class="ub-f3">{{trainsNum}}</div>
                     <div class="number ub-f2"><span class="carNumber">车牌号</span>{{plateNum}}</div>
                 </div>
-                <div class="detail-height ub ub-ac">
+                <div class="detail-top ub ub-ac">
                     <div class="ub-f1 time">入库时间</div>
                     <div class="number">{{putStorageTime}}</div>
 
@@ -132,9 +132,9 @@
         color: #4c4c4c;
         margin-top: 0.2rem;
         .detail-height{
-            line-height: 0.98rem;
         }
         .detail-top {
+            line-height: 0.98rem;
             margin-bottom: 0.2rem;
             padding: 0 0.3rem;
             background: #fff;
