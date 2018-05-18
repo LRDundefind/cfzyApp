@@ -1084,7 +1084,7 @@ i{
 	left: 0;
 	top: 0;
 	background: rgba(0, 0, 0, 0.6);
-	z-index: 99;
+	z-index: 999;
 	.dialoag_cont{
 		width: 80%;
 		margin: 3rem auto 0;
