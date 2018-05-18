@@ -100,6 +100,7 @@
 
     import { MessageBox , Toast } from 'mint-ui';
     import { client } from '@/services/apis/client'
+    import Cookies from 'js-cookie'
      import Exif from 'exif-js';
     export default {
         data () {
@@ -499,9 +500,9 @@
                                     //     });
                                         this.tiopmessage='客户添加成功'
                                         setTimeout(() => {
-                                            if(Cookies.get('froms')){
-                                                Cookies.remove('froms');
+                                            if(Cookies.get('froms')=='Y'){
                                                 this.$router.push({name: 'order'});
+                                                Cookies.remove('froms');
                                             }
                                             else{
                                                 this.$router.push({name: 'client'});
@@ -550,7 +551,13 @@
                                     //     });
                                          this.tiopmessage='客户添加成功'
                                         setTimeout(() => {
-                                            this.$router.push({name: 'client'});
+                                            if(Cookies.get('froms')=='Y'){
+                                                this.$router.push({name: 'order'});
+                                                Cookies.remove('froms');
+                                            }
+                                            else{
+                                                this.$router.push({name: 'client'});
+                                            }
                                              this.addover=false;
                                         }, 3000)
                                     
