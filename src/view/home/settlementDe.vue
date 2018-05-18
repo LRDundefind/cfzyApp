@@ -9,8 +9,8 @@
         <div class="page-main page-loadmore-wrappe topScroll">
 
             <div class=" settlement-detail">
-                <div class="ub detail-top">
-                    <div class="ub-f3">{{trainsNum}}</div>
+                <div class="ub detail-bottom">
+                    <div class="ub-f3" style="width: 1rem ;word-break: break-all">{{trainsNum}}</div>
                     <div class="number ub-f2"><span class="carNumber">车牌号</span>{{plateNum}}</div>
                 </div>
                 <div class="detail-top ub ub-ac">
@@ -149,6 +149,23 @@
                 }
             }
         }
+
+        .detail-bottom{
+            margin-bottom: 0.2rem;
+            padding: 0.3rem 0.3rem;
+            background: #fff;
+            font-size: 0.3rem;
+            color: #333333;
+            .number {
+                font-size: 0.26rem;
+                color: #4c4c4c;
+                text-align: right;
+                .carNumber {
+                    padding-right: 0.12rem;
+                }
+            }
+        }
+
 
         .table-list {
             padding: 0.32rem 0.3rem 0;
