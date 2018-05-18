@@ -22,10 +22,11 @@
                     <span class="passIconBg"></span>
                     <input v-model="params.confirmPassword" placeholder="确认密码" type="password" class="passIcon ">
                 </div>
-
-                <div @click="alterPass" class="findbtn">更改登录密码</div>
-
             </div>
+            <div class="login_pass">
+                <div @click="alterPass" class="loginbtn">更改登录密码</div>
+            </div>
+
         </div>
     </div>
 
@@ -76,10 +77,17 @@
         @include login_input;
     }
 
-    .loginbtn {
-        @include login_btn;
-        background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
+    .login_pass{
+        width: 5.5rem;
+        margin: 6rem auto 0;
+        .loginbtn {
+            @include login_btn;
+            background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
+            margin: 0 !important;
+        }
     }
+
+
 </style>
 <script>
     import {Toast} from 'mint-ui';
