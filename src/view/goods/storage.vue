@@ -667,7 +667,7 @@
                     color: #4c4c4c;
                     text-align: right;
                     line-height: 0.4rem;
-                    margin-top: 0.35rem
+                    margin-top: 0.3rem
                 }
                 .upload {
                     color: #33d570;

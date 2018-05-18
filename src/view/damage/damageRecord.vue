@@ -8,7 +8,10 @@
         <div class="page-main page-loadmore-wrappe topScroll"  >
             <div class="" v-show="showList==false">
                 <div class="main-list">
-                    <p class="clearfix">货品分类
+                    <p class="clearfix">
+
+                        <span style="display: block;float: left">货品分类</span>
+
                         <!--<span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>-->
                         <span class="name">{{goods.goodName}}
                         </span>
@@ -16,13 +19,16 @@
                 </div>
 
                 <div class="main-list">
-                    <p class="clearfix">数量
+                    <p class="clearfix">
+                        <span style="display: block;float: left">数量</span>
                         <input type="text" placeholder="请输入损坏数量" v-model="goods.quantity" readonly
                                v-if="goods.goodName ==''">
                         <input type="number" placeholder="请输入损坏数量" v-model="goods.quantity" v-else>
                     </p>
 
-                    <p class="clearfix">损坏原因
+                    <p class="clearfix">
+                        <span style="display: block;float: left">损坏原因</span>
+
                         <input type="text" placeholder="请输入损坏原因" v-model="goods.lossRemark" readonly
                                v-if="goods.goodName ==''">
                         <input type="text" placeholder="请输入损坏原因" v-model="goods.lossRemark" v-else>
@@ -201,7 +207,6 @@
         color: #333;
         font-size: 0.28rem;
         line-height: 0.4rem;
-        margin-top: 0.35rem;
         > p {
             border-bottom: 1px #f0f0f0 solid;
 
