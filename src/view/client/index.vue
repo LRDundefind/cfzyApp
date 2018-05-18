@@ -238,7 +238,7 @@
         color: #333;
         .heade {
             font-size: 0.4rem;
-            border-bottom: 1px #f0f0f0 solid;
+            border-bottom: 1px #dedede solid;
             padding-bottom: 0.2rem;
         }
         h3 {

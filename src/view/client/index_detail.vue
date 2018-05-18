@@ -175,7 +175,7 @@
         font-size: 0.28rem;
         line-height: 1rem;
         > p {
-            border-top: 1px #f0f0f0 solid;
+            border-top: 1px #dedede solid;
             > span {
                 float: right;
                 color: #4c4c4c;
