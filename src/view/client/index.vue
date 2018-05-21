@@ -9,8 +9,8 @@
         <div :class= "[ this.$route.params.type=='order'? 'maintop0' : 'maintop'] ">
             <search-box  @getSmeage='searchstart' :message='placeMessage'></search-box>
             
-            <!-- :style="{ height: wrapperHeight + 'px' }" -->
-            <div class="page-main page-loadmore-wrappe "  :class= "[ this.$route.params.type=='order'? 'topScroll0' : 'topScroll'] ">
+            <!--  -->
+            <div class="page-main page-loadmore-wrappe "  :class= "[ this.$route.params.type=='order'? 'topScroll0' : 'topScroll'] " :style="{ height: wrapperHeight + 'rem' }">
              <noDate v-if="noWdata"></noDate>  
             <mt-loadmore 
                 v-else
@@ -100,7 +100,13 @@
             noDate
         },
         mounted () {
-            this.wrapperHeight = document.documentElement.clientHeight - this.heightNum;
+            if(this.$route.params.type=='order'){
+                this.wrapperHeight = document.documentElement.clientHeight/50 - 2.2;
+            }
+            else{
+                this.wrapperHeight = document.documentElement.clientHeight/50 - 3.3;
+            }
+            
 
             this.type = this.$route.params.type || false;
         },
