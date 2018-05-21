@@ -118,7 +118,17 @@
                 padding: 0.22rem 0 0.34rem 0;
                 color: #ffffff;
                 font-size: 0.26rem;
-                border-bottom: 1px solid;
+            }
+            .name:after{
+                content: '';
+                position: absolute;
+                left: 50%;
+                top: 0.9rem;
+                display: inline-block;
+                width: 0.58rem;
+                height: 1px;
+                background-color: white;
+                transform: translateX(-50%);
             }
         }
         .loginbtn {
