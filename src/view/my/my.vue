@@ -2,7 +2,8 @@
     <div class="my">
         <div class="b-c-f">
             <div class="top ">
-                <div class="leftIcon" @click="goHome">
+                <div  @click="goHome" class="smallIcon" style="" >
+                    <span class="leftIcon"></span>
                 </div>
                 <div class="information">
                     <div class="ub ub-pc">
@@ -92,12 +93,18 @@
             background-image: url("../../assets/my/my_background.png");
             background-repeat: no-repeat;
             height: 4.52rem;
-
+            .smallIcon{
+                min-height: 0.32rem;
+                width: 0.64rem;
+                padding-right: 0.32rem;
+                padding-top: 0.22rem
+            }
             .information {
-                padding-top: 13.6%;
+                padding-top: 10.2%;
             }
             .leftIcon {
-                width: 0.22rem !important;
+                width: 0.32rem !important;
+                height: 0.32rem !important;
                 left: 0.3rem !important;
                 @include login_input_icon;
                 background-image: url(../../assets/index/left_icon.png);
