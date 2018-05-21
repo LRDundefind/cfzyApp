@@ -54,7 +54,7 @@
         </div>
         <div class='update clearfix' v-else>
             <mt-button type="primary" :disabled="deleteDisabled == 'edit'" size="large" class='f-l'
-                       @click="addGoods('delete')">删除
+                       @click="deleteGoods('delete')">删除
             </mt-button>
             <mt-button type="primary" size="large" class='f-l' @click="addGoods('add')">确定</mt-button>
         </div>
@@ -63,7 +63,7 @@
 </template>
 
 <script>
-    import {Toast} from 'mint-ui';
+    import {MessageBox, Toast} from 'mint-ui';
     import {damage} from '@/services/apis/damage.api'
     import {keyValue} from '@/services/apis/key-value';
 
@@ -122,6 +122,16 @@
             showType(){
                 this.showList = true;
             },
+
+            deleteGoods(){
+                //删除货品
+                    MessageBox.confirm('确认删除？', '').then(() => {
+                        this.addGoods('delete');
+                    }, () => {
+
+                    });
+            },
+
             //添加货品列表
             addGoods(type){
                 console.log(type);
