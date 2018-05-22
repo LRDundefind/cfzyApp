@@ -6,11 +6,13 @@
                 <div class="top ">
                     <div class="ub ub-pc p-t-10">
                         <div class="c-f f-s-18 ">完善用户资料</div>
-                        <div @click="goMy" class="leftIcon"></div>
+                        <div @click="goMy" >
+                            <span class="leftIcon"></span>
+                        </div>
                     </div>
                     <div class="ub ub-pc">
                         <div class="sc">
-                            <div style="opacity: 0" class="picture"
+                            <div style="opacity: 0;display: none" class="picture"
                                  :style="'backgroundImage:url('+headerImage+')'"></div>
                             <input type="file" id="upload" accept="image" @change="upload1" style="opacity: 0">
                             <div>
@@ -338,8 +340,10 @@
         background-repeat: no-repeat;
         height: 4.52rem;
         .leftIcon {
-            width: 0.22rem !important;
+            width: 0.32rem !important;
+            height: 0.32rem !important;
             left: 0.3rem !important;
+            padding-right: 0.32rem;
             @include login_input_icon;
             background-image: url(../../assets/index/left_icon.png);
         }
@@ -347,6 +351,7 @@
             width: 1.24rem;
             height: 1.24rem;
             border-radius: 50%;
+            margin-top: 0.9rem;
         }
     }
 
@@ -364,7 +369,8 @@
                 float: right;
                 color: #4c4c4c;
                 text-align: right;
-                line-height: 1rem;
+                line-height: 0.4rem;
+                margin-top: 0.35rem;
             }
         }
         > p:nth-child(1) {

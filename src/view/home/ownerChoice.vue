@@ -34,7 +34,9 @@
         },
         methods: {
             getList(){
-                let params = {};
+                let params = {
+                    tfCheck:'N'
+                };
                 home.gearList(params).then(response => {
                     this.ownerList = response.data.results;
 //                    console.log(response.data.results);

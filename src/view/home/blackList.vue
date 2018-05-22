@@ -44,7 +44,7 @@
 <script>
     import searchBox from '@/components/searchBox/search'
     import {home} from '@/services/apis/home.api'
-    import {Loadmore, Indicator} from 'mint-ui'
+    import {Loadmore, Indicator,Toast} from 'mint-ui'
     import noDate from '@/components/noData/noDate'
 
     export default {
@@ -146,7 +146,15 @@
             },
 
             goDetail(cid){
-                this.$router.push({name: 'client_detail', params: {ids: cid, come: 'black'}});
+                if (this.black == 'nostall') {
+                    Toast({
+                        message: '当前档位未上班！',
+                        position: 'middle',
+                        duration: 5000
+                    });
+                }else {
+                    this.$router.push({name: 'client_detail', params: {ids: cid, come: 'black'}});
+                }
             }
 
         }

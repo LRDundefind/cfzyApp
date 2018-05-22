@@ -20,55 +20,57 @@
             <mt-tab-item id="goods">查看还款记录</mt-tab-item>
         </mt-navbar>
         <mt-tab-container>
-            <!--消费记录-->
-            <div v-if="selected == 'basic'">
+            <div class="page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }">
+                <!--消费记录-->
+                <div v-if="selected == 'basic'">
 
-                <!--<search-box @getSmeage="searchBlack" :msg="msg" ref="search"/>-->
+                    <!--<search-box @getSmeage="searchBlack" :msg="msg" ref="search"/>-->
 
-                <ul class="order-record">
-                    <noDate v-show="consumeData==''"></noDate> 
-                    <li v-for="item in consumeData" :key="item.id" @click="ordersDetail(item.oid)">
-                        <div class="ub list-top">
-                            <span class="ub-f1">订单号 {{item.orderNo}}</span>
-                            <i class="c-6">{{item.status}}</i>
-                        </div>
-                        <div class="ub list-bottom">
-                            <span class="ub-f1 c-6">{{item.placeOrderTime}}</span>
-                            <i>{{item.salesAmount}}</i>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <!--货品信息-->
-            <div v-if="selected == 'goods'">
-                <noDate v-show="repaymentData==''"></noDate> 
-                <ul class="pay-list">
-                    <!-- <li class="pay-total ub ub-pj">
-                        <div class="ub ub-ac">
-                            <span class="ub-f1 c-3">赊账总金额</span>
-                            <i class="c-6">￥30000</i>
-                        </div>
-                        <div class="ub ub-ac">
-                            <span class="ub-f1 c-3">待还款金额</span>
-                            <i class="c-6">￥30000</i>
-                        </div>
-                    </li> -->
-                    <li v-for="item in repaymentData" :key="item.id">
-                        <div class="ub list-t">
-                            <div class="pay">还款金额</div>
-                            <div class="edu ub-f1">{{item.refundAmount}}</div>
-                            <div class="type">{{item.refundType}}</div>
-                        </div>
-                        <div class="ub list-c">
-                            <div class="data">还款日期</div>
-                            <div class="datatime">{{item.refundTime}}</div>
-                        </div>
-                        <div class="ub list-b">
-                            <div class="remarks c-6">备注</div>
-                            <div class="info ub-f1 c-6">{{item.remark}}</div>
-                        </div>
-                    </li>
-                </ul>
+                    <ul class="order-record">
+                        <noDate v-show="consumeData==''"></noDate>
+                        <li v-for="item in consumeData" :key="item.id" @click="ordersDetail(item.oid)">
+                            <div class="ub list-top">
+                                <span class="ub-f1">订单号 {{item.orderNo}}</span>
+                                <i class="c-6">{{item.status}}</i>
+                            </div>
+                            <div class="ub list-bottom">
+                                <span class="ub-f1 c-6">{{item.placeOrderTime}}</span>
+                                <i>{{item.salesAmount}}</i>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!--货品信息-->
+                <div v-if="selected == 'goods'">
+                    <noDate v-show="repaymentData==''"></noDate>
+                    <ul class="pay-list">
+                        <!-- <li class="pay-total ub ub-pj">
+                            <div class="ub ub-ac">
+                                <span class="ub-f1 c-3">赊账总金额</span>
+                                <i class="c-6">￥30000</i>
+                            </div>
+                            <div class="ub ub-ac">
+                                <span class="ub-f1 c-3">待还款金额</span>
+                                <i class="c-6">￥30000</i>
+                            </div>
+                        </li> -->
+                        <li v-for="item in repaymentData" :key="item.id">
+                            <div class="ub list-t">
+                                <div class="pay">还款金额</div>
+                                <div class="edu ub-f1">{{item.refundAmount}}</div>
+                                <div class="type">{{item.refundType}}</div>
+                            </div>
+                            <div class="ub list-c">
+                                <div class="data">还款日期</div>
+                                <div class="datatime">{{item.refundTime}}</div>
+                            </div>
+                            <div class="ub list-b">
+                                <div class="remarks c-6">备注</div>
+                                <div class="info ub-f1 c-6">{{item.remark}}</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
 
         </mt-tab-container>
@@ -119,6 +121,13 @@
 
         mounted () {
             
+        },
+        computed:{
+            wrapperHeight:function(){
+                let height = 0;
+                height = document.documentElement.clientHeight - 120;
+                return height;
+            }
         },
         methods: {
             //初始化数据--查看消费记录
@@ -197,7 +206,11 @@
     i {
         font-style: normal;
     }
-
+    .page-loadmore-wrappe{
+        width:100%;
+        overflow: scroll;
+        -webkit-overflow-scrolling : touch;
+    }
     .searchBox {
         margin-bottom: 0.2rem;
     }
