@@ -51,7 +51,7 @@
                         </div>
 
                         <div class="basic-list">
-                            <p class="clearfix">车牌号<input type="text" v-model="stall.plateNum"
+                            <p class="clearfix">车牌号<input type="text" maxlength="8" v-model="stall.plateNum"
                                                           :disabled="item.plateNumber != ''"></p>
                             <p class="clearfix">发货地点<input style="width: 80%" type="text" v-model="stall.startAddress"
                                                            :disabled="item.sourceAddr != ''"></p>
