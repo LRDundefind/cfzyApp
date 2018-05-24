@@ -8,18 +8,18 @@
                 <!--<img class="header_icon" src="../../assets/index/down_icon.png"/>-->
 			<!--</router-link>-->
 		</mt-header>
-		<ul class="pay-list" v-if="payList!=''">
-			<li class="pay-total ub ub-pj">
-				<div class="ub ub-ac">
-					<span class="ub-f1 c-3">赊账总金额</span>
-					<i class="c-6">￥{{payList.noPayAmount}}</i>
-				</div>
-				<div class="ub ub-ac">
-					<span class="ub-f1 c-3">还款总金额</span>
-					<i class="c-6">￥{{payList.creditAmount}}</i>
-				</div>
-			</li>
-		</ul>
+		<!--<ul class="pay-list" v-if="payList!=''">-->
+			<!--<li class="pay-total ub ub-pj">-->
+				<!--<div class="ub ub-ac">-->
+					<!--<span class="ub-f1 c-3">赊账总金额</span>-->
+					<!--<i class="c-6">￥{{payList.noPayAmount}}</i>-->
+				<!--</div>-->
+				<!--<div class="ub ub-ac">-->
+					<!--<span class="ub-f1 c-3">还款总金额</span>-->
+					<!--<i class="c-6">￥{{payList.creditAmount}}</i>-->
+				<!--</div>-->
+			<!--</li>-->
+		<!--</ul>-->
 		<!--还款记录列表-->
 		<div class="page-main page-loadmore-wrapper">
 			<noDate v-if="counts || count"></noDate>
