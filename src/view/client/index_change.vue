@@ -513,11 +513,12 @@
                                     
                                 }
                                 else{
-                                     Toast({
-                                        message: response.data.error_msg,
-                                        position: 'middle',
-                                        duration: 3000
-                                        });
+                                    //  Toast({
+                                    //     message: ,
+                                    //     position: 'middle',
+                                    //     duration: 3000
+                                    //     });
+                                    this.tiopmessage=response.data.error_msg;
                                     setTimeout(() => {
                                             this.$router.push({name: 'client'});
                                         }, 3000)
@@ -563,11 +564,15 @@
                                     
                                 }
                                 else{
-                                     Toast({
-                                        message: response.data.error_msg,
-                                        position: 'middle',
-                                        duration: 3000
-                                        });
+                                    //  Toast({
+                                    //     message: response.data.error_msg,
+                                    //     position: 'middle',
+                                    //     duration: 3000
+                                    //     });
+                                    this.tiopmessage=response.data.error_msg;
+                                    setTimeout(() => {
+                                            this.$router.push({name: 'client'});
+                                        }, 3000)
                                 }
                             })
                         }
