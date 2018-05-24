@@ -11,7 +11,7 @@
             <div class="login_cont">
                 <div class="bg1">
 					<span class="usericonBg"></span>
-					<input v-model="phoneNumber" placeholder="手机号" class="usericon ">
+					<input type="number" v-model="phoneNumber" placeholder="手机号" class="usericon ">
 				</div>
                 <div class="bg1">
 					<span class="usericonBg2"></span>

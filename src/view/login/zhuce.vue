@@ -23,7 +23,7 @@
 				<div class="bg3">
 					<span class="usericonBg"></span>
                     <span class="phonePre">+86</span>
-					<input v-model="phone" placeholder="请输入手机号" class="usericonPhone">
+					<input v-model="phone" type="number" placeholder="请输入手机号" class="usericonPhone">
 				</div>
 
 				<div class="bg2">
