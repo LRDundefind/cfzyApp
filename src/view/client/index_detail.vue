@@ -52,7 +52,7 @@
                 
             </div>
             <div class='update clearfix'>
-                <mt-button type="primary" size="large" class='f-l' @click="consumptionRecords()">查看消费记录</mt-button>
+                <mt-button type="primary" size="large" class='f-l' @click="consumptionRecords(listdata.cid)">查看消费记录</mt-button>
                 <mt-button type="primary" size="large" class='f-l' @click="goChange()" :disabled="listdata.sys_status=='Y'">更新资料</mt-button>
             </div>
         </div>
@@ -114,8 +114,8 @@
                 if(this.$route.params.come == 'black'){
                     this.$router.push({name: 'blackList'})
                 }else{
-                	window.history.go(-1);
-                    //this.$router.push({name:'client'})
+                	//window.history.go(-1);
+                    this.$router.push({name:'client'})
                 }
             },
 
@@ -124,8 +124,27 @@
                 this.$router.push({name: 'index_change/update', params: {id: this.cid, type: 'update'}});
             },
             //跳转到消费记录
-            consumptionRecords(){
-                this.$router.push({name: 'record', params: {id: this.cid}});
+            consumptionRecords(cid){
+                console.log(cid);
+                console.log(1111);
+                if(this.$route.params.come == 'black'){
+                    this.$router.push({
+                        name: 'orderPay_record',
+                        params: {
+                            cid: cid,
+                            come:'black'
+                        }
+                    });
+                }else {
+                    this.$router.push({
+                        name: 'orderPay_record',
+                        params: {
+                            cid: cid,
+                            come:'client'
+                        }
+
+                    });
+                }
             }
         }
     }

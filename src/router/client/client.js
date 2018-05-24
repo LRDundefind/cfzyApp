@@ -6,8 +6,14 @@
 const client = resolve => require([ '@/view/client/index'],resolve)
 const client_detail = resolve => require([ '@/view/client/index_detail'],resolve)
 const index_change = resolve => require([ '@/view/client/index_change'],resolve)
-const record = resolve => require([ '@/view/client/record'],resolve)
 
+const orderPay_record = resolve => require([ '@/view/client/orderPay_record'],resolve)
+const orderRecord = resolve => require([ '@/view/client/orderRecord'],resolve)
+const payRecord = resolve => require([ '@/view/client/payRecord'],resolve)
+
+// import orderPay_record from '@/view/client/orderPay_record'
+// import orderRecord from '@/view/client/orderRecord'
+// import payRecord from '@/view/client/payRecord'
 
 export default [
     {
@@ -57,17 +63,37 @@ export default [
         meta: {
             showFooter: false
         }
-    },  {
-
-        // 记录
-        path: 'record/:id',
-        name: 'record',
+    }, {
+        //消费和还款记录
+        path: 'orderPay_record',
+        name: 'orderPay_record',
         components: {
-            mainView: record
+            mainView: resolve => require(['@/view/client/orderPay_record'], resolve)
         },
         meta: {
             showFooter: false
-        }
-
-    }
+        },
+        redirect: 'orderPay_record/record/:cid/:come',
+        children: [
+            {
+                path: 'record/:cid/:come',
+                name: 'record',
+                components: {
+                    orderpayRouteView: resolve => require(['@/view/client/orderRecord'], resolve)
+                },
+                meta: {
+                    showFooter: false
+                }
+            }, {
+                path: 'payss/:cid/:come',
+                name: 'payss',
+                components: {
+                    orderpayRouteView: resolve => require(['@/view/client/payRecord'], resolve)
+                },
+                meta: {
+                    showFooter: false
+                }
+            }
+        ]
+    },
 ]

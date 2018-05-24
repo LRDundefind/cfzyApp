@@ -44,7 +44,7 @@ export const client = {
         });
     },
     //查看消费记录
-    consume(params) {
+    getRecordList(params) {
         return axios({
             url: 'rest/CHENGFENG_GET_SELEMAN_CUSTOMER_ORDER',
             method: 'post',
@@ -52,7 +52,7 @@ export const client = {
         });
     },
     //查看还款记录
-    repayment(params) {
+    getPayList(params) {
         return axios({
             url: 'rest/CHENGFENG_GET_SELEMAN_CUSTOMER_TRANSFER',
             method: 'post',
