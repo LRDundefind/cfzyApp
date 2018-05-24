@@ -218,7 +218,8 @@
                 float: right;
                 color: #4c4c4c;
                 text-align: right;
-                line-height: 0.98rem;
+                line-height: 0.4rem;
+                margin-top: 0.3rem;
             }
             > span {
                 float: right;
