@@ -416,7 +416,7 @@ export default {
         	this.goodName = name;
         	this.sellUnit = sellunit;//提交订单传参所需 售卖单位
         	this.numUnit = numUnit;//提交订单传参所需  重量单位
-        	this.slushing = slushing || '减水重';//减水重 只作展示，
+        	this.slushing = slushing;//减水重 只作展示，
         	if(numUnit == 'unit_pie'){
         		this.surplusHeavy = '';
         		this.surplusPiece = surplusNum; // 入库单位为件时，在件数位置-显示货品剩余量
@@ -716,15 +716,15 @@ export default {
     			return false;
     		}
 			
-			//非临时客户赊账时，验证是否签名了
-        	if(this.orderType == 'order_credit' && this.autographInfo == ''){
-        		Toast({
-					message: '请签名',
-					position: 'middle',
-					duration: 1000
-    			});
-        		return false;
-        	}
+			//非临时客户赊账时，验证是否签名了--2018.5.22暂时设置为非必传
+//      	if(this.orderType == 'order_credit' && this.autographInfo == ''){
+//      		Toast({
+//					message: '请签名',
+//					position: 'middle',
+//					duration: 1000
+//  			});
+//      		return false;
+//      	}
         	
         	if(this.beizhu.length > 420){
         		Toast({

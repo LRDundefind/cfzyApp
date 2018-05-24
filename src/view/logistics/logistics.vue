@@ -9,16 +9,16 @@
 		<!--物流-->
 		<div class="logistics">
 			<div class="page-main page-loadmore-wrappe" :class= "[this.$route.params.fromc=='order'? 'topScroll0' : 'topScroll'] ">
-            <noDate v-show="Xdtlist.length=='0'"></noDate>  
-          
-            <!-- <mt-loadmore 
+            <!-- <noDate v-show="Xdtlist.length=='0'"></noDate>   -->
+            <noDate v-if="noWdata"></noDate>  
+            <mt-loadmore 
 				:auto-fill="false"
 				:top-method="loadTop" 
 				:bottom-method="loadBottom"
 				:bottom-all-loaded="allLoaded"
-				ref="loadmore"> -->
+				ref="loadmore">
 
-                <div v-for="n in Xdtlist" :key='n.id' class="main-list" @click="goDetail(n)">
+                <div v-for="n in listStore" :key='n.id' class="main-list" @click="goDetail(n)">
                     <div class="ub ub-ac heade">
                         <div class='lis-icon'>发货人&nbsp;</div>
                         <!-- {{n.nickname}} -->
@@ -43,7 +43,7 @@
                 </div>
                 <div  style="text-align:center;font-size: 0.18rem;display:none"></div>
 		  
-			<!-- </mt-loadmore> -->	
+			</mt-loadmore>	
         </div>
 			
 		</div>
@@ -54,6 +54,7 @@
 import Cookies from 'js-cookie'
 import noDate from '@/components/noData/noDate'
 import {logistics} from '@/services/apis/logistics'
+import { Loadmore , Indicator} from 'mint-ui'
 export default {
     components:{
         noDate
@@ -62,11 +63,35 @@ export default {
         return {
 			  allLoaded: false,
               msg:'',
+              noWdata:false,
               Xdtlist:[],
+               listStore: [],
+                counts: null,
+                params:{
+                    uId:Cookies.get('sid'),
+                    tokenId:'',
+                    time:new Date().getTime(),
+                    rd:'',
+                    inCode:140021,
+                    content:{
+                            mobilePhone:Cookies.get('xdtPhne'),
+                            userId:Cookies.get('xdtuseid'),
+                            page:1,
+                            count:10,
+                            orderState:3,
+                    }
+                },
 			  wrapperHeight: 0,//容器高度
         }
     },
     mounted () {
+          let rd=parseInt(100*Math.random());  //需要的随机数
+        if(rd>900){
+            this.params.rd=rd;
+        }
+        else{
+            this.params.rd=rd+100
+        }
         if(this.$route.params.fromc=='order'){
             this.wrapperHeight = document.documentElement.clientHeight - 40;
         }else {
@@ -95,35 +120,52 @@ export default {
             goBaiMap(orderId){
 				this.$router.push({name: 'baiduMap', params: {orderId:orderId}})
             },
+             loadTop(){
+                Indicator.open({
+                    text: 'Loading...',
+                    spinnerType: 'fading-circle'
+                });
+                this.listStore = [];
+                this.params.content.page = 1;
+                this.getList();
+                this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
+                this.allLoaded = false;//下拉刷新时解除上拉加载的禁用
+            },
+            loadBottom() {
+                Indicator.open({
+                    text: 'Loading...',
+                    spinnerType: 'fading-circle'
+                });
+                this.getList();
+            },
             getlist(){
-                let rd=parseInt(100*Math.random());  //需要的随机数
-                if(rd>900){
-                    rd
-                }
-                else{
-                    rd=rd+100
-                }
+              
                 let time=new Date().getTime();     //生成时间戳
                 let uId= Cookies.get('sid');
-                let params = {
-                            uId:uId,
-                            tokenId:'',
-                            time:time,
-                            rd:rd,
-                            inCode:140021,
-
-                            content:{
-                                    mobilePhone:Cookies.get('xdtPhne'),
-                                    userId:Cookies.get('xdtuseid'),
-                                    page:1,
-                                    count:10,
-                                    orderState:3,
-                            }
-                    };
-                logistics.auth(params).then(response => {
+            
+                logistics.auth(this.params).then(response => {
                     let ss=JSON.parse(response.data.results)
                     this.Xdtlist=ss.content.items;
-                    console.log(this.Xdtlist)
+
+                        if(this.Xdtlist==''&& this.params.content.page == 1){
+                            this.noWdata=true;
+                        }
+                        app.Cwaiting();
+                        if(this.Xdtlist.length==this.params.content.page){  
+                            //判断是否应该加载下一页
+                            this.params.content.page+=1 ;
+                        }else{
+                            //禁用上拉加载
+                            this.allLoaded = true;
+                        }
+                        if (this.Xdtlist) {
+                            this.listStore.push(...this.Xdtlist)
+                            if(this.listStore==''){
+	                            this.noWdata=true;
+	                        	app.Cwaiting();
+	                        }
+                        }
+                        Indicator.close();
                     
                 })
             }
