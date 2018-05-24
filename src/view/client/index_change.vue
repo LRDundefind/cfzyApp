@@ -34,7 +34,7 @@
 
                <div>
                    <!-- 增加时电话不可编辑 -->
-                   <p class="clearfix" v-if="phoneAdd==''">电话<input type="text" v-model="phone" placeholder="请输入" maxlength="11"></p>
+                   <p class="clearfix" v-if="phoneAdd==''">电话<input type="number" v-model="phone" placeholder="请输入" maxlength="11"></p>
                    <!-- 修改时可以 -->
                    <p class="clearfix" v-else>电话<span class="Unchange">{{phone}}</span></p>
                </div>
@@ -84,7 +84,7 @@
         <div class="dialoag" v-show="addPerson">
             <div class="dialoag_cont">
                 <h3>请输入手机号</h3>
-                <input type="text" v-model="phoneAdd" class="phonemobil">
+                <input type="number" v-model="phoneAdd" class="phonemobil">
                 <div @click="tipsQX">取消</div>
                 <div @click="showa">确定</div>
             </div>
