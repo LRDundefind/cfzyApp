@@ -1,6 +1,6 @@
 <template>
     <div class="page-content">
-        <search-box @getSmeage="searchBlack" :msg="msg" ref="search"/>
+        <search-box @getSmeage="searchBlack" :message='placeMessage' :msg="msg" ref="search"/>
 
         <div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
             <no-Date v-show="listStore=='' || listStore.length==0"/>
@@ -61,6 +61,7 @@
         },        name: 'owner',
         data () {
             return {
+                placeMessage: '请输入货主名称或电话号码',
                 msg: '',
                 allLoaded: false,
                 wrapperHeight: 0,//容器高度
