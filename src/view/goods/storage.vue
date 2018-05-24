@@ -53,12 +53,12 @@
                         <div class="basic-list">
                             <p class="clearfix">车牌号<input type="text" maxlength="8" v-model="stall.plateNum"
                                                           :disabled="item.plateNumber != ''"></p>
-                            <p class="clearfix">发货地点<input style="width: 80%" type="text" v-model="stall.startAddress"
+                            <p class="clearfix">发货地点<input type="text" maxlength="48" v-model="stall.startAddress"
                                                            :disabled="item.sourceAddr != ''"></p>
                         </div>
 
                         <div class="basic-list">
-                            <p class="clearfix">产地<input type="text" v-model="stall.origin"
+                            <p class="clearfix">产地<input type="text" maxlength="48" v-model="stall.origin"
                                                          :disabled="item.productAddr != ''"></p>
                             <p class="clearfix" style="position: relative">产地证明
                                 <input type="file" class="upload-picture" accept="image"
