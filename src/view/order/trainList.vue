@@ -38,7 +38,7 @@
 import Bus from '@/components/bus.js'
 import noDate from '@/components/noData/noDate'
 import {order} from '@/services/apis/order.js'
-import { Loadmore } from 'mint-ui'
+import { Loadmore , Indicator } from 'mint-ui'
 import { InfiniteScroll } from 'mint-ui'
 import Cookies from 'js-cookie'
 export default {

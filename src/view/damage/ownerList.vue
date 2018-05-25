@@ -154,7 +154,7 @@
     bottom: 0rem;
     }
     .page-loadmore-wrapper {
-        overflow: scroll
+        overflow: scroll;
         -webkit-overflow-scrolling: touch;
     }
     .main-list {
