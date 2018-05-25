@@ -13,6 +13,7 @@
                     :top-method="loadTop"
                     :bottom-method="loadBottom"
                     :bottom-all-loaded="allLoaded"
+                    :bottomDistance= 50
                     ref="loadmore">
                 <ul class="settlement-list">
                     <li v-for="item in listStore" :key='item.tid' @click="settlementDetail(item)">
@@ -28,7 +29,7 @@
                         </div>
                     </li>
                 </ul>
-                <div v-if="allLoaded" class="m-t-10" style="text-align:center;font-size: 0.18rem">没有更多数据了</div>
+                <!-- <div v-if="allLoaded" class="m-t-10" style="text-align:center;font-size: 0.18rem">没有更多数据了</div> -->
             </mt-loadmore>
         </div>
     </div>
@@ -37,7 +38,7 @@
 <script>
     import {damage} from '@/services/apis/damage.api'
     import noDate from '@/components/noData/noDate'
-
+    import { Loadmore , Indicator} from 'mint-ui'
     export default {
         data () {
             return {
@@ -93,6 +94,8 @@
                             app.Cwaiting();
                         }
                     }
+                    this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
+                    Indicator.close();
                 })
             },
 
@@ -113,6 +116,10 @@
                 this.allLoaded = false;//下拉刷新时解除上拉加载的禁用
             },
             loadBottom() {
+                 Indicator.open({
+                    text: 'Loading...',
+                    spinnerType: 'fading-circle'
+                });
                 this.getList();
             }
 
@@ -124,8 +131,9 @@
         font-style: normal;
     }
     .topScroll{
-        top: 0.8rem;
-        bottom: 0.2rem;
+        height: calc(100vh - 50px);
+        top: 50px;
+        bottom: 0rem;
     }
     .page-loadmore-wrappe{
         overflow: auto;

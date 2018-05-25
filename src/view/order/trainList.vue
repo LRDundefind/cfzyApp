@@ -4,7 +4,7 @@
 		    <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
 		</mt-header>
 		<!--车次列表-->
-		<div class="page-main page-loadmore-wrapper">
+		<div class="page-main page-loadmore-wrapper topScroll">
 			<noDate v-if="counts || count"></noDate>  
 			<mt-loadmore 
 				v-else
@@ -12,6 +12,7 @@
 				:top-method="loadTop" 
 				:bottom-method="loadBottom"
 				:bottom-all-loaded="allLoaded"
+				:bottomDistance= 50
 				ref="loadmore">
 			<ul class="order-list">
 				<li v-for="list in listStore" @click="chooseTrain(list.tid, list.trainsNum, list.plateNum)" :key="list.id">
@@ -25,7 +26,7 @@
 					</div>
 				</li>
 			</ul>
-		    <div v-if="allLoaded" class="m-t-10" style="text-align:center;font-size: 0.18rem">没有更多数据了</div>
+		    <!-- <div v-if="allLoaded" class="m-t-10" style="text-align:center;font-size: 0.18rem">没有更多数据了</div> -->
 		  
 			</mt-loadmore>
 		</div>
@@ -95,6 +96,7 @@ export default {
 	                        app.Cwaiting();
 	                    }
 					}
+					this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
 				})
 				.catch(function (response) {
 					console.log(response);
@@ -126,6 +128,11 @@ export default {
 }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
+ .topScroll {
+    height: calc(100vh - 40px);
+    top: 40px;
+    bottom: 0rem;
+    }
 i{
 	font-style: normal;
 }
