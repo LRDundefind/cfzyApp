@@ -115,6 +115,10 @@ export default {
             });
 		},
 	    loadTop(){
+	    	Indicator.open({
+                text: 'Loading...',
+                spinnerType: 'fading-circle'
+            });
 	    	this.listStore = [];
 	    	this.params.current_page = 1;
 	    	this.getList();
@@ -122,7 +126,12 @@ export default {
 	    	this.allLoaded = false;//下拉刷新时解除上拉加载的禁用
 	    },
 	    loadBottom() {
+	    	Indicator.open({
+                text: 'Loading...',
+                spinnerType: 'fading-circle'
+            });
 	    	this.getList();
+	    	this.$refs.loadmore.onBottomLoaded();
 		}
     }
 }

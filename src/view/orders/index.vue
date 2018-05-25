@@ -175,6 +175,7 @@ export default {
                 spinnerType: 'fading-circle'
             });
             this.getList();
+            this.$refs.loadmore.onBottomLoaded();
         },
         
         //跳转到订单列表
