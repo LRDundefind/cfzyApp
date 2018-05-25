@@ -51,7 +51,7 @@
             </div>
         </div>
 
-        <div v-show="showList == false">
+        <div v-if="showList == false">
             <div v-if="deleteDisabled == 'edit'">
                 <div class="login_cont" >
                     <div @click="addGoods('add')" class="loginbtn">确定</div>
