@@ -35,14 +35,14 @@ export default {
 <style scoped rel="stylesheet/scss" lang="scss">
 	
 	.searchBox{
-		padding:10px 0.3rem;
+		padding: 0.3rem;
 		background: #fff;
 		input{
 		    display: block;
 		    width: -moz-calc(100% - 1rem);
             width: -webkit-calc(100% - 1rem);
             width: calc(100% - 1rem);
-		    height: 60px;
+		    height:0.8rem;
 		    box-sizing: border-box;
 		    padding-left: 0.9rem;
 		    border-radius: 2em;

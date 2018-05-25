@@ -16,6 +16,9 @@ import '@/assets/rem.js'
 //过滤器
 import * as filters from '@/filters'; // 全局vue filter
 
+//rem转换为px
+Vue.prototype.REM = 100 * (document.documentElement.clientWidth / 750);
+
 Vue.use(Mint);
 Vue.prototype.$http = axios
 

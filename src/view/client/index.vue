@@ -9,8 +9,8 @@
         <div :class= "[ this.$route.params.type=='order'? 'maintop0' : 'maintop'] ">
             <search-box  @getSmeage='searchstart' :message='placeMessage'></search-box>
             
-            <!-- :style="{ height: wrapperHeight + 'rem' }" -->
-            <div class="page-main page-loadmore-wrappe heights"  :class= "[ this.$route.params.type=='order'? 'topScroll0' : 'topScroll'] " >
+            <!--  -->
+            <div class="page-main page-loadmore-wrappe heights" :style="{ height: wrapperHeight + 'px' }"  :class= "[ this.$route.params.type=='order'? 'topScroll0' : 'topScroll'] " >
              <noDate v-if="noWdata"></noDate>  
             <mt-loadmore 
                 v-else
@@ -18,7 +18,7 @@
 				:top-method="loadTop" 
 				:bottom-method="loadBottom"
 				:bottom-all-loaded="allLoaded"
-                :bottomDistance= 200
+                :bottomDistance= 50
 				ref="loadmore">
                 <ul
                       
@@ -105,10 +105,10 @@
         mounted () {
             if(this.$route.params.type=='order'){
                 // this.wrapperHeight = document.documentElement.clientHeight/50 - 2.2;
-                 this.wrapperHeight = document.documentElement.clientHeight/(document.documentElement.clientWidth/15) - 2.2;
+                 this.wrapperHeight = document.documentElement.clientHeight - this.REM*1.4 -40;
             }
             else{
-                 this.wrapperHeight = document.documentElement.clientHeight/(document.documentElement.clientWidth/15) - 3.3;
+                 this.wrapperHeight = document.documentElement.clientHeight - this.REM*1.4 -100;
                 
             }
             
@@ -213,12 +213,12 @@
 </script>
 <style scoped lang="scss">
 .topScroll{
-    height: calc(100vh - 190px);
+    // height: calc(100vh - 190px);
     top: 130px;
     bottom: 1.1rem;
 }
 .topScroll0{
-    height: calc(100vh - 130px);
+    // height: calc(100vh - 130px);
     top: 130px;
     bottom: 0rem;
 }
