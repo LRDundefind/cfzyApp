@@ -21,8 +21,7 @@
                 :bottomDistance= 200
 				ref="loadmore">
                 <ul
-                        infinite-scroll-disabled="loading"
-					    infinite-scroll-distance="10"
+                      
                 >
                         <li>
                             <div v-for="n in listStore" :key='n.id' class="main-list" @click="goDetail(n.cid, n.nickname)">
@@ -158,7 +157,10 @@
                         app.Cwaiting();
                         if(this.listdata.length==this.params.page_size){  
                             //判断是否应该加载下一页
-                            this.params.current_page+=1 ;
+                            this.$nextTick(function () {
+                                this.params.current_page+=1 ;
+                            });
+
                         }else{
                             //禁用上拉加载
                             this.allLoaded = true;
@@ -211,13 +213,13 @@
 </script>
 <style scoped lang="scss">
 .topScroll{
-    height: calc(100vh - 3.3rem);
-    top: 2.2rem;
+    height: calc(100vh - 190px);
+    top: 130px;
     bottom: 1.1rem;
 }
 .topScroll0{
-    height: calc(100vh - 2.2rem);
-    top: 2.2rem;
+    height: calc(100vh - 130px);
+    top: 130px;
     bottom: 0rem;
 }
 .page-loadmore-wrappe{
