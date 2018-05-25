@@ -119,6 +119,7 @@
                     spinnerType: 'fading-circle'
                 });
                 this.getList();
+                this.$refs.loadmore.onBottomLoaded();
             },
             getList(){
                 home.blacklist(this.params).then(response => {
