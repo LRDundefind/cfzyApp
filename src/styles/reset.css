@@ -404,6 +404,9 @@ body {
 	padding: 0 0 20px 0;
 }
 /*上拉下拉加载数据*/
+.mint-loadmore-bottom{
+  display: none !important;
+}
 .mint-loadmore-top,
 .mint-loadmore-bottom{
 	font-size: 0.2rem;
