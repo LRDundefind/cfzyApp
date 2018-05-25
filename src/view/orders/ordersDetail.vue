@@ -317,16 +317,13 @@ i{
 			}
 		}
 		.con{
-			min-height: 0.96rem;
-			line-height: 0.96rem;
+			/*min-height: 0.96rem;*/
 			border-bottom: 1px solid #dedede;
 			span{
-				/*height: 0.96rem;*/
+				line-height: 0.32rem;
+   				margin: 0.2rem 0;
 			}
-			span:first-child{
-				line-height: 0.3rem;
-				margin-top: 0.2rem;
-			}
+			
 		}
 		li:last-child{
 			border-bottom: none;
