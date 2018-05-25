@@ -38,7 +38,7 @@
 import Bus from '@/components/bus.js'
 import noDate from '@/components/noData/noDate'
 import {order} from '@/services/apis/order.js'
-import { Loadmore } from 'mint-ui'
+import { Loadmore , Indicator } from 'mint-ui'
 import { InfiniteScroll } from 'mint-ui'
 import Cookies from 'js-cookie'
 export default {
@@ -115,6 +115,10 @@ export default {
             });
 		},
 	    loadTop(){
+	    	Indicator.open({
+                text: 'Loading...',
+                spinnerType: 'fading-circle'
+            });
 	    	this.listStore = [];
 	    	this.params.current_page = 1;
 	    	this.getList();
@@ -122,7 +126,12 @@ export default {
 	    	this.allLoaded = false;//下拉刷新时解除上拉加载的禁用
 	    },
 	    loadBottom() {
+	    	Indicator.open({
+                text: 'Loading...',
+                spinnerType: 'fading-circle'
+            });
 	    	this.getList();
+	    	this.$refs.loadmore.onBottomLoaded();
 		}
     }
 }

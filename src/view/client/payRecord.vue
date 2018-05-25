@@ -173,6 +173,7 @@ export default {
                 spinnerType: 'fading-circle'
             });
             this.getPayList();
+            this.$refs.loadmore.onBottomLoaded();
         },
             
     }

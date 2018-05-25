@@ -631,9 +631,9 @@ export default {
         },
         //设置三轮费-确定按钮
         setSanlunfei(){
-        	if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.deliveryCost)) || this.deliveryCost > 9999.99){
+        	if(!(new RegExp(/^(0|[1-9][0-9]*)$/).test(this.deliveryCost)) || this.deliveryCost > 9999){
     			Toast({
-					message: '请正确输入三轮费',
+					message: '请输入正确整数',
 					position: 'middle',
 					duration: 1000
     			});
