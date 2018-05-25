@@ -191,7 +191,7 @@ export default {
 }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
-.topScroll0{
+.topScroll{
     height: calc(100vh - 100px);
     top: 100px;
     bottom: 0rem;
@@ -199,12 +199,7 @@ export default {
 i{
 	font-style: normal;
 }
-.page-main {
-	width: 100%;
-    position: fixed;
-    top: 2.2rem;
-    bottom: 0;
-}
+
 .gearname{
 	text-overflow: ellipsis;
     overflow: hidden;
