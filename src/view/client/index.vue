@@ -142,6 +142,7 @@
                     spinnerType: 'fading-circle'
                 });
                 this.getList();
+                this.$refs.loadmore.onBottomLoaded();
             },
             getList(){
                
