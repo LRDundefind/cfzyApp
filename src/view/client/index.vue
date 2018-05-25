@@ -157,9 +157,7 @@
                         app.Cwaiting();
                         if(this.listdata.length==this.params.page_size){  
                             //判断是否应该加载下一页
-                            this.$nextTick(function () {
-                                this.params.current_page+=1 ;
-                            });
+                            this.params.current_page+=1 ;
 
                         }else{
                             //禁用上拉加载
