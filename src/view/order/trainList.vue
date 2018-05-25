@@ -26,7 +26,6 @@
 					</div>
 				</li>
 			</ul>
-		    <!-- <div v-if="allLoaded" class="m-t-10" style="text-align:center;font-size: 0.18rem">没有更多数据了</div> -->
 		  
 			</mt-loadmore>
 		</div>
@@ -96,7 +95,9 @@ export default {
 	                        app.Cwaiting();
 	                    }
 					}
-					this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
+
+                    this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
+                    Indicator.close();
 				})
 				.catch(function (response) {
 					console.log(response);
