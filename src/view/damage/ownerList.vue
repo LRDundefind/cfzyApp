@@ -101,6 +101,8 @@
                     if(this.listData==''&& this.params.current_page == 1){
                         this.noWdata=true;
                     }
+                    app.Cwaiting();
+
                     if(this.listData.length==this.params.page_size){
                         //判断是否应该加载下一页
                         this.params.current_page+=1 ;
