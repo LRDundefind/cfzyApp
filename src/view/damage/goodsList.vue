@@ -144,7 +144,7 @@
     .topScroll {
         height: calc(100vh - 100px);
         top: 100px;
-        bottom: 120px;
+        bottom: 0;
     }
 
     .page-loadmore-wrapper {

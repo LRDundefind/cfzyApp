@@ -51,13 +51,13 @@
             </div>
         </div>
 
-        <div v-if="showList == false">
-            <div v-if="deleteDisabled == 'edit'">
+        <div v-show="showList == false">
+            <div v-show="deleteDisabled == 'edit'">
                 <div class="login_cont" >
                     <div @click="addGoods('add')" class="loginbtn">确定</div>
                 </div>
             </div>
-            <div class='update clearfix' v-else>
+            <div class='update clearfix' v-show="deleteDisabled != 'edit'">
                 <mt-button type="primary" :disabled="deleteDisabled == 'edit'" size="large" class='f-l'
                            @click="deleteGoods('delete')">删除
                 </mt-button>
@@ -121,7 +121,7 @@
         },
 
         mounted () {
-            this.wrapperHeight = document.documentElement.clientHeight - 160;
+            this.wrapperHeight = document.documentElement.clientHeight - 120;
             this.getlist()
         },
         methods: {

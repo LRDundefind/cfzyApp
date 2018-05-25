@@ -137,7 +137,7 @@
             </mt-tab-container>
 
         </div>
-       <div class="login_cont" v-if="selected == 'goods'">
+       <div class="login_cont" v-show="selected == 'goods'">
             <div @click="createGoods" class="loginbtn">添加货品</div>
         </div>
     </div>
