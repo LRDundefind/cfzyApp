@@ -9,8 +9,8 @@
         <div :class= "[ this.$route.params.type=='order'? 'maintop0' : 'maintop'] ">
             <search-box  @getSmeage='searchstart' :message='placeMessage'></search-box>
             
-            <!--  -->
-            <div class="page-main page-loadmore-wrappe "  :class= "[ this.$route.params.type=='order'? 'topScroll0' : 'topScroll'] " :style="{ height: wrapperHeight + 'rem' }">
+            <!-- :style="{ height: wrapperHeight + 'rem' }" -->
+            <div class="page-main page-loadmore-wrappe heights"  :class= "[ this.$route.params.type=='order'? 'topScroll0' : 'topScroll'] " >
              <noDate v-if="noWdata"></noDate>  
             <mt-loadmore 
                 v-else
@@ -18,41 +18,45 @@
 				:top-method="loadTop" 
 				:bottom-method="loadBottom"
 				:bottom-all-loaded="allLoaded"
+                :bottomDistance= 200
 				ref="loadmore">
                 <ul
                         infinite-scroll-disabled="loading"
 					    infinite-scroll-distance="10"
                 >
-                        <li  v-for="n in listStore" :key='n.id' class="main-list" @click="goDetail(n.cid, n.nickname)">
-                            <div class="ub ub-ac heade">
-                                <div class='lis-icon ub-img im'>
-                                    <img v-show="n.headImg!=''" :src="imgpath+n.headImg" >
-                                    <img v-show="n.headImg==''" src="../../assets/my/my_head.png" alt="">
+                        <li>
+                            <div v-for="n in listStore" :key='n.id' class="main-list" @click="goDetail(n.cid, n.nickname)">
+                                <div class="ub ub-ac heade">
+                                    <div class='lis-icon ub-img im'>
+                                        <img v-show="n.headImg!=''" :src="imgpath+n.headImg" >
+                                        <img v-show="n.headImg==''" src="../../assets/my/my_head.png" alt="">
+                                    </div>
+                                    <div class='ub-f1 ut-s'>{{n.nickname}}</div>
+                                    <!-- 正常客户状态 -->
+                                    <div class=' res8 lis-sw ub-img im2' v-show="n.status=='Y'"></div>
+                                    <!-- 平台状态 -->
+                                    <div class=' res8 lis-sw ub-img im3' v-show="n.sys_status=='Y'"></div>
                                 </div>
-                                <div class='ub-f1 ut-s'>{{n.nickname}}</div>
-                                <!-- 正常客户状态 -->
-                                <div class=' res8 lis-sw ub-img im2' v-show="n.status=='Y'"></div>
-                                <!-- 平台状态 -->
-                                <div class=' res8 lis-sw ub-img im3' v-show="n.sys_status=='Y'"></div>
+                                <div class="listStyle">
+                                    <div class="ub ub-pj stylea">
+                                        <div class="ub-f1">消费次数</div>
+                                        <div class="ub-f1">{{n.consum_num}}次</div>
+                                    </div>
+                                    <div class="ub ub-pj stylea">
+                                        <div class="ub-f1">最后消费时间</div>
+                                        <div class="ub-f1">{{n.consum_ltime}}</div>
+                                    </div>
+                                    <div class="ub ub-pj stylea">
+                                        <div class="ub-f1">赊账总金额</div>
+                                        <div class="ub-f1">{{n.notPayAmount}}元</div>
+                                    </div>
+                                    <div class="ub ub-pc stylea">
+                                        <div class="ub-f1">赊账最长时间</div>
+                                        <div class="ub-f1">{{n.creditTime}}</div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="listStyle">
-                                <div class="ub ub-pj stylea">
-                                    <div class="ub-f1">消费次数</div>
-                                    <div class="ub-f1">{{n.consum_num}}次</div>
-                                </div>
-                                <div class="ub ub-pj stylea">
-                                    <div class="ub-f1">最后消费时间</div>
-                                    <div class="ub-f1">{{n.consum_ltime}}</div>
-                                </div>
-                                <div class="ub ub-pj stylea">
-                                    <div class="ub-f1">赊账总金额</div>
-                                    <div class="ub-f1">{{n.notPayAmount}}元</div>
-                                </div>
-                                <div class="ub ub-pc stylea">
-                                    <div class="ub-f1">赊账最长时间</div>
-                                    <div class="ub-f1">{{n.creditTime}}</div>
-                                </div>
-                            </div>
+                            
                     </li>
                     <!-- <div  style="text-align:center;font-size: 0.18rem;display:none"></div> -->
                 </ul> 
@@ -101,10 +105,12 @@
         },
         mounted () {
             if(this.$route.params.type=='order'){
-                this.wrapperHeight = document.documentElement.clientHeight/50 - 2.2;
+                // this.wrapperHeight = document.documentElement.clientHeight/50 - 2.2;
+                 this.wrapperHeight = document.documentElement.clientHeight/(document.documentElement.clientWidth/15) - 2.2;
             }
             else{
-                this.wrapperHeight = document.documentElement.clientHeight/50 - 3.3;
+                 this.wrapperHeight = document.documentElement.clientHeight/(document.documentElement.clientWidth/15) - 3.3;
+                
             }
             
 
@@ -205,15 +211,17 @@
 </script>
 <style scoped lang="scss">
 .topScroll{
+    height: calc(100vh - 3.3rem);
     top: 2.2rem;
     bottom: 1.1rem;
 }
 .topScroll0{
+    height: calc(100vh - 2.2rem);
     top: 2.2rem;
     bottom: 0rem;
 }
 .page-loadmore-wrappe{
-   overflow: auto;
+   overflow: scroll;
     -webkit-overflow-scrolling : touch;
 }
     .im {

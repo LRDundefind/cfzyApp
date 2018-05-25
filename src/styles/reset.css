@@ -403,6 +403,10 @@ body {
 .noHeader_wrap{
 	padding: 0 0 20px 0;
 }
+.mint-loadmore {
+  overflow: auto !important;
+  height: 100%;
+}
 /*上拉下拉加载数据*/
 .mint-loadmore-top,
 .mint-loadmore-bottom{
