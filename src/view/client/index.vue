@@ -20,10 +20,7 @@
 				:bottom-all-loaded="allLoaded"
                 :bottomDistance= 200
 				ref="loadmore">
-                <ul
-                        infinite-scroll-disabled="loading"
-					    infinite-scroll-distance="10"
-                >
+                <ul>
                         <li>
                             <div v-for="n in listStore" :key='n.id' class="main-list" @click="goDetail(n.cid, n.nickname)">
                                 <div class="ub ub-ac heade">
@@ -211,14 +208,14 @@
 </script>
 <style scoped lang="scss">
 .topScroll{
-    height: calc(100vh - 3.3rem);
-    top: 2.2rem;
-    bottom: 1.1rem;
+    height: calc(100vh - 190px);
+    top: 130px;
+    bottom: 60px;
 }
 .topScroll0{
-    height: calc(100vh - 2.2rem);
-    top: 2.2rem;
-    bottom: 0rem;
+    height: calc(100vh -130px);
+    top: 130px;
+    bottom: 0;
 }
 .page-loadmore-wrappe{
    overflow: scroll;
