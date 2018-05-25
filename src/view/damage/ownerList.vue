@@ -3,7 +3,7 @@
         <search-box @getSmeage="searchBlack" :message='placeMessage' :msg="msg" ref="search"/>
         <!-- :style="{ height: wrapperHeight + 'px' }" -->
         <div class="page-main page-loadmore-wrapper topScroll" >
-            <no-Date v-show="listStore=='' || listStore.length==0"/>
+            <noDate v-if="noWdata"></noDate>
             <mt-loadmore
                     :auto-fill="false"
                     :top-method="loadTop"
@@ -62,6 +62,7 @@
         },        name: 'owner',
         data () {
             return {
+                noWdata: false,
                 placeMessage: '请输入货主名称或电话号码',
                 msg: '',
                 allLoaded: false,
@@ -77,9 +78,10 @@
                 //searchValue:this.$refs.search.searchValue
             }
         },
-        mounted () {
+        created () {
             this.wrapperHeight = document.documentElement.clientHeight - 100;
             this.getList();
+            app.Vwaiting();
         },
         methods: {
             searchBlack(msg){
@@ -96,6 +98,9 @@
             getList(){
                 damage.ownerList(this.params).then(response => {
                     this.listData=response.data.results;
+                    if(this.listData==''&& this.params.current_page == 1){
+                        this.noWdata=true;
+                    }
                     if(this.listData.length==this.params.page_size){
                         //判断是否应该加载下一页
                         this.params.current_page+=1 ;
@@ -107,7 +112,11 @@
 
                         this.listStore.push(...this.listData);
                     }
-                    if (!this.listStore) this.noData = true;
+                    if(this.listStore==''){
+                        this.noWdata=true;
+                        app.Cwaiting();
+                    }
+
                     this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
                     Indicator.close();
                 })
@@ -145,6 +154,7 @@
     }
     .page-loadmore-wrapper {
         overflow: scroll
+        -webkit-overflow-scrolling: touch;
     }
     .main-list {
         background: #fff;
