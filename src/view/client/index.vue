@@ -9,8 +9,8 @@
         <div :class= "[ this.$route.params.type=='order'? 'maintop0' : 'maintop'] ">
             <search-box  @getSmeage='searchstart' :message='placeMessage'></search-box>
             
-            <!--  -->
-            <div class="page-main page-loadmore-wrappe heights" :style="{ height: wrapperHeight + 'px' }"  :class= "[ this.$route.params.type=='order'? 'topScroll0' : 'topScroll'] " >
+            <!--  :style="{ height: wrapperHeight + 'px' }"  -->
+            <div class="page-main page-loadmore-wrappe heights" :class= "[ this.$route.params.type=='order'? 'topScroll0' : 'topScroll'] " >
              <noDate v-if="noWdata"></noDate>  
             <mt-loadmore 
                 v-else
@@ -213,13 +213,13 @@
 </script>
 <style scoped lang="scss">
 .topScroll{
-    // height: calc(100vh - 190px);
-    top: 130px;
+     height: calc(100vh - 150px);
+    top: 100px;
     bottom: 1.1rem;
 }
 .topScroll0{
-    // height: calc(100vh - 130px);
-    top: 130px;
+    height: calc(100vh - 100px);
+    top: 100px;
     bottom: 0rem;
 }
 .page-loadmore-wrappe{
