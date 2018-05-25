@@ -209,9 +209,6 @@
     }
 </script>
 <style scoped lang="scss">
-.mint-loadmore-bottom{
-    display: none !important;
-}
 .topScroll{
      height: calc(100vh - 150px);
     top: 100px;
