@@ -138,6 +138,7 @@
                     spinnerType: 'fading-circle'
                 });
                 this.getList();
+                this.$refs.loadmore.onBottomLoaded();
             },
             //选择货主
             choiceOwner(item){
