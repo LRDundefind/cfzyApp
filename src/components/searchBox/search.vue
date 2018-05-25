@@ -55,7 +55,7 @@ export default {
 
 		}
 		.clearSearch{
-			top: 0.3rem;
+			top: 0.15rem;
 			right: 1.3rem;
 			width: 0.9rem;
 			height: 0.8rem;
@@ -63,7 +63,7 @@ export default {
 			background-repeat: no-repeat;
 		}
 		.searchBtn{
-			top: 0.3rem;
+			top: 0.15rem;
 			right: 0.3rem;
 			width: 1rem;
 			text-align: right;
