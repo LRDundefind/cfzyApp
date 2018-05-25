@@ -9,8 +9,8 @@
         <div :class= "[ this.$route.params.type=='order'? 'maintop0' : 'maintop'] ">
             <search-box  @getSmeage='searchstart' :message='placeMessage'></search-box>
             
-            <!-- :style="{ height: wrapperHeight + 'rem' }" -->
-            <div class="page-main page-loadmore-wrappe heights"  :class= "[ this.$route.params.type=='order'? 'topScroll0' : 'topScroll'] " >
+            <!--  :style="{ height: wrapperHeight + 'px' }"  -->
+            <div class="page-main page-loadmore-wrappe heights" :class= "[ this.$route.params.type=='order'? 'topScroll0' : 'topScroll'] " >
              <noDate v-if="noWdata"></noDate>  
             <mt-loadmore 
                 v-else
@@ -18,9 +18,11 @@
 				:top-method="loadTop" 
 				:bottom-method="loadBottom"
 				:bottom-all-loaded="allLoaded"
-                :bottomDistance= 200
+                :bottomDistance= 50
 				ref="loadmore">
-                <ul>
+                <ul
+                      
+                >
                         <li>
                             <div v-for="n in listStore" :key='n.id' class="main-list" @click="goDetail(n.cid, n.nickname)">
                                 <div class="ub ub-ac heade">
@@ -103,10 +105,10 @@
         mounted () {
             if(this.$route.params.type=='order'){
                 // this.wrapperHeight = document.documentElement.clientHeight/50 - 2.2;
-                 this.wrapperHeight = document.documentElement.clientHeight/(document.documentElement.clientWidth/15) - 2.2;
+                 this.wrapperHeight = document.documentElement.clientHeight - this.REM*1.4 -40;
             }
             else{
-                 this.wrapperHeight = document.documentElement.clientHeight/(document.documentElement.clientWidth/15) - 3.3;
+                 this.wrapperHeight = document.documentElement.clientHeight - this.REM*1.4 -100;
                 
             }
             
@@ -142,6 +144,7 @@
                     spinnerType: 'fading-circle'
                 });
                 this.getList();
+                this.$refs.loadmore.onBottomLoaded();
             },
             getList(){
                
@@ -156,6 +159,7 @@
                         if(this.listdata.length==this.params.page_size){  
                             //判断是否应该加载下一页
                             this.params.current_page+=1 ;
+
                         }else{
                             //禁用上拉加载
                             this.allLoaded = true;
@@ -167,6 +171,7 @@
 	                        	app.Cwaiting();
 	                        }
                         }
+                        this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
                         Indicator.close();
                     })
                 
@@ -208,14 +213,14 @@
 </script>
 <style scoped lang="scss">
 .topScroll{
-    height: calc(100vh - 190px);
-    top: 130px;
-    bottom: 60px;
+     height: calc(100vh - 150px);
+    top: 100px;
+    bottom: 1.1rem;
 }
 .topScroll0{
-    height: calc(100vh -130px);
-    top: 130px;
-    bottom: 0;
+    height: calc(100vh - 100px);
+    top: 100px;
+    bottom: 0rem;
 }
 .page-loadmore-wrappe{
    overflow: scroll;
