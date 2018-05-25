@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/rest': {
-        target: 'http://47.106.86.30:8080/',
+        target: 'https://xdy-tmp.52cfzy.com/',
           secure: false,      // 如果是https接口，需要配置这个参数
           changeOrigin: true,
         pathRewrite: {
