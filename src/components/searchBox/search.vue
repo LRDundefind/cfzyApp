@@ -17,7 +17,7 @@ export default {
         }
     },
     mounted () {
-		console.log(this.sendGet)
+		//console.log(this.sendGet)
 	},
     methods: {
         clearSearch() {
@@ -27,7 +27,7 @@ export default {
 			this.$emit('getSmeage',this.searchValue); //主动触发getSmeage方法，'this.searchValue'为向父组件传递的数据
 		},
         searchChange() {
-        	console.log(this.searchValue)
+        	//console.log(this.searchValue)
         }   
     }
 }
@@ -55,7 +55,7 @@ export default {
 
 		}
 		.clearSearch{
-			top: 0.15rem;
+			top: 10px;
 			right: 1.3rem;
 			width: 0.9rem;
 			height: 0.8rem;
@@ -63,7 +63,7 @@ export default {
 			background-repeat: no-repeat;
 		}
 		.searchBtn{
-			top: 0.15rem;
+			top: 10px;
 			right: 0.3rem;
 			width: 1rem;
 			text-align: right;
