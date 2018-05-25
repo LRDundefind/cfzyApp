@@ -8,7 +8,7 @@
 		<!--子emit发送触发事件this.$emit('getSmeage',this.searchValue)  父监听getSmeage，并接收值-->
 		<search-box ref="search" @getSmeage="searchHandler" :message='placeMessage'/>
 		<!--订单列表-->
-		<div class="page-main page-loadmore-wrapper">
+		<div class="page-main page-loadmore-wrapper topScroll">
        		<noDate v-if="counts"></noDate>  
 			<ul class="order-list">
 				<li v-for="temporary in temporaryList" @click="orderDetail(temporary.oid)" :key="temporary.oid">
@@ -83,10 +83,15 @@ export default {
 }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
-.page-main{
+.topScroll{
+    height: calc(100vh - 100px);
+    top:100px;
+    bottom: 0rem;
+}
+/*.page-main{
 	top: 2.2rem;
 	bottom: 0px;
-}
+}*/
 .page-loadmore-wrapper{
    overflow: scroll;
    -webkit-overflow-scrolling : touch;

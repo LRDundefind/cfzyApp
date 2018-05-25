@@ -430,15 +430,17 @@ i{
 			tr{
 				height: 0.96rem;
 				border-bottom: 1px solid #dedede;
+				td{
+					margin: 0.32rem 0;
+				}
 				td:first-child{
 					width: 1.8rem;
-					padding-left: 0.2rem;
-					padding-right: 0.2rem;
+					padding: 0.2rem;
 					/*text-overflow:ellipsis;
 					overflow:hidden;
 					white-space:nowrap; 
 					display:block;*/
-					margin-top: 0.15rem;
+					/*margin-top: 0.15rem;*/
 				}
 				td.set-price{
 					color: #33d570;
