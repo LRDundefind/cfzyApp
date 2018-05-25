@@ -21,7 +21,7 @@
 			<!--</li>-->
 		<!--</ul>-->
 		<!--还款记录列表-->
-		<div class="page-main page-loadmore-wrapper">
+		<div class="page-main page-loadmore-wrapper topScroll">
 			<noDate v-if="counts || count"></noDate>
 			<mt-loadmore 
 			v-else
@@ -145,7 +145,8 @@ export default {
 	                        this.counts = true;
 	                        app.Cwaiting();
 	                    }
-                    }
+					}
+					this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
                     Indicator.close();
                     
                 })
@@ -178,6 +179,11 @@ export default {
 }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
+.topScroll0{
+    height: calc(100vh - 100px);
+    top: 100px;
+    bottom: 0rem;
+}
 i{
 	font-style: normal;
 }

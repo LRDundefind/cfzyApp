@@ -8,7 +8,7 @@
 			<!--</router-link>-->
 		</mt-header>
 		<!--消费记录列表-->
-		<div class="page-main page-loadmore-wrapper">
+		<div class="page-main page-loadmore-wrapper topScroll">
 			<noDate v-if="counts || count"></noDate>
 			<mt-loadmore 
 				v-else
@@ -16,6 +16,7 @@
 				:top-method="loadTop" 
 				:bottom-method="loadBottom"
 				:bottom-all-loaded="allLoaded"
+                :bottomDistance= 50
 				ref="loadmore">
 				<ul class="order-record">
 					<li v-for="list in listStore" @click="orderDetail(list.oid)">
@@ -137,6 +138,7 @@ export default {
 	                        app.Cwaiting();
 	                    }
                     }
+                    this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
                     Indicator.close();
                     
                 })
@@ -188,6 +190,11 @@ export default {
 }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
+.topScroll0{
+    height: calc(100vh - 100px);
+    top: 100px;
+    bottom: 0rem;
+}
 i{
 	font-style: normal;
 }

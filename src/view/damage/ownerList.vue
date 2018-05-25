@@ -1,14 +1,15 @@
 <template>
     <div class="page-content">
         <search-box @getSmeage="searchBlack" :message='placeMessage' :msg="msg" ref="search"/>
-
-        <div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
+        <!-- :style="{ height: wrapperHeight + 'px' }" -->
+        <div class="page-main page-loadmore-wrapper topScroll" >
             <no-Date v-show="listStore=='' || listStore.length==0"/>
             <mt-loadmore
                     :auto-fill="false"
                     :top-method="loadTop"
                     :bottom-method="loadBottom"
                     :bottom-all-loaded="allLoaded"
+                    :bottomDistance= 50
                     ref="loadmore">
 
                 <div v-for="item in listStore" :key='item.id' class="main-list">
@@ -42,7 +43,7 @@
                     </div>
                 </div>
 
-                <div v-if="allLoaded" class="m-t-10" style="text-align:center;font-size: 0.18rem">没有更多数据了</div>
+                <div v-if="allLoaded" class="m-t-10" style="text-align:center;font-size: 0.18rem;display:none;">没有更多数据了</div>
             </mt-loadmore>
         </div>
     </div>
@@ -107,6 +108,7 @@
                         this.listStore.push(...this.listData);
                     }
                     if (!this.listStore) this.noData = true;
+                    this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
                     Indicator.close();
                 })
             },
@@ -136,6 +138,11 @@
     }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
+ .topScroll {
+    height: calc(100vh - 100px);
+    top: 100px;
+    bottom: 0rem;
+    }
     .page-loadmore-wrapper {
         overflow: scroll
     }

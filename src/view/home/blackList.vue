@@ -5,7 +5,7 @@
         </mt-header>
         <search-box @getSmeage="searchBlack" :message='placeMessage' ref="search"/>
 
-        <div class="page-main page-loadmore-wrapper topScroll">
+        <div class="page-main page-loadmore-wrapper topScroll" >
             <noDate v-if="noWdata"></noDate>
             <mt-loadmore
                     v-else
@@ -13,6 +13,7 @@
                     :top-method="loadTop"
                     :bottom-method="loadBottom"
                     :bottom-all-loaded="allLoaded"
+                     :bottomDistance= 50
                     ref="loadmore">
                 <!--<noDate v-if="noWdata"></noDate-->
 
@@ -141,6 +142,7 @@
                         this.noWdata=true;
                         app.Cwaiting();
                     }
+                     this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
                     Indicator.close();
                 })
             },
@@ -161,9 +163,11 @@
     }
 </script>
 <style scoped lang="scss">
+
     .topScroll {
-        top: 2.2rem;
-        bottom: 0.3rem;
+       height: calc(100vh - 100px);
+    top: 100px;
+    bottom: 0rem;
     }
 
     .page-loadmore-wrapper {

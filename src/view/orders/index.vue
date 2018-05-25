@@ -8,7 +8,7 @@
 		</mt-header>
 		<div class="maintop">
 			<search-box ref="search" @getSmeage="searchHandler" :message='placeMessage'/>
-			<div class="page-main earning page-loadmore-wrapper">
+			<div class="page-main earning page-loadmore-wrapper topScroll">
 				<noDate v-if="counts || count"></noDate>  
 				<mt-loadmore 
 					v-else
@@ -16,12 +16,12 @@
 					:top-method="loadTop" 
 					:bottom-method="loadBottom"
 					:bottom-all-loaded="allLoaded"
+					 :bottomDistance= 50
 					ref="loadmore">
 	
 					<!--订单车次列表-->
 					<ul 
-					    infinite-scroll-disabled="loading"
-					    infinite-scroll-distance="10"
+					 
 					    class="orders-ul"><!--v-infinite-scroll="loadMore"-->
 						<li v-for="list in listStore" class="orders-li" :key="list.id" @click="orderList(list.tid, list.sell_day)">
 					  		<div class="orders-t ub ub-ac" @click="orderList(list.tid, list.sell_day)">
@@ -62,7 +62,7 @@
 					  		<!--<div class="slide-btn" v-if="list.goods.length >= 1" @click="sildeDown">展开</div>-->
 						</li>
 					</ul>
-					<div></div>
+					<!-- <div></div> -->
 				</mt-loadmore>
 			</div>
 		</div>
@@ -138,7 +138,8 @@ export default {
 	                        this.counts = true;
 	                        app.Cwaiting();
 	                    }
-                    }
+					}
+					  this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
                     Indicator.close();
                     
                 })
@@ -196,13 +197,18 @@ export default {
 </script>
 
 <style scoped rel="stylesheet/scss" lang="scss">
+.topScroll {
+    height: calc(100vh - 150px);
+    top: 100px !important;
+    bottom: 0rem;
+    }
 i,b{
 	font-style: normal;
 	font-weight: normal;
 }
 .page-main{
-	top: 2.2rem;
-	bottom: 60px;
+	// top: 2.2rem;
+	// bottom: 60px;
 }
 body{
 	font-size: 0.3rem;

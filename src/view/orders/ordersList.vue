@@ -6,7 +6,7 @@
 		<search-box ref="search" @getSmeage="searchHandler" :message='placeMessage'/>
 
 		<!--订单列表-->
-		<div class="page-main page-loadmore-wrapper">
+		<div class="page-main page-loadmore-wrapper topScroll">
 			<noDate v-if="counts || count"></noDate>  
 			<mt-loadmore 
 				v-else
@@ -14,6 +14,7 @@
 				:top-method="loadTop" 
 				:bottom-method="loadBottom"
 				:bottom-all-loaded="allLoaded"
+				:bottomDistance= 50
 				ref="loadmore">
 				<ul class="order-list">
 					<li @click="ordersDetail(list.oid)" v-for="list in listStore" :key="list.oid">
@@ -114,7 +115,8 @@ export default {
 	                        this.counts = true;
 	                        app.Cwaiting();
 	                    }
-                    }
+					}
+					this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
                     Indicator.close();
                     
                 })
@@ -166,12 +168,17 @@ export default {
 }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
+.topScroll {
+    height: calc(100vh - 150px);
+    top: 100px !important;
+    bottom: 0rem;
+    }
 i,em,strong{
 	font-style: normal;
 	font-weight: normal;
 }
 .page-main{
-	top: 2.2rem;
+	// top: 2.2rem;
 	bottom: 0px;
 }
 .page-loadmore-wrapper{

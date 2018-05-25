@@ -16,6 +16,7 @@
 				:top-method="loadTop" 
 				:bottom-method="loadBottom"
 				:bottom-all-loaded="allLoaded"
+                :bottomDistance= 50
 				ref="loadmore">
 
                 <div v-for="n in listStore" :key='n.id' class="main-list" @click="goDetail(n)">
@@ -165,6 +166,7 @@ export default {
 	                        	app.Cwaiting();
 	                        }
                         }
+                        this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
                         Indicator.close();
                     
                 })
@@ -178,11 +180,13 @@ export default {
    overflow: auto;
 }
 .topScroll{
-    top: 0.8rem;
+     height: calc(100vh - 150px);
+    top: 100px;
     bottom: 1.1rem;
 }
 .topScroll0{
-    top:0.8rem;
+    height: calc(100vh - 100px);
+    top: 100px;
     bottom: 0rem;
 }
 .ft28{font-size: 0.36rem;}

@@ -20,9 +20,7 @@
 				:bottom-all-loaded="allLoaded"
                 :bottomDistance= 50
 				ref="loadmore">
-                <ul
-                      
-                >
+                <ul>
                         <li>
                             <div v-for="n in listStore" :key='n.id' class="main-list" @click="goDetail(n.cid, n.nickname)">
                                 <div class="ub ub-ac heade">
@@ -171,7 +169,7 @@
 	                        	app.Cwaiting();
 	                        }
                         }
-                        this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
+                       // this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
                         Indicator.close();
                     })
                 
