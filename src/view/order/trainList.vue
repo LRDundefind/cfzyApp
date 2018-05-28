@@ -95,9 +95,8 @@ export default {
 	                        app.Cwaiting();
 	                    }
 					}
-
-                    this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
-                    Indicator.close();
+					//this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
+					Indicator.close();
 				})
 				.catch(function (response) {
 					console.log(response);
@@ -174,7 +173,8 @@ i{
 	}
 }
 .page-loadmore-wrapper {
-    overflow: scroll
+    overflow: scroll;
+    -webkit-overflow-scrolling : touch;
 }
 
 
