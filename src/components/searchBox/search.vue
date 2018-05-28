@@ -48,7 +48,7 @@ export default {
 		    border-radius: 2em;
 		    font-size:  $fons_size_26;
 		    color: $main_color999999;
-
+			padding-right: 0.8rem;
 			background:#e1fcef url(../../assets/kehu_search_icon.png);
 			background-position: 0.28rem center;
     		background-repeat: no-repeat;
