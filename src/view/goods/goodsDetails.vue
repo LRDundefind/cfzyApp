@@ -1,7 +1,7 @@
 <template>
     <div class="page-content">
         <!--还款记录列表-->
-        <div class="page-main page-loadmore-wrapper" :style="{ height: wrapperHeight + 'px' }">
+        <div class="page-main page-loadmore-wrapper topScroll">
             <div class="" v-show="showList==false">
                 <div class="main-list" @click="showType">
                     <div class="clearfix goods">货品分类
@@ -199,7 +199,14 @@
     }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
-
+    .topScroll{
+        top: 40px;
+        bottom: 0;
+    }
+    .page-loadmore-wrappe{
+        overflow: auto;
+        -webkit-overflow-scrolling : touch;
+    }
     .main-list {
         background: #fff;
         margin-top: 0.2rem;
