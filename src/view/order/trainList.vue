@@ -26,7 +26,6 @@
 					</div>
 				</li>
 			</ul>
-		    <!-- <div v-if="allLoaded" class="m-t-10" style="text-align:center;font-size: 0.18rem">没有更多数据了</div> -->
 		  
 			</mt-loadmore>
 		</div>

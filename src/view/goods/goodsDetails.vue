@@ -34,35 +34,43 @@
 
             </div>
             <div class="" v-if="showList == true">
-                <div v-for="item in goodsData" :key='item.id' class="type-list">
-                    <div class="" @click="hideType(item)">
-                        <div class="ub ">
-                            <div class=" ub-f3">{{item.goodName}}</div>
-                        </div>
-                        <div class=" ub ">
-                            <div class="unit ub-f3">{{item.sellUnit | sellNnit}}</div>
-                        </div>
-                    </div>
-                </div>
+                <goods-list ref="goods" @choiceGoods="oNchoiceGoods"></goods-list>
+
+                <!--<div v-for="item in goodsData" :key='item.id' class="type-list">-->
+                    <!--<div class="" @click="hideType(item)">-->
+                        <!--<div class="ub ">-->
+                            <!--<div class=" ub-f3">{{item.goodName}}</div>-->
+                        <!--</div>-->
+                        <!--<div class=" ub ">-->
+                            <!--<div class="unit ub-f3">{{item.sellUnit | sellNnit}}</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+
+
             </div>
         </div>
 
-        <div v-if="deleteDisabled == 'edit'">
-            <div class="login_cont">
-                <div @click="addGoods('add')" class="loginbtn">确定</div>
+        <div v-show="showList == false">
+            <div v-show="deleteDisabled == 'edit'">
+                <div class="login_cont" >
+                    <div @click="addGoods('add')" class="loginbtn">确定</div>
+                </div>
+            </div>
+            <div class='update clearfix' v-show="deleteDisabled != 'edit'">
+                <mt-button type="primary" :disabled="deleteDisabled == 'edit'" size="large" class='f-l'
+                           @click="deleteGoods('delete')">删除
+                </mt-button>
+                <mt-button type="primary" size="large" class='f-l' @click="addGoods('add')">确定</mt-button>
             </div>
         </div>
-        <div class='update clearfix' v-else>
-            <mt-button type="primary" :disabled="deleteDisabled == 'edit'" size="large" class='f-l'
-                       @click="deleteGoods('delete')">删除
-            </mt-button>
-            <mt-button type="primary" size="large" class='f-l' @click="addGoods('add')">确定</mt-button>
-        </div>
-        
+
     </div>
 </template>
 
 <script>
+    import goodsList from '@/view/damage/goodsList'
+
     import {MessageBox, Toast} from 'mint-ui';
     import {damage} from '@/services/apis/damage.api'
     import {keyValue} from '@/services/apis/key-value';
@@ -98,6 +106,11 @@
                 showList: false,
             }
         },
+
+        components: {
+            'goods-list': goodsList,
+        },
+
         created(){
             if (typeof(this.edit.goodId) != "undefined" && this.edit.goodId != '') {
                 this.goods = this.edit;
@@ -108,10 +121,18 @@
         },
 
         mounted () {
-            this.wrapperHeight = document.documentElement.clientHeight - 160;
+            this.wrapperHeight = document.documentElement.clientHeight - 120;
             this.getlist()
         },
         methods: {
+            oNchoiceGoods(item){
+                this.showList = false;
+                this.Unit = item.sellUnit;
+                this.goods.goodId = item.goodId;
+                this.goods.goodName = item.goodName;
+                this.goods.numUnit = item.sellUnit;
+            },
+
             //初始化数据--获取档位货品列表
             getlist(){
                 damage.goodsList(this.goodsListParams).then(response => {
@@ -236,35 +257,34 @@
         }
     }
 
-    .type-list {
-        background: #fff;
-        margin-top: 0.2rem;
-        padding: 0.2rem 0.3rem;
-        color: #333;
-        font-size: 0.3rem;
+    /*.type-list {*/
+        /*background: #fff;*/
+        /*margin-top: 0.2rem;*/
+        /*padding: 0.2rem 0.3rem;*/
+        /*color: #333;*/
+        /*font-size: 0.3rem;*/
 
-        .unit {
-            font-size: 0.26rem;
-            color: #666666;
-            padding-top: 0.1rem;
-        }
-        .date {
-            font-size: 0.28rem;
-            color: #808080;
-            text-align: right;
-        }
+        /*.unit {*/
+            /*font-size: 0.26rem;*/
+            /*color: #666666;*/
+            /*padding-top: 0.1rem;*/
+        /*}*/
+        /*.date {*/
+            /*font-size: 0.28rem;*/
+            /*color: #808080;*/
+            /*text-align: right;*/
+        /*}*/
 
-    }
+    /*}*/
 
     .login_cont {
         width: 5.5rem;
-        margin: 0 auto;
-    }
-    .loginbtn {
-        width: 80% !important;
-        @include login_btn(fixed);
-        background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
-        margin: 0 !important;
+        margin: 10.5rem auto 0;
+        .loginbtn {
+            @include login_btn;
+            background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
+            margin: 0 !important;
+        }
     }
 
     .update {
