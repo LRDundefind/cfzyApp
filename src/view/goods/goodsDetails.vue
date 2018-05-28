@@ -49,21 +49,24 @@
 
 
             </div>
-        </div>
 
-        <div v-show="showList == false">
-            <div v-show="deleteDisabled == 'edit'">
-                <div class="login_cont" >
-                    <div @click="addGoods('add')" class="loginbtn">确定</div>
+            <div v-show="showList == false">
+                <div v-show="deleteDisabled == 'edit'">
+                    <div class="login_cont" >
+                        <div @click="addGoods('add')" class="loginbtn">确定</div>
+                    </div>
+                </div>
+                <div class='update clearfix' v-show="deleteDisabled != 'edit'">
+                    <mt-button type="primary" :disabled="deleteDisabled == 'edit'" size="large" class='f-l'
+                               @click="deleteGoods('delete')">删除
+                    </mt-button>
+                    <mt-button type="primary" size="large" class='f-l' @click="addGoods('add')">确定</mt-button>
                 </div>
             </div>
-            <div class='update clearfix' v-show="deleteDisabled != 'edit'">
-                <mt-button type="primary" :disabled="deleteDisabled == 'edit'" size="large" class='f-l'
-                           @click="deleteGoods('delete')">删除
-                </mt-button>
-                <mt-button type="primary" size="large" class='f-l' @click="addGoods('add')">确定</mt-button>
-            </div>
+
         </div>
+
+
 
     </div>
 </template>
@@ -286,7 +289,7 @@
 
     .login_cont {
         width: 5.5rem;
-        margin: 10.5rem auto 0;
+        margin: 7rem auto 0;
         .loginbtn {
             @include login_btn;
             background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
