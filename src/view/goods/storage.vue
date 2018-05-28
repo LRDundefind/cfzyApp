@@ -20,7 +20,7 @@
             </router-link>
         </mt-header>
 
-        <div class="page-loadmore-wrappe" :style="{ height: wrapperHeight + 'px' }">
+        <div class="page-main page-loadmore-wrappe topScroll">
 
             <mt-navbar v-model="selected" v-if="selected">
                 <mt-tab-item id="basic">基本信息</mt-tab-item>
@@ -119,6 +119,9 @@
                             <span>{{item.goodNum}} {{item.numUnit | sellNnit}}</span>
                         </p>
                     </div>
+                    <div class="login_pass" v-show="selected == 'goods'">
+                        <div @click="createGoods" class="loginbtn">添加货品</div>
+                    </div>
 
                 </div>
                
@@ -132,14 +135,13 @@
                 <!--入库货品信息-->
                 <div v-if="goodsDetails">
                     <goods-details :edit="editItem" @addGoods="onAddGoods"></goods-details>
+
                 </div>
 
             </mt-tab-container>
 
         </div>
-       <div class="login_cont" v-show="selected == 'goods'">
-            <div @click="createGoods" class="loginbtn">添加货品</div>
-        </div>
+
     </div>
 </template>
 
@@ -239,17 +241,17 @@
                 }
             }
         },
-        computed:{
-            wrapperHeight:function(){
-                let height = 0
-                if(this.selected == 'goods'){
-                    height = document.documentElement.clientHeight - 120;
-                }else {
-                    height = document.documentElement.clientHeight - 40;
-                }
-                return height;
-            }
-        },
+//        computed:{
+//            wrapperHeight:function(){
+//                let height = 0
+//                if(this.selected == 'goods'){
+//                    height = document.documentElement.clientHeight - 120;
+//                }else {
+//                    height = document.documentElement.clientHeight - 40;
+//                }
+//                return height;
+//            }
+//        },
         methods: {
             //货主列表返回
             ownerBack(){
@@ -611,8 +613,12 @@
     }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
+    .topScroll{
+        height: calc(100vh - 50px);
+        top: 40px;
+        bottom: 0rem;
+    }
     .page-loadmore-wrappe{
-        width:100%;
         overflow: scroll;
         -webkit-overflow-scrolling : touch;
     }
@@ -710,16 +716,16 @@
                 }
             }
         }
-        .login_cont {
+        .login_pass {
             width: 5.5rem;
-            margin: 0 auto;
+            margin: 1.5rem auto 0;
+            .loginbtn {
+                @include login_btn;
+                background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
+                margin: 0 !important;
+            }
         }
-        .loginbtn {
-            width: 80% !important;
-            @include login_btn(fixed);
-            background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
-            margin: 0 !important;
-        }
+
     }
 
 </style>

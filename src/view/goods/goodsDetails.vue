@@ -279,13 +279,12 @@
 
     .login_cont {
         width: 5.5rem;
-        margin: 0 auto;
-    }
-    .loginbtn {
-        width: 80% !important;
-        @include login_btn(fixed);
-        background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
-        margin: 0 !important;
+        margin: 10.5rem auto 0;
+        .loginbtn {
+            @include login_btn;
+            background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
+            margin: 0 !important;
+        }
     }
 
     .update {
