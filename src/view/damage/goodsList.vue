@@ -1,6 +1,6 @@
 <template>
     <div class="page-content">
-        <search-box @getSmeage="searchBlack" :message='placeMessage' :msg="msg" ref="search"/>
+        <!--<search-box @getSmeage="searchBlack" :message='placeMessage' :msg="msg" ref="search"/>-->
         <!-- :style="{ height: wrapperHeight + 'px' }" -->
         <div class="page-main page-loadmore-wrapper topScroll">
             <noDate v-if="noWdata"></noDate>
@@ -22,7 +22,6 @@
                         </div>
                     </div>
                 </div>
-
 
                 <div v-if="allLoaded" class="m-t-10" style="text-align:center;font-size: 0.18rem;display:none;">
                     没有更多数据了
@@ -47,8 +46,8 @@
             return {
 
                 noWdata: false,
-                placeMessage: '请输入货主名称或电话号码',
-                msg: '',
+                //placeMessage: '请输入货主名称或电话号码',
+                //msg: '',
                 allLoaded: false,
                 wrapperHeight: 0,//容器高度
                 noData: false,
@@ -74,17 +73,17 @@
                 this.$emit('choiceGoods', item);
             },
 
-            searchBlack(msg){
-                Indicator.open({
-                    text: 'Loading...',
-                    spinnerType: 'fading-circle'
-                });
-                this.params.current_page = 1;
-                this.params.search = msg;
-                debugger
-                this.listStore = [];
-                this.getList();
-            },
+//            searchBlack(msg){
+//                Indicator.open({
+//                    text: 'Loading...',
+//                    spinnerType: 'fading-circle'
+//                });
+//                this.params.current_page = 1;
+//                this.params.search = msg;
+//                debugger
+//                this.listStore = [];
+//                this.getList();
+//            },
             //初始化数据--获取货主列表
             getList(){
                 damage.goodsList(this.params).then(response => {
@@ -142,8 +141,8 @@
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
     .topScroll {
-        height: calc(100vh - 100px);
-        top: 100px;
+        height: calc(100vh - 40px);
+        top: 40px;
         bottom: 0;
     }
 
