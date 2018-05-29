@@ -108,8 +108,8 @@
                     this.$router.push({name:'noStalls'});
                 }
             }
-            
-
+        },    
+        mounted () {
             if (JSON.parse(Cookies.get('gidOwnID_lists')).gearName) {
                 this.gearName = JSON.parse(Cookies.get('gidOwnID_lists')).gearName;
             }
