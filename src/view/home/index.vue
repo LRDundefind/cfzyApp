@@ -104,10 +104,12 @@
             if (typeof Cookies.get('Token') == 'undefined') {
                 this.$router.push({name: 'login'});
             }
-
-            if(typeof Cookies.get('gidOwnID_lists') =='undefined'){
-                this.$router.push({name:'noStalls'});
+            else{
+                if(typeof Cookies.get('gidOwnID_lists') =='undefined'){
+                    this.$router.push({name:'noStalls'});
+                }
             }
+            
 
             if (JSON.parse(Cookies.get('gidOwnID_lists')).gearName) {
                 this.gearName = JSON.parse(Cookies.get('gidOwnID_lists')).gearName;
