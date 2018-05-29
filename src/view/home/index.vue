@@ -103,8 +103,7 @@
         created () {
             if (typeof Cookies.get('Token') == 'undefined') {
                 this.$router.push({name: 'login'});
-            }
-            else{
+            }else{
                 if(typeof Cookies.get('gidOwnID_lists') =='undefined'){
                     this.$router.push({name:'noStalls'});
                 }

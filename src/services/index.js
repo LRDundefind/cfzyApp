@@ -70,7 +70,7 @@ instance.interceptors.response.use(function (response) {
         var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
         if (keys) {
             var q = keys;
-            q.forEach(function (value) {
+            q.forEach(function(value){
                 Cookies.remove(value);
             });
         }
