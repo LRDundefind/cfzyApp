@@ -53,7 +53,7 @@ instance.interceptors.response.use(function (response) {
             });
         }
         setTimeout(function () {
-           window.location.href = '/wechat' 
+           window.location.href = '/wechat/#/login' 
         },2000)
         Toast({
             message: response.data.message,
@@ -75,7 +75,7 @@ instance.interceptors.response.use(function (response) {
             });
         }
         setTimeout(function () {
-           window.location.href = '/wechat' 
+           window.location.href = '/wechat/#/login' 
         },2000)
     };
     //  对响应错误做点什么
