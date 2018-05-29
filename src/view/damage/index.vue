@@ -128,8 +128,8 @@
 </script>
 <style scoped lang="scss">
     .topScroll{
-        height: calc(100vh - 100px);
-        top: 100px;
+        height: calc(100vh - 40px);
+        top: 40px;
         bottom: 0rem;
     }
     .page-loadmore-wrappe{
