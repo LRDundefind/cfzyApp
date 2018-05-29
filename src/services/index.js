@@ -44,11 +44,40 @@ instance.interceptors.response.use(function (response) {
         // });
         app.Cwaiting();
        }
-      
+    if (response.data.code == 700 ) {
+        var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
+        if (keys) {
+            var q = keys;
+            q.forEach(function (value) {
+                Cookies.remove(value);
+            });
+        }
+        setTimeout(function () {
+           window.location.href = '/wechat' 
+        },2000)
+        Toast({
+            message: response.data.message,
+            position: 'middle',
+            duration: 3000
+        });
+
+    };  
     return response;
    
 
 }, function (error) {
+    if (error.response.data.code == 700 ) {
+        var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
+        if (keys) {
+            var q = keys;
+            q.forEach(function (value) {
+                Cookies.remove(value);
+            });
+        }
+        setTimeout(function () {
+           window.location.href = '/wechat' 
+        },2000)
+    };
     //  对响应错误做点什么
     app.Cwaiting();
     Toast({
