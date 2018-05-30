@@ -37,6 +37,11 @@
                 }
             }
         },
+        created () {
+            if (typeof Cookies.get('Token') == 'undefined') {
+                this.$router.push({name: 'login'});
+            }
+        },
         mounted () {
 
         },

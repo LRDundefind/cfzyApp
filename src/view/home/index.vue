@@ -103,12 +103,13 @@
         created () {
             if (typeof Cookies.get('Token') == 'undefined') {
                 this.$router.push({name: 'login'});
+            }else{
+                if(typeof Cookies.get('gidOwnID_lists') =='undefined'){
+                    this.$router.push({name:'noStalls'});
+                }
             }
-
-            if(typeof Cookies.get('gidOwnID_lists') =='undefined'){
-                this.$router.push({name:'noStalls'});
-            }
-
+        },    
+        mounted () {
             if (JSON.parse(Cookies.get('gidOwnID_lists')).gearName) {
                 this.gearName = JSON.parse(Cookies.get('gidOwnID_lists')).gearName;
             }

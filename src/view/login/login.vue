@@ -109,9 +109,9 @@ export default {
         }
     },
     mounted () {
-       if (typeof Cookies.get('Token') !=='undefined') {
-            this.$router.push({name:'home'});
-        }
+       // if (typeof Cookies.get('Token') !=='undefined') {
+       //      this.$router.push({name:'home'});
+       //  }
     },
     created(){
         // let _this = this;

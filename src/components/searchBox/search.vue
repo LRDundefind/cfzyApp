@@ -58,7 +58,7 @@ export default {
 			top: 10px;
 			right: 1.3rem;
 			width: 0.9rem;
-			height: 0.8rem;
+			height: 40px;
 			background: url(../../assets/kehu_del_icon.png) center;
 			background-repeat: no-repeat;
 		}
