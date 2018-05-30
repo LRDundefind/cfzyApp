@@ -209,6 +209,7 @@
                     border-radius: 50%;
                 }
                 .name {
+                    min-height: 0.3rem;
                     font-size: 0.3rem;
                     color: #333333;
                     padding: 0.4rem 0 0.22rem 0.26rem;
