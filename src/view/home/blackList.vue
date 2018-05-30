@@ -205,16 +205,27 @@
                 font-size: 0.3rem;
                 .black-img {
                     width: 1.06rem;
+                    height: 1.06rem;
+                    border-radius: 50%;
                 }
                 .name {
                     font-size: 0.3rem;
                     color: #333333;
                     padding: 0.4rem 0 0.22rem 0.26rem;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    display: block;
                 }
                 .reason {
                     font-size: 0.24rem;
                     color: #808080;
                     padding-left: 0.26rem;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    display: block;
+                    width: 5rem;
                 }
                 .date {
                     font-size: 0.22rem;
