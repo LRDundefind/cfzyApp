@@ -7,7 +7,7 @@
 
             <div class="main-list">
                 <div class="remark c-9">
-                    <textarea name="" id="" cols="30" rows="10" placeholder="请输入您的宝贵意见" v-model="ideaInfo"></textarea>
+                    <textarea name="" id="" cols="30" rows="10" placeholder="请输入您的宝贵意见" v-model="ideaInfo"  maxlength="420"></textarea>
                 </div>
             </div>
 
