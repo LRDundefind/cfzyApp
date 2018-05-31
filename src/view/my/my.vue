@@ -254,7 +254,7 @@
             goPassword(){
                 if(this.black == 'nostall'){
                     Toast({
-                        message: '当前档位未上班！',
+                        message: '请登录管理端维护档位信息!',
                         position: 'middle',
                         duration: 5000
                     });
@@ -266,7 +266,7 @@
             gofeedBack(){
                 if(this.black == 'nostall'){
                     Toast({
-                        message: '当前档位未上班！',
+                        message: '请登录管理端维护档位信息!',
                         position: 'middle',
                         duration: 5000
                     });
@@ -278,7 +278,7 @@
             goAbout(){
                 if(this.black == 'nostall'){
                     Toast({
-                        message: '当前档位未上班！',
+                        message: '请登录管理端维护档位信息!',
                         position: 'middle',
                         duration: 5000
                     });
@@ -304,7 +304,7 @@
             goDetails(){
                 if(this.black == 'nostall'){
                     Toast({
-                        message: '当前档位未上班！',
+                        message: '请登录管理端维护档位信息!',
                         position: 'middle',
                         duration: 5000
                     });

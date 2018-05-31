@@ -66,12 +66,7 @@
             },
             //跳转到个人中心
             goMy(){
-                Toast({
-                    message: '当前档位未上班！',
-                    position: 'middle',
-                    duration: 5000
-                });
-//                this.$router.push({name: 'my',params:{black:'nostall'}});
+                this.$router.push({name: 'my',params:{black:'nostall'}});
             },
 
         }
