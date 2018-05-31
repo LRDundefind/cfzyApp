@@ -26,6 +26,7 @@
 <script>
     import { login } from '@/services/apis/login'
     import Cookies from 'js-cookie'
+    import {Toast} from 'mint-ui';
 
     export default {
         data () {
@@ -65,7 +66,12 @@
             },
             //跳转到个人中心
             goMy(){
-                this.$router.push({name: 'my',params:{black:'nostall'}});
+                Toast({
+                    message: '当前档位未上班！',
+                    position: 'middle',
+                    duration: 5000
+                });
+//                this.$router.push({name: 'my',params:{black:'nostall'}});
             },
 
         }
