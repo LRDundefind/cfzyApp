@@ -51,10 +51,14 @@
                 </ul> -->
                 
             </div>
-            <div class='update clearfix'>
-                <mt-button type="primary" size="large" class='f-l' @click="consumptionRecords(listdata.cid)">查看消费记录</mt-button>
-                <mt-button type="primary" size="large" class='f-l' @click="goChange()" :disabled="listdata.sys_status=='Y'">更新资料</mt-button>
+            <div class='update clearfix ub' v-if="listdata.sys_status!='Y'">
+                <mt-button type="primary" size="large" class='btn1 ub-f1' @click="consumptionRecords(listdata.cid)">查看消费记录</mt-button>
+                <mt-button type="primary" size="large" class='btn2 ub-f1' @click="goChange()">更新资料</mt-button>
             </div>
+            <div class='update clearfix ub' v-else>
+                <mt-button type="primary" size="large" class='btn3 ub-f1' @click="consumptionRecords(listdata.cid)">查看消费记录</mt-button>
+            </div>
+
         </div>
     
 </template>
@@ -212,20 +216,27 @@
     }
 
     .update {
-
-        .mint-button--primary:nth-child(1) {
+        left: -0.1rem;
+        .btn1 {
             background: url(../../assets/kehu_chakanxiaofeijilu_btn@2x.png) no-repeat center;
-            background-size: contain;
-            width: 41%;
-            color: #0f0;
+            background-size: 100% 100%;
+            width: 100%;
+            color: #33d57c;
             margin: 0 3%;
             font-size: 0.3rem !important;
         }
-        .mint-button--primary:nth-child(2) {
+        .btn2 {
             background: url(../../assets/kehu_gengxinziliao_btn@2x.png) no-repeat center;
-            background-size: contain;
-            width: 50%;
+            background-size: 100% 95%;
+            width: 100%;
             font-size: 0.3rem !important;
+        }
+        .btn3{
+            width: 100%;
+            font-size: 0.3rem !important;
+            background: #33d57c content-box;
+            border-radius: 30px;
+            margin-left: 0.2rem;
         }
         padding: 0.3rem 0 0rem 0;
         button {
