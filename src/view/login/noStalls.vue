@@ -7,10 +7,10 @@
         </mt-header>
 
         <div class="">
-            <div class="home">
+            <!-- <div class="home">
                 <span class="black-title">黑名单</span>
                 <img @click="goBlack" class="p-re" src="../../assets/index/black_img.png"/>
-            </div>
+            </div> -->
 
             <div class="stalls">
                 <div>
@@ -26,7 +26,7 @@
 <script>
     import { login } from '@/services/apis/login'
     import Cookies from 'js-cookie'
-    import {Toast} from 'mint-ui';
+    import { MessageBox } from 'mint-ui';
 
     export default {
         data () {
@@ -48,17 +48,22 @@
         },
         methods: {
             getlist(){
-                let params = {};
-                login.stalls(params).then(response => {
+                MessageBox({
+                  title: '提示',
+                  message: '请关联档位后重新登录',
+                  //showCancelButton: true
+                });
+                // let params = {};
+                // login.stalls(params).then(response => {
 
-                    if(response.data.results == ''){
-//                        console.log(123);
-                    }else {
-                        let gidOwnID_list=JSON.stringify(response.data.results[0]);
-                        Cookies.set('gidOwnID_lists', gidOwnID_list);                 //档位信息集合
-                        this.$router.push({name:'home'});
-                    }
-                })
+                //     if(response.data.results == ''){
+
+                //     }else {
+                //         let gidOwnID_list=JSON.stringify(response.data.results[0]);
+                //         Cookies.set('gidOwnID_lists', gidOwnID_list);                 //档位信息集合
+                //         this.$router.push({name:'home'});
+                //     }
+                // })
             },
             //跳转到黑名单
             goBlack(){
@@ -92,9 +97,9 @@
     }
 
     .stalls{
-        margin-top: 0.22rem;
+        padding-top: 2rem;
         text-align: center;
-        height: 10.38rem;
+        height: calc(100vh - 2rem);
         background-color: white;
         .stalls_pic{
             width: 4.18rem;

@@ -104,15 +104,17 @@
             if (typeof Cookies.get('Token') == 'undefined') {
                 this.$router.push({name: 'login'});
             }else{
-                if(typeof Cookies.get('gidOwnID_lists') =='undefined'){
+                var g = Cookies.get('gidOwnID_lists') 
+                if(typeof g == 'undefined' || g == ''){
                     this.$router.push({name:'noStalls'});
+                }else{
+                    if (JSON.parse(Cookies.get('gidOwnID_lists')).gearName) {
+                        this.gearName = JSON.parse(Cookies.get('gidOwnID_lists')).gearName;
+                    }
                 }
             }
         },    
         mounted () {
-            if (JSON.parse(Cookies.get('gidOwnID_lists')).gearName) {
-                this.gearName = JSON.parse(Cookies.get('gidOwnID_lists')).gearName;
-            }
             this.info();
             this.getlist();
             app.Vwaiting();
