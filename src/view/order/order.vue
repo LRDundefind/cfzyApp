@@ -12,7 +12,8 @@
 		</mt-header>
 		</div>
 		<!--下单-->
-		<div class="page-main page-loadmore-wrapper">
+		<order-form v-if="showOrderForm" ref="orderForm" v-bind="post"></order-form>
+		<div class="page-main page-loadmore-wrapper" v-else>
 			<div class="order-detail" v-if="trainInfo">
 				<div class="ub ub-ac term no-border right-icon" @click="choosetrainNumber()">
 					<div class="ub-f1">{{trainsNum}}</div>
@@ -47,7 +48,7 @@
 						<span>金额</span>
 						<span>包装费</span>
 					</li>
-					<li class="con" v-for=" (goods,index) in goodsInfo" @click="goodsInfoSet(index, goods.goodId, goods.id, goods.goodName, goods.sellUnit, goods.numUnit, goods.surplusNum, goods.slushing, goods.tid, trainsNum)" :key="goods.id">
+					<li class="con" v-for=" (goods,index) in goodsInfo" @click="goodsInfoSet(index, goods)" :key="goods.id">
 						<span>{{goods.goodName}}</span>
 						<span v-if="goods.netWeight == null">{{goods.weight}}</span>
 						<span v-if="goods.netWeight != null">{{goods.netWeight}}</span>
@@ -190,7 +191,7 @@
 			</div>
 		</div>
 		<div class="autograph-con" v-if="showAutograph">
-			<autograph @closeAutographCon = "closeAutograph" @autographInfo = "getAutographInfo"></autograph>
+			<autograph @closeAutographCon = "closeAutograph" @autographInfo = "getAutographInfo" ref="autograph"></autograph>
 		</div>
 	</div>
 </template>
@@ -201,12 +202,16 @@ import Bus from '@/components/bus.js'
 import {order} from '@/services/apis/order.js'
 import Cookies from 'js-cookie'
 import Autograph from '@/components/Autograph/autograph'
+import orderForm from '@/view/order/orderForm'
 //import Router from 'vue-router'
 export default {
-	components: { Autograph },
+	components: { Autograph, orderForm},
     data () {
         return {
-        	wrapperHeight: 0,//容器高度
+        	showOrderForm:false,
+        	post:{},  //传递到表单的数据
+        	dataArray:[],  //保存修改过数据
+
         	gearName:'', //档位
         	
         	numberNum:null,   //点击获取索引
@@ -283,7 +288,7 @@ export default {
         }
     },
     mounted () {
-    	this.wrapperHeight = document.documentElement.clientHeight - 100;
+
     	//档位
     	if(JSON.parse(Cookies.get('gidOwnID_lists')).gearName){
             this.gearName = JSON.parse(Cookies.get('gidOwnID_lists')).gearName;
@@ -373,15 +378,15 @@ export default {
                     for(var i = 0, len = this.goodsInfo.length; i < this.goodsInfo.length; i ++){
                     	//列表中展示的项 非设置全部goodsInfo，部分题啊交订单所需项在货品设置弹框关闭后set添加
                     	//初始不添加goodName,googId
-						this.goodsInfo[i]['price'] = null; 
-						this.goodsInfo[i]['goodNum'] = null; 
-						this.goodsInfo[i]['weight'] = null; 
-						this.goodsInfo[i]['goodAmount'] = null;
-                        this.goodsInfo[i]['netWeight'] = null; //净重 用于页面展示
+						this.goodsInfo[i]['price'] = ''; 
+						this.goodsInfo[i]['goodNum'] = ''; 
+						this.goodsInfo[i]['weight'] = ''; 
+						this.goodsInfo[i]['goodAmount'] = '';
+                        this.goodsInfo[i]['netWeight'] = ''; //净重 用于页面展示
                         this.goodsInfo[i]['slushing'] = this.goodsInfo[i].slushing; //减水重 用于页面展示
-                        this.goodsInfo[i]['packCost'] = null;
-						this.goodsInfo[i]['weighCost'] = null; //过磅费，表格里不展示，下方列表展示
-						this.goodsInfo[i]['slabWeight'] = null; //平板重 提交订单所需，列表不展示
+                        this.goodsInfo[i]['packCost'] = '';
+						this.goodsInfo[i]['weighCost'] = ''; //过磅费，表格里不展示，下方列表展示
+						this.goodsInfo[i]['slabWeight'] = ''; //平板重 提交订单所需，列表不展示
 						this.goodsInfo[i]['weight_util'] = this.goodsInfo[i].sellUnit; //重量单位，提交订单所需，列表不展示    //若按重量售卖，则重量单位为售卖单位????   待修改
                         this.goodsInfo[i]['sellUnit'] = this.goodsInfo[i].sellUnit ; //售卖单位，列表不展示
                         this.goodsInfo[i]['numUnit'] = this.goodsInfo[i].numUnit; //入库单位，列表不展示
@@ -400,7 +405,8 @@ export default {
 			
 		},
 		//设置货品重量件数信息的弹框
-        goodsInfoSet(i, goodid, id, name, sellunit, numUnit, surplusNum, slushing, tid, trainsNum){
+        goodsInfoSet(i, goods){
+        	
         	//提示优先选择客户--在选中了非临时客户的时候
         	if(this.customerType == 'Nottemporary' && this.customerId == undefined){
 				Toast({
@@ -408,42 +414,55 @@ export default {
 					position: 'middle',
 					duration: 3000
     			});
-        	}
-			this.numberNum = i;
-        	this.dialoags = true;
-        	this.goodId = goodid;//货品id 提交订单传参所需
-        	this.id = id;//货品id 提交订单传参所需
-        	this.goodName = name;
-        	this.sellUnit = sellunit;//提交订单传参所需 售卖单位
-        	this.numUnit = numUnit;//提交订单传参所需  重量单位
-        	this.slushing = slushing;//减水重 只作展示，
-        	if(numUnit == 'unit_pie'){
-        		this.surplusHeavy = '';
-        		this.surplusPiece = surplusNum; // 入库单位为件时，在件数位置-显示货品剩余量
         	}else{
-        		this.surplusPiece = '';
-        		this.surplusHeavy = surplusNum; // 入库单位为斤/公斤时，在重量位置-显示货品剩余量
-        	}
+        		if (this.dataArray != []) {
+        			for (var j = 0; j < this.dataArray.length; j++) {
+	        			if (this.dataArray[j].id == goods.id) {
+	        				goods = this.dataArray[j]
+	        			
+	        			}
+	        		} 
+        		}
+        		
 
-			if(this.sellUnit == 'unit_jin'){
-				this.goodsUnit = '斤';
-			}else if(this.sellUnit == 'unit_kg'){
-				this.goodsUnit = '公斤';
-			}else{
-				//unit_pie 件
-				this.goodsUnit = '件';
-				this.goodsweight = '0'; //入库单位为件时，重量默认输入0  //不需要在resetPriceNum中设置
-			};
+        		this.showOrderForm = true;
+        		this.post = goods;
+        		this.numberNum = i;
+        	}
+   //      	this.dialoags = true;
+   //      	this.goodId = goodid;//货品id 提交订单传参所需
+   //      	this.id = id;//货品id 提交订单传参所需
+   //      	this.goodName = name;
+   //      	this.sellUnit = sellunit;//提交订单传参所需 售卖单位
+   //      	this.numUnit = numUnit;//提交订单传参所需  重量单位
+   //      	this.slushing = slushing;//减水重 只作展示，
+   //      	if(numUnit == 'unit_pie'){
+   //      		this.surplusHeavy = '';
+   //      		this.surplusPiece = surplusNum; // 入库单位为件时，在件数位置-显示货品剩余量
+   //      	}else{
+   //      		this.surplusPiece = '';
+   //      		this.surplusHeavy = surplusNum; // 入库单位为斤/公斤时，在重量位置-显示货品剩余量
+   //      	}
+
+			// if(this.sellUnit == 'unit_jin'){
+			// 	this.goodsUnit = '斤';
+			// }else if(this.sellUnit == 'unit_kg'){
+			// 	this.goodsUnit = '公斤';
+			// }else{
+			// 	//unit_pie 件
+			// 	this.goodsUnit = '件';
+			// 	this.goodsweight = '0'; //入库单位为件时，重量默认输入0  //不需要在resetPriceNum中设置
+			// };
 			
-			//编辑弹框的值  price 单价 、goodNum 件数、weight 重量、slabWeight 平板重
-			if(this.goodsInfo[i].goodNum != null){
-				this.goodsunit = this.goodsInfo[i].price;
-				this.goodsnum = this.goodsInfo[i].goodNum;
-				this.goodsweight = this.goodsInfo[i].weight;
-				this.pbweight = this.goodsInfo[i].slabWeight;
-				this.slushing = this.goodsInfo[i].slushing;
+			// //编辑弹框的值  price 单价 、goodNum 件数、weight 重量、slabWeight 平板重
+			// if(this.goodsInfo[i].goodNum != null){
+			// 	this.goodsunit = this.goodsInfo[i].price;
+			// 	this.goodsnum = this.goodsInfo[i].goodNum;
+			// 	this.goodsweight = this.goodsInfo[i].weight;
+			// 	this.pbweight = this.goodsInfo[i].slabWeight;
+			// 	this.slushing = this.goodsInfo[i].slushing;
 				
-			}
+			// }
 		},
         
     	//单件货品信息录入验证和提交
@@ -771,9 +790,6 @@ export default {
 						params: {type: 'home'}
 		            });
         		})
-        		.catch(function (response) {
-        			console.log(response);
-        		});
         }
         
     },
