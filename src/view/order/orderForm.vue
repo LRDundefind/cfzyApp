@@ -206,11 +206,16 @@ export default {
 				parent.goodAmount = response.data.results.goodAmount
 				parent.netWeight = response.data.results.netWeight
 				parent.weighCost = response.data.results.weighCost
+				parent.weight = this.form.weight
+				parent.slabWeight = this.form.slabWeight
 				
 
 				//根据返回数据计算总和
                 for(var i=0;i<this.$parent.goodsInfo.length;i++){
                 	console.log(this.$parent.totalCost.totalAmount)
+                	toNumber(this.$parent.goodsInfo[i]['goodAmount'])
+                	toNumber(this.$parent.goodsInfo[i]['packCost'])
+                	toNumber(this.$parent.goodsInfo[i]['weighCost'])
 					this.$parent.totalCost.totalAmount += parseInt(this.$parent.goodsInfo[i]['goodAmount']); //总货款费用
 					this.$parent.totalCost.totalPack += parseInt(this.$parent.goodsInfo[i]['packCost']); //总包装费
 					this.$parent.totalCost.totalWeigh += parseInt(this.$parent.goodsInfo[i]['weighCost']); //总过磅费
@@ -229,6 +234,13 @@ export default {
 			　　return true; 
 			    } 
 			} return false; 
+		},
+		//空字符串时转为0
+		toNumber(str){
+			if (str == '') {
+				str = 0
+			}
+			return str
 		}
     }
 }
@@ -250,12 +262,11 @@ export default {
 .page-main{
 	top: 0.8rem;
 	bottom: 60px;
+	overflow: scroll;
 }
 .update{
 	background: #f5f5f5;
 	width: 100%;
-	position: fixed;
-	bottom: 0;
 	.mint-button--primary:nth-child(2){
 		background: url(../../assets/kehu_chakanxiaofeijilu_btn@2x.png) no-repeat center;
 		background-size:contain;
