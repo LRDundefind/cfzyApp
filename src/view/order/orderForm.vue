@@ -212,8 +212,8 @@ export default {
 				//根据返回数据计算总和
                 for(var i=0;i<this.$parent.goodsInfo.length;i++){
                 	
-                	if (this.$parent.goodsInfo[i].price == '') {
-                		console.log(this.$parent.goodsInfo[i])
+                	if (this.$parent.goodsInfo[i].goodNum !='' && this.$parent.goodsInfo[i].price == '') {
+                		//console.log(this.$parent.goodsInfo[i])
 						this.$parent.isPrice = true
 					}
                 	if(this.$parent.goodsInfo[i]['goodAmount'] == '') this.$parent.goodsInfo[i]['goodAmount'] = 0
@@ -230,21 +230,6 @@ export default {
 		},
 		cancel(){
 			this.$parent.showOrderForm = false;
-		},
-		//判断数组中是否有某值
-		inArray(arr,element){
-			for (var i = 0; i < arr.length; i++) { 
-			　　if (arr[i] == element) { 
-			　　return true; 
-			    } 
-			} return false; 
-		},
-		//空字符串时转为0
-		toNumber(str){
-			if (str == '') {
-				str = 0
-			}
-			return str
 		}
     }
 }

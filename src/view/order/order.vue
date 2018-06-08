@@ -702,12 +702,15 @@ export default {
         	}
 
 			//填写的购买货品的总件数 以此判断至少有一项货品填写了下单信息
-			var buyNum = 0; 
+			var buyNum = false; //件数
+			var bugWigth = false; //重量
 			for(var index in this.goodsInfo){
-				buyNum += this.goodsInfo[index].goodNum;
+				if (this.goodsInfo[index].goodNum != '') buyNum = true
+				if (this.goodsInfo[index].weight != '') bugWigth = true
 			}
+
 			//现结+赊账 至少填写了一项货品信息
-			if(buyNum < 0 || buyNum == ''){
+			if(!buyNum && !buyNum){
 				Toast({
 					message: '请完善货品购买量信息',
 					position: 'middle',
@@ -715,7 +718,6 @@ export default {
     			});
     			return false;
 			}
-			
 			//非 赊账暂存(szType != 'Y')时，判断填写了重量的货品都填写了单价
 			if(szType != 'Y'){
                 for(var i = 0, len = this.goodsInfo.length; i < this.goodsInfo.length; i ++){
