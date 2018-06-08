@@ -1,53 +1,53 @@
 <template>
-	<div class="page-content">
+
+	<div style="background: #f5f5f5;height: 100%">
 		
-		<div class="page-main">
-			
-			<mt-field label="货品名称" readonly disableClear v-model="form.goodName"></mt-field>
-			<mt-field class="form.sellUnit" label="售卖单位" readonly>
-				<select class="sellUnitSel m-l-10" v-model="form.sellUnit">
-					<option value="unit_jin">斤</option>
-					<option value="unit_kg">公斤</option>
-					<option value="unit_pie">件</option>
-				</select>
-			</mt-field>
-			<mt-field label="单价" placeholder="请输入单价" v-model="form.price"></mt-field>
-			<mt-field label="件数" :placeholder="surplus" type="number" v-model="form.goodNum"><span class="m-l-10">件</span></mt-field>
-			<mt-field label="重量" placeholder="请输入重量" type="number" v-model="form.weight">
-				<select v-model="form.weight_util" class="m-l-10">
-					<option value="unit_jin">斤</option>
-					<option value="unit_kg">公斤</option>
-				</select>
-			</mt-field>
-			<mt-field label="平板重" placeholder="请输入平板重" type="number" v-model="form.slabWeight">
-				<span class="m-l-10">{{form.weight_util | sellNnit}}</span>
-			</mt-field>
-			<mt-field label="减水重" placeholder="" type="number" v-model="form.slushing">
-				<select v-model="form.slushingUnit" class="m-l-10">
-					<option value="unit_jin">斤/件</option>
-					<option value="unit_kg">公斤/件</option>
-				</select>
-			</mt-field>
-			<mt-field label="包装费" placeholder="" type="number" v-model="form.packCoef">
-				<select v-model="form.packCoefUnit" class="m-l-10">
-					<option value="unit_jin">元/斤</option>
-					<option value="unit_kg">元/公斤</option>
-					<option value="unit_pie">元/件</option>
-				</select>
-			</mt-field>
-			<mt-field label="过磅费" placeholder="" type="number" v-model="form.poundCoef">
-				<select v-model="form.poundCoefUnit " class="m-l-10">
-					<option value="unit_jin">元/斤</option>
-					<option value="unit_kg">元/公斤</option>
-					<option value="unit_cbd">元/公担</option>
-				</select>
-			</mt-field>
-			<div class='update clearfix'>
-				<mt-button type="primary" size="large" class='f-l' @click="sure">确定</mt-button>
-				<mt-button type="primary" size="large" class='f-l' @click="cancel">取消</mt-button>
-			</div>
+		<mt-field label="货品名称" readonly disableClear v-model="form.goodName"></mt-field>
+		<mt-field class="form.sellUnit" label="售卖单位" readonly>
+			<select class="sellUnitSel m-l-10" v-model="form.sellUnit">
+				<option value="unit_jin">斤</option>
+				<option value="unit_kg">公斤</option>
+				<option value="unit_pie">件</option>
+			</select>
+		</mt-field>
+		<mt-field label="单价" placeholder="请输入单价" type="number" v-model="form.price"></mt-field>
+		<mt-field label="件数" :placeholder="surplus" type="number" v-model="form.goodNum"><span class="m-l-10">件</span></mt-field>
+		<mt-field label="重量" placeholder="请输入重量" type="number" v-model="form.weight">
+			<select v-model="form.weight_util" class="m-l-10">
+				<option value="unit_jin">斤</option>
+				<option value="unit_kg">公斤</option>
+			</select>
+		</mt-field>
+		<mt-field label="平板重" placeholder="请输入平板重" type="number" v-model="form.slabWeight">
+			<span class="m-l-10">{{form.weight_util | sellNnit}}</span>
+		</mt-field>
+		<mt-field label="减水重" placeholder="" type="number" v-model="form.slushing">
+			<select v-model="form.slushingUnit" class="m-l-10">
+				<option value="unit_jin">斤/件</option>
+				<option value="unit_kg">公斤/件</option>
+			</select>
+		</mt-field>
+		<mt-field label="包装费" placeholder="" type="number" v-model="form.packCoef">
+			<select v-model="form.packCoefUnit" class="m-l-10">
+				<option value="unit_jin">元/斤</option>
+				<option value="unit_kg">元/公斤</option>
+				<option value="unit_pie">元/件</option>
+			</select>
+		</mt-field>
+		<mt-field label="过磅费" placeholder="" type="number" v-model="form.poundCoef">
+			<select v-model="form.poundCoefUnit " class="m-l-10">
+				<option value="unit_jin">元/斤</option>
+				<option value="unit_kg">元/公斤</option>
+				<option value="unit_cbd">元/公担</option>
+			</select>
+		</mt-field>
+		<div class='update clearfix'>
+			<mt-button type="primary" size="large" class='f-l' @click="sure">确定</mt-button>
+			<mt-button type="primary" size="large" class='f-l' @click="cancel">取消</mt-button>
 		</div>
+
 	</div>
+
 </template>
 
 <script>
@@ -97,11 +97,9 @@ export default {
     	}
     },
     methods: {
-    	//赊账规则
-		getGoodInfo(){
-			
-		},
+    	
 		sure(){
+
 			if(this.form.goodNum == '' ){
     			Toast({
 					message: '请完善购买信息（件数）',
@@ -167,6 +165,7 @@ export default {
 							duration: 1000
 		    			});
 	    			}else{
+	    				this.$parent.isPrice = false;
 	    				this.getGoodsInformation();
 	    			}
 	    		}else{
@@ -186,8 +185,7 @@ export default {
 				//通过是否写入单价的情况 判断是否显示总货款、包装、过磅、合计金额费用
 				this.$parent.have_goodsunit = true;
 				this.$parent.showOrderForm = false;
-
-
+				
                 var parent = this.$parent.goodsInfo[this.$parent.numberNum];
             	for (var n = 0; n < this.$parent.dataArray.length; n++) {
                 	if (this.$parent.dataArray[n].id == this.form.id) {
@@ -206,22 +204,28 @@ export default {
 				parent.goodAmount = response.data.results.goodAmount
 				parent.netWeight = response.data.results.netWeight
 				parent.weighCost = response.data.results.weighCost
+				parent.sellUnit = this.form.sellUnit
 				parent.weight = this.form.weight
 				parent.slabWeight = this.form.slabWeight
 				
 
 				//根据返回数据计算总和
                 for(var i=0;i<this.$parent.goodsInfo.length;i++){
-                	console.log(this.$parent.totalCost.totalAmount)
-                	toNumber(this.$parent.goodsInfo[i]['goodAmount'])
-                	toNumber(this.$parent.goodsInfo[i]['packCost'])
-                	toNumber(this.$parent.goodsInfo[i]['weighCost'])
+                	
+                	if (this.$parent.goodsInfo[i].price == '') {
+                		console.log(this.$parent.goodsInfo[i])
+						this.$parent.isPrice = true
+					}
+                	if(this.$parent.goodsInfo[i]['goodAmount'] == '') this.$parent.goodsInfo[i]['goodAmount'] = 0
+                	if(this.$parent.goodsInfo[i]['packCost'] == '') this.$parent.goodsInfo[i]['packCost'] = 0
+                	if(this.$parent.goodsInfo[i]['weighCost'] == '') this.$parent.goodsInfo[i]['weighCost'] = 0
+
 					this.$parent.totalCost.totalAmount += parseInt(this.$parent.goodsInfo[i]['goodAmount']); //总货款费用
 					this.$parent.totalCost.totalPack += parseInt(this.$parent.goodsInfo[i]['packCost']); //总包装费
 					this.$parent.totalCost.totalWeigh += parseInt(this.$parent.goodsInfo[i]['weighCost']); //总过磅费
 					this.$parent.totalCost.tatol = this.$parent.totalCost.totalAmount + this.$parent.totalCost.totalPack + this.$parent.totalCost.totalWeigh + this.$parent.totalCost.deliveryCost;
                 }
-                
+                //console.log(this.$parent.isPrice)
 			})
 		},
 		cancel(){
@@ -255,15 +259,11 @@ export default {
 		height: 25px;
 		line-height: 25px;
 	}
+	.sellUnitSel{
+		width: 100px;
+	}
 }
-.sellUnitSel{
-	width: 200px;
-}
-.page-main{
-	top: 0.8rem;
-	bottom: 60px;
-	overflow: scroll;
-}
+
 .update{
 	background: #f5f5f5;
 	width: 100%;

@@ -12,116 +12,118 @@
 		</mt-header>
 		</div>
 		<!--下单-->
-		<order-form v-if="showOrderForm" ref="orderForm" v-bind="post"></order-form>
-		<div class="page-main page-loadmore-wrapper" v-else>
-			<div class="order-detail" v-if="trainInfo">
-				<div class="ub ub-ac term no-border right-icon" @click="choosetrainNumber()">
-					<div class="ub-f1">{{trainsNum}}</div>
-					<span class="c-3 F26C4c">{{plateNum}}</span>
-					<img src="../../assets/my/icon_right.png" class="icon">
-				</div>
-			</div>
-			<div class="order-detail" v-if="trainInfo" id="chooseCustomer">
-				<div class="ub ub-ac term right-icon input-choose">
-					<input id="kh" type="radio" name="choose" value="Nottemporary" v-model="customerType">
-					<label for="kh" class="customer ub ub-pj">
-						<div class="kehu f-l">客户</div>
-						<img src="../../assets/my/icon_right.png" class="icon f-r" @click="chooseCustomer()">
-						<span @click="chooseCustomer()" class="f-r">{{customerName}}</span>
-					</label>
-					
-				</div>
-				<div class="ub ub-ac term no-border input-choose">
-					<input id="sk" type="radio" name="choose" value="temporary" v-model="customerType">
-					<label for="sk" class="individual"><div class="kehu">临时客户</div></label>				
-				</div>
-			</div>
-			
-			<!--货品信息-->
-			<div class="order-detail item-table" v-if="otherInfo">
-				<ul class="table-ul">
-					<li class="title">
-						<span>品名</span>
-						<span>重量</span>
-						<span>单价</span>
-						<span>件数</span>
-						<span>金额</span>
-						<span>包装费</span>
-					</li>
-					<li class="con" v-for=" (goods,index) in goodsInfo" @click="goodsInfoSet(index, goods)" :key="goods.id">
-						<span>{{goods.goodName}}</span>
-						<span v-if="goods.netWeight == null">{{goods.weight}}</span>
-						<span v-if="goods.netWeight != null">{{goods.netWeight}}</span>
-						<span>{{goods.price || '' | numberRules}}</span>
-						<span>{{goods.goodNum || '' | numberRules}}</span>
-						<span>{{goods.goodAmount}}</span>
-						<span>{{goods.packCost}}</span>
-					</li>
-				</ul>
-			</div>
-			<div class="order-detail" v-if="otherInfo">
-				<div class="ub term" v-if="have_goodsunit">
-					<div class="ub-f1">货款费用</div>
-					<div class="edu">{{totalCost.totalAmount | keepTwoNum}}</div>
-				</div>
-				<div class="ub term" v-if="have_goodsunit">
-					<div class="ub-f1">包装费</div>
-					<div class="edu">{{totalCost.totalPack | keepTwoNum}}</div>
-				</div>
-				<div class="ub term" v-if="have_goodsunit">
-					<div class="ub-f1">过磅费</div>
-					<div class="edu">{{totalCost.totalWeigh | keepTwoNum}}</div>
-				</div>
-				<div class="ub term">
-					<div class="ub-f1">三轮费</div>
-					<div class="edu fare">
-						<input type="text" @click="sanlunfei = true" v-model="totalCost.deliveryCost" readonly="readonly" placeholder="点击输入三轮费用">
+		
+		<div class="page-main page-loadmore-wrapper" :class= "[showOrderForm? 'topScroll0' : 'topScroll'] ">
+			<order-form v-if="showOrderForm" ref="orderForm" v-bind="post"></order-form>
+			<div v-else>
+				<div class="order-detail" v-if="trainInfo">
+					<div class="ub ub-ac term no-border right-icon" @click="choosetrainNumber()">
+						<div class="ub-f1">{{trainsNum}}</div>
+						<span class="c-3 F26C4c">{{plateNum}}</span>
+						<img src="../../assets/my/icon_right.png" class="icon">
 					</div>
 				</div>
-				<div class="ub term no-border">
-					<div class="ub-f1">车号</div>
-					<input type="text" class="F26C4c trainNum" v-model="trainNumber" placeholder="请输入车号">
+				<div class="order-detail" v-if="trainInfo" id="chooseCustomer">
+					<div class="ub ub-ac term right-icon input-choose">
+						<input id="kh" type="radio" name="choose" value="Nottemporary" v-model="customerType">
+						<label for="kh" class="customer ub ub-pj">
+							<div class="kehu f-l">客户</div>
+							<img src="../../assets/my/icon_right.png" class="icon f-r" @click="chooseCustomer()">
+							<span @click="chooseCustomer()" class="f-r">{{customerName}}</span>
+						</label>
+						
+					</div>
+					<div class="ub ub-ac term no-border input-choose">
+						<input id="sk" type="radio" name="choose" value="temporary" v-model="customerType">
+						<label for="sk" class="individual"><div class="kehu">临时客户</div></label>				
+					</div>
 				</div>
-				<div class="ub term border-top" v-if="have_goodsunit">
-					<div class="ub-f1">合计金额</div>
-					<div class="total">{{totalCost.tatol | keepTwoNum}}</div>
+				
+				<!--货品信息-->
+				<div class="order-detail item-table" v-if="otherInfo">
+					<ul class="table-ul">
+						<li class="title">
+							<span>品名</span>
+							<span>重量</span>
+							<span>单价</span>
+							<span>件数</span>
+							<span>金额</span>
+							<span>包装费</span>
+						</li>
+						<li class="con" v-for=" (goods,index) in goodsInfo" @click="goodsInfoSet(index, goods)" :key="goods.id">
+							<span>{{goods.goodName}}</span>
+							<span v-if="goods.netWeight == null">{{goods.weight}}</span>
+							<span v-if="goods.netWeight != null">{{goods.netWeight}}</span>
+							<span>{{goods.price || '' | numberRules}}</span>
+							<span>{{goods.goodNum || '' | numberRules}}</span>
+							<span v-if="goods.goodAmount">{{goods.goodAmount}}</span>
+							<span v-if="goods.packCost">{{goods.packCost}}</span>
+						</li>
+					</ul>
+				</div>
+				<div class="order-detail" v-if="otherInfo">
+					<div class="ub term" v-if="have_goodsunit">
+						<div class="ub-f1">货款费用</div>
+						<div class="edu"><span v-if="isPrice">--</span><span v-else>{{totalCost.totalAmount | keepTwoNum}}</span></div>
+					</div>
+					<div class="ub term" v-if="have_goodsunit">
+						<div class="ub-f1">包装费</div>
+						<div class="edu">{{totalCost.totalPack | keepTwoNum}}</div>
+					</div>
+					<div class="ub term" v-if="have_goodsunit">
+						<div class="ub-f1">过磅费</div>
+						<div class="edu">{{totalCost.totalWeigh | keepTwoNum}}</div>
+					</div>
+					<div class="ub term">
+						<div class="ub-f1">三轮费</div>
+						<div class="edu fare">
+							<input type="text" @click="sanlunfei = true" v-model="totalCost.deliveryCost" readonly="readonly" placeholder="点击输入三轮费用">
+						</div>
+					</div>
+					<div class="ub term no-border">
+						<div class="ub-f1">车号</div>
+						<input type="text" class="F26C4c trainNum" v-model="trainNumber" placeholder="请输入车号">
+					</div>
+					<div class="ub term border-top" v-if="have_goodsunit">
+						<div class="ub-f1">合计金额</div>
+						<div class="total"><span v-if="isPrice">--</span><span v-else>{{totalCost.tatol | keepTwoNum}}</span></div>
+					</div>
+				</div>
+				<!--付款方式  order_knot现结  order_credit赊账-->
+				<div class="order-detail" v-if="otherInfo" id="orderTypes">
+					<div class="ub ub-ac term no-border right-icon input-choose">
+						<input id="xj" type="radio" name="choosetype" value="order_knot" v-model="orderType">
+						<label for="xj" class="individual"><div class="f-r">现结</div></label>
+											
+					</div>
+					<div class="ub ub-ac term border-top input-choose" v-if="customerType == 'Nottemporary'"> <!--临时客户不可以赊账-->
+						<input id="sz" type="radio" name="choosetype" value="order_credit" v-model="orderType">
+						<label for="sz" class="individual"><div class="f-r">赊账</div></label>
+											
+					</div>
+				</div>
+				<!--备注信息-->
+				<div class="order-detail" v-if="otherInfo">
+					<div class="term">
+						<div class="">备注</div>
+					</div>
+					<div class="term no-border">
+						<textarea class="" v-model="beizhu" placeholder="备注信息，最多输入420个字符"></textarea>
+					</div>
+				</div>
+				<!--签名-->
+				<div class="order-detail" v-if="otherInfo && orderType == 'order_credit'">
+					<div class="ub ub-ac term no-border right-icon" @click="goAutograph">
+						<div class="ub-f1">签名</div>
+						<img src="../../assets/my/icon_right.png" class="icon">
+					</div>
+				</div> 
+				<div class="orderBtn ub" v-if="otherInfo">
+					<div class="lefts ub-f1" @click="submitOrder('Y')" v-if="orderType == 'order_credit' ">暂存</div>  <!--选择为赊账的时候才展示暂存按钮-->
+					<div class="center" v-if="orderType == 'order_credit' "></div>
+					<div class="rights ub-f1" @click="submitOrder('N')">下单</div> <!--选择为现结的时候只展示下单按钮-->
 				</div>
 			</div>
-			<!--付款方式  order_knot现结  order_credit赊账-->
-			<div class="order-detail" v-if="otherInfo" id="orderTypes">
-				<div class="ub ub-ac term no-border right-icon input-choose">
-					<input id="xj" type="radio" name="choosetype" value="order_knot" v-model="orderType">
-					<label for="xj" class="individual"><div class="f-r">现结</div></label>
-										
-				</div>
-				<div class="ub ub-ac term border-top input-choose" v-if="customerType == 'Nottemporary'"> <!--临时客户不可以赊账-->
-					<input id="sz" type="radio" name="choosetype" value="order_credit" v-model="orderType">
-					<label for="sz" class="individual"><div class="f-r">赊账</div></label>
-										
-				</div>
-			</div>
-			<!--备注信息-->
-			<div class="order-detail" v-if="otherInfo">
-				<div class="term">
-					<div class="">备注</div>
-				</div>
-				<div class="term no-border">
-					<textarea class="" v-model="beizhu" placeholder="备注信息，最多输入420个字符"></textarea>
-				</div>
-			</div>
-			<!--签名-->
-			<div class="order-detail" v-if="otherInfo && orderType == 'order_credit'">
-				<div class="ub ub-ac term no-border right-icon" @click="goAutograph">
-					<div class="ub-f1">签名</div>
-					<img src="../../assets/my/icon_right.png" class="icon">
-				</div>
-			</div> 
-			<div class="orderBtn ub" v-if="otherInfo">
-				<div class="lefts ub-f1" @click="submitOrder('Y')" v-if="orderType == 'order_credit' ">暂存</div>  <!--选择为赊账的时候才展示暂存按钮-->
-				<div class="center" v-if="orderType == 'order_credit' "></div>
-				<div class="rights ub-f1" @click="submitOrder('N')">下单</div> <!--选择为现结的时候只展示下单按钮-->
-			</div>
-
 		</div>
 		<!-- 设置价格模态框 -->
 		<div class="dialoag" v-if="dialoags">
@@ -211,6 +213,7 @@ export default {
         	showOrderForm:false,
         	post:{},  //传递到表单的数据
         	dataArray:[],  //保存修改过数据
+        	isPrice:false,  //判断是否有货品没有填写单价
 
         	gearName:'', //档位
         	
@@ -296,6 +299,9 @@ export default {
 		this.getChooseType();
 	},
 	created(){
+		
+	},
+	updated(){
 		
 	},
 	filters: {
@@ -817,13 +823,19 @@ export default {
 i{
 	font-style: normal;
 }
-.page-main{
-	top: 0.8rem;
-	bottom: 60px;
-}
 .page-loadmore-wrapper{
    overflow: scroll;
     -webkit-overflow-scrolling : touch;
+}
+.topScroll{
+    height: calc(100vh - 100px);
+    top: 40px;
+    bottom: 60px;
+}
+.topScroll0{
+    height: calc(100vh - 40px);
+    top: 40px;
+    bottom: 0rem;
 }
 .header_img{
     width: 0.32rem;
