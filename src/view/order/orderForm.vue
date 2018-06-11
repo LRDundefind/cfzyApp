@@ -207,7 +207,10 @@ export default {
 				parent.sellUnit = this.form.sellUnit
 				parent.weight = this.form.weight
 				parent.slabWeight = this.form.slabWeight
-				
+				parent.weight_util = this.form.weight_util
+				parent.slushingUnit = this.form.slushingUnit
+				parent.packCoefUnit = this.form.packCoefUnit
+				parent.poundCoefUnit = this.form.poundCoefUnit
 
 				//根据返回数据计算总和
                 for(var i=0;i<this.$parent.goodsInfo.length;i++){

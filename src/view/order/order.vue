@@ -56,8 +56,8 @@
 							<span v-if="goods.netWeight != null">{{goods.netWeight}}</span>
 							<span>{{goods.price || '' | numberRules}}</span>
 							<span>{{goods.goodNum || '' | numberRules}}</span>
-							<span>{{goods.goodAmount}}</span>
-							<span>{{goods.packCost}}</span>
+							<span v-if="goods.goodNum != ''">{{goods.goodAmount}}</span>
+							<span v-if="goods.goodNum != ''">{{goods.packCost}}</span>
 						</li>
 					</ul>
 				</div>
@@ -291,7 +291,7 @@ export default {
         }
     },
     mounted () {
-    	console.log(this.goodsInfo)
+    	//console.log(this.goodsInfo)
     	//档位
     	if(JSON.parse(Cookies.get('gidOwnID_lists')).gearName){
             this.gearName = JSON.parse(Cookies.get('gidOwnID_lists')).gearName;
