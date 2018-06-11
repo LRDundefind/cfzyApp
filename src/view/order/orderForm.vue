@@ -225,7 +225,7 @@ export default {
 					this.$parent.totalCost.totalWeigh += parseInt(this.$parent.goodsInfo[i]['weighCost']); //总过磅费
 					this.$parent.totalCost.tatol = this.$parent.totalCost.totalAmount + this.$parent.totalCost.totalPack + this.$parent.totalCost.totalWeigh + this.$parent.totalCost.deliveryCost;
                 }
-                //console.log(this.$parent.isPrice)
+                //console.log(parent.packCost)
 			})
 		},
 		cancel(){
