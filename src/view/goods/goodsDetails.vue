@@ -117,6 +117,7 @@
         created(){
             if (typeof(this.edit.goodId) != "undefined" && this.edit.goodId != '') {
                 this.goods = this.edit;
+                this.Unit = this.goods.numUnit;
                 this.deleteDisabled = 'delete'
             } else {
                 this.deleteDisabled = 'edit'

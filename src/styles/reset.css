@@ -531,6 +531,7 @@ input,textarea {
 .page-content{
   position: fixed;
   height: calc(100vh - 1rem);
+  z-index: 2;
 }
 .page-main{
   width: 100%;

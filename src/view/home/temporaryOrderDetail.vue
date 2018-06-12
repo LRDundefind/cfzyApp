@@ -234,12 +234,19 @@ export default {
         		var params = {
 					goodId: this.goodsInfo[this.numberNum].goodId,//单个货品id
 					id: this.goodsInfo[this.numberNum].id,//单个货品id
+					trainGoodId: this.goodsInfo[this.numberNum].trainGoodId,
 					price: this.price,//单价
 					goodNum: this.goodsInfo[this.numberNum].goodNum,//件数
 					weight: this.goodsInfo[this.numberNum].weight,//重量
 					weight_util: this.goodsInfo[this.numberNum].weight_util,//重量单位 
 					sellUnit: this.goodsInfo[this.numberNum].priceUnit,//售卖单位
 					slabWeight: this.goodsInfo[this.numberNum].slabWeight,//平板重
+					slushing: this.goodsInfo[this.numberNum].slushing,  //减水重
+		        	slushingUnit: this.goodsInfo[this.numberNum].slushingUnit,  //减水重单位
+		        	packCoef: this.goodsInfo[this.numberNum].packCoef,  //包装费
+		        	packCoefUnit: this.goodsInfo[this.numberNum].packCoefUnit,  //包装费单位
+		        	poundCoef: this.goodsInfo[this.numberNum].poundCoef,  //过磅费
+		        	poundCoefUnit: this.goodsInfo[this.numberNum].poundCoefUnit,  //过磅费单位
 				};
 
 				order.goodsCost(params)
@@ -259,6 +266,7 @@ export default {
 						    	//原数据重复set进集合
 						    	goodId: this.goodsInfo[this.numberNum].goodId,//-----提交传参所需
 						    	id: this.goodsInfo[this.numberNum].id,//-----提交传参所需
+						    	trainGoodId: this.goodsInfo[this.numberNum].trainGoodId,
 						    	goodName: this.goodsInfo[this.numberNum].goodName,//-----提交传参所需
 								weight: this.goodsInfo[this.numberNum].weight,//重量-----提交传参所需
 								weight_util: this.goodsInfo[this.numberNum].weight_util,//重量单位 -----提交传参所需
@@ -271,8 +279,16 @@ export default {
 						    	packCost: response.data.results.packCost,//单件包装费------界面展示所需、计算总和所需
 						    	goodAmount: response.data.results.goodAmount, //单件金额---界面展示所需、计算总和所需
 								weighCost: response.data.results.weighCost,//单件过磅费------计算总和所需
-								
 								netWeight:response.data.results.netWeight, //净重
+
+
+								slushing: this.goodsInfo[this.numberNum].slushing,  //减水重
+					        	slushingUnit: this.goodsInfo[this.numberNum].slushingUnit,  //减水重单位
+					        	packCoef: this.goodsInfo[this.numberNum].packCoef,  //包装费
+					        	packCoefUnit: this.goodsInfo[this.numberNum].packCoefUnit,  //包装费单位
+					        	poundCoef: this.goodsInfo[this.numberNum].poundCoef,  //过磅费
+					        	poundCoefUnit: this.goodsInfo[this.numberNum].poundCoefUnit,  //过磅费单位
+
 						    });
 						//计算
 	                    for(var i=0,len = this.goodsInfo.length; i<this.goodsInfo.length;i++){
