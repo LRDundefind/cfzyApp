@@ -35,6 +35,7 @@ instance.interceptors.request.use(function (config) {
 // 添加响应拦截器
 instance.interceptors.response.use(function (response) {
     // 对响应数据做点什么
+    app.Cwaiting();
     response.headers['access'] = '*';
     if(response.data.status=='N'){
         // MessageBox({
@@ -42,7 +43,7 @@ instance.interceptors.response.use(function (response) {
         //     type: 'error',
         //     duration: 3 * 1000
         // });
-        app.Cwaiting();
+        
        }
     if (response.data.code == 700 ) {
         var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
@@ -66,6 +67,7 @@ instance.interceptors.response.use(function (response) {
    
 
 }, function (error) {
+    app.Cwaiting();
     if (error.response.data.code == 700 ) {
         var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
         if (keys) {
@@ -79,7 +81,7 @@ instance.interceptors.response.use(function (response) {
         },2000)
     };
     //  对响应错误做点什么
-    app.Cwaiting();
+    
     Toast({
         message: error.response.data.message,
         position: 'middle',
