@@ -208,8 +208,11 @@ export default {
 				parent.weight = this.form.weight
 				parent.slabWeight = this.form.slabWeight
 				parent.weight_util = this.form.weight_util
+				parent.slushing = this.form.slushing
 				parent.slushingUnit = this.form.slushingUnit
+				parent.packCoef = this.form.packCoef
 				parent.packCoefUnit = this.form.packCoefUnit
+				parent.poundCoef = this.form.poundCoef
 				parent.poundCoefUnit = this.form.poundCoefUnit
 
 				//根据返回数据计算总和
