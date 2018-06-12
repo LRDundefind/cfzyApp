@@ -43,6 +43,7 @@ instance.interceptors.response.use(function (response) {
         //     type: 'error',
         //     duration: 3 * 1000
         // });
+        
        }
     if (response.data.code == 700 ) {
         var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
@@ -80,6 +81,7 @@ instance.interceptors.response.use(function (response) {
         },2000)
     };
     //  对响应错误做点什么
+    
     Toast({
         message: error.response.data.message,
         position: 'middle',

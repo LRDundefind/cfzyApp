@@ -12,115 +12,118 @@
 		</mt-header>
 		</div>
 		<!--下单-->
-		<div class="page-main page-loadmore-wrapper">
-			<div class="order-detail" v-if="trainInfo">
-				<div class="ub ub-ac term no-border right-icon" @click="choosetrainNumber()">
-					<div class="ub-f1">{{trainsNum}}</div>
-					<span class="c-3 F26C4c">{{plateNum}}</span>
-					<img src="../../assets/my/icon_right.png" class="icon">
-				</div>
-			</div>
-			<div class="order-detail" v-if="trainInfo" id="chooseCustomer">
-				<div class="ub ub-ac term right-icon input-choose">
-					<input id="kh" type="radio" name="choose" value="Nottemporary" v-model="customerType">
-					<label for="kh" class="customer ub ub-pj">
-						<div class="kehu f-l">客户</div>
-						<img src="../../assets/my/icon_right.png" class="icon f-r" @click="chooseCustomer()">
-						<span @click="chooseCustomer()" class="f-r">{{customerName}}</span>
-					</label>
-					
-				</div>
-				<div class="ub ub-ac term no-border input-choose">
-					<input id="sk" type="radio" name="choose" value="temporary" v-model="customerType">
-					<label for="sk" class="individual"><div class="kehu">临时客户</div></label>				
-				</div>
-			</div>
-			
-			<!--货品信息-->
-			<div class="order-detail item-table" v-if="otherInfo">
-				<ul class="table-ul">
-					<li class="title">
-						<span>品名</span>
-						<span>重量</span>
-						<span>单价</span>
-						<span>件数</span>
-						<span>金额</span>
-						<span>包装费</span>
-					</li>
-					<li class="con" v-for=" (goods,index) in goodsInfo" @click="goodsInfoSet(index, goods.goodId, goods.id, goods.goodName, goods.sellUnit, goods.numUnit, goods.surplusNum, goods.slushing, goods.tid, trainsNum)" :key="goods.id">
-						<span>{{goods.goodName}}</span>
-						<span v-if="goods.netWeight == null">{{goods.weight}}</span>
-						<span v-if="goods.netWeight != null">{{goods.netWeight}}</span>
-						<span>{{goods.price || '' | numberRules}}</span>
-						<span>{{goods.goodNum || '' | numberRules}}</span>
-						<span>{{goods.goodAmount}}</span>
-						<span>{{goods.packCost}}</span>
-					</li>
-				</ul>
-			</div>
-			<div class="order-detail" v-if="otherInfo">
-				<div class="ub term" v-if="have_goodsunit">
-					<div class="ub-f1">货款费用</div>
-					<div class="edu">{{totalCost.totalAmount | keepTwoNum}}</div>
-				</div>
-				<div class="ub term" v-if="have_goodsunit">
-					<div class="ub-f1">包装费</div>
-					<div class="edu">{{totalCost.totalPack | keepTwoNum}}</div>
-				</div>
-				<div class="ub term" v-if="have_goodsunit">
-					<div class="ub-f1">过磅费</div>
-					<div class="edu">{{totalCost.totalWeigh | keepTwoNum}}</div>
-				</div>
-				<div class="ub term">
-					<div class="ub-f1">三轮费</div>
-					<div class="edu fare">
-						<input type="text" @click="sanlunfei = true" v-model="totalCost.deliveryCost" readonly="readonly" placeholder="点击输入三轮费用">
+		
+		<div class="page-main page-loadmore-wrapper" :class= "[showOrderForm? 'topScroll0' : 'topScroll'] ">
+			<order-form v-if="showOrderForm" ref="orderForm" v-bind="post"></order-form>
+			<div v-else>
+				<div class="order-detail" v-if="trainInfo">
+					<div class="ub ub-ac term no-border right-icon" @click="choosetrainNumber()">
+						<div class="ub-f1">{{trainsNum}}</div>
+						<span class="c-3 F26C4c">{{plateNum}}</span>
+						<img src="../../assets/my/icon_right.png" class="icon">
 					</div>
 				</div>
-				<div class="ub term no-border">
-					<div class="ub-f1">车号</div>
-					<input type="text" class="F26C4c trainNum" v-model="trainNumber" placeholder="请输入车号">
+				<div class="order-detail" v-if="trainInfo" id="chooseCustomer">
+					<div class="ub ub-ac term right-icon input-choose">
+						<input id="kh" type="radio" name="choose" value="Nottemporary" v-model="customerType">
+						<label for="kh" class="customer ub ub-pj">
+							<div class="kehu f-l">客户</div>
+							<img src="../../assets/my/icon_right.png" class="icon f-r" @click="chooseCustomer()">
+							<span @click="chooseCustomer()" class="f-r">{{customerName}}</span>
+						</label>
+						
+					</div>
+					<div class="ub ub-ac term no-border input-choose">
+						<input id="sk" type="radio" name="choose" value="temporary" v-model="customerType">
+						<label for="sk" class="individual"><div class="kehu">临时客户</div></label>				
+					</div>
 				</div>
-				<div class="ub term border-top" v-if="have_goodsunit">
-					<div class="ub-f1">合计金额</div>
-					<div class="total">{{totalCost.tatol | keepTwoNum}}</div>
+				
+				<!--货品信息-->
+				<div class="order-detail item-table" v-if="otherInfo">
+					<ul class="table-ul">
+						<li class="title">
+							<span>品名</span>
+							<span>重量</span>
+							<span>单价</span>
+							<span>件数</span>
+							<span>金额</span>
+							<span>包装费</span>
+						</li>
+						<li class="con" v-for=" (goods,index) in goodsInfo" @click="goodsInfoSet(index, goods)" :key="goods.id">
+							<span>{{goods.goodName}}</span>
+							<span v-if="goods.netWeight == null">{{goods.weight}}</span>
+							<span v-if="goods.netWeight != null">{{goods.netWeight}}</span>
+							<span>{{goods.price || '' | numberRules}}</span>
+							<span>{{goods.goodNum || '' | numberRules}}</span>
+							<span v-if="goods.goodNum != ''">{{goods.goodAmount}}</span>
+							<span v-if="goods.goodNum != ''">{{goods.packCost}}</span>
+						</li>
+					</ul>
+				</div>
+				<div class="order-detail" v-if="otherInfo">
+					<div class="ub term" v-if="have_goodsunit">
+						<div class="ub-f1">货款费用</div>
+						<div class="edu"><span v-if="isPrice">--</span><span v-else>{{totalCost.totalAmount | keepTwoNum}}</span></div>
+					</div>
+					<div class="ub term" v-if="have_goodsunit">
+						<div class="ub-f1">包装费</div>
+						<div class="edu">{{totalCost.totalPack | keepTwoNum}}</div>
+					</div>
+					<div class="ub term" v-if="have_goodsunit">
+						<div class="ub-f1">过磅费</div>
+						<div class="edu">{{totalCost.totalWeigh | keepTwoNum}}</div>
+					</div>
+					<div class="ub term">
+						<div class="ub-f1">三轮费</div>
+						<div class="edu fare">
+							<input type="text" @click="sanlunfei = true" v-model="totalCost.deliveryCost" readonly="readonly" placeholder="点击输入三轮费用">
+						</div>
+					</div>
+					<div class="ub term no-border">
+						<div class="ub-f1">车号</div>
+						<input type="text" class="F26C4c trainNum" v-model="trainNumber" placeholder="请输入车号">
+					</div>
+					<div class="ub term border-top" v-if="have_goodsunit">
+						<div class="ub-f1">合计金额</div>
+						<div class="total"><span v-if="isPrice">--</span><span v-else>{{totalCost.tatol | keepTwoNum}}</span></div>
+					</div>
+				</div>
+				<!--付款方式  order_knot现结  order_credit赊账-->
+				<div class="order-detail" v-if="otherInfo" id="orderTypes">
+					<div class="ub ub-ac term no-border right-icon input-choose">
+						<input id="xj" type="radio" name="choosetype" value="order_knot" v-model="orderType">
+						<label for="xj" class="individual"><div class="f-r">现结</div></label>
+											
+					</div>
+					<div class="ub ub-ac term border-top input-choose" v-if="customerType == 'Nottemporary'"> <!--临时客户不可以赊账-->
+						<input id="sz" type="radio" name="choosetype" value="order_credit" v-model="orderType">
+						<label for="sz" class="individual"><div class="f-r">赊账</div></label>
+											
+					</div>
+				</div>
+				<!--备注信息-->
+				<div class="order-detail" v-if="otherInfo">
+					<div class="term">
+						<div class="">备注</div>
+					</div>
+					<div class="term no-border">
+						<textarea class="" v-model="beizhu" placeholder="备注信息，最多输入420个字符"></textarea>
+					</div>
+				</div>
+				<!--签名-->
+				<div class="order-detail" v-if="otherInfo && orderType == 'order_credit'">
+					<div class="ub ub-ac term no-border right-icon" @click="goAutograph">
+						<div class="ub-f1">签名</div>
+						<img src="../../assets/my/icon_right.png" class="icon">
+					</div>
+				</div> 
+				<div class="orderBtn ub" v-if="otherInfo">
+					<div class="lefts ub-f1" @click="submitOrder('Y')" v-if="orderType == 'order_credit' ">暂存</div>  <!--选择为赊账的时候才展示暂存按钮-->
+					<div class="center" v-if="orderType == 'order_credit' "></div>
+					<div class="rights ub-f1" @click="submitOrder('N')">下单</div> <!--选择为现结的时候只展示下单按钮-->
 				</div>
 			</div>
-			<!--付款方式  order_knot现结  order_credit赊账-->
-			<div class="order-detail" v-if="otherInfo" id="orderTypes">
-				<div class="ub ub-ac term no-border right-icon input-choose">
-					<input id="xj" type="radio" name="choosetype" value="order_knot" v-model="orderType">
-					<label for="xj" class="individual"><div class="f-r">现结</div></label>
-										
-				</div>
-				<div class="ub ub-ac term border-top input-choose" v-if="customerType == 'Nottemporary'"> <!--临时客户不可以赊账-->
-					<input id="sz" type="radio" name="choosetype" value="order_credit" v-model="orderType">
-					<label for="sz" class="individual"><div class="f-r">赊账</div></label>
-										
-				</div>
-			</div>
-			<!--备注信息-->
-			<div class="order-detail" v-if="otherInfo">
-				<div class="term">
-					<div class="">备注</div>
-				</div>
-				<div class="term no-border">
-					<textarea class="" v-model="beizhu" placeholder="备注信息，最多输入420个字符"></textarea>
-				</div>
-			</div>
-			<!--签名-->
-			<div class="order-detail" v-if="otherInfo && orderType == 'order_credit'">
-				<div class="ub ub-ac term no-border right-icon" @click="goAutograph">
-					<div class="ub-f1">签名</div>
-					<img src="../../assets/my/icon_right.png" class="icon">
-				</div>
-			</div> 
-			<div class="orderBtn ub" v-if="otherInfo">
-				<div class="lefts ub-f1" @click="submitOrder('Y')" v-if="orderType == 'order_credit' ">暂存</div>  <!--选择为赊账的时候才展示暂存按钮-->
-				<div class="center" v-if="orderType == 'order_credit' "></div>
-				<div class="rights ub-f1" @click="submitOrder('N')">下单</div> <!--选择为现结的时候只展示下单按钮-->
-			</div>
-
 		</div>
 		<!-- 设置价格模态框 -->
 		<div class="dialoag" v-if="dialoags">
@@ -190,7 +193,7 @@
 			</div>
 		</div>
 		<div class="autograph-con" v-if="showAutograph">
-			<autograph @closeAutographCon = "closeAutograph" @autographInfo = "getAutographInfo"></autograph>
+			<autograph @closeAutographCon = "closeAutograph" @autographInfo = "getAutographInfo" ref="autograph"></autograph>
 		</div>
 	</div>
 </template>
@@ -201,12 +204,17 @@ import Bus from '@/components/bus.js'
 import {order} from '@/services/apis/order.js'
 import Cookies from 'js-cookie'
 import Autograph from '@/components/Autograph/autograph'
+import orderForm from '@/view/order/orderForm'
 //import Router from 'vue-router'
 export default {
-	components: { Autograph },
+	components: { Autograph, orderForm},
     data () {
         return {
-        	wrapperHeight: 0,//容器高度
+        	showOrderForm:false,
+        	post:{},  //传递到表单的数据
+        	dataArray:[],  //保存修改过数据
+        	isPrice:false,  //判断是否有货品没有填写单价
+
         	gearName:'', //档位
         	
         	numberNum:null,   //点击获取索引
@@ -283,7 +291,7 @@ export default {
         }
     },
     mounted () {
-    	this.wrapperHeight = document.documentElement.clientHeight - 100;
+    	//console.log(this.goodsInfo)
     	//档位
     	if(JSON.parse(Cookies.get('gidOwnID_lists')).gearName){
             this.gearName = JSON.parse(Cookies.get('gidOwnID_lists')).gearName;
@@ -291,6 +299,9 @@ export default {
 		this.getChooseType();
 	},
 	created(){
+		
+	},
+	updated(){
 		
 	},
 	filters: {
@@ -373,15 +384,15 @@ export default {
                     for(var i = 0, len = this.goodsInfo.length; i < this.goodsInfo.length; i ++){
                     	//列表中展示的项 非设置全部goodsInfo，部分题啊交订单所需项在货品设置弹框关闭后set添加
                     	//初始不添加goodName,googId
-						this.goodsInfo[i]['price'] = null; 
-						this.goodsInfo[i]['goodNum'] = null; 
-						this.goodsInfo[i]['weight'] = null; 
-						this.goodsInfo[i]['goodAmount'] = null;
-                        this.goodsInfo[i]['netWeight'] = null; //净重 用于页面展示
+						this.goodsInfo[i]['price'] = ''; 
+						this.goodsInfo[i]['goodNum'] = ''; 
+						this.goodsInfo[i]['weight'] = ''; 
+						this.goodsInfo[i]['goodAmount'] = '';
+                        this.goodsInfo[i]['netWeight'] = ''; //净重 用于页面展示
                         this.goodsInfo[i]['slushing'] = this.goodsInfo[i].slushing; //减水重 用于页面展示
-                        this.goodsInfo[i]['packCost'] = null;
-						this.goodsInfo[i]['weighCost'] = null; //过磅费，表格里不展示，下方列表展示
-						this.goodsInfo[i]['slabWeight'] = null; //平板重 提交订单所需，列表不展示
+                        this.goodsInfo[i]['packCost'] = '';
+						this.goodsInfo[i]['weighCost'] = ''; //过磅费，表格里不展示，下方列表展示
+						this.goodsInfo[i]['slabWeight'] = ''; //平板重 提交订单所需，列表不展示
 						this.goodsInfo[i]['weight_util'] = this.goodsInfo[i].sellUnit; //重量单位，提交订单所需，列表不展示    //若按重量售卖，则重量单位为售卖单位????   待修改
                         this.goodsInfo[i]['sellUnit'] = this.goodsInfo[i].sellUnit ; //售卖单位，列表不展示
                         this.goodsInfo[i]['numUnit'] = this.goodsInfo[i].numUnit; //入库单位，列表不展示
@@ -400,7 +411,8 @@ export default {
 			
 		},
 		//设置货品重量件数信息的弹框
-        goodsInfoSet(i, goodid, id, name, sellunit, numUnit, surplusNum, slushing, tid, trainsNum){
+        goodsInfoSet(i, goods){
+        	
         	//提示优先选择客户--在选中了非临时客户的时候
         	if(this.customerType == 'Nottemporary' && this.customerId == undefined){
 				Toast({
@@ -408,42 +420,55 @@ export default {
 					position: 'middle',
 					duration: 3000
     			});
-        	}
-			this.numberNum = i;
-        	this.dialoags = true;
-        	this.goodId = goodid;//货品id 提交订单传参所需
-        	this.id = id;//货品id 提交订单传参所需
-        	this.goodName = name;
-        	this.sellUnit = sellunit;//提交订单传参所需 售卖单位
-        	this.numUnit = numUnit;//提交订单传参所需  重量单位
-        	this.slushing = slushing;//减水重 只作展示，
-        	if(numUnit == 'unit_pie'){
-        		this.surplusHeavy = '';
-        		this.surplusPiece = surplusNum; // 入库单位为件时，在件数位置-显示货品剩余量
         	}else{
-        		this.surplusPiece = '';
-        		this.surplusHeavy = surplusNum; // 入库单位为斤/公斤时，在重量位置-显示货品剩余量
-        	}
+        		if (this.dataArray != []) {
+        			for (var j = 0; j < this.dataArray.length; j++) {
+	        			if (this.dataArray[j].id == goods.id) {
+	        				goods = this.dataArray[j]
+	        			
+	        			}
+	        		} 
+        		}
+        		
 
-			if(this.sellUnit == 'unit_jin'){
-				this.goodsUnit = '斤';
-			}else if(this.sellUnit == 'unit_kg'){
-				this.goodsUnit = '公斤';
-			}else{
-				//unit_pie 件
-				this.goodsUnit = '件';
-				this.goodsweight = '0'; //入库单位为件时，重量默认输入0  //不需要在resetPriceNum中设置
-			};
+        		this.showOrderForm = true;
+        		this.post = goods;
+        		this.numberNum = i;
+        	}
+   //      	this.dialoags = true;
+   //      	this.goodId = goodid;//货品id 提交订单传参所需
+   //      	this.id = id;//货品id 提交订单传参所需
+   //      	this.goodName = name;
+   //      	this.sellUnit = sellunit;//提交订单传参所需 售卖单位
+   //      	this.numUnit = numUnit;//提交订单传参所需  重量单位
+   //      	this.slushing = slushing;//减水重 只作展示，
+   //      	if(numUnit == 'unit_pie'){
+   //      		this.surplusHeavy = '';
+   //      		this.surplusPiece = surplusNum; // 入库单位为件时，在件数位置-显示货品剩余量
+   //      	}else{
+   //      		this.surplusPiece = '';
+   //      		this.surplusHeavy = surplusNum; // 入库单位为斤/公斤时，在重量位置-显示货品剩余量
+   //      	}
+
+			// if(this.sellUnit == 'unit_jin'){
+			// 	this.goodsUnit = '斤';
+			// }else if(this.sellUnit == 'unit_kg'){
+			// 	this.goodsUnit = '公斤';
+			// }else{
+			// 	//unit_pie 件
+			// 	this.goodsUnit = '件';
+			// 	this.goodsweight = '0'; //入库单位为件时，重量默认输入0  //不需要在resetPriceNum中设置
+			// };
 			
-			//编辑弹框的值  price 单价 、goodNum 件数、weight 重量、slabWeight 平板重
-			if(this.goodsInfo[i].goodNum != null){
-				this.goodsunit = this.goodsInfo[i].price;
-				this.goodsnum = this.goodsInfo[i].goodNum;
-				this.goodsweight = this.goodsInfo[i].weight;
-				this.pbweight = this.goodsInfo[i].slabWeight;
-				this.slushing = this.goodsInfo[i].slushing;
+			// //编辑弹框的值  price 单价 、goodNum 件数、weight 重量、slabWeight 平板重
+			// if(this.goodsInfo[i].goodNum != null){
+			// 	this.goodsunit = this.goodsInfo[i].price;
+			// 	this.goodsnum = this.goodsInfo[i].goodNum;
+			// 	this.goodsweight = this.goodsInfo[i].weight;
+			// 	this.pbweight = this.goodsInfo[i].slabWeight;
+			// 	this.slushing = this.goodsInfo[i].slushing;
 				
-			}
+			// }
 		},
         
     	//单件货品信息录入验证和提交
@@ -677,12 +702,15 @@ export default {
         	}
 
 			//填写的购买货品的总件数 以此判断至少有一项货品填写了下单信息
-			var buyNum = 0; 
+			var buyNum = false; //件数
+			var bugWigth = false; //重量
 			for(var index in this.goodsInfo){
-				buyNum += this.goodsInfo[index].goodNum;
+				if (this.goodsInfo[index].goodNum != '') buyNum = true
+				if (this.goodsInfo[index].weight != '') bugWigth = true
 			}
+
 			//现结+赊账 至少填写了一项货品信息
-			if(buyNum < 0 || buyNum == ''){
+			if(!buyNum && !buyNum){
 				Toast({
 					message: '请完善货品购买量信息',
 					position: 'middle',
@@ -690,7 +718,6 @@ export default {
     			});
     			return false;
 			}
-			
 			//非 赊账暂存(szType != 'Y')时，判断填写了重量的货品都填写了单价
 			if(szType != 'Y'){
                 for(var i = 0, len = this.goodsInfo.length; i < this.goodsInfo.length; i ++){
@@ -771,9 +798,6 @@ export default {
 						params: {type: 'home'}
 		            });
         		})
-        		.catch(function (response) {
-        			console.log(response);
-        		});
         }
         
     },
@@ -801,13 +825,19 @@ export default {
 i{
 	font-style: normal;
 }
-.page-main{
-	top: 0.8rem;
-	bottom: 60px;
-}
 .page-loadmore-wrapper{
    overflow: scroll;
     -webkit-overflow-scrolling : touch;
+}
+.topScroll{
+    height: calc(100vh - 100px);
+    top: 40px;
+    bottom: 60px;
+}
+.topScroll0{
+    height: calc(100vh - 40px);
+    top: 40px;
+    bottom: 0rem;
 }
 .header_img{
     width: 0.32rem;
