@@ -259,11 +259,8 @@ export default {
 <style scoped rel="stylesheet/scss" lang="scss">
 
     .order-border{
-        border-bottom: 1px #f0f0f0 solid!important;
     }
-
-
-
+    
      .mint-cell-wrapper{
          padding: 10px 0 0 !important;
          border-bottom: 1px #f0f0f0 solid!important;
