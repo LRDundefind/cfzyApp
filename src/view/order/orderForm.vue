@@ -2,8 +2,8 @@
 
 	<div style="background: #f5f5f5;height: 100%; overflow-y: hidden">
 		
-		<mt-field label="货品名称" readonly disableClear v-model="form.goodName" class="order-p-120 order-border"></mt-field>
-		<mt-field class="form.sellUnit order-border" label="售卖单位" readonly>
+		<mt-field label="货品名称" readonly disableClear v-model="form.goodName" class=" order-border"></mt-field>
+		<mt-field class="order-border" label="售卖单位" readonly>
 			<select class=" m-l-10 jin-select" v-model="form.sellUnit">
 				<option value="unit_jin">斤</option>
 				<option value="unit_kg">公斤</option>
@@ -14,7 +14,7 @@
                  src="../../assets/index/gray-right-icon.png"/>
 
 		</mt-field>
-		<mt-field class=" order-p-120 order-border" label="单价" placeholder="请输入单价" type="number" v-model="form.price"></mt-field>
+		<mt-field class="order-border" label="单价" placeholder="请输入单价" type="number" v-model="form.price"></mt-field>
 		<mt-field class="order-border" label="件数" :placeholder="surplus" type="number" v-model="form.goodNum"><span class="f-s-15 m-l-10 c-6">件</span></mt-field>
 		<mt-field class="order-border" label="重量" placeholder="请输入重量" type="number" v-model="form.weight">
 			<select v-model="form.weight_util" class="m-l-10 jin-select">
@@ -260,7 +260,7 @@ export default {
 
     .order-border{
     }
-    
+
      .mint-cell-wrapper{
          padding: 10px 0 0 !important;
          border-bottom: 1px #f0f0f0 solid!important;
