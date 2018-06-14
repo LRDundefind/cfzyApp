@@ -26,7 +26,12 @@
 
 		</mt-field>
 		<mt-field class=" order-border" label="平板重" placeholder="请输入平板重" type="number" v-model="form.slabWeight">
-			<span class="m-l-10 c-6 f-s-15">{{form.weight_util | sellNnit}}</span>
+            <select v-model="form.weight_util" class="m-l-10 jin-select">
+                <option value="unit_jin">斤</option>
+                <option value="unit_kg">公斤</option>
+            </select>
+            <img class="jin-right"
+                 src="../../assets/index/gray-right-icon.png"/>
 		</mt-field>
 		<mt-field class="order-border" label="减水重" placeholder="" type="number" v-model="form.slushing">
 			<select v-model="form.slushingUnit" class="m-l-10">
