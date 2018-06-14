@@ -3,7 +3,7 @@
 	<div style="background: #f5f5f5;height: 100%; overflow-y: hidden">
 		
 		<mt-field label="货品名称" readonly disableClear v-model="form.goodName" class=" order-border"></mt-field>
-		<mt-field class="order-border" label="售卖单位" readonly>
+		<mt-field class="order-border" label="售卖方式" readonly>
 			<select class=" m-l-10 jin-select" v-model="form.sellUnit">
 				<option value="unit_jin">斤</option>
 				<option value="unit_kg">公斤</option>
