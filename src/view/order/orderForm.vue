@@ -117,13 +117,12 @@ export default {
     		}
 	    }
 
-//	    this.form = this.$parent.post;
-//        console.log(this.$parent.post.sellUnit);
+        if(this.form.slushingUnit == ""){
+            this.form.slushingUnit = 'unit_jin';
+        }
 
         if(!this.form.slabWeight) this.form.slabWeight = '0';
-
         this.sellUnit = this.form.sellUnit;
-
     },
     computed: {
     	surplus:function(){
