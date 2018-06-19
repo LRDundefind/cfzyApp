@@ -101,13 +101,14 @@ export default {
         }
     },
     mounted () {
-//    	for (var Key1 in this.form){
-//    		for (var Key2 in this.$parent.post){
-//    			if (Key1 == Key2) this.form[Key1] = this.$parent.post[Key2]
-//    		}
-//	    }
-//
-	    this.form = this.$parent.post;
+    	for (var Key1 in this.form){
+    		for (var Key2 in this.$parent.post){
+    			if (Key1 == Key2) this.form[Key1] = this.$parent.post[Key2]
+    		}
+	    }
+
+
+//	    this.form = this.$parent.post;
 //        console.log(this.$parent.post.sellUnit);
 
         if(!this.form.slabWeight) this.form.slabWeight = '0';
