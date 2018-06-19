@@ -40,7 +40,7 @@
                  <!--src="../../assets/index/gray-right-icon.png"/>-->
 		</mt-field>
 		<mt-field class="order-border" label="减水重" placeholder="" type="number" v-model="form.slushing">
-            <span class="f-s-15 m-l-10 c-6">{{form.slushingUnit | sellUnit}}</span>
+            <span class="f-s-15 m-l-10 c-6">{{form.slushingUnit | unit}}</span>
 
 
 			<!--<select v-model="form.slushingUnit" class="m-l-10">-->
@@ -121,6 +121,11 @@ export default {
         if(this.form.slushingUnit == ""){
             this.form.slushingUnit = 'unit_jin';
         }
+
+        if(this.form.weight_util == 'unit_pie'){
+            this.form.weight_util = 'unit_kg'
+        }
+
 
         if(!this.form.slabWeight) this.form.slabWeight = '0';
         this.numUnit = this.form.numUnit;

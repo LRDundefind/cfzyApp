@@ -37,6 +37,18 @@ export function sellUnit(value) {
     return unit[value]
 }
 
+//单位转换
+export function unit(value) {
+    let unit = {
+        unit_jin:'斤/件<',
+        unit_kg:'公斤/件',
+
+    }
+    return unit[value]
+}
+
+
+
 //金额保留两位小数
 export function keepTwoNum(value) {
     value = Number(value);
