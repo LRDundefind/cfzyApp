@@ -213,14 +213,20 @@ export default {
                     position: 'middle',
                     duration: 1000
                 });
-            } else if(this.form.poundCoef == '' || !(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.form.poundCoef)) || this.form.poundCoef > 999.99){
+            } else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.form.poundCoef)) || this.form.poundCoef > 999.99){
 
     			Toast({
 					message: '请正确输入过磅费',
 					position: 'middle',
 					duration: 1000
     			});
-    		}else{
+    		}else if(this.form.poundCoef == '' && this.form.poundCoef != '0'){
+                Toast({
+                    message: '请正确输入过磅费',
+                    position: 'middle',
+                    duration: 1000
+                });
+            } else{
     			if(this.form.price != ''){
 	    			if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.form.price))|| this.form.price > 9999.99){
 		    			Toast({
