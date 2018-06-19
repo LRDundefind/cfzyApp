@@ -79,7 +79,7 @@ export default {
 	name:'order-form',
     data () {
         return {
-
+            sellUnit:'',
         	form:{
         		goodName:'',
         		goodId:'',
@@ -112,19 +112,21 @@ export default {
 //        console.log(this.$parent.post.sellUnit);
 
         if(!this.form.slabWeight) this.form.slabWeight = '0';
+        this.sellUnit = this.form.sellUnit;
+
     },
     computed: {
     	surplus:function(){
-    		if (this.form.sellUnit == 'unit_pie' && this.form.surplusNum) {
+    		if (this.sellUnit == 'unit_pie' && this.form.surplusNum) {
     			return '剩余' + this.form.surplusNum.toString() +'件';
     		}else{
     			return "请输入件数";
     		}
     	},
         weightPlus:function () {
-            if (this.form.sellUnit == 'unit_jin' && this.form.surplusNum) {
+            if (this.sellUnit == 'unit_jin' && this.form.surplusNum) {
                 return '剩余' + this.form.surplusNum.toString() +'斤';
-            } else if (this.form.sellUnit == 'unit_kg' && this.form.surplusNum) {
+            } else if (this.sellUnit == 'unit_kg' && this.form.surplusNum) {
                 return '剩余' + this.form.surplusNum.toString() +'公斤';
             } else{
                 return "请输入重量";
