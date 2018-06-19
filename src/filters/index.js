@@ -40,7 +40,7 @@ export function sellUnit(value) {
 //单位转换
 export function unit(value) {
     let unit = {
-        unit_jin:'斤/件<',
+        unit_jin:'斤/件',
         unit_kg:'公斤/件',
 
     }
