@@ -88,8 +88,9 @@ export default {
 	name:'order-form',
     data () {
         return {
-            sellUnit:'',
+            numUnit:'',
         	form:{
+                numUnit:'',
         		goodName:'',
         		goodId:'',
         		id:'',
