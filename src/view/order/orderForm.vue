@@ -122,7 +122,7 @@ export default {
         }
 
         if(!this.form.slabWeight) this.form.slabWeight = '0';
-        this.sellUnit = this.form.sellUnit;
+        this.numUnit = this.form.numUnit;
     },
     computed: {
     	surplus:function(){
