@@ -17,50 +17,59 @@
 		<mt-field class="order-border" label="单价" placeholder="请输入单价" type="number" v-model="form.price"></mt-field>
 		<mt-field class="order-border" label="件数" :placeholder="surplus" type="number" v-model="form.goodNum"><span class="f-s-15 m-l-10 c-6">件</span></mt-field>
 		<mt-field class="order-border" label="重量" :placeholder="weightPlus" type="number" v-model="form.weight">
-			<select v-model="form.weight_util" class="m-l-10 jin-select">
-				<option value="unit_jin">斤</option>
-				<option value="unit_kg">公斤</option>
-			</select>
-            <img class="jin-right"
-                 src="../../assets/index/gray-right-icon.png"/>
+            <span class="f-s-15 m-l-10 c-6" v-show="form.weight_util == 'unit_jin'">斤</span>
+            <span class="f-s-15 m-l-10 c-6" v-show="form.weight_util == 'unit_kg'">公斤</span>
+            <span class="f-s-15 m-l-10 c-6" v-show="form.weight_util == 'unit_pie'">公斤</span>
 
+            <!--<select v-model="form.weight_util" class="m-l-10 jin-select">-->
+				<!--<option value="unit_jin">斤</option>-->
+				<!--<option value="unit_kg">公斤</option>-->
+			<!--</select>-->
+            <!--<img class="jin-right"-->
+                 <!--src="../../assets/index/gray-right-icon.png"/>-->
 		</mt-field>
 		<mt-field class=" order-border" label="平板重" placeholder="请输入平板重" type="number" v-model="form.slabWeight">
-            <select v-model="form.weight_util" class="m-l-10 jin-select">
-                <option value="unit_jin">斤</option>
-                <option value="unit_kg">公斤</option>
-            </select>
-            <img class="jin-right"
-                 src="../../assets/index/gray-right-icon.png"/>
+            <span class="f-s-15 m-l-10 c-6" v-show="form.weight_util == 'unit_jin'">斤</span>
+            <span class="f-s-15 m-l-10 c-6" v-show="form.weight_util == 'unit_kg'">公斤</span>
+            <span class="f-s-15 m-l-10 c-6" v-show="form.weight_util == 'unit_pie'">公斤</span>
+            <!--<select v-model="form.weight_util" class="m-l-10 jin-select">-->
+                <!--<option value="unit_jin">斤</option>-->
+                <!--<option value="unit_kg">公斤</option>-->
+            <!--</select>-->
+            <!--<img class="jin-right"-->
+                 <!--src="../../assets/index/gray-right-icon.png"/>-->
 		</mt-field>
 		<mt-field class="order-border" label="减水重" placeholder="" type="number" v-model="form.slushing">
-			<select v-model="form.slushingUnit" class="m-l-10">
-				<option value="unit_jin">斤/件</option>
-				<option value="unit_kg">公斤/件</option>
-			</select>
+            <span class="f-s-15 m-l-10 c-6">{{form.slushingUnit | sellUnit}}</span>
 
-            <img class="jin-right"
-                 src="../../assets/index/gray-right-icon.png"/>
 
+			<!--<select v-model="form.slushingUnit" class="m-l-10">-->
+				<!--<option value="unit_jin">斤/件</option>-->
+				<!--<option value="unit_kg">公斤/件</option>-->
+			<!--</select>-->
+
+            <!--<img class="jin-right"-->
+                 <!--src="../../assets/index/gray-right-icon.png"/>-->
 		</mt-field>
 		<mt-field class="order-border" label="包装费" placeholder="" type="number" v-model="form.packCoef">
-			<select v-model="form.packCoefUnit" class="m-l-10">
-				<option value="unit_jin">元/斤</option>
-				<option value="unit_kg">元/公斤</option>
-				<option value="unit_pie">元/件</option>
-			</select>
-            <img class="jin-right"
-                 src="../../assets/index/gray-right-icon.png"/>
-
+            <span class="f-s-15 m-l-10 c-6">{{form.packCoefUnit | sellUnit}}</span>
+            <!--<select v-model="form.packCoefUnit" class="m-l-10">-->
+				<!--<option value="unit_jin">元/斤</option>-->
+				<!--<option value="unit_kg">元/公斤</option>-->
+				<!--<option value="unit_pie">元/件</option>-->
+			<!--</select>-->
+            <!--<img class="jin-right"-->
+                 <!--src="../../assets/index/gray-right-icon.png"/>-->
 		</mt-field>
 		<mt-field label="过磅费" placeholder="" type="number" v-model="form.poundCoef">
-			<select v-model="form.poundCoefUnit " class="m-l-10">
-				<option value="unit_jin">元/斤</option>
-				<option value="unit_kg">元/公斤</option>
-				<option value="unit_cbd">元/公担</option>
-			</select>
-            <img class="jin-right"
-                 src="../../assets/index/gray-right-icon.png"/>
+            <span class="f-s-15 m-l-10 c-6">{{form.poundCoefUnit | sellUnit}}</span>
+			<!--<select v-model="form.poundCoefUnit " class="m-l-10">-->
+				<!--<option value="unit_jin">元/斤</option>-->
+				<!--<option value="unit_kg">元/公斤</option>-->
+				<!--<option value="unit_cbd">元/公担</option>-->
+			<!--</select>-->
+            <!--<img class="jin-right"-->
+                 <!--src="../../assets/index/gray-right-icon.png"/>-->
 		</mt-field>
 		<div class='update clearfix'>
 			<mt-button type="primary" size="large" class='f-l' @click="sure">确定</mt-button>
@@ -112,6 +121,7 @@ export default {
 //        console.log(this.$parent.post.sellUnit);
 
         if(!this.form.slabWeight) this.form.slabWeight = '0';
+
         this.sellUnit = this.form.sellUnit;
 
     },

@@ -25,6 +25,18 @@ export function sellNnit(value) {
     }
     return unit[value]
 }
+
+//单位转换
+export function sellUnit(value) {
+    let unit = {
+        unit_jin:'元/斤',
+        unit_kg:'元/公斤',
+        unit_pie:'元/件',
+        unit_cbd:'元/公担'
+    }
+    return unit[value]
+}
+
 //金额保留两位小数
 export function keepTwoNum(value) {
     value = Number(value);
