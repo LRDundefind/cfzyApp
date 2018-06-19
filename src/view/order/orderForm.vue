@@ -16,7 +16,7 @@
 		</mt-field>
 		<mt-field class="order-border" label="单价" placeholder="请输入单价" type="number" v-model="form.price"></mt-field>
 		<mt-field class="order-border" label="件数" :placeholder="surplus" type="number" v-model="form.goodNum"><span class="f-s-15 m-l-10 c-6">件</span></mt-field>
-		<mt-field class="order-border" label="重量" placeholder="请输入重量" type="number" v-model="form.weight">
+		<mt-field class="order-border" label="重量" :placeholder="weightPlus" type="number" v-model="form.weight">
 			<select v-model="form.weight_util" class="m-l-10 jin-select">
 				<option value="unit_jin">斤</option>
 				<option value="unit_kg">公斤</option>
@@ -96,6 +96,7 @@ export default {
 	        	packCoefUnit:'元/斤',
 	        	poundCoef:'',
 	        	poundCoefUnit:'元/斤',
+                surplusNum:'',
         	}
         	
         }
@@ -107,7 +108,6 @@ export default {
     		}
 	    }
 
-
 //	    this.form = this.$parent.post;
 //        console.log(this.$parent.post.sellUnit);
 
@@ -115,12 +115,22 @@ export default {
     },
     computed: {
     	surplus:function(){
-    		if (this.form.numUnit == 'unit_pie' && this.form.surplusNum) {
+    		if (this.form.sellUnit == 'unit_pie' && this.form.surplusNum) {
     			return '剩余' + this.form.surplusNum.toString() +'件';
     		}else{
     			return "请输入件数";
     		}
-    	}
+    	},
+        weightPlus:function () {
+            if (this.form.sellUnit == 'unit_jin' && this.form.surplusNum) {
+                return '剩余' + this.form.surplusNum.toString() +'斤';
+            } else if (this.form.sellUnit == 'unit_kg' && this.form.surplusNum) {
+                return '剩余' + this.form.surplusNum.toString() +'公斤';
+            } else{
+                return "请输入重量";
+            }
+        }
+
     },
     methods: {
     	
