@@ -150,7 +150,6 @@ export default {
 					duration: 1000
     			});
     		}else if(this.form.slabWeight == ''){
-    			debugger
     			Toast({
 					message: '请完善购买信息（平板重）',
 					position: 'middle',
@@ -162,13 +161,19 @@ export default {
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(this.form.slushing == '' || !(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.form.slabWeight)) || this.form.slabWeight > 999.99){
+    		}else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.form.slushing)) || this.form.slushing > 999.99){
     			Toast({
 					message: '请正确输入减水重',
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.form.packCoef)) || this.form.packCoef > 999.99){
+    		}else if(this.form.slushing == ''&&this.form.slushing != '0' ){
+                Toast({
+                    message: '请正确输入减水重',
+                    position: 'middle',
+                    duration: 1000
+                });
+            } else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.form.packCoef)) || this.form.packCoef > 999.99){
     			Toast({
 					message: '请正确输入包装费',
 					position: 'middle',
