@@ -126,16 +126,16 @@ export default {
     },
     computed: {
     	surplus:function(){
-    		if (this.sellUnit == 'unit_pie' && this.form.surplusNum) {
+    		if (this.numUnit == 'unit_pie' && this.form.surplusNum) {
     			return '剩余' + this.form.surplusNum.toString() +'件';
     		}else{
     			return "请输入件数";
     		}
     	},
         weightPlus:function () {
-            if (this.sellUnit == 'unit_jin' && this.form.surplusNum) {
+            if (this.numUnit == 'unit_jin' && this.form.surplusNum) {
                 return '剩余' + this.form.surplusNum.toString() +'斤';
-            } else if (this.sellUnit == 'unit_kg' && this.form.surplusNum) {
+            } else if (this.numUnit == 'unit_kg' && this.form.surplusNum) {
                 return '剩余' + this.form.surplusNum.toString() +'公斤';
             } else{
                 return "请输入重量";
