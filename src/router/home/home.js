@@ -13,6 +13,7 @@
 
 
 const home = resolve => require([ '@/view/home/index'],resolve)
+const finance = resolve => require([ '@/view/home/finance'],resolve)
 const blackList = resolve => require([ '@/view/home/blackList'],resolve)
 const ownerChoice = resolve => require([ '@/view/home/ownerChoice'],resolve)
 //暂存订单
@@ -25,11 +26,11 @@ const settlementList = resolve => require([ '@/view/home/settlementList'],resolv
 const settlementDetail = resolve => require([ '@/view/home/settlementDe'],resolve)
 
 export default [{
-	path: 'home',
-	name: 'home',
-	components: {
-		mainView: home
-	}
+    path: 'home',
+    name: 'home',
+    components: {
+        mainView: home
+    }
 },{
     path: 'blackList',
     name: 'blackList',
@@ -84,5 +85,11 @@ export default [{
     meta: {
         showFooter: false,
     }
-}
+},{
+    path: 'finance',
+    name: 'finance',
+    components: {
+        mainView: finance
+    }
+},
 ]
