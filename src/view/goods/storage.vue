@@ -274,6 +274,7 @@
 //            }
 //        },
         methods: {
+
             //货主列表返回
             ownerBack(){
                 this.ownerList = false;
@@ -336,7 +337,11 @@
             },
             //跳转到车次
             gologistics(){
-                this.$router.push({name: 'logistics/fromc', params: {fromc: 'order'}});
+                if(this.trainsNum && this.status){
+                    this.$router.push({name: 'logistics/fromc', params: {fromc: 'order',trainsNum:this.trainsNum,status:this.status}});
+                }else {
+                    this.$router.push({name: 'logistics/fromc', params: {fromc: 'order'}});
+                }
             },
 
             //跳转到订单详情
@@ -359,10 +364,8 @@
             //跳转到首页
             goHome(){
                 MessageBox.confirm('确认返回？', '').then(() => {
-//                    trainsNum:'',//车次
-//                        status:'',//状态
                     if(this.trainsNum && this.status){
-                        window.history.go(-1);
+                        this.$router.push({name: 'trainManagement'});
                     }else {
                         this.$router.push({name: 'home'});
                     }

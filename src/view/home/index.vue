@@ -23,7 +23,7 @@
             </div>
 
             <!--当日入库-->
-            <div class="ub today" v-show="roleId == 'maishou'">
+            <div class="ub today" v-show="roleId == 'role_sel'">
                 <div class="ub-f1 ">
                     <div class="number">{{storageData.trainNum}}</div>
                     <div class="words">当日入库</div>
@@ -38,7 +38,7 @@
                 </div>
             </div>
 
-            <div class="ub today" v-show="roleId != 'maishou'">
+            <div class="ub today" v-show="roleId != 'role_sel'">
                 <div class="ub-f1 bd-r">
                     <div class="number">{{storageData.trainNum}}</div>
                     <div class="words">
@@ -72,7 +72,7 @@
             </div>
 
             <!--货品-->
-            <div class="goods" v-show="roleId == 'maishou'">
+            <div class="goods" v-show="roleId == 'role_sel'">
                 <div class="ub">
                     <div class="ub-f1 order-left">
                         <div class="bd-b" @click="goStorage">
@@ -110,17 +110,17 @@
             </div>
 
             <!--货品——财务兼卖手与财务-->
-            <div class="goods" v-show="roleId != 'maishou'">
+            <div class="goods" v-show="roleId != 'role_sel'">
                 <div class="ub">
-                    <div class="ub-f1" :class= "[ this.roleId=='caiwu-maishou'? 'left-finance' : 'order-left'] " >
-                        <div class="bd-b" @click="goStorage" v-if="roleId == 'caiwu-maishou'">
+                    <div class="ub-f1" :class= "[ this.roleId=='role_finance_sell'? 'left-finance' : 'order-left'] " >
+                        <div class="bd-b" @click="goStorage" v-if="roleId == 'role_finance_sell'">
                             <div>
                                 <img class="goods-image left-imge" src="../../assets/index/goods_storage.png"/>
                             </div>
                             <div class="name">货品入库</div>
                         </div>
 
-                        <div class="bd-b" v-if="roleId == 'caiwu-maishou'">
+                        <div class="bd-b" v-if="roleId == 'role_finance_sell'">
                             <div>
                                 <img class="goods-image left-imge" src="../../assets/index/goods_storage.png"/>
                             </div>
@@ -142,7 +142,7 @@
                         </div>
                     </div>
                     <div class="ub-f1">
-                        <div class="bd-b">
+                        <div class="bd-b" @click="goTemporaryOrderList">
                             <div class="">
                                 <img class="goods-image right-img" src="../../assets/index/goods_damaged.png"/>
                             </div>
@@ -156,7 +156,7 @@
                             <div class="name">赊账还款</div>
                         </div>
 
-                        <div class=" bd-b bb" v-if="roleId == 'caiwu-maishou'">
+                        <div class=" bd-b bb" v-if="roleId == 'role_finance_sell'" @click="goTrainManagement">
                             <div>
                                 <img class="goods-image right-img" src="../../assets/index/trips_computing.png"/>
                             </div>
@@ -179,7 +179,7 @@
     export default {
         data () {
             return {
-                roleId:'maishou',//卖手——maishou;财务兼卖手--caiwu-maishou
+                roleId:'role_finance_sell',//卖手——role_sel;财务兼卖手--role_finance_sell;财务--role_finance;
                 imgpath: process.env.BASE_PATH,
                 gearName: '',
                 personalData: {
@@ -268,6 +268,11 @@
             //跳转到货品损坏
             goDamage(){
                 this.$router.push({name: 'damage'});
+            },
+
+            //车次管理
+            goTrainManagement(){
+                this.$router.push({name: 'trainManagement'});
             },
         }
     }

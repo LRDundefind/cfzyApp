@@ -1,9 +1,7 @@
 <template>
 	<div class="page-content">
 		<mt-header fixed  title="物流">
-            <router-link to="/storage" slot="left">
-                <mt-button v-if="this.$route.params.fromc=='order'" icon="back"></mt-button>
-            </router-link>
+            <mt-button @click="goTrain" v-if="this.$route.params.fromc=='order'" icon="back" slot="left"></mt-button>
             <span class="c-3 f-s-16" slot="right" @click="sendXDT">发布货源</span>
 		</mt-header>
 		<!--物流-->
@@ -83,9 +81,14 @@ export default {
                     }
                 },
 			  wrapperHeight: 0,//容器高度
+            trainsNum:'',//车次
+            status:'',//状态
         }
     },
     mounted () {
+        this.trainsNum = this.$route.params.trainsNum || false;
+        this.status = this.$route.params.status || false;
+
           let rd=parseInt(100*Math.random());  //需要的随机数
         if(rd>900){
             this.params.rd=rd;
@@ -115,8 +118,30 @@ export default {
 			goDetail(item){
 				if(this.$route.params.fromc=='order'){
 					this.$router.push({name: 'storage',params:{item:item}})
-				}
+				}else if(this.trainsNum && this.status){
+                    this.$router.push({
+                        name: 'storage/train',
+                        params: {
+                            item: item, trainsNum: this.trainsNum, status: this.status,
+                        }
+                    });
+                }
 			},
+
+            goTrain(){
+			    if(this.trainsNum && this.status){
+                    this.$router.push({
+                        name: 'storage/train',
+                        params: {
+                            trainsNum: this.trainsNum, status: this.status,
+                        }
+                    });
+                }else {
+                    this.$router.push({name: 'storage'})
+
+                }
+            },
+
 			//查看位置
             goBaiMap(orderId){
 				this.$router.push({name: 'baiduMap', params: {orderId:orderId}})
