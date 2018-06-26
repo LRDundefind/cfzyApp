@@ -109,8 +109,6 @@
 
             //跳转到车次结算详情
             settlementDetail(item){
-                console.log(item.trainsNum);
-
                 this.$router.push({
                     name: 'storage/train',
                     params: {
