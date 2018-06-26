@@ -211,20 +211,21 @@ export default {
                             Cookies.set('Token', result.token);
                             Cookies.set('randomKey', result.randomKey);
                              Cookies.set('xdtPhne', result.phone); 
-                             Cookies.set('roleId', result.roleId);          //身份区分，档主还是财务
+                             
                              Cookies.set('sid', result.sid);                //登录用户ID
                              Cookies.set('userName', result.userName);     //姓名
                              Cookies.set('compayName', result.compayName); //公司名称
                              Cookies.set('uid', result.uid);
 
                             if(result.stalls_list.length==0){
+                                Cookies.set('roleId', 'role_owner');        //身份区分
                                 this.XDTlogin();
                                 this.$router.push({name:'noStalls'});
                                    //原生端接到信息后，将信息直接存储到手机端
                                 let loginMessage = {
                                     'token': result.token,
                                     'randomKey': result.randomKey,
-                                    'roleId': result.roleId,
+                                    'roleId': 'role_owner',
                                     'sid': result.sid,
                                     'userName': result.userName,
                                     'compayName': result.compayName,
@@ -238,13 +239,14 @@ export default {
                             }
                             else{
                                 let gidOwnID_list=JSON.stringify(result.stalls_list[0]);
-                                Cookies.set('gidOwnID_lists', gidOwnID_list);                 //档位信息集合
+                                Cookies.set('gidOwnID_lists', gidOwnID_list); //档位信息集合
+                                Cookies.set('roleId', JSON.parse(gidOwnID_list).roleId);        //身份区分
                                 this.XDTlogin();
                                   //原生端接到信息后，将信息直接存储到手机端
                                 let loginMessage = {
                                     'token': result.token,
                                     'randomKey': result.randomKey,
-                                    'roleId': result.roleId,
+                                    'roleId': JSON.parse(gidOwnID_list).roleId,
                                     'sid': result.sid,
                                     'userName': result.userName,
                                     'compayName': result.compayName,

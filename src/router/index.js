@@ -9,6 +9,8 @@ import client from './client/client'
 import my from './my/my'
 import goods from './goods/goods'
 import damage from './damage/damage'
+//支出
+import expend from './expend/expend'
 
 // 登录注册验证密码相关的组件
 import login from '@/view/login/login'
@@ -76,6 +78,7 @@ const router = new Router({
               ...my,
               ...goods,
               ...damage,
+              ...expend
             ],
             meta:{
                 requireAuth: false,  // 添加该字段，表示进入这个路由是需要登录的,暂时设置为false，否则不能进入home

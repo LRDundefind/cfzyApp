@@ -207,6 +207,7 @@
             }
         },    
         mounted () {
+            this.roleId = Cookies.get('roleId');
             this.info();
             this.getlist();
             app.Vwaiting();
