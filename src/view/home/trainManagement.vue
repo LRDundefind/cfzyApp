@@ -31,8 +31,8 @@
                                     <div>到达时间&nbsp;&nbsp;{{item.putStorageTime | capitalize}}</div>
                                 </div>
                                 <div class="btn" @click="settlementDetail(item)">编辑</div>
-                                <div class="btn1" @click="deleteTrain(item)">删除</div>
-                                <!--<div class="btn">售完结算</div>-->
+                                <!--<div class="btn1" @click="deleteTrain(item)">删除</div>-->
+                                <div class="btn" @click="sold(item)">售完结算</div>
                             </div>
                         </div>
                     </li>
@@ -140,6 +140,13 @@
                     alert("确认删除");
                 }, () => {
                     alert("取消删除");
+                });
+            },
+            //售完结算
+            sold(){
+                this.$router.push({
+                    name: 'carClearing',
+                    params: {}
                 });
             },
 
