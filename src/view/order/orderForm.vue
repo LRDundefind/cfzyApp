@@ -1,45 +1,75 @@
 <template>
 
-	<div style="background: #f5f5f5;height: 100%">
+	<div style="background: #f5f5f5;height: 100%; overflow-y: hidden">
 		
-		<mt-field label="货品名称" readonly disableClear v-model="form.goodName"></mt-field>
-		<mt-field class="form.sellUnit" label="售卖单位" readonly>
-			<select class="sellUnitSel m-l-10" v-model="form.sellUnit">
+		<mt-field label="货品名称" readonly disableClear v-model="form.goodName" class=" order-border"></mt-field>
+		<mt-field class="order-border" label="售卖方式" readonly>
+			<select class=" m-l-10 jin-select" v-model="form.sellUnit">
 				<option value="unit_jin">斤</option>
 				<option value="unit_kg">公斤</option>
 				<option value="unit_pie">件</option>
 			</select>
+
+            <img class="jin-right"
+                 src="../../assets/index/gray-right-icon.png"/>
+
 		</mt-field>
-		<mt-field label="单价" placeholder="请输入单价" type="number" v-model="form.price"></mt-field>
-		<mt-field label="件数" :placeholder="surplus" type="number" v-model="form.goodNum"><span class="m-l-10">件</span></mt-field>
-		<mt-field label="重量" placeholder="请输入重量" type="number" v-model="form.weight">
-			<select v-model="form.weight_util" class="m-l-10">
-				<option value="unit_jin">斤</option>
-				<option value="unit_kg">公斤</option>
-			</select>
+		<mt-field class="order-border" label="单价" placeholder="请输入单价" type="number" v-model="form.price"></mt-field>
+		<mt-field class="order-border" label="件数" :placeholder="surplus" type="number" v-model="form.goodNum"><span class="f-s-15 m-l-10 c-6">件</span></mt-field>
+		<mt-field class="order-border" label="重量" :placeholder="weightPlus" type="number" v-model="form.weight">
+            <span class="f-s-15 m-l-10 c-6" v-show="form.weight_util == 'unit_jin'">斤</span>
+            <span class="f-s-15 m-l-10 c-6" v-show="form.weight_util == 'unit_kg'">公斤</span>
+            <span class="f-s-15 m-l-10 c-6" v-show="form.weight_util == 'unit_pie'">公斤</span>
+
+            <!--<select v-model="form.weight_util" class="m-l-10 jin-select">-->
+				<!--<option value="unit_jin">斤</option>-->
+				<!--<option value="unit_kg">公斤</option>-->
+			<!--</select>-->
+            <!--<img class="jin-right"-->
+                 <!--src="../../assets/index/gray-right-icon.png"/>-->
 		</mt-field>
-		<mt-field label="平板重" placeholder="请输入平板重" type="number" v-model="form.slabWeight">
-			<span class="m-l-10">{{form.weight_util | sellNnit}}</span>
+		<mt-field class=" order-border" label="平板重" placeholder="请输入平板重" type="number" v-model="form.slabWeight">
+            <span class="f-s-15 m-l-10 c-6" v-show="form.weight_util == 'unit_jin'">斤</span>
+            <span class="f-s-15 m-l-10 c-6" v-show="form.weight_util == 'unit_kg'">公斤</span>
+            <span class="f-s-15 m-l-10 c-6" v-show="form.weight_util == 'unit_pie'">公斤</span>
+            <!--<select v-model="form.weight_util" class="m-l-10 jin-select">-->
+                <!--<option value="unit_jin">斤</option>-->
+                <!--<option value="unit_kg">公斤</option>-->
+            <!--</select>-->
+            <!--<img class="jin-right"-->
+                 <!--src="../../assets/index/gray-right-icon.png"/>-->
 		</mt-field>
-		<mt-field label="减水重" placeholder="" type="number" v-model="form.slushing">
-			<select v-model="form.slushingUnit" class="m-l-10">
-				<option value="unit_jin">斤/件</option>
-				<option value="unit_kg">公斤/件</option>
-			</select>
+		<mt-field class="order-border" label="减水重" placeholder="" type="number" v-model="form.slushing">
+            <span class="f-s-15 m-l-10 c-6">{{form.slushingUnit | unit}}</span>
+
+
+			<!--<select v-model="form.slushingUnit" class="m-l-10">-->
+				<!--<option value="unit_jin">斤/件</option>-->
+				<!--<option value="unit_kg">公斤/件</option>-->
+			<!--</select>-->
+
+            <!--<img class="jin-right"-->
+                 <!--src="../../assets/index/gray-right-icon.png"/>-->
 		</mt-field>
-		<mt-field label="包装费" placeholder="" type="number" v-model="form.packCoef">
-			<select v-model="form.packCoefUnit" class="m-l-10">
-				<option value="unit_jin">元/斤</option>
-				<option value="unit_kg">元/公斤</option>
-				<option value="unit_pie">元/件</option>
-			</select>
+		<mt-field class="order-border" label="包装费" placeholder="" type="number" v-model="form.packCoef">
+            <span class="f-s-15 m-l-10 c-6">{{form.packCoefUnit | sellUnit}}</span>
+            <!--<select v-model="form.packCoefUnit" class="m-l-10">-->
+				<!--<option value="unit_jin">元/斤</option>-->
+				<!--<option value="unit_kg">元/公斤</option>-->
+				<!--<option value="unit_pie">元/件</option>-->
+			<!--</select>-->
+            <!--<img class="jin-right"-->
+                 <!--src="../../assets/index/gray-right-icon.png"/>-->
 		</mt-field>
 		<mt-field label="过磅费" placeholder="" type="number" v-model="form.poundCoef">
-			<select v-model="form.poundCoefUnit " class="m-l-10">
-				<option value="unit_jin">元/斤</option>
-				<option value="unit_kg">元/公斤</option>
-				<option value="unit_cbd">元/公担</option>
-			</select>
+            <span class="f-s-15 m-l-10 c-6">{{form.poundCoefUnit | sellUnit}}</span>
+			<!--<select v-model="form.poundCoefUnit " class="m-l-10">-->
+				<!--<option value="unit_jin">元/斤</option>-->
+				<!--<option value="unit_kg">元/公斤</option>-->
+				<!--<option value="unit_cbd">元/公担</option>-->
+			<!--</select>-->
+            <!--<img class="jin-right"-->
+                 <!--src="../../assets/index/gray-right-icon.png"/>-->
 		</mt-field>
 		<div class='update clearfix'>
 			<mt-button type="primary" size="large" class='f-l' @click="sure">确定</mt-button>
@@ -58,8 +88,9 @@ export default {
 	name:'order-form',
     data () {
         return {
-
+            numUnit:'',
         	form:{
+                numUnit:'',
         		goodName:'',
         		goodId:'',
         		id:'',
@@ -75,6 +106,7 @@ export default {
 	        	packCoefUnit:'元/斤',
 	        	poundCoef:'',
 	        	poundCoefUnit:'元/斤',
+                surplusNum:'',
         	}
         	
         }
@@ -83,18 +115,39 @@ export default {
     	for (var Key1 in this.form){
     		for (var Key2 in this.$parent.post){
     			if (Key1 == Key2) this.form[Key1] = this.$parent.post[Key2]
-    		}	
+    		}
 	    }
-	    if(!this.form.slabWeight) this.form.slabWeight = '0';
+
+        if(this.form.slushingUnit == ""){
+            this.form.slushingUnit = 'unit_jin';
+        }
+
+        if(this.form.weight_util == 'unit_pie'){
+            this.form.weight_util = 'unit_kg'
+        }
+
+
+        if(!this.form.slabWeight) this.form.slabWeight = '0';
+        this.numUnit = this.form.numUnit;
     },
     computed: {
     	surplus:function(){
-    		if (this.form.numUnit == 'unit_pie' && this.form.surplusNum) {
-    			return this.form.surplusNum.toString();
+    		if (this.numUnit == 'unit_pie' && this.form.surplusNum) {
+    			return '剩余' + this.form.surplusNum.toString() +'件';
     		}else{
     			return "请输入件数";
     		}
-    	}
+    	},
+        weightPlus:function () {
+            if (this.numUnit == 'unit_jin' && this.form.surplusNum) {
+                return '剩余' + this.form.surplusNum.toString() +'斤';
+            } else if (this.numUnit == 'unit_kg' && this.form.surplusNum) {
+                return '剩余' + this.form.surplusNum.toString() +'公斤';
+            } else{
+                return "请输入重量";
+            }
+        }
+
     },
     methods: {
     	
@@ -125,7 +178,6 @@ export default {
 					duration: 1000
     			});
     		}else if(this.form.slabWeight == ''){
-    			debugger
     			Toast({
 					message: '请完善购买信息（平板重）',
 					position: 'middle',
@@ -137,26 +189,44 @@ export default {
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(this.form.slushing == '' || !(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.form.slabWeight)) || this.form.slabWeight > 999.99){
+    		}else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.form.slushing)) || this.form.slushing > 999.99){
     			Toast({
 					message: '请正确输入减水重',
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(this.form.packCoef == '' || !(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.form.packCoef)) || this.form.packCoef > 999.99){
+    		}else if(this.form.slushing == ''&&this.form.slushing != '0' ){
+                Toast({
+                    message: '请正确输入减水重',
+                    position: 'middle',
+                    duration: 1000
+                });
+            } else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.form.packCoef)) || this.form.packCoef > 999.99){
     			Toast({
 					message: '请正确输入包装费',
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(this.form.poundCoef == '' || !(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.form.poundCoef)) || this.form.poundCoef > 999.99){
+    		}else if(this.form.packCoef == ''&&this.form.packCoef != '0'){
+                Toast({
+                    message: '请正确输入包装费',
+                    position: 'middle',
+                    duration: 1000
+                });
+            } else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.form.poundCoef)) || this.form.poundCoef > 999.99){
 
     			Toast({
 					message: '请正确输入过磅费',
 					position: 'middle',
 					duration: 1000
     			});
-    		}else{
+    		}else if(this.form.poundCoef == '' && this.form.poundCoef != '0'){
+                Toast({
+                    message: '请正确输入过磅费',
+                    position: 'middle',
+                    duration: 1000
+                });
+            } else{
     			if(this.form.price != ''){
 	    			if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.form.price))|| this.form.price > 9999.99){
 		    			Toast({
@@ -242,16 +312,48 @@ export default {
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
 
-.mint-field-other{
+    .order-border{
+    }
 
+     .mint-cell-wrapper{
+         padding: 10px 0 0 !important;
+         border-bottom: 1px #f0f0f0 solid!important;
+
+     }
+
+     .order-p-120{
+         padding-right: 1.05rem;
+     }
+     .order-m-20{
+         margin-top: 0.2rem;
+     }
+.mint-field-other{
+    .jin-right{
+        position: absolute;
+        width: 0.18rem;
+        right: 0;
+        top: 11px;
+    }
+
+    .jin-select{
+        width: 0.95rem;
+    }
 	select{
+        font-size: 0.30rem;
+        position: relative;
 		margin-left: 10px;
-		width: 80px;
-		height: 25px;
-		line-height: 25px;
-	}
-	.sellUnitSel{
-		width: 100px;
+		width: 1.4rem;
+		height: 40px;
+		line-height: 40px;
+        border: none;
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        background-size: 0.9rem 0.9rem;
+        color: #666666;
+        outline: none;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        background-color: #fff;
 	}
 }
 
