@@ -31,7 +31,8 @@
                                     <div>到达时间&nbsp;&nbsp;{{item.putStorageTime | capitalize}}</div>
                                 </div>
                                 <div class="btn" @click="settlementDetail(item)">编辑</div>
-                                <div class="btn">售完结算</div>
+                                <div class="btn1" @click="deleteTrain(item)">删除</div>
+                                <!--<div class="btn">售完结算</div>-->
                             </div>
                         </div>
                     </li>
@@ -45,7 +46,7 @@
 <script>
     import {damage} from '@/services/apis/damage.api'
     import noDate from '@/components/noData/noDate'
-    import { Loadmore , Indicator} from 'mint-ui'
+    import { Loadmore , Indicator,MessageBox} from 'mint-ui'
     export default {
         data () {
             return {
@@ -132,7 +133,15 @@
                 this.getList();
                 this.$refs.loadmore.onBottomLoaded();
 
-            }
+            },
+            //删除车次管理
+            deleteTrain(){
+                MessageBox.confirm('确认删除？', '').then(() => {
+                    alert("确认删除");
+                }, () => {
+                    alert("取消删除");
+                });
+            },
 
         }
     }
@@ -143,7 +152,7 @@
     }
     .topScroll{
         height: calc(100vh - 50px);
-        top: 50px;
+        top: 40px;
         bottom: 0rem;
     }
     .page-loadmore-wrappe{
@@ -196,6 +205,17 @@
                     color: #fff;
                     background: -webkit-linear-gradient(left, #30b03e 0%, #33d57c 100%);
                     border-radius: 1rem;
+                }
+
+                .btn1{
+                    background: url(../../assets/kehu_chakanxiaofeijilu_btn@2x.png) no-repeat center;
+                    margin-left: 0.15rem;
+                    font-size: 0.3rem;
+                    width: 1.88rem;
+                    line-height: 0.68rem;
+                    text-align: center;
+                    border-radius: 1rem;
+                    color: #33d57c;
                 }
             }
         }
