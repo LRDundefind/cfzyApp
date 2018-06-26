@@ -218,6 +218,9 @@
             this.trainsNum = this.$route.params.trainsNum || false;
             this.status = this.$route.params.status || false;
 
+            if(this.trainsNum && this.status){
+                this.editStorage();
+            }
 //            this.wrapperHeight = document.documentElement.clientHeight - 40;
 
             console.log(this.item);
@@ -274,6 +277,11 @@
 //            }
 //        },
         methods: {
+            //
+            editStorage(){
+                console.log(1213);
+
+            },
 
             //货主列表返回
             ownerBack(){

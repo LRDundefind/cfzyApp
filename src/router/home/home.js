@@ -25,6 +25,8 @@ const settlementList = resolve => require([ '@/view/home/settlementList'],resolv
 const settlementDetail = resolve => require([ '@/view/home/settlementDe'],resolve)
 //车次管理
 const trainManagement = resolve => require([ '@/view/home/trainManagement'],resolve)
+//车次结算
+const carClearing = resolve => require([ '@/view/home/carClearing'],resolve)
 
 export default [{
     path: 'home',
@@ -95,5 +97,14 @@ export default [{
     meta: {
         showFooter: false,
     }
-},
+},{
+    path: 'carClearing',
+    name: 'carClearing',
+    components: {
+        mainView: carClearing
+    },
+    meta: {
+        showFooter: false,
+    }
+},//车次结算
 ]
