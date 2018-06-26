@@ -32,5 +32,15 @@ export default [
         meta: {
             showFooter: false
         }
+    },{
+        path: 'storage/train/:trainsNum/:status',
+        name: 'storage/train',
+        components: {
+            mainView: storage
+        },
+        meta: {
+            showFooter: false
+        }
     },
+
 ]

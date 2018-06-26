@@ -24,6 +24,8 @@ const temporaryOrderDetail = resolve => require([ '@/view/home/temporaryOrderDet
 const settlementList = resolve => require([ '@/view/home/settlementList'],resolve)
 //车次详情
 const settlementDetail = resolve => require([ '@/view/home/settlementDe'],resolve)
+//车次管理
+const trainManagement = resolve => require([ '@/view/home/trainManagement'],resolve)
 
 export default [{
     path: 'home',
@@ -90,6 +92,15 @@ export default [{
     name: 'finance',
     components: {
         mainView: finance
+    }
+},{
+    path: 'trainManagement',
+    name: 'trainManagement',
+    components: {
+        mainView: trainManagement
+    },
+    meta: {
+        showFooter: false,
     }
 },
 ]

@@ -1,9 +1,19 @@
 <template>
     <div class="page-content storage">
+
+
+
         <mt-header fixed title="货品入库" v-if="selected">
             <mt-button icon="back" slot="left" @click="goHome"></mt-button>
             <mt-button slot="right" style="font-size: 0.32rem" @click="confirmStorage" :disabled="confirmDisabled">
                 确认入库
+            </mt-button>
+        </mt-header>
+
+        <mt-header fixed title="车次管理"  v-if="trainsNum!=''">
+            <mt-button icon="back" slot="left" @click="goHome"></mt-button>
+            <mt-button slot="right" style="font-size: 0.32rem" @click="confirmStorage" :disabled="confirmDisabled">
+                确认修改
             </mt-button>
         </mt-header>
 
@@ -30,6 +40,12 @@
                 <!--基本信息-->
                 <div v-if="selected == 'basic'">
                     <div class="">
+                        <div class="basic-list" @click="gologistics" v-show="trainsNum">
+                            <p class="clearfix">{{trainsNum}}
+                                <span class="name">{{status}}</span>
+                            </p>
+                        </div>
+
                         <div class="basic-list" @click="gologistics">
                             <p class="clearfix">物流
                                 <span class="name">{{trainShow}}<img class="right-icon"
@@ -190,6 +206,8 @@
                 goodsDetails: false,//货品列表详情
                 ownerList: false,//货主列表
                 item: [],//物流信息
+                trainsNum:'',//车次
+                status:'',//状态
             }
         },
         components: {
@@ -197,6 +215,9 @@
             'goods-details': goodsDetails,
         },
         mounted () {
+            this.trainsNum = this.$route.params.trainsNum || false;
+            this.status = this.$route.params.status || false;
+
 //            this.wrapperHeight = document.documentElement.clientHeight - 40;
 
             console.log(this.item);
@@ -338,7 +359,13 @@
             //跳转到首页
             goHome(){
                 MessageBox.confirm('确认返回？', '').then(() => {
-                    this.$router.push({name: 'home'});
+//                    trainsNum:'',//车次
+//                        status:'',//状态
+                    if(this.trainsNum && this.status){
+                        window.history.go(-1);
+                    }else {
+                        this.$router.push({name: 'home'});
+                    }
                 }, () => {
 
                 });
