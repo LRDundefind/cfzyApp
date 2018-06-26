@@ -55,12 +55,12 @@
                     <p class="clearfix">卸车费
                         <span class="name">测试1000.00</span>
                     </p>
-                    <p class="clearfix">固定代销费<input type="text" maxlength="8" v-model="stall.plateNum"></p>
+                    <p class="clearfix">固定代销费<input type="text" maxlength="12" placeholder="请输入固定代销费" v-model="stall.plateNum"></p>
 
                 </div>
 
                 <div class="pay">
-                    <div class="cost">计算最终结算费用</div>
+                    <div class="cost" @click="settlement">计算最终结算费用</div>
                 </div>
 
                 <div class="basic-list">
@@ -124,6 +124,33 @@
         },
 
         methods: {
+            //计算最终结算费用
+            settlement(){
+                let data = {
+                    tid: this.tid,
+                    marketingCost:this.marketingCost,
+                    remark:this.remark,
+                    computer:'Y',
+                };
+                console.log(data);
+                return false;
+                damage.submitBus(data)
+                    .then(response => {
+                        if (response.data.status == 'Y') {
+                            this.$router.push({name: 'settlementList'});
+                        } else {
+                            Toast({
+                                message: response.data.error_msg,
+                                position: 'middle',
+                                duration: 2000
+                            });
+                        }
+                    })
+                    .catch(function (response) {
+                        console.log(response);
+                    });
+            },
+
             goTrain(){
                 this.$router.push({
                     name: 'trainManagement',
