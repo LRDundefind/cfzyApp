@@ -1,6 +1,30 @@
 <template>
 
 	<div class="page-main page-loadmore-wrapper">
+        <div>
+            <div class="basic-list" >
+                <p class="clearfix">货主1
+                    <span class="name">123<img class="right-icon"
+                                                          src="../../assets/index/gray-right-icon.png"/></span>
+                </p>
+
+                <p class="clearfix">货主2
+                    <span class="name">123<img class="right-icon"
+                                               src="../../assets/index/gray-right-icon.png"/></span>
+                </p>
+                <p class="clearfix">司机电话<input type="number"></p>
+
+            </div>
+            <div class="basic-list" >
+                <p class="clearfix">货主3
+                    <span class="name">123<img class="right-icon"
+                                               src="../../assets/index/gray-right-icon.png"/></span>
+                </p>
+            </div>
+
+        </div>
+
+
 		<mt-field label="费用类型" readonly>
 			<select class=" m-l-10" v-model="form.eid">
 				<option v-for="item in typeOfCost" :value="item.value" :label="item.label"></option>
@@ -64,6 +88,60 @@
 	}
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
+    .basic-list {
+        background: #fff;
+        margin-top: 0.2rem;
+        padding: 0 0.3rem;
+        color: #333;
+        font-size: 0.28rem;
+        line-height: 0.98rem;
+        > p {
+            border-top: 1px #f0f0f0 solid;
+            .upload-picture {
+                position: absolute;
+                width: 2rem;
+                height: 0.95rem;
+                left: 70%;
+                top: 0;
+                opacity: 0.1;
+            }
+            .name {
+                float: right;
+            }
+            .right-icon {
+                width: 0.18rem;
+                padding-top: 0.3294rem;
+                padding-left: 0.24rem;
+            }
+            > input {
+                font-size: 0.26rem;
+                float: right;
+                color: #4c4c4c;
+                text-align: right;
+                line-height: 0.4rem;
+                margin-top: 0.3rem
+            }
+            .upload {
+                color: #33d570;
+                float: right;
+            }
+        }
+        > p:nth-child(1) {
+            border: none;
+        }
+        .remark {
+            color: #666;
+            padding-bottom: 0.8rem;
+            textarea {
+                border: none;
+                width: 100%;
+                font-size: 0.26rem;
+                color: #4c4c4c;
+            }
+        }
+    }
+
+
 .mint-field-other{
 		.jin-right{
         position: absolute;
