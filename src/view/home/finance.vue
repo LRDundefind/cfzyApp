@@ -283,8 +283,7 @@
         .number {
             font-size: 0.42rem;
             color: #33d57c;
-            min-height: 0.48rem;
-            width: 1.8rem;
+            min-height: 0.48rem; 
             word-break: break-all;
             text-align: center;
         }

@@ -6,8 +6,15 @@ import router from './router'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 let Base64 = require('js-base64').Base64;
+
+//注册mint组件
+// import {components} from './util/frameComponents.js';
+// components.init(Vue);
+
 import Mint from 'mint-ui'
 import 'mint-ui/lib/style.css'
+Vue.use(Mint);
+
 import 'animate.css'
 // import '@/styles/globalScssVarables.scss';
 // 使用rem布局，rem函数便于移动端快速开发布局
@@ -19,9 +26,9 @@ import * as filters from '@/filters'; // 全局vue filter
 //rem转换为px
 Vue.prototype.REM = 100 * (document.documentElement.clientWidth / 750);
 
-Vue.use(Mint);
-Vue.prototype.$http = axios
 
+//Vue.prototype.$http = axios
+//定义全局返回上一页方法
 Vue.prototype.goBack = function(){
 	window.history.go(-1);
 }
