@@ -23,7 +23,7 @@
             </div>
 
             <!--当日入库-->
-            <div class="ub today">
+            <div class="ub today" v-show="roleId == 'role_sel'">
                 <div class="ub-f1 ">
                     <div class="number">{{storageData.trainNum}}</div>
                     <div class="words">当日入库</div>
@@ -38,8 +38,41 @@
                 </div>
             </div>
 
+            <div class="ub today" v-show="roleId != 'role_sel'">
+                <div class="ub-f1 bd-r">
+                    <div class="number">{{storageData.trainNum}}</div>
+                    <div class="words">
+                        <div>当日</div>
+                        <div>收入(元)</div>
+                    </div>
+                </div>
+                <div class="ub-f1 bd-r">
+                    <div class="number">{{storageData.order_quantity}}</div>
+                    <div class="words">
+                        <div>当日</div>
+                        <div>支出(元)</div>
+                    </div>
+                </div>
+                <div class="ub-f1 bd-r">
+                    <div class="number">{{storageData.deposit}}</div>
+                    <div class="words">
+                        <div>当日赊账</div>
+                        <div>金额(元)</div>
+                    </div>
+                </div>
+
+                <div class="ub-f1">
+                    <div class="number">{{storageData.deposit}}</div>
+                    <div class="words">
+                        <div>当日</div>
+                        <div>收赊账(元)</div>
+                    </div>
+                </div>
+
+            </div>
+
             <!--货品-->
-            <div class="goods">
+            <div class="goods" v-show="roleId == 'role_sel'">
                 <div class="ub">
                     <div class="ub-f1 order-left">
                         <div class="bd-b" @click="goStorage">
@@ -74,8 +107,66 @@
                         </div>
                     </div>
                 </div>
-
             </div>
+
+            <!--货品——财务兼卖手与财务-->
+            <div class="goods" v-show="roleId != 'role_sel'">
+                <div class="ub">
+                    <div class="ub-f1" :class= "[ this.roleId=='role_finance_sell'? 'left-finance' : 'order-left'] " >
+                        <div class="bd-b" @click="goStorage" v-if="roleId == 'role_finance_sell'">
+                            <div>
+                                <img class="goods-image left-imge" src="../../assets/index/goods_storage.png"/>
+                            </div>
+                            <div class="name">货品入库</div>
+                        </div>
+
+                        <div class="bd-b" v-if="roleId == 'role_finance_sell'">
+                            <div>
+                                <img class="goods-image left-imge" src="../../assets/index/goods_storage.png"/>
+                            </div>
+                            <div class="name">现结收账</div>
+                        </div>
+
+                        <div class="bd-b" >
+                            <div>
+                                <img class="goods-image left-imge" src="../../assets/index/goods_storage.png"/>
+                            </div>
+                            <div class="name">支出</div>
+                        </div>
+
+                        <div class="" @click="goDamage">
+                            <div>
+                                <img class="goods-image right-img" src="../../assets/index/goods_damaged.png"/>
+                            </div>
+                            <div class="name">货品损坏</div>
+                        </div>
+                    </div>
+                    <div class="ub-f1">
+                        <div class="bd-b" @click="goTemporaryOrderList">
+                            <div class="">
+                                <img class="goods-image right-img" src="../../assets/index/goods_damaged.png"/>
+                            </div>
+                            <div class="name">暂存订单</div>
+                        </div>
+
+                        <div class=" bd-b bb">
+                            <div>
+                                <img class="goods-image right-img" src="../../assets/index/trips_computing.png"/>
+                            </div>
+                            <div class="name">赊账还款</div>
+                        </div>
+
+                        <div class=" bd-b bb" v-if="roleId == 'role_finance_sell'" @click="goTrainManagement">
+                            <div>
+                                <img class="goods-image right-img" src="../../assets/index/trips_computing.png"/>
+                            </div>
+                            <div class="name">车次管理</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
     </div>
 </template>
@@ -88,6 +179,7 @@
     export default {
         data () {
             return {
+                roleId:'role_finance_sell',//卖手——role_sel;财务兼卖手--role_finance_sell;财务--role_finance;
                 imgpath: process.env.BASE_PATH,
                 gearName: '',
                 personalData: {
@@ -177,6 +269,11 @@
             goDamage(){
                 this.$router.push({name: 'damage'});
             },
+
+            //车次管理
+            goTrainManagement(){
+                this.$router.push({name: 'trainManagement'});
+            },
         }
     }
 </script>
@@ -254,6 +351,18 @@
             height: 5.96rem;
             background-color: #f0f0f0;
         }
+
+        .left-finance:after {
+            content: '';
+            position: absolute;
+            top: 0.52rem;
+            left: 100%;
+            display: inline-block;
+            width: 1px;
+            height: 13rem;
+            background-color: #f0f0f0;
+        }
+
         .goods-image {
             width: 1.72rem;
             padding: 0.52rem 0.735rem 0 0.735rem;

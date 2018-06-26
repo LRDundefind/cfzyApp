@@ -13,7 +13,6 @@
 
 
 const home = resolve => require([ '@/view/home/index'],resolve)
-const finance = resolve => require([ '@/view/home/finance'],resolve)
 const blackList = resolve => require([ '@/view/home/blackList'],resolve)
 const ownerChoice = resolve => require([ '@/view/home/ownerChoice'],resolve)
 //暂存订单
@@ -24,6 +23,8 @@ const temporaryOrderDetail = resolve => require([ '@/view/home/temporaryOrderDet
 const settlementList = resolve => require([ '@/view/home/settlementList'],resolve)
 //车次详情
 const settlementDetail = resolve => require([ '@/view/home/settlementDe'],resolve)
+//车次管理
+const trainManagement = resolve => require([ '@/view/home/trainManagement'],resolve)
 
 export default [{
     path: 'home',
@@ -86,10 +87,13 @@ export default [{
         showFooter: false,
     }
 },{
-    path: 'finance',
-    name: 'finance',
+    path: 'trainManagement',
+    name: 'trainManagement',
     components: {
-        mainView: finance
+        mainView: trainManagement
+    },
+    meta: {
+        showFooter: false,
     }
 },
 ]
