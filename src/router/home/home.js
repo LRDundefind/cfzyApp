@@ -13,7 +13,6 @@
 
 
 const home = resolve => require([ '@/view/home/index'],resolve)
-const finance = resolve => require([ '@/view/home/finance'],resolve)
 const blackList = resolve => require([ '@/view/home/blackList'],resolve)
 const ownerChoice = resolve => require([ '@/view/home/ownerChoice'],resolve)
 //暂存订单
@@ -86,12 +85,6 @@ export default [{
     },
     meta: {
         showFooter: false,
-    }
-},{
-    path: 'finance',
-    name: 'finance',
-    components: {
-        mainView: finance
     }
 },{
     path: 'trainManagement',
