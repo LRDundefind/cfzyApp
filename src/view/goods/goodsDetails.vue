@@ -90,7 +90,6 @@
             return {
                 wrapperHeight: 0,//容器高度
                 Unit: '',
-                deleteDisabled: '',
                 goods: {
                     goodId: '',
                     goodName: '',//货品名称
@@ -110,18 +109,24 @@
             }
         },
 
+        computed: {
+            deleteDisabled: function () {
+                if(this.$route.params.trainsNum){
+                    return 'edit';
+                }else if(typeof(this.edit.goodId) != "undefined" && this.edit.goodId != ''){
+                    return 'delete';
+                }else {
+                    return 'edit';
+                }
+            }
+        },
+
         components: {
             'goods-list': goodsList,
         },
 
         created(){
-            if (typeof(this.edit.goodId) != "undefined" && this.edit.goodId != '') {
-                this.goods = this.edit;
-                this.Unit = this.goods.numUnit;
-                this.deleteDisabled = 'delete'
-            } else {
-                this.deleteDisabled = 'edit'
-            }
+
         },
 
         mounted () {
