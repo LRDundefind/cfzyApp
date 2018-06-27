@@ -9,6 +9,8 @@ import client from './client/client'
 import my from './my/my'
 import goods from './goods/goods'
 import damage from './damage/damage'
+import creditOrder from './credit/creditOrder'
+
 //支出
 import expend from './expend/expend'
 
@@ -78,7 +80,8 @@ const router = new Router({
               ...my,
               ...goods,
               ...damage,
-              ...expend
+              ...expend,
+              ...creditOrder,
             ],
             meta:{
                 requireAuth: false,  // 添加该字段，表示进入这个路由是需要登录的,暂时设置为false，否则不能进入home
