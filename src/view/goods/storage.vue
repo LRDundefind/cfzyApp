@@ -2,7 +2,6 @@
     <div class="page-content storage">
 
 
-
         <mt-header fixed title="货品入库" v-if="selected">
             <mt-button icon="back" slot="left" @click="goHome"></mt-button>
             <mt-button slot="right" style="font-size: 0.32rem" @click="confirmStorage" :disabled="confirmDisabled">
@@ -10,9 +9,9 @@
             </mt-button>
         </mt-header>
 
-        <mt-header fixed title="车次管理"  v-if="trainsNum!=''">
+        <mt-header fixed title="车次管理" v-if="trainsNum!=''">
             <mt-button icon="back" slot="left" @click="goHome"></mt-button>
-            <mt-button slot="right" style="font-size: 0.32rem" @click="confirmStorage" :disabled="confirmDisabled">
+            <mt-button slot="right" style="font-size: 0.32rem" @click="editSubmit" :disabled="confirmDisabled">
                 确认修改
             </mt-button>
         </mt-header>
@@ -46,13 +45,13 @@
                             </p>
                         </div>
 
-                        <div class="basic-list" @click="gologistics">
+                        <div class="basic-list" @click="gologistics" v-show="trainsNum ==''">
                             <p class="clearfix">物流
                                 <span class="name">{{trainShow}}<img class="right-icon"
                                                                      src="../../assets/index/gray-right-icon.png"/></span>
                             </p>
                         </div>
-                        <div class="basic-list" @click="goList">
+                        <div class="basic-list" @click="goList" v-show="trainsNum ==''">
                             <p class="clearfix">货主
                                 <span class="name">{{stall.name}}<img class="right-icon"
                                                                       src="../../assets/index/gray-right-icon.png"/></span>
@@ -129,21 +128,26 @@
                 </div>
                 <!--货品信息-->
                 <div v-if="selected == 'goods'">
-                    <div v-for="item in goods" :key='item.goodId' class="goods-list">
+                    <div v-for="item in goods" :key='item.goodId' class="goods-list" v-show="status!='售卖中'">
                         <p @click="editGoods(item)" class="clearfix">{{item.goodName}}
                             <span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
                             <span>{{item.goodNum}} {{item.numUnit | sellNnit}}</span>
                         </p>
                     </div>
+
+                    <div v-for="item in goods" :key='item.goodId' class="goods-list" v-show="status =='售卖中'">
+                        <p class="clearfix">{{item.goodName}}
+                            <span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
+                            <span>{{item.goodNum}} {{item.numUnit | sellNnit}}</span>
+                        </p>
+                    </div>
+
                     <div class="login_pass" v-show="selected == 'goods'">
-                        <div @click="createGoods" class="loginbtn">添加货品</div>
+                        <div v-show="status !='售卖中'" @click="createGoods" class="loginbtn">添加货品</div>
                     </div>
 
                 </div>
-               
 
-
-                
                 <!--货主列表-->
                 <div v-if="ownerList">
                     <owner-list ref="owner" @choiceOwner="oNchoiceOwner"></owner-list>
@@ -171,7 +175,7 @@
     export default {
         data () {
             return {
-                confirmDisabled:false,
+                confirmDisabled: false,
 //                wrapperHeight: 0,//容器高度
 
                 trainShow: '请选择',
@@ -206,8 +210,8 @@
                 goodsDetails: false,//货品列表详情
                 ownerList: false,//货主列表
                 item: [],//物流信息
-                trainsNum:'',//车次
-                status:'',//状态
+                trainsNum: '',//车次
+                status: '',//状态
             }
         },
         components: {
@@ -218,7 +222,7 @@
             this.trainsNum = this.$route.params.trainsNum || false;
             this.status = this.$route.params.status || false;
 
-            if(this.trainsNum && this.status){
+            if (this.trainsNum && this.status) {
                 this.editStorage();
             }
 //            this.wrapperHeight = document.documentElement.clientHeight - 40;
@@ -279,8 +283,49 @@
         methods: {
             //
             editStorage(){
-                console.log(1213);
+                this.stall = {
+                    name: '',
+                    good_sid: '',//货主id
+                    driverName: '假数据名字',//司机姓名
+                    driverPhone: '18236911783',//司机电话
+                    plateNum: '假123456',//车牌号
+                    startAddress: '假北京',//发货地点
+                    origin: '假北京',//产地
+                    originProve: '',//产地证明图片地址
+                    checkProve: '',//检验证明图片地址
+                    carrierContract: '',//承运合同图片地址
+                    remark: '123',//备注
+                    goods: '',//货品信息
+                };
 
+                this.goods = [
+                    {
+                        "goodId": "52940002478d4b9397412eae6c180b5f",
+                        "goodName": "进口西瓜",
+                        "numUnit": "unit_kg",
+                        "goodNum": "4"
+                    },
+                    {
+                        "goodId": "9674bbe82d084592bd2f1b2295a5da34",
+                        "goodName": "榴莲",
+                        "numUnit": "unit_kg",
+                        "goodNum": "1"
+                    }
+                ];
+
+                console.log(this.stall);
+                return false;
+
+                //获取车次详情
+                damage.getTrain(data)
+                    .then(response => {
+                        this.stall = response.data.results.logistics_info;
+                        this.goods = response.data.results.goods_info;
+
+                    })
+                    .catch(function (response) {
+                        console.log(response);
+                    });
             },
 
             //货主列表返回
@@ -345,9 +390,12 @@
             },
             //跳转到车次
             gologistics(){
-                if(this.trainsNum && this.status){
-                    this.$router.push({name: 'logistics/fromc', params: {fromc: 'order',trainsNum:this.trainsNum,status:this.status}});
-                }else {
+                if (this.trainsNum && this.status) {
+                    this.$router.push({
+                        name: 'logistics/fromc',
+                        params: {fromc: 'order', trainsNum: this.trainsNum, status: this.status}
+                    });
+                } else {
                     this.$router.push({name: 'logistics/fromc', params: {fromc: 'order'}});
                 }
             },
@@ -372,9 +420,9 @@
             //跳转到首页
             goHome(){
                 MessageBox.confirm('确认返回？', '').then(() => {
-                    if(this.trainsNum && this.status){
+                    if (this.trainsNum && this.status) {
                         this.$router.push({name: 'trainManagement'});
-                    }else {
+                    } else {
                         this.$router.push({name: 'home'});
                     }
                 }, () => {
@@ -461,6 +509,82 @@
                     })
                 }
             },
+            //编辑修改
+            editSubmit(){
+                const data =[];
+                data.logistics_info = this.stall;
+                data.goods_info = this.goods;
+                if (data.driverName == '') {
+                    Toast({
+                        message: '司机姓名不可为空',
+                        position: 'middle',
+                        duration: 2000
+                    });
+                } else if (data.driverPhone == '') {
+                    Toast({
+                        message: '司机电话不可为空',
+                        position: 'middle',
+                        duration: 2000
+                    });
+                } else if (!(new RegExp(/^1[3|4|5|6|7|8|9][0-9]{9}$/).test(data.driverPhone))) {
+                    Toast({
+                        message: '司机电话输入有误',
+                        position: 'middle',
+                        duration: 2000
+                    });
+                } else if (data.plateNum == '') {
+                    Toast({
+                        message: '车牌号不能为空',
+                        position: 'middle',
+                        duration: 2000
+                    });
+                } else if (data.startAddress == '') {
+                    Toast({
+                        message: '发货地点不能为空',
+                        position: 'middle',
+                        duration: 2000
+                    });
+                } else if (data.origin == '') {
+                    Toast({
+                        message: '产地不能为空',
+                        position: 'middle',
+                        duration: 2000
+                    });
+                } else if (data.goods.length == 0) {
+                    Toast({
+                        message: '请维护车次货品信息',
+                        position: 'middle',
+                        duration: 2000
+                    });
+                } else {
+                    this.confirmDisabled = true;
+                    console.log(data);
+                    delete data.name;
+                    damage.editTrain(data).then(response => {
+                        if (response.data.status == 'Y') {
+                            Toast({
+                                message: '已完成编辑车次操作',
+                                position: 'middle',
+                                duration: 1000
+                            });
+                            setTimeout(() => {
+                                this.confirmDisabled = false;
+                                this.$router.push({name: 'trainManagement'});
+                            }, 1000)
+                        } else {
+                            this.confirmDisabled = false;
+                            Toast({
+                                message: response.data.results,
+                                position: 'middle',
+                                duration: 1000
+                            });
+                        }
+                        console.log(response.data.results);
+                    })
+                }
+
+            },
+
 
             upload1 (e, ty) {
                 if (ty == 'source') {
@@ -526,7 +650,7 @@
                 this.detect = '';
                 this.ship = '';
             },
-                rotateImg (img, direction,canvas) {
+            rotateImg (img, direction, canvas) {
                 //最小与最大旋转方向，图片旋转4次后回到原方向
                 const min_step = 0;
                 const max_step = 3;
@@ -536,43 +660,43 @@
                 let width = img.width;
                 let step = 2;
                 if (step == null) {
-                step = min_step;
+                    step = min_step;
                 }
                 if (direction == 'right') {
-                step++;
-                //旋转到原位置，即超过最大值
-                step > max_step && (step = min_step);
+                    step++;
+                    //旋转到原位置，即超过最大值
+                    step > max_step && (step = min_step);
                 } else {
-                step--;
-                step < min_step && (step = max_step);
+                    step--;
+                    step < min_step && (step = max_step);
                 }
                 //旋转角度以弧度值为参数
                 let degree = step * 90 * Math.PI / 180;
                 let ctx = canvas.getContext('2d');
                 switch (step) {
-                case 0:
-                    canvas.width = width;
-                    canvas.height = height;
-                    ctx.drawImage(img, 0, 0);
-                    break;
-                case 1:
-                    canvas.width = height;
-                    canvas.height = width;
-                    ctx.rotate(degree);
-                    ctx.drawImage(img, 0, -height);
-                    break;
-                case 2:
-                    canvas.width = width;
-                    canvas.height = height;
-                    ctx.rotate(degree);
-                    ctx.drawImage(img, -width, -height);
-                    break;
-                case 3:
-                    canvas.width = height;
-                    canvas.height = width;
-                    ctx.rotate(degree);
-                    ctx.drawImage(img, -width, 0);
-                    break;
+                    case 0:
+                        canvas.width = width;
+                        canvas.height = height;
+                        ctx.drawImage(img, 0, 0);
+                        break;
+                    case 1:
+                        canvas.width = height;
+                        canvas.height = width;
+                        ctx.rotate(degree);
+                        ctx.drawImage(img, 0, -height);
+                        break;
+                    case 2:
+                        canvas.width = width;
+                        canvas.height = height;
+                        ctx.rotate(degree);
+                        ctx.drawImage(img, -width, -height);
+                        break;
+                    case 3:
+                        canvas.width = height;
+                        canvas.height = width;
+                        ctx.rotate(degree);
+                        ctx.drawImage(img, -width, 0);
+                        break;
                 }
             },
             compress(img, Orientation) {
@@ -651,15 +775,17 @@
     }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
-    .topScroll{
+    .topScroll {
         height: calc(100vh - 50px);
         top: 40px;
         bottom: 0rem;
     }
-    .page-loadmore-wrappe{
+
+    .page-loadmore-wrappe {
         overflow: scroll;
-        -webkit-overflow-scrolling : touch;
+        -webkit-overflow-scrolling: touch;
     }
+
     .storage {
         input:disabled, textarea:disabled {
             background-color: white !important;

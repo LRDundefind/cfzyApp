@@ -61,5 +61,22 @@ export const damage = {
             data: serverMoudle(params) || {}
         });
     },
+    //获取车次详情
+    getTrain(params) {
+        return axios({
+            url: 'rest/CHENGFENG_GET_SELEMAN_TRAIN_INFO',
+            method: 'post',
+            data: serverMoudle(params) || {}
+        });
+    },
+    //编辑车次信息
+    editTrain(params) {
+        return axios({
+            url: 'rest/CHENGFENG_SET_SELEMAN_TRAIN_EDITINFO',
+            method: 'post',
+            data: serverMoudle(params) || {}
+        });
+    },
+
 
 };
