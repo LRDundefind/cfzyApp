@@ -211,6 +211,10 @@
             this.info();
             this.getlist();
             app.Vwaiting();
+            //  删除车次cookie
+            Cookies.remove('trainTid');
+            Cookies.remove('trainsNum');
+            Cookies.remove('plateNum');
         },
         methods: {
             //获取头像

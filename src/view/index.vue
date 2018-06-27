@@ -32,7 +32,7 @@
                 <img v-else slot="icon" src="../assets/kehu_shouye_icon@2x.png">
                 首页
             </mt-tab-item>
-            <mt-tab-item id="order">
+            <mt-tab-item id="order"  v-show="roleId != 'role_finance'">
                 <img v-if="selected == 'order'" slot="icon" src="../assets/order_green.png">
                 <img v-else slot="icon" src="../assets/order.png">
                 下单
@@ -42,7 +42,7 @@
                 <img v-else slot="icon" src="../assets/kehu_shouru_icon@2x.png">
                 订单
             </mt-tab-item>
-            <mt-tab-item id="logistics">
+            <mt-tab-item id="logistics" v-show="roleId != 'role_finance'">
                 <img v-if="selected == 'logistics'" slot="icon" src="../assets/wuliuicon_green.png">
                 <img v-else slot="icon" src="../assets/wuliuicon.png">
                 物流
@@ -66,6 +66,7 @@ export default {
     name: 'application',
     data () {
         return {
+            roleId:'',//卖手——role_sel;财务兼卖手--role_finance_sell;财务--role_finance;
             mainClass: 'page_wrap',
             // showHeader: false,
             showFooter: true,
@@ -75,6 +76,7 @@ export default {
     created(){
     },
     mounted () {
+        this.roleId = Cookies.get('roleId');
         //console.log(this.selected)
         //console.log(document.body.clientWidth)
         this.fetchDate()

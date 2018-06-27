@@ -118,6 +118,12 @@ body {
 .pos-f{
   position: fixed;
 }
+.textRight {
+    text-align: right;
+}
+.textLeft{
+    text-align: left;
+}
 .left{
   left: 0;
 }
