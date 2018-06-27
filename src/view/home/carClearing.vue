@@ -14,19 +14,19 @@
                         <!--<span class="name">123465</span>-->
                     </p>
                     <p class="clearfix">姓名
-                        <span class="name">测试姓名</span>
+                        <span class="name">{{ownerInfo.shipName}}</span>
                     </p>
                     <p class="clearfix">手机号
-                        <span class="name">测试：18236911783</span>
+                        <span class="name">{{ownerInfo.phone}}</span>
                     </p>
                     <p class="clearfix">供应商名称
-                        <span class="name">测试集团</span>
+                        <span class="name">{{ownerInfo.supplierName}}</span>
                     </p>
                     <p class="clearfix">账户信息
-                        <span class="name">测试123456789</span>
+                        <span class="name">{{ownerInfo.acount}}</span>
                     </p>
                     <p class="clearfix">地址
-                        <span class="name">测试地址</span>
+                        <span class="name">{{ownerInfo.address}}</span>
                     </p>
                 </div>
 
@@ -34,20 +34,20 @@
                     <p class="clearfix">备注</p>
                     <div class="remark">
                     <textarea maxlength="420" name="" id="" cols="30" rows="3" placeholder="货主备注信息"
-                              v-model="stall.remark"></textarea>
+                              v-model="ownerInfo.remark"></textarea>
                     </div>
                 </div>
 
                 <div class="basic-list">
                     <p class="clearfix">结算信息</p>
                     <p class="clearfix">货品费用
-                        <span class="name">测试1000.00</span>
+                        <span class="name">{{goodCost}}</span>
                     </p>
                     <p class="clearfix">提成费用
-                        <span class="name">测试1000.00</span>
+                        <span class="name">{{commission}}</span>
                     </p>
                     <p class="clearfix">回扣
-                        <span class="name">测试1000.00</span>
+                        <span class="name">{{rebates}}</span>
                     </p>
                     <p class="clearfix">车费
                         <span class="name">测试1000.00</span>
@@ -55,12 +55,12 @@
                     <p class="clearfix">卸车费
                         <span class="name">测试1000.00</span>
                     </p>
-                    <p class="clearfix">固定代销费<input type="text" maxlength="12" placeholder="请输入固定代销费" v-model="stall.plateNum"></p>
+                    <p class="clearfix">固定代销费<input type="text" maxlength="12" placeholder="请输入固定代销费" v-model="marketingCost"></p>
 
                 </div>
 
                 <div class="pay">
-                    <div class="cost" @click="settlement">计算最终结算费用</div>
+                    <div class="cost" @click="settlement('compute')">计算最终结算费用</div>
                 </div>
 
                 <div class="basic-list">
@@ -75,13 +75,13 @@
                     <p class="clearfix">备注</p>
                     <div class="remark">
                     <textarea maxlength="420" name="" id="" cols="30" rows="3" placeholder="结算备注信息"
-                              v-model="stall.remark"></textarea>
+                              v-model="remark"></textarea>
                     </div>
                 </div>
 
                 <div class="login_pass ub">
-                    <div class="loginbtn1 ">取消</div>
-                    <div class="loginbtn ">确认结算信息</div>
+                    <div class="loginbtn1" @click="goTrain">取消</div>
+                    <div class="loginbtn " @click="settlement('clearing')">确认结算信息</div>
                 </div>
 
             </div>
@@ -98,6 +98,13 @@
     export default {
         data () {
             return {
+                ownerInfo: {},//货主信息
+                goodCost: '',//货款总金额
+                commission :'',//提成费用合计总额
+                rebates: '',//回扣
+                marketingCost: '',//固定代销费
+                remark:'',//结算备注
+
                 stall: {
                     name: '请选择',
                     good_sid: '',//货主id
@@ -120,18 +127,64 @@
             }
         },
         mounted () {
-
+            this.testClearing();
         },
 
         methods: {
-            //计算最终结算费用
-            settlement(){
+            //验证车次结算
+            testClearing(){
+                let data = {
+                    tid: this.tid,
+                };
+
+                this.ownerInfo = {
+                    shipName:'测试货主姓名',
+                    phone:'18236911783',//货主手机号
+                    supplierName:'供应商名称',
+                    acount:'账户信息',
+                    address:'北京地址',
+                    remark:'测测试备注',
+                };
+
+                this.goodCost = '货款总金额123';//货款总金额
+                this.commission = '提成费用合计总额123';//提成费用合计总额
+                this.rebates = '回扣132';//回扣
+                this.marketingCost = '固定代销费132';//固定代销费
+                return false;
+
+                damage.testClearing(data)
+                    .then(response => {
+                        if (response.data.status == 'Y') {
+                            this.ownerInfo = response.data.results.goods_owner_info;
+                            this.goodCost = response.data.results.goodCost;//货款总金额
+                            this.commission = response.data.results.commission;//提成费用合计总额
+                            this.rebates = response.data.results.rebates;//回扣
+                            this.marketingCost = response.data.results.marketingCost;//固定代销费
+                        } else {
+                            Toast({
+                                message: response.data.error_msg,
+                                position: 'middle',
+                                duration: 2000
+                            });
+                        }
+                    })
+                    .catch(function (response) {
+                        console.log(response);
+                    });
+            },
+
+            //计算结算费用与提交车次申请
+            settlement(apply){
                 let data = {
                     tid: this.tid,
                     marketingCost:this.marketingCost,
                     remark:this.remark,
-                    computer:'Y',
                 };
+                if(apply == 'compute'){
+                    data.computer ='Y'
+                }else {
+                    data.computer ='N'
+                }
                 console.log(data);
                 return false;
                 damage.submitBus(data)

@@ -77,6 +77,14 @@ export const damage = {
             data: serverMoudle(params) || {}
         });
     },
+    //验证车次结算
+    testClearing(params) {
+        return axios({
+            url: 'rest/CHENGFENG_SELEMAN_CHECK_TRAIN_CLEAR',
+            method: 'post',
+            data: serverMoudle(params) || {}
+        });
+    },
 
 
 };
