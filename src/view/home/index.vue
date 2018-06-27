@@ -127,7 +127,7 @@
                             <div class="name">现结收账</div>
                         </div>
 
-                        <div class="bd-b" >
+                        <div class="bd-b" @click="goExpend">
                             <div>
                                 <img class="goods-image left-imge" src="../../assets/index/goods_storage.png"/>
                             </div>
@@ -256,6 +256,10 @@
             //跳转至车次列表
             goSettlementList(){
                 this.$router.push({name: 'settlementList'});
+            },
+            //跳转至支出
+            goExpend(){
+                this.$router.push({name: 'expend'});
             },
             getList(){
             },

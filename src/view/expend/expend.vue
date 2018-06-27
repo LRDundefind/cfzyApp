@@ -1,9 +1,9 @@
 <template>
 	<div class="page-content">
 		<mt-header fixed  title="支出">
-			<router-link :to="{ name: 'owner'}" slot="left">
-			    <mt-button icon="back"></mt-button>
-			</router-link>
+			
+			<mt-button icon="back" @click="goBack()" slot="left"></mt-button>
+			
 		</mt-header>
 		<mt-navbar v-model="selected">
 		  	<mt-tab-item id="ordinaryExpenditure">普通支出</mt-tab-item>
@@ -56,7 +56,7 @@ export default {
     top: 0.8rem;
 }
 .mint-navbar{
-	margin-top: 10px;
+	margin-top: 12px;
 	.mint-tab-item{
 		color: #4c4c4c;
 		font-size: 0.28rem;  /*没有生效*/

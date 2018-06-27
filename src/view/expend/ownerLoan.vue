@@ -1,14 +1,166 @@
 <template>
 
 	<div class="page-main page-loadmore-wrapper">
-		货主汇款
+        <div class="basic-list" >
+
+			<p class="clearfix">货主
+                <span class="name">
+				<img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
+            </p>
+            <p class="clearfix">支付方式
+                <span class="name">
+				<select class=" m-l-10 jin-select" v-model="form.expendType">
+					<option v-for="item in typeOfPay" :label="item.label" :value="item.value"></option>
+				</select>
+                <img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
+            </p>
+            <p class="clearfix">收款人电话<input type="number" v-model="payeePhone" placeholder="请输入收款人电话"></p>
+            <p class="clearfix">收款人<input v-model="payeeName" placeholder="请输入收款人名称"></p>
+			<p class="clearfix">金额<input v-model="amount" type="number" placeholder="请输入金额"></p>
+			<p class="clearfix">结款人<input v-model="tieName" placeholder="请输入收款人名称"></p>
+			<p class="clearfix">收款账号<input v-model="payeeAccount" placeholder="请输入收款账号"></p>
+        </div>
+        <div class="basic-list" >
+            <p class="clearfix">备注</p>
+            <div class="remark">
+                <textarea name="" id="" cols="30" rows="4" placeholder="备注信息" v-model="remark" maxlength="420"></textarea>
+            </div>
+        </div>
+		<div class="update">
+        <mt-button class="sure" type="primary" size="large">确 定</mt-button>
+        </div>
 	</div>
 
 </template>
 
 <script>
+	import { Cell } from 'mint-ui';
+	export default {
+        data () {
+            return {
+            	form:{
+            		roleId:'', //角色id
+					tfAdvances:false, //是否为垫付
+					tid:'', //车次id
+					expendType:'type_wechat', //支付方式
+					payeePhone:'', //收款人电话
+					payeeName:'', //收款人
+					amount:'', //金额
+					tieName:'', //结款人
+					payeeAccount:'', //收款账号
+					remark:'', //备注
+            	},
+            	typeOfPay:[{
+            		value:'type_alipay',
+            		label:'支付宝'
+            	},{
+            		value:'type_wechat',
+            		label:'微信'
+            	},{
+            		value:'type_cash',
+            		label:'现金'
+            	},{
+            		value:'type_card',
+            		label:'银行卡'
+            	}]
+            	
+            }
+        },
+        created () {},
+        mounted () {},
+        methods: {
 
+	    },
+	}
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
-	
+	.page-main{		
+		top: 90px;
+		bottom: 0;
+		height: calc(100vh - 90px);
+	}
+    .basic-list {
+        background: #fff;
+        margin-top: 0.2rem;
+        padding: 0 0.3rem;
+        color: #333;
+        font-size: 0.28rem;
+        line-height: 0.94rem;
+        > p {
+            border-top: 1px #f0f0f0 solid;
+            .upload-picture {
+                position: absolute;
+                width: 2rem;
+                height: 0.94rem;
+                left: 70%;
+                top: 0;
+                opacity: 0.1;
+            }
+            .name {
+                float: right;
+            }
+            .right-icon {
+                width: 0.18rem;
+                padding-top: 0.3294rem;
+                padding-left: 0.24rem;
+            }
+            > input {
+                font-size: 0.26rem;
+                float: right;
+                color: #4c4c4c;
+                text-align: right;
+                line-height: 0.4rem;
+                margin-top: 0.3rem
+            }
+            .mintui-field-success{
+		 		color: $main_colorNumber;
+		 		font-size: 20px;
+		 	}
+            .upload {
+                color: #33d570;
+                float: right;
+            }
+        }
+        > p:nth-child(1) {
+            border: none;
+        }
+        .remark {
+            color: #666;
+            textarea {
+                border: none;
+                width: 100%;
+                font-size: 0.26rem;
+                color: #4c4c4c;
+            }
+        }
+    }
+
+	select{
+        font-size: 0.30rem;
+        position: relative;
+		margin-left: 10px;
+		width: 1.4rem;
+		height: 40px;
+		line-height: 40px;
+        border: none;
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        background-size: 0.9rem 0.9rem;
+        color: #666666;
+        outline: none;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        background-color: #fff;
+	}
+	.update{
+		margin:0 auto;
+		padding:0.5rem 0;
+		.mint-button--primary{
+			background: url(../../assets/login/dengluzhuce_denglu_img@2x.png) no-repeat center;
+			background-size:contain;
+			font-size: 0.3rem !important;
+			margin: 0 auto;
+			height: 0.9rem;
+		}
+	}
 </style>
