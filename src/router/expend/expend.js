@@ -2,6 +2,7 @@
 const expend = resolve => require([ '@/view/expend/expend'],resolve)
 const ordinaryExpenditure = resolve => require([ '@/view/expend/ordinaryExpenditure'],resolve)
 const ownerLoan = resolve => require([ '@/view/expend/ownerLoan'],resolve)
+const ownerList = resolve => require([ '@/view/expend/ownerList'],resolve)
 
 
 export default [{
@@ -30,5 +31,13 @@ export default [{
 			showFooter: false
 		}
 	}]
-
+},{
+	path:'ownerList',
+	name:'ownerList',
+	components: {
+		mainView: ownerList
+	},
+	meta: {
+		showFooter: false
+	}
 }]

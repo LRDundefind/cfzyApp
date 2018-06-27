@@ -1,6 +1,6 @@
 <template>
 	<div class="page-content">
-		<mt-header fixed  title="车次">
+		<mt-header fixed  title="货主">
 		    <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
 		</mt-header>
 		<!--车次列表-->
@@ -15,14 +15,17 @@
 				:bottomDistance= 50
 				ref="loadmore">
 			<ul class="order-list">
-				<li v-for="list in listStore" @click="chooseTrain(list.tid, list.trainsNum, list.plateNum)" :key="list.id">
+				<li v-for="list in listStore" @click="chooseOwner(list.sid, list.shipName)" :key="list.id">
 					<div class="ub ub-ac list-top">
-						<div>{{list.trainsNum}}</div>
+						<div>{{list.shipName}}</div>
 					</div>
 					<div class="list-bottom ub ub-ac">
-						<div class="list-bl">入库时间</div>
-						<div class="ub-f1">{{list.putStorageTime}}</div>
-						<div>{{list.plateNum}}</div>
+						<div class="list-bl">电话</div>
+						<div class="ub-f1 textRight">{{list.phone}}</div>
+					</div>
+					<div class="list-bottom ub ub-ac">
+						<div class="list-bl">待汇款金额</div>
+						<div class="ub-f1 textRight">{{list.notPayAmount}}</div>
 					</div>
 				</li>
 			</ul>
@@ -46,7 +49,15 @@ export default {
         return {
         	allLoaded: false,
         	wrapperHeight: 0,//容器高度
-        	listStore: [],
+        	listStore: [{
+        		shipName:'杭三',
+				sid:'01',
+				trainNum:'2',
+				unsettlement:'2',
+				tradeAmount:'100',
+				notPayAmount:'20',
+				phone:'131',
+        	}],
         	trainList: [],
         	counts: false,
         	count: false,
@@ -63,14 +74,15 @@ export default {
 	    }else{
 	        this.wrapperHeight = document.documentElement.clientHeight - 40;
 	    }
+	    //this.getList();
     },
     created(){
-		this.getList();
-		app.Vwaiting();
+		
+		//app.Vwaiting();
 	},
     methods: {
 		
-		//获取车次列表
+		//获取货主列表
 		getList(){
 			
 			order.getTrainList(this.params)
@@ -100,23 +112,21 @@ export default {
 				})
 		},
 		//选择车次
-		chooseTrain(tid, trainsNum, plateNum){
+		chooseOwner(sid, shipName){
 
-			Cookies.set('trainTid',tid);
-			Cookies.set('trainsNum',trainsNum);
-            Cookies.set('plateNum',plateNum);
-            if (this.$route.params.to == 'toExpend') {
+			// Cookies.set('trainTid',tid);
+			// Cookies.set('trainsNum',trainsNum);
+   //          Cookies.set('plateNum',plateNum);
+      
 
-            	this.$router.push({
-	            	name: 'expend',
-					params: {}
-	            });
-            }else{
-            	this.$router.push({
-	            	name: 'order',
-					params: {}
-	            });
-            }
+        	this.$router.push({
+            	name: 'ownerLoan',
+				params: {
+					sid:sid,
+					shipName:shipName
+				}
+            });
+         
             
 		},
 	    loadTop(){
@@ -160,10 +170,13 @@ i{
 	li{
 		background: #fff;
 		margin-top: 0.2rem;
-		padding: 0.22rem 0.3rem 0.2rem;
+		padding: 0.2rem 0.3rem 0.2rem;
 		.list-top{
 			font-size: 0.3rem;
 			line-height: 0.55rem;
+			border-bottom: 1px #f0f0f0 solid;
+			padding-bottom: 0.2rem;
+			margin-bottom: 0.2rem;
 			/*.list-name{
 				margin: 0 0.2rem;
 			}*/

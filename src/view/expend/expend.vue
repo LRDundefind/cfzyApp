@@ -1,9 +1,9 @@
 <template>
 	<div class="page-content">
 		<mt-header fixed  title="支出">
-			
-			<mt-button icon="back" @click="goBack()" slot="left"></mt-button>
-			
+			<router-link to="/home" slot="left">
+                <mt-button icon="back"></mt-button>
+            </router-link>
 		</mt-header>
 		<mt-navbar v-model="selected">
 		  	<mt-tab-item id="ordinaryExpenditure">普通支出</mt-tab-item>
