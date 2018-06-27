@@ -1,46 +1,32 @@
 <template>
 
 	<div class="page-main page-loadmore-wrapper">
-        <div>
-            <div class="basic-list" >
-                <p class="clearfix">货主1
-                    <span class="name">123<img class="right-icon"
-                                                          src="../../assets/index/gray-right-icon.png"/></span>
-                </p>
+        <div class="basic-list" >
+            <p class="clearfix"><i class="mintui mintui-field-success"></i> 改费用为货主垫付</p>
+        </div>
+        <div class="basic-list" >
 
-                <p class="clearfix">货主2
-                    <span class="name">123<img class="right-icon"
-                                               src="../../assets/index/gray-right-icon.png"/></span>
-                </p>
-                <p class="clearfix">司机电话<input type="number"></p>
+            <p class="clearfix">费用类型
+                <span class="name">
+                <select class=" m-l-10 jin-select" v-model="form.eid">
+					<option v-for="item in typeOfCost" :label="item.label" :value="item.value"></option>
+				</select>
+				<img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
+            </p>
 
-            </div>
-            <div class="basic-list" >
-                <p class="clearfix">货主3
-                    <span class="name">123<img class="right-icon"
-                                               src="../../assets/index/gray-right-icon.png"/></span>
-                </p>
-            </div>
+            <p class="clearfix">货主2
+                <span class="name">123<img class="right-icon"
+                                           src="../../assets/index/gray-right-icon.png"/></span>
+            </p>
+            <p class="clearfix">司机电话<input type="number"></p>
 
         </div>
-
-
-		<mt-field label="费用类型" readonly>
-			<select class=" m-l-10" v-model="form.eid">
-				<option v-for="item in typeOfCost" :value="item.value" :label="item.label"></option>
-				
-			</select>
-
-            <img class="jin-right"
-                 src="../../assets/index/gray-right-icon.png"/>
-
-		</mt-field>
-		<mt-field label="车次" readonly>
-
-            <img class="jin-right"
-                 src="../../assets/index/gray-right-icon.png"/>
-
-		</mt-field>
+        <div class="basic-list" >
+            <p class="clearfix">货主3
+                <span class="name">123<img class="right-icon"
+                                           src="../../assets/index/gray-right-icon.png"/></span>
+            </p>
+        </div>
 
 		<mt-field class="order-border" label="收款人电话" placeholder="请输入收款人电话" type="number" v-model="form.payeePhone"></mt-field>
 	</div>
@@ -54,7 +40,7 @@
             return {
             	form:{
             		roleId:'', //角色id
-					tfAdvances:'', //是否为垫付
+					tfAdvances:false, //是否为垫付
 					eid:'选项1', //费用类型
 					tid:'', //车次id
 					expendType:'', //支付方式
@@ -94,13 +80,13 @@
         padding: 0 0.3rem;
         color: #333;
         font-size: 0.28rem;
-        line-height: 0.98rem;
+        line-height: 0.94rem;
         > p {
             border-top: 1px #f0f0f0 solid;
             .upload-picture {
                 position: absolute;
                 width: 2rem;
-                height: 0.95rem;
+                height: 0.94rem;
                 left: 70%;
                 top: 0;
                 opacity: 0.1;
@@ -121,6 +107,10 @@
                 line-height: 0.4rem;
                 margin-top: 0.3rem
             }
+            .mintui-field-success{
+		 		color: $main_colorNumber;
+		 		font-size: 20px;
+		 	}
             .upload {
                 color: #33d570;
                 float: right;
@@ -141,18 +131,6 @@
         }
     }
 
-
-.mint-field-other{
-		.jin-right{
-        position: absolute;
-        width: 0.18rem;
-        right: 0;
-        top: 11px;
-    }
-    .mint-field-core{
-    	text-align: right;
- 
-    }
 	select{
         font-size: 0.30rem;
         position: relative;
@@ -170,6 +148,5 @@
         -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
         background-color: #fff;
 	}
-}
 
 </style>
