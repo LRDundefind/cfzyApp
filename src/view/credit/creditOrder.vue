@@ -232,7 +232,8 @@
                     white-space: nowrap;
                     display: block;
                     .customer {
-                        color: #666
+                        color: #666;
+                        padding-right: 0.2rem;
                     }
 
                 }
