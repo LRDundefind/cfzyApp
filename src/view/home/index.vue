@@ -120,7 +120,7 @@
                             <div class="name">货品入库</div>
                         </div>
 
-                        <div class="bd-b" v-if="roleId == 'role_finance_sell'">
+                        <div class="bd-b" v-if="roleId == 'role_finance_sell'" @click="cashAccount">
                             <div>
                                 <img class="goods-image left-imge" src="../../assets/index/goods_storage.png"/>
                             </div>
@@ -286,6 +286,10 @@
             //赊账收账
             goCreditOrder(){
                 this.$router.push({name: 'creditOrder'});
+            },
+            //现结收账
+            cashAccount(){
+                this.$router.push({name: 'cashAccount'});
             },
         }
     }
