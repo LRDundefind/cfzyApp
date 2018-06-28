@@ -23,7 +23,11 @@
                             <div class="name ub-f2">
                                 <span class="order-number">订单号</span>{{item.orderNo}}
                             </div>
-                            <div class="pay ub-f1">{{item.status}}</div>
+                            <div class="pay ub-f1">
+                                <span v-show="item.status == 'status_topay'">
+                                    待支付
+                                </span>
+                            </div>
                         </li>
                         <li>
                             <div class="customer">
@@ -44,8 +48,8 @@
                         </li>
 
                         <li class="clearfix">
-                            <div class="money-btn ub ub-ae" @click="repay(item)">
-                                <div class="btn1">取消</div>
+                            <div class="money-btn ub ub-ae" >
+                                <div class="btn1" @click="cancel(item.oid)">取消</div>
                                 <div class="btn">结算</div>
                             </div>
                         </li>
@@ -163,16 +167,22 @@
                     Indicator.close();
                 })
             },
-            //还款
-            repay(item){
-                let data = item;
-                delete data.nickname;
-                delete data.idCard;
-                delete data.company;
-                delete data.creditAmount;
-                delete data.cusName;
-                this.$router.push({name: 'repayment', params: {cid: item.cid,item:data}});
-            }
+            //取消订单
+            cancel(oid){
+                let data={
+                    oid:oid
+                };
+                creditOrder.cancelKnot(data).then(response => {
+                    this.listStore = response.data.results;
+                });
+                this.listStore = [];
+                this.params.current_page = 1;
+                this.getList();
+                this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
+                this.allLoaded = false;//下拉刷新时解除上拉加载的禁用
+
+            },
+
         }
     }
 </script>
