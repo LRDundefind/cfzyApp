@@ -10,4 +10,21 @@ export const creditOrder = {
             data: serverMoudle(params) || {}
         });
     },
+    //获取客户还款详情
+    getDetails(params) {
+        return axios({
+            url: 'rest/CHENGFENG_GET_SELEMAN_CREDITINFO',
+            method: 'post',
+            data: serverMoudle(params) || {}
+        });
+    },
+    //提交还款信息
+    submitRepay(params) {
+        return axios({
+            url: 'rest/CHENGFENG_SET_SELEMAN_CREDITAMOUNT',
+            method: 'post',
+            data: serverMoudle(params) || {}
+        });
+    },
+
 };

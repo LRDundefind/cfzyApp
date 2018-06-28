@@ -7,36 +7,47 @@
         <div class="page-main page-loadmore-wrappe topScroll">
             <!--基本信息-->
             <div class="">
-                <div class="info-list ub">
-                    <div class="">
-                        <img class="black-img" src="../../assets/my/my_head.png" alt="">
-                    </div>
-                    <div class="">
-                        <div class="info">客户 <span class="son">李欧姆</span></div>
-                        <div class="info">身份证 <span class="son">410927199307077777</span></div>
-                        <div class="info">手机号 <span class="son">18236911784</span></div>
-                        <div class="info">企业名称 <span class="son">某某公司</span></div>
-                    </div>
+                <!--<div class="info-list ub">-->
+                    <!--<div class="">-->
+                        <!--<div class="info">客户 <span class="son">{{repayInfo.nickname}}</span></div>-->
+                        <!--<div class="info">身份证 <span class="son">{{repayInfo.idCard}}</span></div>-->
+                        <!--<div class="info">手机号 <span class="son">{{repayInfo.phone}}</span></div>-->
+                        <!--<div class="info">企业名称 <span class="son">{{repayInfo.company}}</span></div>-->
+                    <!--</div>-->
+                <!--</div>-->
 
+                <div class="main-list">
+                    <div class="clearfix goods">客户
+                        <span>{{repayInfo.nickname}}</span>
+                    </div>
+                    <div class="clearfix goods">身份证
+                        <span>{{repayInfo.idCard}}</span>
+                    </div>
+                    <div class="clearfix goods">手机号
+                        <span>{{repayInfo.phone}}</span>
+                    </div>
+                    <div class="clearfix goods">企业名称
+                        <span class="line-break">{{repayInfo.company}}</span>
+                    </div>
                 </div>
 
                 <div class="main-list" style="position: relative">
                     <div class="clearfix goods">还款信息
-                        <span>货主A</span>
+                        <span>{{bearerName}}</span>
                     </div>
 
                     <div class="clearfix goods">欠款总金额
-                        <span>￥1500.00</span>
+                        <span>{{notPayAmount}}</span>
                     </div>
 
                     <div class="clearfix goods">还款金额
-                        <input v-model="goodNum" type="number" placeholder="请输入金额">
+                        <input v-model="refundAmount" type="number" placeholder="请输入金额">
                     </div>
 
 
                     <div class="clearfix goods">还款方式
                         <div class="choice">
-                            <select v-model="numUnit">
+                            <select v-model="refundType">
                                 <option v-for="item in typeOfPay" :label="item.label" :value="item.value"></option>
                             </select>
                         <img class="jin-right"
@@ -44,7 +55,7 @@
 
                     </div>
                     <div class="clearfix goods c-3">收款账号
-                        <input v-model="goodNum" type="number" placeholder="请输入收款账号">
+                        <input v-model="gatherAccount" type="number" placeholder="请输入收款账号">
                     </div>
                 </div>
 
@@ -52,7 +63,7 @@
                     <div class="clearfix c-3">备注</div>
                     <div class="remark">
                             <textarea maxlength="420" name="" id="" cols="30" rows="3" placeholder="备注信息"
-                                      v-model="goodNum"></textarea>
+                                      v-model="remark"></textarea>
                     </div>
                 </div>
 
@@ -66,7 +77,7 @@
                 </div>
 
                 <div class="update">
-                    <mt-button class="sure" type="primary" size="large" @click="submit">确认还款</mt-button>
+                    <mt-button class="sure" type="primary" size="large" @click="confirm">确认还款</mt-button>
                 </div>
 
             </div>
@@ -77,19 +88,22 @@
 </template>
 
 <script>
-    import {damage} from '@/services/apis/damage.api'
+    import {creditOrder} from '@/services/apis/creditOrder'
     import {MessageBox, Toast} from 'mint-ui';
 
     export default {
         data () {
             return {
-                cid:'',
+                cid:'',//客户id
+                bearerId:'',//承赊方id
+                bearerName:'',//承赊方名字
+                notPayAmount:'',//待还款
 
-                goodNum:'01231',
-                numUnit:'type_alipay',
-
-                money:'1414',//布局测试数据
-                account:'123145',//布局测试收款账号
+                refundAmount:'',//还款金额
+                refundType:'type_alipay',//还款方式
+                gatherAccount:'',//收款账号
+                remark:'',//备注信息
+                repayInfo:{},//客户信息
 
                 typeOfPay:[{
                     value:'type_alipay',
@@ -109,19 +123,81 @@
         },
         mounted () {
             this.cid = this.$route.params.cid;
+            this.bearerId = this.$route.params.item.bearerId;//承赊方id
+            this.bearerName = this.$route.params.item.bearerName;//承赊方名字
+            this.notPayAmount = this.$route.params.item.notPayAmount;//待还款
             this.getInfo();
         },
 
         methods: {
             //获取客户还款详情
             getInfo(){
-                
+                let data = {
+                    cid:this.cid,
+                };
+                creditOrder.getDetails(data).then(response => {
+                    this.repayInfo = response.data.results;
+                })
             },
             //返回赊账还款列表
             goTrain(){
                 this.$router.push({
                     name: 'creditOrder',
                 });
+            },
+            //提交还款信息
+            confirm(){
+                if (this.refundAmount) {
+                    if (!(new RegExp(/^\d+(?:.\d{1,2})?$/).test(this.refundAmount))) {
+                        Toast({
+                            message: '请输入正确的金额',
+                            position: 'middle',
+                            duration: 1000
+                        });
+                    }else if(!(new RegExp(/^([0-9]*[1-9][0-9]*(.[0-9]+)?|[0]+.[0-9]*[1-9][0-9]*)$/).test(this.refundAmount))){
+                        Toast({
+                            message: '请输入大于0的金额',
+                            position: 'middle',
+                            duration: 1000
+                        });
+                    } else {
+                        let data = {
+                            cid:this.cid,//客户id
+                            refundAmount:this.refundAmount,//还款金额
+                            refundType:this.refundType,//还款方式
+                            gatherAccount:this.gatherAccount,//收款账号
+                            remark:this.remark,//备注
+                            bearerId:this.bearerId,//承赊方id
+                        };
+                        creditOrder.submitRepay(data)
+                            .then(response => {
+                                if (response.data.status == 'Y') {
+                                    Toast({
+                                        message: '已完成还款操作',
+                                        position: 'middle',
+                                        duration: 1000
+                                    });
+                                    setTimeout(() => {
+                                        this.$router.push({name: 'creditOrder'});
+                                    }, 1000)
+                                } else {
+                                    Toast({
+                                        message: response.data.results,
+                                        position: 'middle',
+                                        duration: 1000
+                                    });
+                                }
+                            })
+                            .catch(function (response) {
+                                console.log(response);
+                            });
+                    }
+                } else {
+                    Toast('请完善信息');
+                    return false;
+                }
+
+
             },
         },
     }
@@ -164,28 +240,32 @@
              }
         }
 
-        .info-list{
-            background: #fff;
-            margin-top: 0.2rem;
-            padding:0.3rem 0.3rem 0.1rem;
-            color: #666;
-            font-size: 0.28rem;
-            .black-img {
-                width: 1.16rem;
-                height: 1.16rem;
-                border-radius: 50%;
-                padding-right: 0.25rem;
-            }
-            .info{
-                padding-bottom: 0.2rem;
-                .son{
-                    padding-left: 0.2rem;
-                    color: #333;
-                }
-            }
-
+        /*.info-list{*/
+            /*background: #fff;*/
+            /*margin-top: 0.2rem;*/
+            /*padding:0.3rem 0.3rem 0.1rem;*/
+            /*color: #666;*/
+            /*font-size: 0.28rem;*/
+            /*.black-img {*/
+                /*width: 1.16rem;*/
+                /*height: 1.16rem;*/
+                /*border-radius: 50%;*/
+                /*padding-right: 0.25rem;*/
+            /*}*/
+            /*.info{*/
+                /*padding-bottom: 0.2rem;*/
+                /*.son{*/
+                    /*padding-left: 0.2rem;*/
+                    /*color: #333;*/
+                /*}*/
+            /*}*/
+        /*}*/
+        .line-break{
+            word-break: break-all;
+            word-wrap: break-word;
+            display: block;
+            width: 70%;
         }
-
         .main-list {
             background: #fff;
             margin-top: 0.2rem;

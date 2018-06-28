@@ -40,7 +40,7 @@
                         </li>
 
                         <li class="clearfix">
-                            <div class="money-btn ub ub-ae" @click="repay(item.cid)">
+                            <div class="money-btn ub ub-ae" @click="repay(item)">
                                 <div class="btn">还款</div>
                             </div>
                         </li>
@@ -159,11 +159,15 @@
                 })
             },
             //还款
-            repay(cid){
-                //console.log(cid);
-                this.$router.push({name: 'repayment', params: {cid: cid}});
+            repay(item){
+                let data = item;
+                delete data.nickname;
+                delete data.idCard;
+                delete data.company;
+                delete data.creditAmount;
+                delete data.cusName;
+                this.$router.push({name: 'repayment', params: {cid: item.cid,item:data}});
             }
-
         }
     }
 </script>
