@@ -26,5 +26,13 @@ export const creditOrder = {
             data: serverMoudle(params) || {}
         });
     },
+    //查看还款订单
+    viewRepay(params) {
+        return axios({
+            url: 'rest/CHENGFENG_GET_SELEMAN_CREDITAMOUNT',
+            method: 'post',
+            data: serverMoudle(params) || {}
+        });
+    },
 
 };

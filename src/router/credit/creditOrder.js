@@ -2,6 +2,7 @@
 const storage = resolve => require([ '@/view/goods/storage'],resolve);
 const creditOrder = resolve => require([ '@/view/credit/creditOrder'],resolve);
 const repayment = resolve => require([ '@/view/credit/repayment'],resolve);
+const repayOrder = resolve => require([ '@/view/credit/repayOrder'],resolve);
 
 export default [
     {
@@ -18,6 +19,15 @@ export default [
         name: 'repayment',
         components: {
             mainView: repayment
+        },
+        meta: {
+            showFooter: false
+        }
+    },{
+        path: 'repayOrder/:refundAmount',
+        name: 'repayOrder',
+        components: {
+            mainView: repayOrder
         },
         meta: {
             showFooter: false

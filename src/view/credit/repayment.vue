@@ -69,7 +69,7 @@
                 </div>
 
                 <div class="list">
-                    <div class="clearfix goods" style="">查看可还款订单
+                    <div class="clearfix goods" @click="viewRepay">查看可还款订单
                         <div class="choice">
                             <img class="jin-right"
                                  src="../../assets/index/gray-right-icon.png"/>
@@ -99,7 +99,7 @@
                 bearerId:'',//承赊方id
                 bearerName:'',//承赊方名字
                 notPayAmount:'',//待还款
-
+                item:'',//赊账列表传参
                 refundAmount:'',//还款金额
                 refundType:'type_alipay',//还款方式
                 gatherAccount:'',//收款账号
@@ -124,6 +124,8 @@
         },
         mounted () {
             this.cid = this.$route.params.cid;
+            this.item = this.$route.params.item;
+
             this.bearerId = this.$route.params.item.bearerId;//承赊方id
             this.bearerName = this.$route.params.item.bearerName;//承赊方名字
             this.notPayAmount = this.$route.params.item.notPayAmount;//待还款
@@ -131,19 +133,23 @@
         },
 
         methods: {
-            //选择支付宝
+            //选择还款方式
             payWay(way){
                 if(way == 'type_cash'){
                     this.gatherAccount = '';
                 }
             },
-            //获取客户还款详情
+            //获取赊账还款详情
             getInfo(){
                 let data = {
                     cid:this.cid,
                 };
                 creditOrder.getDetails(data).then(response => {
                     this.repayInfo = response.data.results;
+                    if(this.item.refundAmount){this.refundAmount = this.item.refundAmount;}
+                    if(this.item.refundType){this.refundType = this.item.refundType;}
+                    if(this.item.gatherAccount){this.gatherAccount = this.item.gatherAccount;}
+                    if(this.item.remark){this.remark = this.item.remark;}
                 })
             },
             //返回赊账还款列表
@@ -152,6 +158,53 @@
                     name: 'creditOrder',
                 });
             },
+            //查看可还款订单
+            viewRepay(){
+                if(this.refundAmount){
+                    if (!(new RegExp(/^\d+(?:.\d{1,2})?$/).test(this.refundAmount))) {
+                        Toast({
+                            message: '请输入正确的金额',
+                            position: 'middle',
+                            duration: 1000
+                        });
+                    }else if(!(new RegExp(/^([0-9]*[1-9][0-9]*(.[0-9]+)?|[0]+.[0-9]*[1-9][0-9]*)$/).test(this.refundAmount))){
+                        Toast({
+                            message: '请输入大于0的金额',
+                            position: 'middle',
+                            duration: 1000
+                        });
+                    }else if(parseFloat(this.refundAmount)>parseFloat(this.notPayAmount)){
+                        Toast({
+                            message: '此次还款金额超出欠款额度，请重新输入',
+                            position: 'middle',
+                            duration: 1000
+                        });
+                    }else {
+                        let data = this.item;
+                        data.refundAmount = this.refundAmount;
+                        if(this.refundType){
+                            data.refundType = this.refundType;
+                        }
+                        if(this.gatherAccount){
+                            data.gatherAccount = this.gatherAccount;
+                        }
+                        if(this.remark){
+                            data.remark = this.remark;
+                        }
+
+                        console.log(this.item);
+                        this.$router.push({name: 'repayOrder', params: {refundAmount: data.refundAmount,item:data}});
+                    }
+
+                }else {
+                    Toast({
+                        message: '请输入还款金额',
+                        position: 'middle',
+                        duration: 1000
+                    });
+                }
+            },
+
             //提交还款信息
             confirm(){
                 if (this.refundAmount) {
