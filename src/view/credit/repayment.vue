@@ -47,7 +47,7 @@
 
                     <div class="clearfix goods">还款方式
                         <div class="choice">
-                            <select v-model="refundType">
+                            <select v-model="refundType" @change="payWay(refundType)">
                                 <option v-for="item in typeOfPay" :label="item.label" :value="item.value"></option>
                             </select>
                         <img class="jin-right"
@@ -55,7 +55,8 @@
 
                     </div>
                     <div class="clearfix goods c-3">收款账号
-                        <input v-model="gatherAccount" type="number" placeholder="请输入收款账号">
+                        <input v-show="refundType == 'type_cash'" v-model="gatherAccount" type="number" readonly placeholder="收款账号为空">
+                        <input v-show="refundType != 'type_cash'" v-model="gatherAccount" type="number" placeholder="请输入收款账号">
                     </div>
                 </div>
 
@@ -130,6 +131,12 @@
         },
 
         methods: {
+            //选择支付宝
+            payWay(way){
+                if(way == 'type_cash'){
+                    this.gatherAccount = '';
+                }
+            },
             //获取客户还款详情
             getInfo(){
                 let data = {
@@ -148,6 +155,15 @@
             //提交还款信息
             confirm(){
                 if (this.refundAmount) {
+                    if(this.refundType != 'type_cash' && this.gatherAccount ==''){
+                        Toast({
+                            message: '请完善还款信息',
+                            position: 'middle',
+                            duration: 1000
+                        });
+                        return false;
+                    }
+
                     if (!(new RegExp(/^\d+(?:.\d{1,2})?$/).test(this.refundAmount))) {
                         Toast({
                             message: '请输入正确的金额',
@@ -157,6 +173,12 @@
                     }else if(!(new RegExp(/^([0-9]*[1-9][0-9]*(.[0-9]+)?|[0]+.[0-9]*[1-9][0-9]*)$/).test(this.refundAmount))){
                         Toast({
                             message: '请输入大于0的金额',
+                            position: 'middle',
+                            duration: 1000
+                        });
+                    }else if(parseFloat(this.refundAmount)>parseFloat(this.notPayAmount)){
+                        Toast({
+                            message: '此次还款金额超出欠款额度，请重新输入',
                             position: 'middle',
                             duration: 1000
                         });
