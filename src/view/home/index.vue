@@ -149,7 +149,7 @@
                             <div class="name">暂存订单</div>
                         </div>
 
-                        <div class=" bd-b bb">
+                        <div class=" bd-b bb" @click="goCreditOrder">
                             <div>
                                 <img class="goods-image right-img" src="../../assets/index/trips_computing.png"/>
                             </div>
@@ -282,6 +282,10 @@
             //车次管理
             goTrainManagement(){
                 this.$router.push({name: 'trainManagement'});
+            },
+            //赊账收账
+            goCreditOrder(){
+                this.$router.push({name: 'creditOrder'});
             },
         }
     }
