@@ -14,7 +14,7 @@ export default [
             showFooter: false
         }
     },{
-        path: 'repayment',
+        path: 'repayment/:cid',
         name: 'repayment',
         components: {
             mainView: repayment

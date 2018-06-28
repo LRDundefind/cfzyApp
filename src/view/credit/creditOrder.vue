@@ -17,7 +17,7 @@
                     ref="loadmore">
                 <!--<noDate v-if="noWdata"></noDate-->
 
-                <div v-for="item in listStore" :key='item.cid' class="main-list" @click="goDetail(item.cid)">
+                <div v-for="item in listStore" :key='item.cid' class="main-list">
                     <ul>
 
                         <li class=" ub">
@@ -40,7 +40,7 @@
                         </li>
 
                         <li class="clearfix">
-                            <div class="money-btn ub ub-ae">
+                            <div class="money-btn ub ub-ae" @click="repay(item.cid)">
                                 <div class="btn">还款</div>
                             </div>
                         </li>
@@ -158,17 +158,10 @@
                     Indicator.close();
                 })
             },
-
-            goDetail(cid){
-                if (this.black == 'nostall') {
-                    Toast({
-                        message: '当前档位未上班！',
-                        position: 'middle',
-                        duration: 5000
-                    });
-                } else {
-                    this.$router.push({name: 'client_detail', params: {ids: cid, come: 'black'}});
-                }
+            //还款
+            repay(cid){
+                //console.log(cid);
+                this.$router.push({name: 'repayment', params: {cid: cid}});
             }
 
         }

@@ -83,6 +83,8 @@
     export default {
         data () {
             return {
+                cid:'',
+
                 goodNum:'01231',
                 numUnit:'type_alipay',
 
@@ -106,17 +108,19 @@
             }
         },
         mounted () {
-            this.testClearing();
+            this.cid = this.$route.params.cid;
+            this.getInfo();
         },
 
         methods: {
-            //确认还款
-            submit(){
-
+            //获取客户还款详情
+            getInfo(){
+                
             },
+            //返回赊账还款列表
             goTrain(){
                 this.$router.push({
-                    name: 'trainManagement',
+                    name: 'creditOrder',
                 });
             },
         },
