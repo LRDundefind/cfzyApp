@@ -33,19 +33,14 @@
                             <div class="customer">
                                 <span class="nickName">姓名</span>{{item.nickname}}
                             </div>
-                        </li>
-
-                        <li style="background-color: #f5f5f5;">
                             <div class="sort">
                                 {{item.goodName}}
                             </div>
-                        </li>
-
-                        <li>
                             <div class="money">
                                 ￥{{item.salesAmount}}
                             </div>
                         </li>
+
 
                         <li class="clearfix">
                             <div class="money-btn ub ub-ae">
@@ -279,17 +274,22 @@
                     padding: 0.2rem;
                     color: #666;
                     line-height: 1.5;
+                    word-wrap:break-word;
+                    word-break:keep-all;
+                    overflow:hidden;
+                    background-color: #f5f5f5;
                 }
                 .money {
-                    padding: 0.3rem 0;
+                    padding: 0.2rem 0;
                     text-align: right;
                     color: #49c98b;
                     font-weight: bold;
                     font-size: 0.3rem;
+                    border-bottom: 1px solid #dedede;
                 }
                 .money-btn {
                     float: right;
-                    padding-bottom: 0.3rem;
+                    padding:0.3rem 0;
                     text-align: right;
                     .btn1 {
                         font-size: 0.3rem;
