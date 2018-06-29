@@ -38,7 +38,7 @@
                     </li>
 
 
-                    <li class="clearfix">
+                    <li class="clearfix" v-show="item.status=='status_topay'" style="border-top:1px solid #dedede">
                         <div class="money-btn ub ub-ae">
                             <div class="btn1" @click="cancel(item.oid)">取消</div>
                             <div class="btn" @click="clearing(item.oid)">结算</div>
@@ -51,8 +51,6 @@
                 没有更多数据了
             </div>
         </mt-loadmore>
-
-
     </div>
 
 </template>
@@ -139,8 +137,55 @@
                     Indicator.close();
                 })
             },
+            //取消订单
+            cancel(oid){
+                MessageBox.confirm('您确定取消该订单吗？', '').then(() => {
+                    let data = {
+                        oid: oid
+                    };
+                    creditOrder.cancelKnot(data).then(response => {
+                        if (response.data.status == 'Y') {
+                            Toast({
+                                message: '取消订单操作成功',
+                                position: 'middle',
+                                duration: 1500
+                            });
+                        } else {
+                            Toast({
+                                message: response.data.error_msg,
+                                position: 'middle',
+                                duration: 1000
+                            });
+                        }
+                    });
+                    this.listStore = [];
+                    this.params.current_page = 1;
+                    this.getList();
+                    this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
+                    this.allLoaded = false;//下拉刷新时解除上拉加载的禁用
+                }, () => {
 
+                });
+            },
 
+            //跳转到结算
+            clearing(oid){
+                this.$router.push({
+                    name: 'orderClearing',
+                    params: {
+                        oid:oid
+                    }
+                });
+            },
+            //跳转到订单详情
+            ordersDetail(oid){
+                this.$router.push({
+                    name: 'ordersList/ordersDetail',
+                    params: {
+                        oid:oid
+                    }
+                });
+            }
         },
     }
 </script>

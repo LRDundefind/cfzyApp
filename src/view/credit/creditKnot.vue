@@ -36,14 +36,6 @@
                         </div>
                     </li>
 
-
-                    <li class="clearfix">
-                        <div class="money-btn ub ub-ae">
-                            <div class="btn1" @click="cancel(item.oid)">取消</div>
-                            <div class="btn" @click="clearing(item.oid)">结算</div>
-                        </div>
-                    </li>
-
                 </ul>
             </div>
             <div v-if="allLoaded" class="m-t-10" style="text-align:center;font-size: 0.18rem;display: none">
@@ -219,33 +211,6 @@
                     color: #49c98b;
                     font-weight: bold;
                     font-size: 0.3rem;
-                    border-bottom: 1px solid #dedede;
-                }
-                .money-btn {
-                    float: right;
-                    padding:0.3rem 0;
-                    text-align: right;
-                    .btn1 {
-                        font-size: 0.3rem;
-                        width: 1.88rem;
-                        line-height: 0.68rem;
-                        text-align: center;
-                        background: -webkit-linear-gradient(left, #30b03e 0%, #33d57c 100%);
-                        border-radius: 1rem;
-                        background: url(../../assets/kehu_chakanxiaofeijilu_btn@2x.png) no-repeat center;
-                        background-size: contain;
-                        color: #0f0;
-                        margin-right: 0.2rem;
-                    }
-                    .btn {
-                        font-size: 0.3rem;
-                        width: 1.88rem;
-                        line-height: 0.68rem;
-                        text-align: center;
-                        color: #fff;
-                        background: -webkit-linear-gradient(left, #30b03e 0%, #33d57c 100%);
-                        border-radius: 1rem;
-                    }
                 }
 
             }
