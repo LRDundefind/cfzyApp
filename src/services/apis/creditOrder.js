@@ -58,6 +58,15 @@ export const creditOrder = {
             data: serverMoudle(params) || {}
         });
     },
+    //获取订单列表
+    getOrderList(params) {
+        return axios({
+            url: 'rest/CHENGFENG_SET_SELEMAN_KNOTLIST',
+            method: 'post',
+            data: serverMoudle(params) || {}
+        });
+    },
+
 
 
 

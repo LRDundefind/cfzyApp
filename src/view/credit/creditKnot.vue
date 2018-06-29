@@ -19,9 +19,9 @@
                             <span class="order-number">订单号</span>{{item.orderNo}}
                         </div>
                         <div class="pay ub-f1">
-                                <span v-show="item.status == 'status_topay'">
-                                    待支付
-                                </span>
+                                <span v-show="item.status == 'status_repay'">待还款</span>
+                                <span v-show="item.status == 'status_deposit'">暂存</span>
+                                <span v-show="item.status == 'status_complete'">已完成</span>
                         </div>
                     </li>
                     <li @click="ordersDetail(item.oid)">
@@ -73,7 +73,7 @@
                 params: {
                     current_page: 1,
                     page_size: 10,
-                    //search: ''
+                    orderType:'order_credit'
                 },
                 listStore: [],
                 listdata: null,
@@ -113,7 +113,7 @@
                 this.$refs.loadmore.onBottomLoaded();
             },
             getList(){
-                creditOrder.getKnot(this.params).then(response => {
+                creditOrder.getOrderList(this.params).then(response => {
                     this.listdata = response.data.results;
                     if (this.listdata == '' && this.params.current_page == 1) {
                         this.noWdata = true;
@@ -251,7 +251,6 @@
             }
         }
     }
-
 
 
 </style>
