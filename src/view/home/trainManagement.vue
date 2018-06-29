@@ -145,11 +145,26 @@
                 });
             },
             //售完结算
-            sold(){
-                this.$router.push({
-                    name: 'carClearing',
-                    params: {}
-                });
+            sold(item){
+                let data={};
+                data.trainsNum = item.trainsNum;
+                data.plateNum = item.plateNum;
+                data.putStorageTime = item.putStorageTime;
+                data.tid = item.tid;
+
+                if(this.roleId == 'role_sel'){
+                    this.$router.push({
+                        name: 'settlementList/detail',
+                        params: {
+                            id: item.tid, item: data,
+                        }
+                    });
+                }else {
+                    this.$router.push({
+                        name: 'carClearing',
+                    });
+                }
+
             },
 
         }
