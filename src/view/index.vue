@@ -37,7 +37,12 @@
                 <img v-else slot="icon" src="../assets/order.png">
                 下单
             </mt-tab-item>
-            <mt-tab-item id="orders">
+            <mt-tab-item id="orders" v-show="roleId =='role_sel'">
+                <img v-if="selected == 'orders'" slot="icon" src="../assets/shouru_shouru_green_icon@2x.png">
+                <img v-else slot="icon" src="../assets/kehu_shouru_icon@2x.png">
+                订单
+            </mt-tab-item>
+            <mt-tab-item id="knot"  v-show="roleId !='role_sel'">
                 <img v-if="selected == 'orders'" slot="icon" src="../assets/shouru_shouru_green_icon@2x.png">
                 <img v-else slot="icon" src="../assets/kehu_shouru_icon@2x.png">
                 订单
