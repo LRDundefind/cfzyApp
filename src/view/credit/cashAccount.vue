@@ -50,7 +50,7 @@
                         <li class="clearfix">
                             <div class="money-btn ub ub-ae">
                                 <div class="btn1" @click="cancel(item.oid)">取消</div>
-                                <div class="btn">结算</div>
+                                <div class="btn" @click="ordersDetail(item.oid)">结算</div>
                             </div>
                         </li>
 
@@ -197,6 +197,16 @@
 
                 });
             },
+
+            //跳转到结算
+            ordersDetail(oid){
+                this.$router.push({
+                    name: 'orderClearing',
+                    params: {
+                        oid:oid
+                    }
+                });
+            }
 
         }
     }

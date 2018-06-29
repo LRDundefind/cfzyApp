@@ -42,7 +42,7 @@ export const creditOrder = {
             data: serverMoudle(params) || {}
         });
     },
-    //获取现结收账列表
+    //结算现结订单
     clearingKnot(params) {
         return axios({
             url: 'rest/CHENGFENG_SET_SELEMAN_KNOTCLEAR',
