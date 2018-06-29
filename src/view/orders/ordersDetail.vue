@@ -94,6 +94,12 @@
 			</div>
 			
 			<div v-if="status == '待提货'" class="submit-btn m-t-20" @click="takeGood">完成提货</div>
+
+            <div class='update clearfix' v-show="roleId != 'role_sel'">
+                <mt-button type="primary" size="large" class='f-l' @click="goBack()">取消
+                </mt-button>
+                <mt-button type="primary" size="large" class='f-l' @click="clearing">结算</mt-button>
+            </div>
 			
 		</div>
 		
@@ -103,9 +109,12 @@
 <script>
 import { Toast } from 'mint-ui'
 import { orders } from '@/services/apis/orders.js';
+import Cookies from 'js-cookie'
+
 export default {
     data () {
         return {
+            roleId:'',
         	wrapperHeight: 0,//容器高度
             detail: [],//订单详情数据
             status: '',//订单状态
@@ -114,7 +123,9 @@ export default {
         }
     },
     mounted () {
-    	this.wrapperHeight = document.documentElement.clientHeight - 60;
+        this.roleId = Cookies.get('roleId');
+
+        this.wrapperHeight = document.documentElement.clientHeight - 60;
 		this.ordersDetail();
     },
     methods: {
@@ -203,7 +214,17 @@ export default {
         		}
         	});
         },
-            
+        //跳转到结算
+        clearing(){
+            this.$router.push({
+                name: 'orderClearing',
+                params: {
+                    oid:this.$route.params.oid
+                }
+            });
+        },
+
+
     }
 }
 </script>
@@ -341,6 +362,28 @@ i{
 	font-size: 0.3rem;
 	font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
 	margin: 0.45rem auto 0.3rem;
+}
+
+.update {
+    padding: 0.3rem 0;
+    .mint-button--primary:nth-child(1) {
+        background: url(../../assets/kehu_chakanxiaofeijilu_btn@2x.png) no-repeat center;
+        background-size: contain;
+        width: 41%;
+        color: #0f0;
+        margin: 0 3%;
+        font-size: 0.3rem !important;
+    }
+    .mint-button--primary:nth-child(2) {
+        background: url(../../assets/kehu_gengxinziliao_btn@2x.png) no-repeat center;
+        background-size: contain;
+        width: 50%;
+        font-size: 0.3rem !important;
+    }
+    button {
+        margin: 0 auto;
+        height: 1rem;
+    }
 }
 
 </style>
