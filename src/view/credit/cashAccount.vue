@@ -31,7 +31,7 @@
                         </li>
                         <li>
                             <div class="customer">
-                                 <span class="nickName">姓名</span>{{item.nickname}}
+                                <span class="nickName">姓名</span>{{item.nickname}}
                             </div>
                         </li>
 
@@ -42,13 +42,13 @@
                         </li>
 
                         <li>
-                           <div class="money">
-                              ￥{{item.salesAmount}}
-                           </div>
+                            <div class="money">
+                                ￥{{item.salesAmount}}
+                            </div>
                         </li>
 
                         <li class="clearfix">
-                            <div class="money-btn ub ub-ae" >
+                            <div class="money-btn ub ub-ae">
                                 <div class="btn1" @click="cancel(item.oid)">取消</div>
                                 <div class="btn">结算</div>
                             </div>
@@ -69,7 +69,7 @@
 <script>
     import searchBox from '@/components/searchBox/search'
     import {creditOrder} from '@/services/apis/creditOrder'
-    import {Loadmore, Indicator, Toast} from 'mint-ui'
+    import {Loadmore, Indicator, Toast, MessageBox} from 'mint-ui'
     import noDate from '@/components/noData/noDate'
 
     export default {
@@ -169,18 +169,33 @@
             },
             //取消订单
             cancel(oid){
-                let data={
-                    oid:oid
-                };
-                creditOrder.cancelKnot(data).then(response => {
-                    this.listStore = response.data.results;
-                });
-                this.listStore = [];
-                this.params.current_page = 1;
-                this.getList();
-                this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
-                this.allLoaded = false;//下拉刷新时解除上拉加载的禁用
+                MessageBox.confirm('您确定取消该订单吗？', '').then(() => {
+                    let data = {
+                        oid: oid
+                    };
+                    creditOrder.cancelKnot(data).then(response => {
+                        if (response.data.status == 'Y') {
+                            Toast({
+                                message: '取消订单操作成功',
+                                position: 'middle',
+                                duration: 1500
+                            });
+                        } else {
+                            Toast({
+                                message: response.data.error_msg,
+                                position: 'middle',
+                                duration: 1000
+                            });
+                        }
+                    });
+                    this.listStore = [];
+                    this.params.current_page = 1;
+                    this.getList();
+                    this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
+                    this.allLoaded = false;//下拉刷新时解除上拉加载的禁用
+                }, () => {
 
+                });
             },
 
         }
@@ -214,7 +229,7 @@
             line-height: 0.8rem;
         }
         ul {
-            li:first-child{
+            li:first-child {
                 border-bottom: 1px solid #dedede;
             }
             li {
@@ -241,32 +256,32 @@
                         padding-right: 0.2rem;
                     }
                 }
-                .customer{
+                .customer {
                     padding: 0.2rem 0;
                     color: #333;
-                    .nickName{
+                    .nickName {
                         font-size: 0.28rem;
                         color: #666;
                         padding-right: 0.2rem;
                     }
                 }
-                .sort{
+                .sort {
                     padding: 0.2rem;
                     color: #666;
                     line-height: 1.5;
                 }
-                .money{
+                .money {
                     padding: 0.3rem 0;
                     text-align: right;
                     color: #49c98b;
                     font-weight: bold;
                     font-size: 0.3rem;
                 }
-                .money-btn{
+                .money-btn {
                     float: right;
                     padding-bottom: 0.3rem;
                     text-align: right;
-                    .btn1{
+                    .btn1 {
                         font-size: 0.3rem;
                         width: 1.88rem;
                         line-height: 0.68rem;
@@ -278,7 +293,7 @@
                         color: #0f0;
                         margin-right: 0.2rem;
                     }
-                    .btn{
+                    .btn {
                         font-size: 0.3rem;
                         width: 1.88rem;
                         line-height: 0.68rem;
