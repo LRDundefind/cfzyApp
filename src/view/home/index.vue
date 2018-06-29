@@ -99,7 +99,7 @@
                             <div class="name">货品损坏</div>
                         </div>
 
-                        <div class=" bd-b bb" @click="goSettlementList">
+                        <div class=" bd-b bb" @click="goTrainManagement">
                             <div>
                                 <img class="goods-image right-img" src="../../assets/index/trips_computing.png"/>
                             </div>
