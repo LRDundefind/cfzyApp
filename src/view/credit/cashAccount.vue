@@ -19,7 +19,7 @@
 
                 <div v-for="item in listStore" :key='item.cid' class="main-list">
                     <ul>
-                        <li class=" ub">
+                        <li class=" ub" @click="ordersDetail(item.oid)">
                             <div class="name ub-f2">
                                 <span class="order-number">订单号</span>{{item.orderNo}}
                             </div>
@@ -29,7 +29,7 @@
                                 </span>
                             </div>
                         </li>
-                        <li>
+                        <li @click="ordersDetail(item.oid)">
                             <div class="customer">
                                 <span class="nickName">姓名</span>{{item.nickname}}
                             </div>
@@ -45,7 +45,7 @@
                         <li class="clearfix">
                             <div class="money-btn ub ub-ae">
                                 <div class="btn1" @click="cancel(item.oid)">取消</div>
-                                <div class="btn" @click="ordersDetail(item.oid)">结算</div>
+                                <div class="btn" @click="clearing(item.oid)">结算</div>
                             </div>
                         </li>
 
@@ -194,14 +194,25 @@
             },
 
             //跳转到结算
-            ordersDetail(oid){
+            clearing(oid){
                 this.$router.push({
                     name: 'orderClearing',
                     params: {
                         oid:oid
                     }
                 });
+            },
+
+            //跳转到订单详情
+            ordersDetail(oid){
+                this.$router.push({
+                    name: 'ordersList/ordersDetail',
+                    params: {
+                        oid:oid
+                    }
+                });
             }
+
 
         }
     }
