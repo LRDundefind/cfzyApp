@@ -8,7 +8,7 @@
                 <div @click="handleCommand(item)">
                     <div class="stall ub">
                         <div class="ub-f1">{{item.gearName}}</div>
-                        <div class="ub-f1 userName">{{item.userName}} <span class="place">&nbsp(档主)</span></div>
+                        <div class="ub-f1 userName">{{item.ownerName}} <span class="place">&nbsp(档主)</span></div>
                     </div>
                     <div class="place"> <span>{{item.position}}</span> <span v-show="item.position != ''">—</span> {{item.markName}}
                     </div>

@@ -39,7 +39,7 @@
 
 import Bus from '@/components/bus.js'
 import noDate from '@/components/noData/noDate'
-import {order} from '@/services/apis/order.js'
+import {expend} from '@/services/apis/expend.js'
 import { Loadmore , Indicator } from 'mint-ui'
 import { InfiniteScroll } from 'mint-ui'
 import Cookies from 'js-cookie'
@@ -49,16 +49,8 @@ export default {
         return {
         	allLoaded: false,
         	wrapperHeight: 0,//容器高度
-        	listStore: [{
-        		shipName:'杭三',
-				sid:'01',
-				trainNum:'2',
-				unsettlement:'2',
-				tradeAmount:'100',
-				notPayAmount:'20',
-				phone:'131',
-        	}],
-        	trainList: [],
+        	listStore: [],
+        	ownerList: [],
         	counts: false,
         	count: false,
         	params:{
@@ -74,34 +66,34 @@ export default {
 	    }else{
 	        this.wrapperHeight = document.documentElement.clientHeight - 40;
 	    }
-	    //this.getList();
+	    this.getList();
     },
     created(){
 		
-		//app.Vwaiting();
+		app.Vwaiting();
 	},
     methods: {
 		
 		//获取货主列表
 		getList(){
 			
-			order.getTrainList(this.params)
+			expend.ownerList(this.params)
 				.then(response => {
-					this.trainList = response.data.results;
-					if(this.trainList=='' && this.params.current_page == 1){
+					this.ownerList = response.data.results;
+					if(this.ownerList=='' && this.params.current_page == 1){
                 		this.count = true;
                     }
 					app.Cwaiting();
 					
-					if(this.trainList.length==this.params.page_size){  
+					if(this.ownerList.length==this.params.page_size){  
 						//判断是否应该加载下一页
 						this.params.current_page+=1 ;
 					}else{
 						//禁用上拉加载
 						this.allLoaded = true;
 					}
-					if (this.trainList) {
-						this.listStore.push(...this.trainList);
+					if (this.ownerList) {
+						this.listStore.push(...this.ownerList);
 						if(this.listStore==''){
 	                        this.counts = true;
 	                        app.Cwaiting();
@@ -111,7 +103,7 @@ export default {
 					Indicator.close();
 				})
 		},
-		//选择车次
+		//选择货主
 		chooseOwner(sid, shipName){
 
 			// Cookies.set('trainTid',tid);
