@@ -40,21 +40,21 @@
 
             <div class="ub today" v-show="roleId != 'role_sel'">
                 <div class="ub-f1 bd-r">
-                    <div class="number">{{storageData.trainNum}}</div>
+                    <div class="number">{{storageData.day_income}}</div>
                     <div class="words">
                         <div>当日</div>
                         <div>收入(元)</div>
                     </div>
                 </div>
                 <div class="ub-f1 bd-r">
-                    <div class="number">{{storageData.order_quantity}}</div>
+                    <div class="number">{{storageData.day_espenditure}}</div>
                     <div class="words">
                         <div>当日</div>
                         <div>支出(元)</div>
                     </div>
                 </div>
                 <div class="ub-f1 bd-r">
-                    <div class="number">{{storageData.deposit}}</div>
+                    <div class="number">{{storageData.day_credit}}</div>
                     <div class="words">
                         <div>当日赊账</div>
                         <div>金额(元)</div>
@@ -62,7 +62,7 @@
                 </div>
 
                 <div class="ub-f1">
-                    <div class="number">{{storageData.deposit}}</div>
+                    <div class="number">{{storageData.day_repayment}}</div>
                     <div class="words">
                         <div>当日</div>
                         <div>收赊账(元)</div>
@@ -179,7 +179,7 @@
     export default {
         data () {
             return {
-                roleId:'role_finance_sell',//卖手——role_sel;财务兼卖手--role_finance_sell;财务--role_finance;
+                roleId:'',//卖手——role_sel;财务兼卖手--role_finance_sell;财务--role_finance;
                 imgpath: process.env.BASE_PATH,
                 gearName: '',
                 personalData: {
