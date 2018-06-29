@@ -132,14 +132,14 @@
                 </div>
                 <!--货品信息-->
                 <div v-if="selected == 'goods'">
-                    <div v-for="item in goods" :key='item.goodId' class="goods-list" v-show="status!='售卖中'">
+                    <div v-for="item in goods" :key='item.goodId' class="goods-list" v-show="status!='status_selling'">
                         <p @click="editGoods(item)" class="clearfix">{{item.goodName}}
                             <span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
                             <span>{{item.goodNum}} {{item.numUnit | sellNnit}}</span>
                         </p>
                     </div>
 
-                    <div v-for="item in goods" :key='item.goodId' class="goods-list" v-show="status =='售卖中'">
+                    <div v-for="item in goods" :key='item.goodId' class="goods-list" v-show="status =='status_selling'">
                         <p class="clearfix">{{item.goodName}}
                             <span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
                             <span>{{item.goodNum}} {{item.numUnit | sellNnit}}</span>
@@ -147,7 +147,7 @@
                     </div>
 
                     <div class="login_pass" v-show="selected == 'goods'">
-                        <div v-show="status !='售卖中'" @click="createGoods" class="loginbtn">添加货品</div>
+                        <div v-show="status !='status_selling'" @click="createGoods" class="loginbtn">添加货品</div>
                     </div>
 
                 </div>
@@ -289,41 +289,8 @@
 //            }
 //        },
         methods: {
-            //
+            //获取车次详情
             editStorage(){
-//                this.stall = {
-//                    name: '',
-//                    good_sid: '',//货主id
-//                    driverName: '假数据名字',//司机姓名
-//                    driverPhone: '18236911783',//司机电话
-//                    plateNum: '假123456',//车牌号
-//                    startAddress: '假北京',//发货地点
-//                    origin: '假北京',//产地
-//                    originProve: '',//产地证明图片地址
-//                    checkProve: '',//检验证明图片地址
-//                    carrierContract: '',//承运合同图片地址
-//                    remark: '123',//备注
-//                    goods: '',//货品信息
-//                };
-//
-//                this.goods = [
-//                    {
-//                        "goodId": "52940002478d4b9397412eae6c180b5f",
-//                        "goodName": "进口西瓜",
-//                        "numUnit": "unit_kg",
-//                        "goodNum": "4"
-//                    },
-//                    {
-//                        "goodId": "9674bbe82d084592bd2f1b2295a5da34",
-//                        "goodName": "榴莲",
-//                        "numUnit": "unit_kg",
-//                        "goodNum": "1"
-//                    }
-//                ];
-
-
-
-                //获取车次详情
                 let data ={
                     tid:this.tid
                 }
@@ -520,46 +487,44 @@
             },
             //编辑修改
             editSubmit(){
-                const data =[];
-                data.logistics_info = this.stall;
-                data.goods_info = this.goods;
-                if (data.driverName == '') {
+
+                if (this.stall.driverName == '') {
                     Toast({
                         message: '司机姓名不可为空',
                         position: 'middle',
                         duration: 2000
                     });
-                } else if (data.driverPhone == '') {
+                } else if (this.stall.driverPhone == '') {
                     Toast({
                         message: '司机电话不可为空',
                         position: 'middle',
                         duration: 2000
                     });
-                } else if (!(new RegExp(/^1[3|4|5|6|7|8|9][0-9]{9}$/).test(data.driverPhone))) {
+                } else if (!(new RegExp(/^1[3|4|5|6|7|8|9][0-9]{9}$/).test(this.stall.driverPhone))) {
                     Toast({
                         message: '司机电话输入有误',
                         position: 'middle',
                         duration: 2000
                     });
-                } else if (data.plateNum == '') {
+                } else if (this.stall.plateNum == '') {
                     Toast({
                         message: '车牌号不能为空',
                         position: 'middle',
                         duration: 2000
                     });
-                } else if (data.startAddress == '') {
+                } else if (this.stall.startAddress == '') {
                     Toast({
                         message: '发货地点不能为空',
                         position: 'middle',
                         duration: 2000
                     });
-                } else if (data.origin == '') {
+                } else if (this.stall.origin == '') {
                     Toast({
                         message: '产地不能为空',
                         position: 'middle',
                         duration: 2000
                     });
-                } else if (data.goods.length == 0) {
+                } else if (this.goods.length == 0) {
                     Toast({
                         message: '请维护车次货品信息',
                         position: 'middle',
@@ -567,8 +532,15 @@
                     });
                 } else {
                     this.confirmDisabled = true;
+                    var data = {
+                        tid:this.tid,
+                        logistics_info:this.stall,
+                        goods_info:this.goods,
+                    }
+
                     console.log(data);
-                    delete data.name;
+                    console.log(123456);
+
                     damage.editTrain(data).then(response => {
                         if (response.data.status == 'Y') {
                             Toast({

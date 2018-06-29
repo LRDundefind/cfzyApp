@@ -111,7 +111,7 @@
 
         computed: {
             deleteDisabled: function () {
-                if(this.$route.params.trainsNum){
+                if(this.$route.params.tid){
                     return 'edit';
                 }else if(typeof(this.edit.goodId) != "undefined" && this.edit.goodId != ''){
                     return 'delete';
