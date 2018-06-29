@@ -56,6 +56,8 @@
 <script>
     import {Toast} from 'mint-ui'
     import {orders} from '@/services/apis/orders.js';
+    import {creditOrder} from '@/services/apis/creditOrder'
+
     export default {
         data () {
             return {
@@ -75,7 +77,7 @@
                     label: '银行卡'
                 }],
 
-                detail: [],//订单详情数据
+                detail: {},//订单详情数据
             }
         },
         mounted () {
@@ -99,7 +101,7 @@
             //结算订单
             settlement(){
                 let data = {
-                    cid: this.oid,//订单id
+                    oid: this.oid,//订单id
                     payType: this.payType,//结算方式
                 };
                 creditOrder.clearingKnot(data)
