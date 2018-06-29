@@ -33,7 +33,7 @@ export default [
             showFooter: false
         }
     },{
-        path: 'storage/train/:trainsNum/:status',
+        path: 'storage/train/:tid/:status',
         name: 'storage/train',
         components: {
             mainView: storage

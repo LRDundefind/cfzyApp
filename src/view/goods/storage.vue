@@ -9,7 +9,7 @@
             </mt-button>
         </mt-header>
 
-        <mt-header fixed title="车次管理" v-if="trainsNum!=''">
+        <mt-header fixed title="车次管理" v-if="tid!=''">
             <mt-button icon="back" slot="left" @click="goHome"></mt-button>
             <mt-button slot="right" style="font-size: 0.32rem" @click="editSubmit" :disabled="confirmDisabled">
                 确认修改
@@ -39,19 +39,23 @@
                 <!--基本信息-->
                 <div v-if="selected == 'basic'">
                     <div class="">
-                        <div class="basic-list" @click="gologistics" v-show="trainsNum">
-                            <p class="clearfix">{{trainsNum}}
-                                <span class="name">{{status}}</span>
+                        <div class="basic-list" @click="gologistics" v-show="tid">
+                            <p class="clearfix">{{stall.trainsNum}}
+                                <span class="name" v-show="status == 'status_toremit'">待汇款</span>
+                                <span class="name" v-show="status == 'status_selling'">售卖中</span>
+                                <span class="name" v-show="status == 'status_topay'">待结算</span>
+                                <span class="name" v-show="status == 'status_complete'">已完成</span>
+                                <span class="name" v-show="status == 'status_not_selling'">未开卖</span>
                             </p>
                         </div>
 
-                        <div class="basic-list" @click="gologistics" v-show="trainsNum ==''">
+                        <div class="basic-list" @click="gologistics" v-show="tid ==''">
                             <p class="clearfix">物流
                                 <span class="name">{{trainShow}}<img class="right-icon"
                                                                      src="../../assets/index/gray-right-icon.png"/></span>
                             </p>
                         </div>
-                        <div class="basic-list" @click="goList" v-show="trainsNum ==''">
+                        <div class="basic-list" @click="goList" v-show="tid ==''">
                             <p class="clearfix">货主
                                 <span class="name">{{stall.name}}<img class="right-icon"
                                                                       src="../../assets/index/gray-right-icon.png"/></span>
@@ -128,14 +132,14 @@
                 </div>
                 <!--货品信息-->
                 <div v-if="selected == 'goods'">
-                    <div v-for="item in goods" :key='item.goodId' class="goods-list" v-show="status!='售卖中'">
+                    <div v-for="item in goods" :key='item.goodId' class="goods-list" v-show="status!='status_selling'">
                         <p @click="editGoods(item)" class="clearfix">{{item.goodName}}
                             <span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
                             <span>{{item.goodNum}} {{item.numUnit | sellNnit}}</span>
                         </p>
                     </div>
 
-                    <div v-for="item in goods" :key='item.goodId' class="goods-list" v-show="status =='售卖中'">
+                    <div v-for="item in goods" :key='item.goodId' class="goods-list" v-show="status =='status_selling'">
                         <p class="clearfix">{{item.goodName}}
                             <span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
                             <span>{{item.goodNum}} {{item.numUnit | sellNnit}}</span>
@@ -143,7 +147,7 @@
                     </div>
 
                     <div class="login_pass" v-show="selected == 'goods'">
-                        <div v-show="status !='售卖中'" @click="createGoods" class="loginbtn">添加货品</div>
+                        <div v-show="status !='status_selling'" @click="createGoods" class="loginbtn">添加货品</div>
                     </div>
 
                 </div>
@@ -212,6 +216,7 @@
                 item: [],//物流信息
                 trainsNum: '',//车次
                 status: '',//状态
+                tid:'',//车次id
             }
         },
         components: {
@@ -219,11 +224,14 @@
             'goods-details': goodsDetails,
         },
         mounted () {
-            this.trainsNum = this.$route.params.trainsNum || false;
+            this.tid = this.$route.params.tid || false;
             this.status = this.$route.params.status || false;
 
-            if (this.trainsNum && this.status) {
+            if (this.$route.params.tid) {
                 this.editStorage();
+                console.log(this.tid);
+                console.log(this.status);
+                console.log(12345)
             }
 //            this.wrapperHeight = document.documentElement.clientHeight - 40;
 
@@ -281,47 +289,15 @@
 //            }
 //        },
         methods: {
-            //
+            //获取车次详情
             editStorage(){
-                this.stall = {
-                    name: '',
-                    good_sid: '',//货主id
-                    driverName: '假数据名字',//司机姓名
-                    driverPhone: '18236911783',//司机电话
-                    plateNum: '假123456',//车牌号
-                    startAddress: '假北京',//发货地点
-                    origin: '假北京',//产地
-                    originProve: '',//产地证明图片地址
-                    checkProve: '',//检验证明图片地址
-                    carrierContract: '',//承运合同图片地址
-                    remark: '123',//备注
-                    goods: '',//货品信息
-                };
-
-                this.goods = [
-                    {
-                        "goodId": "52940002478d4b9397412eae6c180b5f",
-                        "goodName": "进口西瓜",
-                        "numUnit": "unit_kg",
-                        "goodNum": "4"
-                    },
-                    {
-                        "goodId": "9674bbe82d084592bd2f1b2295a5da34",
-                        "goodName": "榴莲",
-                        "numUnit": "unit_kg",
-                        "goodNum": "1"
-                    }
-                ];
-
-                console.log(this.stall);
-                return false;
-
-                //获取车次详情
+                let data ={
+                    tid:this.tid
+                }
                 damage.getTrain(data)
                     .then(response => {
                         this.stall = response.data.results.logistics_info;
                         this.goods = response.data.results.goods_info;
-
                     })
                     .catch(function (response) {
                         console.log(response);
@@ -420,7 +396,7 @@
             //跳转到首页
             goHome(){
                 MessageBox.confirm('确认返回？', '').then(() => {
-                    if (this.trainsNum && this.status) {
+                    if (this.tid) {
                         this.$router.push({name: 'trainManagement'});
                     } else {
                         this.$router.push({name: 'home'});
@@ -511,46 +487,44 @@
             },
             //编辑修改
             editSubmit(){
-                const data =[];
-                data.logistics_info = this.stall;
-                data.goods_info = this.goods;
-                if (data.driverName == '') {
+
+                if (this.stall.driverName == '') {
                     Toast({
                         message: '司机姓名不可为空',
                         position: 'middle',
                         duration: 2000
                     });
-                } else if (data.driverPhone == '') {
+                } else if (this.stall.driverPhone == '') {
                     Toast({
                         message: '司机电话不可为空',
                         position: 'middle',
                         duration: 2000
                     });
-                } else if (!(new RegExp(/^1[3|4|5|6|7|8|9][0-9]{9}$/).test(data.driverPhone))) {
+                } else if (!(new RegExp(/^1[3|4|5|6|7|8|9][0-9]{9}$/).test(this.stall.driverPhone))) {
                     Toast({
                         message: '司机电话输入有误',
                         position: 'middle',
                         duration: 2000
                     });
-                } else if (data.plateNum == '') {
+                } else if (this.stall.plateNum == '') {
                     Toast({
                         message: '车牌号不能为空',
                         position: 'middle',
                         duration: 2000
                     });
-                } else if (data.startAddress == '') {
+                } else if (this.stall.startAddress == '') {
                     Toast({
                         message: '发货地点不能为空',
                         position: 'middle',
                         duration: 2000
                     });
-                } else if (data.origin == '') {
+                } else if (this.stall.origin == '') {
                     Toast({
                         message: '产地不能为空',
                         position: 'middle',
                         duration: 2000
                     });
-                } else if (data.goods.length == 0) {
+                } else if (this.goods.length == 0) {
                     Toast({
                         message: '请维护车次货品信息',
                         position: 'middle',
@@ -558,8 +532,15 @@
                     });
                 } else {
                     this.confirmDisabled = true;
+                    var data = {
+                        tid:this.tid,
+                        logistics_info:this.stall,
+                        goods_info:this.goods,
+                    }
+
                     console.log(data);
-                    delete data.name;
+                    console.log(123456);
+
                     damage.editTrain(data).then(response => {
                         if (response.data.status == 'Y') {
                             Toast({
