@@ -35,8 +35,11 @@
                                     <div>到达时间&nbsp;&nbsp;{{item.putStorageTime | capitalize}}</div>
                                 </div>
                                 <div class="btn" @click="settlementDetail(item)">编辑</div>
-                                <!--<div class="btn1" @click="deleteTrain(item)">删除</div>-->
-                                <div class="btn" @click="sold(item)">售完结算</div>
+                                <div v-show="item.settleStatus == 'status_not_selling'" class="btn1" @click="deleteTrain(item)">删除</div>
+                                <div v-show="item.settleStatus == 'status_selling'" class="btn" @click="sold(item)">
+                                    <span v-show="roleId == 'role_sel'">申请结算</span>
+                                    <span v-show="roleId != 'role_sel'">售完结算</span>
+                                </div>
                             </div>
                         </div>
                     </li>
@@ -51,11 +54,13 @@
     import {damage} from '@/services/apis/damage.api'
     import noDate from '@/components/noData/noDate'
     import { Loadmore , Indicator,MessageBox} from 'mint-ui'
+    import Cookies from 'js-cookie'
+
     export default {
         data () {
             return {
+                roleId:'',//卖手——role_sel;财务兼卖手--role_finance_sell;财务--role_finance;
                 allLoaded: false,
-                wrapperHeight: 0,//容器高度
                 listStore: [],
                 trainList: [],
                 params:{
@@ -68,13 +73,8 @@
         components:{
             noDate,
         },
-        created () {
-            let windowWidth = document.documentElement.clientWidth;//获取屏幕高度
-            if(windowWidth>768){//这里根据自己的实际情况设置容器的高度
-                this.wrapperHeight = document.documentElement.clientHeight - 130;
-            }else{
-                this.wrapperHeight = document.documentElement.clientHeight - 40;
-            }
+        mounted () {
+            this.roleId = Cookies.get('roleId');
             this.getList();
             app.Vwaiting();
         },
