@@ -95,10 +95,12 @@
 			
 			<div v-if="status == '待提货'" class="submit-btn m-t-20" @click="takeGood">完成提货</div>
 
-            <div class='update clearfix' v-show="roleId != 'role_sel'">
-                <mt-button type="primary" size="large" class='f-l' @click="goBack()">取消
-                </mt-button>
-                <mt-button type="primary" size="large" class='f-l' @click="clearing">结算</mt-button>
+            <div  v-show="roleId != 'role_sel'">
+                <div v-show="status == '待支付'" class='update clearfix'>
+                    <mt-button type="primary" size="large" class='f-l' @click="goBack()">取消
+                    </mt-button>
+                    <mt-button type="primary" size="large" class='f-l' @click="clearing">结算</mt-button>
+                </div>
             </div>
 			
 		</div>
