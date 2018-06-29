@@ -19,7 +19,11 @@
                     <li v-for="item in listStore" :key='item.tid' >
                         <div class="ub list-top">
                             <div class="ub-f3 trainsNum">{{item.trainsNum}}</div>
-                            <div class="sale ub-f2">未售卖</div>
+                            <div class="sale ub-f2" v-show="item.settleStatus == 'status_toremit'">待汇款</div>
+                            <div class="sale ub-f2" v-show="item.settleStatus == 'status_selling'">售卖中</div>
+                            <div class="sale ub-f2" v-show="item.settleStatus == 'status_topay'">待结算</div>
+                            <div class="sale ub-f2" v-show="item.settleStatus == 'status_complete'">已完成</div>
+                            <div class="sale ub-f2" v-show="item.settleStatus == 'status_not_selling'">未开卖</div>
                         </div>
                         <div class="ub list-top">
                             <div class="numberPlate ub-f2"><span class="">车牌号&nbsp;&nbsp;</span>{{item.plateNum}}</div>
@@ -202,7 +206,7 @@
                 color: #666;
                 line-height: 1.32rem;
                 .btn {
-                    margin-left: 0.15rem;
+                    margin-left: 0.2rem;
                     font-size: 0.3rem;
                     width: 1.88rem;
                     line-height: 0.68rem;
