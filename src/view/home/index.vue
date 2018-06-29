@@ -103,7 +103,7 @@
                             <div>
                                 <img class="goods-image right-img" src="../../assets/index/trips_computing.png"/>
                             </div>
-                            <div class="name">车次结算</div>
+                            <div class="name">车次管理</div>
                         </div>
                     </div>
                 </div>
