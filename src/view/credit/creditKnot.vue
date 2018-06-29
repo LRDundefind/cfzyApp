@@ -131,7 +131,16 @@
                 })
             },
 
-
+            //跳转到订单详情
+            ordersDetail(oid){
+                this.$router.push({
+                    name: 'ordersList/ordersDetail',
+                    params: {
+                        oid:oid
+                    }
+                });
+            }
+            
         },
     }
 </script>
