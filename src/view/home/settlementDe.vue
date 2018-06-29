@@ -1,7 +1,7 @@
 <template>
     <div class="page-content">
         <mt-header fixed title="车次结算">
-            <router-link to="/settlementList" slot="left">
+            <router-link to="/trainManagement" slot="left">
                 <mt-button icon="back"></mt-button>
             </router-link>
         </mt-header>
