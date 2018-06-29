@@ -116,7 +116,7 @@
                 this.$router.push({
                     name: 'storage/train',
                     params: {
-                        trainsNum: item.trainsNum, status: "未售卖",
+                        tid: item.tid, status: item.settleStatus,
                     }
                 });
             },

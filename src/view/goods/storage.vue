@@ -9,7 +9,7 @@
             </mt-button>
         </mt-header>
 
-        <mt-header fixed title="车次管理" v-if="trainsNum!=''">
+        <mt-header fixed title="车次管理" v-if="tid!=''">
             <mt-button icon="back" slot="left" @click="goHome"></mt-button>
             <mt-button slot="right" style="font-size: 0.32rem" @click="editSubmit" :disabled="confirmDisabled">
                 确认修改
@@ -39,19 +39,23 @@
                 <!--基本信息-->
                 <div v-if="selected == 'basic'">
                     <div class="">
-                        <div class="basic-list" @click="gologistics" v-show="trainsNum">
-                            <p class="clearfix">{{trainsNum}}
-                                <span class="name">{{status}}</span>
+                        <div class="basic-list" @click="gologistics" v-show="tid">
+                            <p class="clearfix">{{stall.trainsNum}}
+                                <span class="name" v-show="status == 'status_toremit'">待汇款</span>
+                                <span class="name" v-show="status == 'status_selling'">售卖中</span>
+                                <span class="name" v-show="status == 'status_topay'">待结算</span>
+                                <span class="name" v-show="status == 'status_complete'">已完成</span>
+                                <span class="name" v-show="status == 'status_not_selling'">未开卖</span>
                             </p>
                         </div>
 
-                        <div class="basic-list" @click="gologistics" v-show="trainsNum ==''">
+                        <div class="basic-list" @click="gologistics" v-show="tid ==''">
                             <p class="clearfix">物流
                                 <span class="name">{{trainShow}}<img class="right-icon"
                                                                      src="../../assets/index/gray-right-icon.png"/></span>
                             </p>
                         </div>
-                        <div class="basic-list" @click="goList" v-show="trainsNum ==''">
+                        <div class="basic-list" @click="goList" v-show="tid ==''">
                             <p class="clearfix">货主
                                 <span class="name">{{stall.name}}<img class="right-icon"
                                                                       src="../../assets/index/gray-right-icon.png"/></span>
@@ -212,6 +216,7 @@
                 item: [],//物流信息
                 trainsNum: '',//车次
                 status: '',//状态
+                tid:'',//车次id
             }
         },
         components: {
@@ -219,11 +224,14 @@
             'goods-details': goodsDetails,
         },
         mounted () {
-            this.trainsNum = this.$route.params.trainsNum || false;
+            this.tid = this.$route.params.tid || false;
             this.status = this.$route.params.status || false;
 
-            if (this.trainsNum && this.status) {
+            if (this.$route.params.tid) {
                 this.editStorage();
+                console.log(this.tid);
+                console.log(this.status);
+                console.log(12345)
             }
 //            this.wrapperHeight = document.documentElement.clientHeight - 40;
 
@@ -283,45 +291,46 @@
         methods: {
             //
             editStorage(){
-                this.stall = {
-                    name: '',
-                    good_sid: '',//货主id
-                    driverName: '假数据名字',//司机姓名
-                    driverPhone: '18236911783',//司机电话
-                    plateNum: '假123456',//车牌号
-                    startAddress: '假北京',//发货地点
-                    origin: '假北京',//产地
-                    originProve: '',//产地证明图片地址
-                    checkProve: '',//检验证明图片地址
-                    carrierContract: '',//承运合同图片地址
-                    remark: '123',//备注
-                    goods: '',//货品信息
-                };
+//                this.stall = {
+//                    name: '',
+//                    good_sid: '',//货主id
+//                    driverName: '假数据名字',//司机姓名
+//                    driverPhone: '18236911783',//司机电话
+//                    plateNum: '假123456',//车牌号
+//                    startAddress: '假北京',//发货地点
+//                    origin: '假北京',//产地
+//                    originProve: '',//产地证明图片地址
+//                    checkProve: '',//检验证明图片地址
+//                    carrierContract: '',//承运合同图片地址
+//                    remark: '123',//备注
+//                    goods: '',//货品信息
+//                };
+//
+//                this.goods = [
+//                    {
+//                        "goodId": "52940002478d4b9397412eae6c180b5f",
+//                        "goodName": "进口西瓜",
+//                        "numUnit": "unit_kg",
+//                        "goodNum": "4"
+//                    },
+//                    {
+//                        "goodId": "9674bbe82d084592bd2f1b2295a5da34",
+//                        "goodName": "榴莲",
+//                        "numUnit": "unit_kg",
+//                        "goodNum": "1"
+//                    }
+//                ];
 
-                this.goods = [
-                    {
-                        "goodId": "52940002478d4b9397412eae6c180b5f",
-                        "goodName": "进口西瓜",
-                        "numUnit": "unit_kg",
-                        "goodNum": "4"
-                    },
-                    {
-                        "goodId": "9674bbe82d084592bd2f1b2295a5da34",
-                        "goodName": "榴莲",
-                        "numUnit": "unit_kg",
-                        "goodNum": "1"
-                    }
-                ];
 
-                console.log(this.stall);
-                return false;
 
                 //获取车次详情
+                let data ={
+                    tid:this.tid
+                }
                 damage.getTrain(data)
                     .then(response => {
                         this.stall = response.data.results.logistics_info;
                         this.goods = response.data.results.goods_info;
-
                     })
                     .catch(function (response) {
                         console.log(response);
@@ -420,7 +429,7 @@
             //跳转到首页
             goHome(){
                 MessageBox.confirm('确认返回？', '').then(() => {
-                    if (this.trainsNum && this.status) {
+                    if (this.tid) {
                         this.$router.push({name: 'trainManagement'});
                     } else {
                         this.$router.push({name: 'home'});
