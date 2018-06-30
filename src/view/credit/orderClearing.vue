@@ -47,7 +47,9 @@
                 </div>
             </div>
 
-            <div class="submit-btn m-t-20" @click="settlement">结算</div>
+            <div class="update">
+                <mt-button class="sure" type="primary" size="large" @click="settlement" :disabled="confirmDisabled">结算</mt-button>
+            </div>
         </div>
 
     </div>
@@ -61,6 +63,7 @@
     export default {
         data () {
             return {
+                confirmDisabled:false,
                 oid: '',//订单id
                 payType: 'type_alipay',
                 typeOfPay: [{
@@ -104,6 +107,7 @@
                     oid: this.oid,//订单id
                     payType: this.payType,//结算方式
                 };
+                this.confirmDisabled = true;
                 creditOrder.clearingKnot(data)
                     .then(response => {
                         if (response.data.status == 'Y') {
@@ -113,9 +117,11 @@
                                 duration: 1000
                             });
                             setTimeout(() => {
+                                this.confirmDisabled = false;
                                 this.$router.push({name: 'cashAccount'});
                             }, 1000)
                         } else {
+                            this.confirmDisabled = false;
                             Toast({
                                 message: response.data.results,
                                 position: 'middle',
@@ -198,17 +204,16 @@
 
     }
 
-    .submit-btn {
-        width: 73%;
-        height: 0.9rem;
-        line-height: 0.9rem;
-        text-align: center;
-        border-radius: 1rem;
-        background: -webkit-linear-gradient(left, #30b03e 0%, #33d57c 100%);
-        color: #fff;
-        font-size: 0.3rem;
-        font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
-        margin: 1rem auto 0.3rem;
+    .update{
+        margin:0 auto;
+        padding:0.5rem 0;
+        .mint-button--primary{
+            background: url(../../assets/login/dengluzhuce_denglu_img@2x.png) no-repeat center;
+            background-size:contain;
+            font-size: 0.3rem !important;
+            margin: 0 auto;
+            height: 0.9rem;
+        }
     }
 
 </style>
