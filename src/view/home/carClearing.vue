@@ -66,7 +66,7 @@
                 <div class="basic-list">
 
                     <p class="clearfix">结算金额
-                        <span class="money">测试￥0.00</span>
+                        <span class="money">￥{{amountClearing}}</span>
                     </p>
 
                 </div>
@@ -99,6 +99,7 @@
         data () {
             return {
                 tid:'',
+                amountClearing:'0.00',//结算金额
                 ownerInfo: {},//货主信息
                 goodCost: '',//货款总金额
                 commission :'',//提成费用合计总额
@@ -159,7 +160,18 @@
                     damage.countTrain(data)
                         .then(response => {
                             if (response.data.status == 'Y') {
-                                this.$router.push({name: 'trainManagement'});
+                                if(apply == 'compute'){
+                                    this.amountClearing = response.data.results.payAmount
+                                }else {
+                                    Toast({
+                                        message: '结算操作成功！',
+                                        position: 'middle',
+                                        duration: 1000
+                                    });
+                                    setTimeout(() => {
+                                        this.$router.push({name: 'trainManagement'});
+                                    }, 1000)
+                                }
                             } else {
                                 if(response.data.error_msg){
                                     Toast({
