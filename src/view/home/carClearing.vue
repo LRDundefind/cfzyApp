@@ -55,7 +55,7 @@
                     <p class="clearfix">卸车费
                         <span class="name">测试1000.00</span>
                     </p>
-                    <p class="clearfix">固定代销费<input type="text" maxlength="12" placeholder="请输入固定代销费" v-model="marketingCost"></p>
+                    <p class="clearfix">固定代销费<input type="number" maxlength="12" placeholder="请输入固定代销费" v-model="marketingCost"></p>
 
                 </div>
 
@@ -138,33 +138,40 @@
 
             //计算结算费用与提交车次申请
             settlement(apply){
-                let data = {
-                    tid: this.tid,
-                    marketingCost:this.marketingCost,
-                    remark:this.remark,
-                };
-                if(apply == 'compute'){
-                    data.computer ='Y'
-                }else {
-                    data.computer ='N'
-                }
-                console.log(data);
-                return false;
-                damage.submitBus(data)
-                    .then(response => {
-                        if (response.data.status == 'Y') {
-                            this.$router.push({name: 'settlementList'});
-                        } else {
-                            Toast({
-                                message: response.data.error_msg,
-                                position: 'middle',
-                                duration: 2000
-                            });
-                        }
-                    })
-                    .catch(function (response) {
-                        console.log(response);
+                if (!(new RegExp(/^\d+(?:.\d{1,2})?$/).test(this.marketingCost))) {
+                    Toast({
+                        message: '请输入正确的数字',
+                        position: 'middle',
+                        duration: 1000
                     });
+                }else {
+                    let data = {
+                        tid: this.tid,
+                        marketingCost:this.marketingCost,
+                        remark:this.remark,
+                    };
+                    if(apply == 'compute'){
+                        data.computer ='Y'
+                    }else {
+                        data.computer ='N'
+                    }
+                    console.log(data);
+                    damage.countTrain(data)
+                        .then(response => {
+                            if (response.data.status == 'Y') {
+                            } else {
+                                Toast({
+                                    message: response.data.error_msg,
+                                    position: 'middle',
+                                    duration: 2000
+                                });
+                            }
+                        })
+
+                }
+
+
+
             },
 
             goTrain(){

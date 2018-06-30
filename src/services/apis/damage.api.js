@@ -93,6 +93,14 @@ export const damage = {
             data: serverMoudle(params) || {}
         });
     },
+    //计算结算|提交车次结算
+    countTrain(params) {
+        return axios({
+            url: 'rest/CHENGFENG_SET_SELEMAN_TRAIN_DEL',
+            method: 'post',
+            data: serverMoudle(params) || {}
+        });
+    },
 
 
 };
