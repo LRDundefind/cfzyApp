@@ -90,6 +90,7 @@
             return {
                 wrapperHeight: 0,//容器高度
                 Unit: '',
+                deleteDisabled: '',
                 goods: {
                     goodId: '',
                     goodName: '',//货品名称
@@ -109,24 +110,18 @@
             }
         },
 
-        computed: {
-            deleteDisabled: function () {
-                if(this.$route.params.tid){
-                    return 'edit';
-                }else if(typeof(this.edit.goodId) != "undefined" && this.edit.goodId != ''){
-                    return 'delete';
-                }else {
-                    return 'edit';
-                }
-            }
-        },
-
         components: {
             'goods-list': goodsList,
         },
 
         created(){
-
+            if (typeof(this.edit.goodId) != "undefined" && this.edit.goodId != '') {
+                this.goods = this.edit;
+                this.Unit = this.goods.numUnit;
+                this.deleteDisabled = 'delete'
+            } else {
+                this.deleteDisabled = 'edit'
+            }
         },
 
         mounted () {
@@ -155,11 +150,11 @@
 
             deleteGoods(){
                 //删除货品
-                    MessageBox.confirm('确认删除？', '').then(() => {
-                        this.addGoods('delete');
-                    }, () => {
+                MessageBox.confirm('确认删除？', '').then(() => {
+                    this.addGoods('delete');
+                }, () => {
 
-                    });
+                });
             },
 
             //添加货品列表
@@ -274,22 +269,22 @@
     }
 
     /*.type-list {*/
-        /*background: #fff;*/
-        /*margin-top: 0.2rem;*/
-        /*padding: 0.2rem 0.3rem;*/
-        /*color: #333;*/
-        /*font-size: 0.3rem;*/
+    /*background: #fff;*/
+    /*margin-top: 0.2rem;*/
+    /*padding: 0.2rem 0.3rem;*/
+    /*color: #333;*/
+    /*font-size: 0.3rem;*/
 
-        /*.unit {*/
-            /*font-size: 0.26rem;*/
-            /*color: #666666;*/
-            /*padding-top: 0.1rem;*/
-        /*}*/
-        /*.date {*/
-            /*font-size: 0.28rem;*/
-            /*color: #808080;*/
-            /*text-align: right;*/
-        /*}*/
+    /*.unit {*/
+    /*font-size: 0.26rem;*/
+    /*color: #666666;*/
+    /*padding-top: 0.1rem;*/
+    /*}*/
+    /*.date {*/
+    /*font-size: 0.28rem;*/
+    /*color: #808080;*/
+    /*text-align: right;*/
+    /*}*/
 
     /*}*/
 
