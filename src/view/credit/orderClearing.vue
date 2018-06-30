@@ -8,7 +8,7 @@
             <!--信息一-->
             <div class="order-detail">
                 <div class="ub term no-border">
-                    <div class="ub-f1">卖手假数据</div>
+                    <div class="ub-f1">卖手</div>
                     <div>{{detail.selName}}</div>
                 </div>
             </div>
@@ -80,7 +80,16 @@
                     label: '银行卡'
                 }],
 
-                detail: {},//订单详情数据
+                detail: {
+                    selName:'',
+                    salesAmount:'',
+                    packCost:'',
+                    weighCost:'',
+                    deliveryCost:'',
+                    salesAmount:'',
+
+
+                },//订单详情数据
             }
         },
         mounted () {
