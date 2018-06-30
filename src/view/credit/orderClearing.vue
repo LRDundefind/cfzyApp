@@ -16,7 +16,7 @@
             <div class="order-detail item-two">
                 <div class="ub term">
                     <div class="ub-f1">货品费用</div>
-                    <div class="edu">￥{{detail.salesAmount | keepTwoNum}}</div>
+                    <div class="edu">￥{{detail.goodCast | keepTwoNum}}</div>
                 </div>
                 <div class="ub term">
                     <div class="ub-f1">包装费</div>
