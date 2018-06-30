@@ -344,7 +344,7 @@
             editGoods(item){
                 if(this.status =='status_selling'){
                     Toast({
-                        message: '售卖货品不支持编辑！',
+                        message: '商品售卖中！',
                         position: 'middle',
                         duration: 2000
                     });
