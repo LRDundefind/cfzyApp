@@ -161,11 +161,20 @@
                             if (response.data.status == 'Y') {
                                 this.$router.push({name: 'trainManagement'});
                             } else {
-                                Toast({
-                                    message: response.data.error_msg,
-                                    position: 'middle',
-                                    duration: 2000
-                                });
+                                if(response.data.error_msg){
+                                    Toast({
+                                        message: response.data.error_msg,
+                                        position: 'middle',
+                                        duration: 2000
+                                    });
+                                }else if(response.data.results){
+                                    Toast({
+                                        message: response.data.results,
+                                        position: 'middle',
+                                        duration: 2000
+                                    });
+                                }
+
                             }
                         })
                 }

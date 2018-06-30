@@ -96,7 +96,7 @@ export const damage = {
     //计算结算|提交车次结算
     countTrain(params) {
         return axios({
-            url: 'rest/CHENGFENG_SET_SELEMAN_TRAIN_DEL',
+            url: 'rest/CHENGFENG_SET_SELEMAN_TRAIN_CLEAR',
             method: 'post',
             data: serverMoudle(params) || {}
         });
