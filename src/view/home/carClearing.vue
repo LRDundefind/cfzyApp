@@ -79,9 +79,9 @@
                     </div>
                 </div>
 
-                <div class="login_pass ub">
-                    <div class="loginbtn1" @click="goTrain">取消</div>
-                    <div class="loginbtn " @click="settlement('clearing')">确认结算信息</div>
+                <div class='update clearfix ub'>
+                    <mt-button type="primary" size="large" class='btn1 ub-f1' @click="goTrain">取消</mt-button>
+                    <mt-button type="primary" size="large" class='btn2 ub-f1' @click="settlement('clearing')">确认结算信息</mt-button>
                 </div>
 
             </div>
@@ -217,6 +217,30 @@
             background-color: white !important;
         }
 
+        .update {
+            left: -0.1rem;
+            padding: 0.3rem 0.2rem;
+            .btn1 {
+                background: url(../../assets/kehu_chakanxiaofeijilu_btn@2x.png) no-repeat center;
+                background-size: 100% 100%;
+                width: 100%;
+                color: #33d57c;
+                margin: 0 3%;
+                font-size: 0.3rem !important;
+            }
+            .btn2 {
+                background: url(../../assets/kehu_gengxinziliao_btn@2x.png) no-repeat center;
+                background-size: 100% 95%;
+                width: 100%;
+                font-size: 0.3rem !important;
+            }
+            button {
+                margin: 0 auto;
+                height: 1rem;
+            }
+
+        }
+
         .pay {
             margin-top: 0.2rem;
             padding: 0 0.3rem;
@@ -284,26 +308,6 @@
                     font-size: 0.26rem;
                     color: #4c4c4c;
                 }
-            }
-        }
-
-        .login_pass {
-            margin: 0.4rem auto 0.2rem;
-            padding-left: 5%;
-            .loginbtn1{
-                width: 47.5%!important;
-                color: #0f0!important;
-                @include login_btn;
-                background: url(../../assets/kehu_chakanxiaofeijilu_btn@2x.png) no-repeat center;
-                margin: 0 !important;
-                margin-right: 2%!important;
-            }
-
-            .loginbtn {
-                @include login_btn;
-                width: 47.5%!important;
-                background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
-                margin: 0 !important;
             }
         }
 
