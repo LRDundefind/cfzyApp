@@ -66,7 +66,8 @@
                 <div class="basic-list">
 
                     <p class="clearfix">结算金额
-                        <span class="money">￥{{amountClearing}}</span>
+                        <span class="money" v-show="amountClearing ==''">￥0.00</span>
+                        <span class="money" v-show="amountClearing !=''">￥{{amountClearing}}</span>
                     </p>
 
                 </div>
@@ -100,7 +101,7 @@
             return {
                 tid:'',
                 confirmDisabled:false,
-                amountClearing:'0.00',//结算金额
+                amountClearing:'',//结算金额
                 ownerInfo: {},//货主信息
                 goodCost: '',//货款总金额
                 commission :'',//提成费用合计总额
@@ -155,8 +156,18 @@
                     if(apply == 'compute'){
                         data.computer ='Y'
                     }else {
-                        data.computer ='N'
-                        this.confirmDisabled = true;
+                        if(this.amountClearing == ''){
+                            Toast({
+                                message: '请先计算最终结算费用！',
+                                position: 'middle',
+                                duration: 1000
+                            });
+                            return false;
+                        }else {
+                            data.computer ='N';
+                            this.confirmDisabled = true;
+                        }
+
                     }
                     console.log(data);
                     damage.countTrain(data)
