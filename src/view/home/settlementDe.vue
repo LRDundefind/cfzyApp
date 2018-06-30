@@ -93,10 +93,15 @@
                 let data = {
                     tid: this.tid
                 };
-                damage.submitBus(data)
+                damage.testClearing(data)
                     .then(response => {
                         if (response.data.status == 'Y') {
-                            this.$router.push({name: 'settlementList'});
+                            this.$router.push({
+                                name: 'carClearing',
+                                params: {
+                                    tid: this.tid,
+                                }
+                            });
                         } else {
                             Toast({
                                 message: response.data.error_msg,
