@@ -149,6 +149,11 @@
                                 position: 'middle',
                                 duration: 1500
                             });
+                            this.listStore = [];
+                            this.params.current_page = 1;
+                            this.getList();
+                            this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
+                            this.allLoaded = false;//下拉刷新时解除上拉加载的禁用
                         } else {
                             Toast({
                                 message: response.data.error_msg,
@@ -158,9 +163,12 @@
                         }
                     });
 
-                    alert("确认删除");
                 }, () => {
-                    alert("取消删除");
+                    Toast({
+                        message: '取消删除',
+                        position: 'middle',
+                        duration: 1500
+                    });
                 });
             },
             //售完结算
