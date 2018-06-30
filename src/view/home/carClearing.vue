@@ -81,7 +81,7 @@
 
                 <div class='update clearfix ub'>
                     <mt-button type="primary" size="large" class='btn1 ub-f1' @click="goTrain">取消</mt-button>
-                    <mt-button type="primary" size="large" class='btn2 ub-f1' @click="settlement('clearing')">确认结算信息</mt-button>
+                    <mt-button type="primary" size="large" class='btn2 ub-f1' @click="settlement('clearing')" :disabled="confirmDisabled">确认结算信息</mt-button>
                 </div>
 
             </div>
@@ -99,6 +99,7 @@
         data () {
             return {
                 tid:'',
+                confirmDisabled:false,
                 amountClearing:'0.00',//结算金额
                 ownerInfo: {},//货主信息
                 goodCost: '',//货款总金额
@@ -155,6 +156,7 @@
                         data.computer ='Y'
                     }else {
                         data.computer ='N'
+                        this.confirmDisabled = true;
                     }
                     console.log(data);
                     damage.countTrain(data)
@@ -169,10 +171,12 @@
                                         duration: 1000
                                     });
                                     setTimeout(() => {
+                                        this.confirmDisabled = false;
                                         this.$router.push({name: 'trainManagement'});
                                     }, 1000)
                                 }
                             } else {
+                                this.confirmDisabled = false;
                                 if(response.data.error_msg){
                                     Toast({
                                         message: response.data.error_msg,
