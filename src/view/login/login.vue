@@ -219,6 +219,7 @@ export default {
 
                             if(result.stalls_list.length==0){
                                 Cookies.set('roleId', 'role_owner');        //身份区分
+                                Cookies.set('owner_id', '');
                                 this.XDTlogin();
                                 this.$router.push({name:'noStalls'});
                                    //原生端接到信息后，将信息直接存储到手机端
@@ -226,6 +227,7 @@ export default {
                                     'token': result.token,
                                     'randomKey': result.randomKey,
                                     'roleId': 'role_owner',
+                                    'owner_id': '',
                                     'sid': result.sid,
                                     'userName': result.userName,
                                     'compayName': result.compayName,
@@ -241,12 +243,14 @@ export default {
                                 let gidOwnID_list=JSON.stringify(result.stalls_list[0]);
                                 Cookies.set('gidOwnID_lists', gidOwnID_list); //档位信息集合
                                 Cookies.set('roleId', JSON.parse(gidOwnID_list).roleId);        //身份区分
+                                Cookies.set('owner_id', JSON.parse(gidOwnID_list).ownerId);
                                 this.XDTlogin();
                                   //原生端接到信息后，将信息直接存储到手机端
                                 let loginMessage = {
                                     'token': result.token,
                                     'randomKey': result.randomKey,
                                     'roleId': JSON.parse(gidOwnID_list).roleId,
+                                    'owner_id': JSON.parse(gidOwnID_list).ownerId,
                                     'sid': result.sid,
                                     'userName': result.userName,
                                     'compayName': result.compayName,

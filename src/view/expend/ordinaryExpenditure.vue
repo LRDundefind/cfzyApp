@@ -153,7 +153,14 @@
 						duration: 1000
 	    			});
         		}else{
-
+                    expend.selemanPay(this.form).then(response => {
+                        if (response.data.status == 'Y') {
+                            this.$message({
+                                message: '提交成功',
+                                type: 'success'
+                            });
+                        } 
+                    })
         		}
 	        }
 	    },

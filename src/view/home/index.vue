@@ -113,14 +113,14 @@
             <div class="goods" v-show="roleId != 'role_sel'">
                 <div class="ub">
                     <div class="ub-f1" :class= "[ this.roleId=='role_finance_sell'? 'left-finance' : 'order-left'] " >
-                        <div class="bd-b" @click="goStorage" v-if="roleId == 'role_finance_sell'">
+                        <div class="bd-b" @click="goStorage">
                             <div>
                                 <img class="goods-image left-imge" src="../../assets/index/goods_storage.png"/>
                             </div>
                             <div class="name">货品入库</div>
                         </div>
 
-                        <div class="bd-b" v-if="roleId == 'role_finance_sell'" @click="cashAccount">
+                        <div class="bd-b" @click="cashAccount">
                             <div>
                                 <img class="goods-image left-imge" src="../../assets/index/goods_storage.png"/>
                             </div>
@@ -156,7 +156,7 @@
                             <div class="name">赊账还款</div>
                         </div>
 
-                        <div class=" bd-b bb" v-if="roleId == 'role_finance_sell'" @click="goTrainManagement">
+                        <div class=" bd-b bb" @click="goTrainManagement">
                             <div>
                                 <img class="goods-image right-img" src="../../assets/index/trips_computing.png"/>
                             </div>
