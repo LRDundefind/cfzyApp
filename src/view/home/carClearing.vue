@@ -34,7 +34,7 @@
                     <p class="clearfix">备注</p>
                     <div class="remark">
                     <textarea maxlength="420" name="" id="" cols="30" rows="3" placeholder="货主备注信息"
-                              v-model="ownerInfo.remark"></textarea>
+                              v-model="ownerInfo.remark" readonly></textarea>
                     </div>
                 </div>
 
@@ -98,35 +98,17 @@
     export default {
         data () {
             return {
+                tid:'',
                 ownerInfo: {},//货主信息
                 goodCost: '',//货款总金额
                 commission :'',//提成费用合计总额
                 rebates: '',//回扣
                 marketingCost: '',//固定代销费
                 remark:'',//结算备注
-
-                stall: {
-                    name: '请选择',
-                    good_sid: '',//货主id
-                    driverName: '',//司机姓名
-                    driverPhone: '',//司机电话
-                    plateNum: '',//车牌号
-                    startAddress: '',//发货地点
-                    origin: '',//产地
-
-                    originProve: '',//产地证明图片地址
-
-                    checkProve: '',//检验证明图片地址
-
-                    carrierContract: '',//承运合同图片地址
-
-                    remark: '',//备注
-                    goods: '',//货品信息
-                },
-
             }
         },
         mounted () {
+            this.tid = this.$route.params.tid || false;
             this.testClearing();
         },
 
@@ -136,22 +118,6 @@
                 let data = {
                     tid: this.tid,
                 };
-
-                this.ownerInfo = {
-                    shipName:'测试货主姓名',
-                    phone:'18236911783',//货主手机号
-                    supplierName:'供应商名称',
-                    acount:'账户信息',
-                    address:'北京地址',
-                    remark:'测测试备注',
-                };
-
-                this.goodCost = '货款总金额123';//货款总金额
-                this.commission = '提成费用合计总额123';//提成费用合计总额
-                this.rebates = '回扣132';//回扣
-                this.marketingCost = '固定代销费132';//固定代销费
-                return false;
-
                 damage.testClearing(data)
                     .then(response => {
                         if (response.data.status == 'Y') {
@@ -159,7 +125,7 @@
                             this.goodCost = response.data.results.goodCost;//货款总金额
                             this.commission = response.data.results.commission;//提成费用合计总额
                             this.rebates = response.data.results.rebates;//回扣
-                            this.marketingCost = response.data.results.marketingCost;//固定代销费
+                            //this.marketingCost = response.data.results.marketingCost;//固定代销费
                         } else {
                             Toast({
                                 message: response.data.error_msg,
@@ -168,9 +134,6 @@
                             });
                         }
                     })
-                    .catch(function (response) {
-                        console.log(response);
-                    });
             },
 
             //计算结算费用与提交车次申请

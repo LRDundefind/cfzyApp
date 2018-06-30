@@ -53,7 +53,7 @@
 <script>
     import {damage} from '@/services/apis/damage.api'
     import noDate from '@/components/noData/noDate'
-    import { Loadmore , Indicator,MessageBox} from 'mint-ui'
+    import { Loadmore ,Toast, Indicator,MessageBox} from 'mint-ui'
     import Cookies from 'js-cookie'
 
     export default {
@@ -164,26 +164,50 @@
                 });
             },
             //售完结算
+
             sold(item){
-                let data={};
-                data.trainsNum = item.trainsNum;
-                data.plateNum = item.plateNum;
-                data.putStorageTime = item.putStorageTime;
-                data.tid = item.tid;
-
-                if(this.roleId == 'role_sel'){
-                    this.$router.push({
-                        name: 'settlementList/detail',
-                        params: {
-                            id: item.tid, item: data,
+                let data = {
+                    tid: item.tid,
+                };
+                damage.testClearing(data)
+                    .then(response => {
+                        if (response.data.status == 'Y') {
+                            if(response.data.results.status == 'Y'){
+                                let data={};
+                                data.trainsNum = item.trainsNum;
+                                data.plateNum = item.plateNum;
+                                data.putStorageTime = item.putStorageTime;
+                                data.tid = item.tid;
+                                if(this.roleId == 'role_sel'){
+                                    this.$router.push({
+                                        name: 'settlementList/detail',
+                                        params: {
+                                            id: item.tid, item: data,
+                                        }
+                                    });
+                                }else {
+                                    this.$router.push({
+                                        name: 'carClearing',
+                                        params: {
+                                            tid: item.tid,
+                                        }
+                                    });
+                                }
+                            }else {
+                                Toast({
+                                    message:  '当前车次含有暂存订单/未支付订单',
+                                    position: 'middle',
+                                    duration: 1500
+                                });
+                            }
+                        } else {
+                            Toast({
+                                message:  response.data.error_msg,
+                                position: 'middle',
+                                duration: 1500
+                            });
                         }
-                    });
-                }else {
-                    this.$router.push({
-                        name: 'carClearing',
-                    });
-                }
-
+                    })
             },
 
         }

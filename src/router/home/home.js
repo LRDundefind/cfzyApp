@@ -98,7 +98,7 @@ export default [{
         showFooter: false,
     }
 },{
-    path: 'carClearing',
+    path: 'carClearing/:tid',
     name: 'carClearing',
     components: {
         mainView: carClearing
