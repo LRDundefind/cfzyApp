@@ -49,12 +49,12 @@
                     <p class="clearfix">回扣
                         <span class="name">{{rebates}}</span>
                     </p>
-                    <p class="clearfix">车费
-                        <span class="name">测试1000.00</span>
+
+                    <p class="clearfix" v-for="item in storage" :key='item.tid' v-show="storage != ''">{{item.expendName}}
+                        <span class="name">{{item.amount}}</span>
                     </p>
-                    <p class="clearfix">卸车费
-                        <span class="name">测试1000.00</span>
-                    </p>
+
+
                     <p class="clearfix">固定代销费<input type="number" maxlength="12" placeholder="请输入固定代销费" v-model="marketingCost"></p>
 
                 </div>
@@ -99,6 +99,7 @@
     export default {
         data () {
             return {
+                storage:[],
                 tid:'',
                 confirmDisabled:false,
                 amountClearing:'',//结算金额
@@ -128,7 +129,7 @@
                             this.goodCost = response.data.results.goodCost;//货款总金额
                             this.commission = response.data.results.commission;//提成费用合计总额
                             this.rebates = response.data.results.rebates;//回扣
-                            //this.marketingCost = response.data.results.marketingCost;//固定代销费
+                            this.storage = response.data.results.storage;//
                         } else {
                             Toast({
                                 message: response.data.error_msg,
