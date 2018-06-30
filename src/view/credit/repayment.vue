@@ -78,7 +78,7 @@
                 </div>
 
                 <div class="update">
-                    <mt-button class="sure" type="primary" size="large" @click="confirm">确认还款</mt-button>
+                    <mt-button class="sure" type="primary" size="large" @click="confirm" :disabled="confirmDisabled">确认还款</mt-button>
                 </div>
 
             </div>
@@ -95,6 +95,7 @@
     export default {
         data () {
             return {
+                confirmDisabled:false,
                 cid:'',//客户id
                 bearerId:'',//承赊方id
                 bearerName:'',//承赊方名字
@@ -236,6 +237,7 @@
                             duration: 1000
                         });
                     } else {
+                        this.confirmDisabled = true;
                         let data = {
                             cid:this.cid,//客户id
                             refundAmount:this.refundAmount,//还款金额
@@ -254,8 +256,10 @@
                                     });
                                     setTimeout(() => {
                                         this.$router.push({name: 'creditOrder'});
+                                        this.confirmDisabled = false;
                                     }, 1000)
                                 } else {
+                                    this.confirmDisabled = false;
                                     Toast({
                                         message: response.data.results,
                                         position: 'middle',
