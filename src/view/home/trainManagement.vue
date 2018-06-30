@@ -35,7 +35,7 @@
                                     <div>到达时间&nbsp;&nbsp;{{item.putStorageTime | capitalize}}</div>
                                 </div>
                                 <div class="btn" @click="settlementDetail(item)">编辑</div>
-                                <div v-show="item.settleStatus == 'status_not_selling'" class="btn1" @click="deleteTrain(item)">删除</div>
+                                <div v-show="item.settleStatus == 'status_not_selling'" class="btn1" @click="deleteTrain(item.tid)">删除</div>
                                 <div v-show="item.settleStatus == 'status_selling'" class="btn" @click="sold(item)">
                                     <span v-show="roleId == 'role_sel'">申请结算</span>
                                     <span v-show="roleId != 'role_sel'">售完结算</span>
@@ -137,8 +137,27 @@
 
             },
             //删除车次管理
-            deleteTrain(){
+            deleteTrain(tid){
                 MessageBox.confirm('确认删除？', '').then(() => {
+                    let data = {
+                        tid: tid
+                    };
+                    damage.deleteTrain(data).then(response => {
+                        if (response.data.status == 'Y') {
+                            Toast({
+                                message: '删除操作成功',
+                                position: 'middle',
+                                duration: 1500
+                            });
+                        } else {
+                            Toast({
+                                message: response.data.error_msg,
+                                position: 'middle',
+                                duration: 1000
+                            });
+                        }
+                    });
+
                     alert("确认删除");
                 }, () => {
                     alert("取消删除");

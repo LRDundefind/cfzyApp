@@ -85,6 +85,14 @@ export const damage = {
             data: serverMoudle(params) || {}
         });
     },
+    //删除车次
+    deleteTrain(params) {
+        return axios({
+            url: 'rest/CHENGFENG_SET_SELEMAN_TRAIN_DEL',
+            method: 'post',
+            data: serverMoudle(params) || {}
+        });
+    },
 
 
 };
