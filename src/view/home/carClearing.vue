@@ -159,6 +159,7 @@
                     damage.countTrain(data)
                         .then(response => {
                             if (response.data.status == 'Y') {
+                                this.$router.push({name: 'trainManagement'});
                             } else {
                                 Toast({
                                     message: response.data.error_msg,
@@ -167,11 +168,7 @@
                                 });
                             }
                         })
-
                 }
-
-
-
             },
 
             goTrain(){
