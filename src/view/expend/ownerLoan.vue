@@ -8,7 +8,7 @@
 				<img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
             </p>
             <p class="clearfix">待结算金额
-                <span class="name allAmount">￥{{allAmount}}</span>
+                <span class="name allAmount">￥{{notPayAmount}}</span>
             </p>
             <p class="clearfix">支付方式
                 <span class="name">
@@ -38,6 +38,7 @@
 
 <script>
 	import { Toast } from 'mint-ui'
+    import {expend} from '@/services/apis/expend.js'
 	export default {
         data () {
             return {
@@ -52,7 +53,7 @@
 					remark:'', //备注
             	},
             	ownerName:'',  //货主名称
-            	allAmount:3000,  //待结算金额
+            	notPayAmount:'',  //待结算金额
             	typeOfPay:[{
             		value:'type_alipay',
             		label:'支付宝'
@@ -72,6 +73,7 @@
         created () {},
         mounted () {
         	//获取货主信息
+            this.notPayAmount = this.$route.params.notPayAmount || 0;
     		this.form.goodOwnerId = this.$route.params.sid || '';
     		this.ownerName = this.$route.params.shipName || '点击选择货主';
     	},
@@ -107,7 +109,7 @@
 						position: 'middle',
 						duration: 1000
 	    			});
-        		}else if(this.form.amount == ''){
+        		}else if(this.form.amount == '' || this.form.amount<=0){
         			Toast({
 						message: '请输入金额',
 						position: 'middle',
@@ -120,14 +122,27 @@
 						duration: 1000
 	    			});
         		}else{
-                    expend.selemanRemit(this.form).then(response => {
-                        if (response.data.status == 'Y') {
-                            this.$message({
-                                message: '提交成功',
-                                type: 'success'
-                            });
-                        } 
-                    })
+                    if (this.form.expendType != 'type_cash' && this.form.payeeAccount == '') {
+                        Toast({
+                            message: '请输入收款账号',
+                            position: 'middle',
+                            duration: 1000
+                        });
+                    }else{
+                        expend.selemanRemit(this.form).then(response => {
+                            if (response.data.status == 'Y') {
+                                Toast({
+                                    message: '提交成功',
+                                    position: 'middle',
+                                    duration: 1000
+                                });
+                                this.$router.push({
+                                    name: 'home'
+                                });
+                            } 
+                        })
+                    }
+                    
         		}
         	}
 	    },

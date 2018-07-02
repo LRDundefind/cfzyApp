@@ -15,10 +15,10 @@
             </div>
 
             <div class="login_cont">
-               <div class="bg1">
+               <!-- <div class="bg1">
 					<span class="usericonBg"></span>
 					<input v-model="userName" placeholder="请输入您的姓名" class="usericon ">
-				</div>
+				</div> -->
 
 				<div class="bg3">
 					<span class="usericonBg"></span>
@@ -32,7 +32,7 @@
                     <span class="passIconBgEYE"  v-bind:class="[ isActive ? 'hui' : 'green']" @click="changeType"></span>
 				</div>
 
-				<div  @click="loginBtn" class="loginbtn">注 册</div>
+				<div  @click="loginBtn" class="loginbtn">下一步</div>
                 <div class="goxieyi">
                     <p>点击上面的“注册”按钮，既表示你同意</p>
                     <a @click="showserver = true">程丰智运档主服务使用协议</a>
@@ -189,53 +189,58 @@ export default {
             })
         },
        loginBtn(){
-           if(this.userName==''){
-					 Toast({
-                        message: '姓名不可为空',
-                        position: 'middle',
-                        duration: 5000
-                        });
-				}
+
 				// else if(!(new RegExp( /^1[3|4|5|7|8][0-9]{9}$/).test(this.userName))){
 				// 	Toast({
                 //         message: '账号输入有误',
                 //         position: 'middle',
-                //         duration: 5000
+                //         duration: 1000
                 //         });
                 // }
-                else if(this.phone==''){
+                if(this.phone==''){
 					Toast({
                         message: '请输入手机号',
                         position: 'middle',
-                        duration: 5000
+                        duration: 1000
                         });
                 }
                 else if(!new RegExp(/^1[3|4|6|5|7|8|9][0-9]{9}$/).test(this.phone)){
                     Toast({
                         message: '手机号格式输入有误',
                         position: 'middle',
-                        duration: 5000
+                        duration: 1000
                         });
-                }
-				else if(this.passWord==''){
-					Toast({
-                        message: '密码不可为空',
-                        position: 'middle',
-                        duration: 5000
-                        });
-                }
-                else if(!(new RegExp(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/).test(this.passWord))){
-					Toast({
-								message: '密码格式不正确，请输入6-16位数字和字母的组合',
-								position: 'middle',
-                                duration: 5000
-							});
-				}
-                else{
-                     Cookies.set('Zname',this.userName);
-                     Cookies.set('Zphone',this.phone);
-                     Cookies.set('Zpassword', this.passWord);
-                    this.$router.push({name:'yanzheng',params: { phone: this.phone,firstlogin:'Y' }});
+                }else{
+                    my.numberCheck({phone:this.phone}).then(response => {
+                        if(response.data.results.status == 'dne'){
+                            if(this.passWord==''){
+                                Toast({
+                                    message: '密码不可为空',
+                                    position: 'middle',
+                                    duration: 1000
+                                });
+                            }
+                            else if(!(new RegExp(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/).test(this.passWord))){
+                                Toast({
+                                    message: '密码格式不正确，请输入6-16位数字和字母的组合',
+                                    position: 'middle',
+                                    duration: 1000
+                                });
+                            }else{
+                                Cookies.set('Zname',this.userName);
+                                Cookies.set('Zphone',this.phone);
+                                Cookies.set('Zpassword', this.passWord);
+                                this.$router.push({name:'yanzheng',params: { phone: this.phone,firstlogin:'Y' }});
+                            }
+                        }else{
+                            Toast({
+                                message: '账号已存在',
+                                position: 'middle',
+                                duration: 1000
+                            });
+                        }
+                    })
+                    
                 }
            
        }

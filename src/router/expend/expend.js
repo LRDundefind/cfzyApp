@@ -3,6 +3,7 @@ const expend = resolve => require([ '@/view/expend/expend'],resolve)
 const ordinaryExpenditure = resolve => require([ '@/view/expend/ordinaryExpenditure'],resolve)
 const ownerLoan = resolve => require([ '@/view/expend/ownerLoan'],resolve)
 const ownerList = resolve => require([ '@/view/expend/ownerList'],resolve)
+const selemanType = resolve => require([ '@/view/expend/selemanType'],resolve)
 
 
 export default [{
@@ -36,6 +37,15 @@ export default [{
 	name:'ownerList',
 	components: {
 		mainView: ownerList
+	},
+	meta: {
+		showFooter: false
+	}
+},{
+	path:'selemanType',
+	name:'selemanType',
+	components: {
+		mainView: selemanType
 	},
 	meta: {
 		showFooter: false

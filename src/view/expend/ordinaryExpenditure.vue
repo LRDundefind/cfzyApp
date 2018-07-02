@@ -3,17 +3,14 @@
 	<div class="page-main page-loadmore-wrapper">
         <div class="basic-list" >
             <p class="clearfix pos-r payment" @click="form.tfAdvances = !form.tfAdvances">
-            <img v-if="form.tfAdvances" src="../../assets/xiadan_xuanzhong_btn@2x.png" class="radioSelect pos-a">
+            <img v-if="form.tfAdvances == 'Y'" src="../../assets/xiadan_xuanzhong_btn@2x.png" class="radioSelect pos-a">
             <img v-else src="../../assets/xiadan_weixuanzhong_btn@2x.png" class="radioSelect pos-a">
              该费用为货主垫付</p>
         </div>
         <div class="basic-list" >
 
-            <p class="clearfix">费用类型
-                <span class="name">
-                <select class=" m-l-10 jin-select" v-model="form.eid">
-					<option v-for="item in typeOfCost" :label="item.label" :value="item.value"></option>
-				</select>
+            <p class="clearfix" @click="chooseSelemanType">费用类型
+                <span class="name">{{expendName}}
 				<img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
             </p>
 			<p class="clearfix" @click="choosetrainNumber">车次
@@ -48,14 +45,15 @@
 
 <script>
 	import { Toast } from 'mint-ui'
+    import {expend} from '@/services/apis/expend.js'
 	import Cookies from 'js-cookie'
 	export default {
         data () {
             return {
             	form:{
             		roleId:'', //角色id
-					tfAdvances:false, //是否为垫付
-					eid:'选项1', //费用类型
+					tfAdvances:'Y', //是否为垫付
+					eid:'', //费用类型
 					tid:'', //车次id
 					expendType:'type_alipay', //支付方式
 					payeePhone:'', //收款人电话
@@ -65,6 +63,7 @@
 					payeeAccount:'', //收款账号
 					remark:'', //备注
             	},
+                expendName:'',  //费用类型
             	trainsNum:'',  // 车次
             	typeOfPay:[{
             		value:'type_alipay',
@@ -78,20 +77,7 @@
             	},{
             		value:'type_card',
             		label:'银行卡'
-            	}],
-            	typeOfCost:[{
-		          	value: '选项1',
-		          	label: '卸妆费'
-		        }, {
-			        value: '选项2',
-			        label: '车费'
-		        }, {
-		            value: '选项3',
-		            label: '路费'
-		        }, {
-		            value: '选项4',
-		            label: '其他'
-		        }]  //费用类型
+            	}]
             }
         },
         created () {},
@@ -99,7 +85,9 @@
         	//获取车次信息
     		this.form.tid = Cookies.get('trainTid') || '';
     		this.trainsNum = Cookies.get('trainsNum') || '点击选择车次';
-        
+            //获取费用类型
+            this.form.eid = Cookies.get('eid') || '';
+            this.expendName = Cookies.get('expendName') || '点击选择费用类型';
         },
 
         methods: {
@@ -115,6 +103,12 @@
 	            	} 
 	            });
 	        },
+            //选择费用类型
+            chooseSelemanType(){
+                this.$router.push({
+                    name: 'selemanType',
+                });
+            },
 	        submit(){
 	        	if (this.form.eid == '') {
         			Toast({
@@ -140,7 +134,7 @@
 						position: 'middle',
 						duration: 1000
 	    			});
-        		}else if(this.form.amount == ''){
+        		}else if(this.form.amount == '' || this.form.amount<=0){
         			Toast({
 						message: '请输入金额',
 						position: 'middle',
@@ -153,14 +147,26 @@
 						duration: 1000
 	    			});
         		}else{
-                    expend.selemanPay(this.form).then(response => {
-                        if (response.data.status == 'Y') {
-                            this.$message({
-                                message: '提交成功',
-                                type: 'success'
-                            });
-                        } 
-                    })
+                    if (this.form.expendType != 'type_cash' && this.form.payeeAccount == '') {
+                        Toast({
+                            message: '请输入收款账号',
+                            position: 'middle',
+                            duration: 1000
+                        });
+                    }else{
+                        expend.selemanPay(this.form).then(response => {
+                            if (response.data.status == 'Y') {
+                                Toast({
+                                    message: '提交成功',
+                                    position: 'middle',
+                                    duration: 1000
+                                });
+                                this.$router.push({
+                                    name: 'home'
+                                });
+                            } 
+                        })
+                    }
         		}
 	        }
 	    },

@@ -127,6 +127,9 @@ body {
 .textLeft{
     text-align: left;
 }
+.textCenter{
+    text-align: center;
+}
 .left{
   left: 0;
 }
