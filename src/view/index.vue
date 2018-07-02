@@ -43,7 +43,7 @@
                 订单
             </mt-tab-item>
             <mt-tab-item id="knot"  v-show="roleId !='role_sel'">
-                <img v-if="selected == 'orders'" slot="icon" src="../assets/shouru_shouru_green_icon@2x.png">
+                <img v-if="selected == 'knot'" slot="icon" src="../assets/shouru_shouru_green_icon@2x.png">
                 <img v-else slot="icon" src="../assets/kehu_shouru_icon@2x.png">
                 订单
             </mt-tab-item>
@@ -134,7 +134,11 @@ export default {
             deep:true
         },
         '$route' (to, from) {
-            this.selected=this.$route.name
+            if (this.$route.name == 'orderKnot' || 'creditKnot') {
+                this.selected == 'knot'
+            }else{
+                this.selected=this.$route.name
+            }
 			this.fetchDate()
 		}
 }

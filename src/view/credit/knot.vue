@@ -52,7 +52,7 @@
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
     .page-content {
-        height: calc(100vh - 0.8rem);
+        height: calc(100vh - 150px);
         top: 0.8rem;
     }
     .mint-navbar{
