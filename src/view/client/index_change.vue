@@ -36,7 +36,7 @@
                    <!-- 增加时电话不可编辑 -->
                    <p class="clearfix" v-if="phoneAdd==''">电话<input type="number" v-model="phone" placeholder="请输入" maxlength="11"></p>
                    <!-- 修改时可以 -->
-                   <p class="clearfix" v-else>电话<span class="Unchange">{{phone}}</span></p>
+                   <p class="clearfix" v-else>电话<span class="Unchange" @click="changePhone">{{phone}}</span></p>
                </div>
                 
                 
@@ -372,6 +372,9 @@
                 // }
                 this.$router.push({name: 'client'});
             },
+            changePhone(){
+                this.addPerson = true;
+            },
             showa(){
                 //新增的确定按钮
                 if(this.phoneAdd==''){
@@ -381,7 +384,7 @@
                         duration: 3000
                         });
                 }
-                else if(!new RegExp(/^1[3|4|5|7|8|9][0-9]{9}$/).test(this.phoneAdd)){
+                else if(!new RegExp(/^1[0-9]{10}$/).test(this.phoneAdd)){
                     Toast({
                         message: '手机号格式输入有误',
                         position: 'middle',
