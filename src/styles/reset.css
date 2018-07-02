@@ -538,6 +538,10 @@ input,textarea {
   position: fixed;
   overflow: auto;
 }
+.mint-indicator{
+  position: fixed;
+  z-index: 999;
+}
 .bottom0{
   bottom: 0;  
 }
