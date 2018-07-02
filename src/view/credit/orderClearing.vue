@@ -9,7 +9,7 @@
             <div class="order-detail">
                 <div class="ub term no-border">
                     <div class="ub-f1">卖手</div>
-                    <div>{{detail.selName}}</div>
+                    <div>{{detail.nickname}}</div>
                 </div>
             </div>
             <!--信息二-->
@@ -81,12 +81,12 @@
                 }],
 
                 detail: {
-                    selName:'',
+                    nickname:'',
                     salesAmount:'',
                     packCost:'',
                     weighCost:'',
                     deliveryCost:'',
-                    salesAmount:'',
+                    goodCast:'',
 
 
                 },//订单详情数据
