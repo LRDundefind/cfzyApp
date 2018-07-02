@@ -6,11 +6,11 @@
         <div class="page-main page-loadmore-wrappe topScroll">
             <div v-for="item in ownerList" :key='item.gid' class="main-list">
                 <div @click="handleCommand(item)">
-                    <div class="stall ub">
-                        <div class="ub-f1">{{item.gearName}}</div>
-                        <div class="ub-f1 userName">{{item.ownerName}} <span class="place">&nbsp(档主)</span></div>
+                    <div class="stall">{{item.gearName}}
                     </div>
-                    <div class="place"> <span>{{item.position}}</span> <span v-show="item.position != ''">—</span> {{item.markName}}
+                    <div class="place" v-show="item.position != '' || item.markName!=''"> <span>{{item.position}}</span> <span v-show="item.position != ''">—</span> {{item.markName}}
+                    </div>
+                    <div class="place">档主：{{item.ownerName}}
                     </div>
                 </div>
             </div>
@@ -50,6 +50,8 @@
             handleCommand(command){
                 var temp = command;
                 Cookies.set('gidOwnID_lists', temp);
+                Cookies.set('roleId', temp.roleId);
+                Cookies.set('owner_id', temp.ownerId);
                 //清除下单页面相关cookies
                 Cookies.remove('trainTid');
 	        	Cookies.remove('trainsNum');
@@ -76,11 +78,12 @@
     .main-list {
         background: #fff;
         margin-top: 0.2rem;
-        padding: 0.3rem;
+        padding: 0.2rem;
+        padding-bottom: 0;
         .stall {
             font-size: 0.3rem;
             color: #333333;
-            padding: 0.02rem 0 0.28rem 0;
+            padding: 0.02rem 0 0.20rem 0;
             min-height: 0.4rem;
             .userName{
                 text-align: right;
@@ -89,7 +92,7 @@
         .place {
             font-size: 0.26rem;
             color: #666666;
-            padding-bottom: 0.02rem;
+            padding-bottom: 0.20rem;
         }
     }
 

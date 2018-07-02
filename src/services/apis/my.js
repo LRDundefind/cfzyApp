@@ -42,6 +42,13 @@ export const my = {
             data: serverMoudle(params) || {}
         });
     },
-
+    //验证手机号
+    numberCheck(params){
+        return axios({
+            url: '/rest/CHENGFENG_NUMBER_CHECK',
+            method: 'get',
+            params: params || {}
+        });
+    }
 
 };

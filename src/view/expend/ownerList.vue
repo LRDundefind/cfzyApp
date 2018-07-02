@@ -15,7 +15,7 @@
 				:bottomDistance= 50
 				ref="loadmore">
 			<ul class="order-list">
-				<li v-for="list in listStore" @click="chooseOwner(list.sid, list.shipName)" :key="list.id">
+				<li v-for="list in listStore" @click="chooseOwner(list.sid, list.shipName, list.notPayAmount)" :key="list.id">
 					<div class="ub ub-ac list-top">
 						<div>{{list.shipName}}</div>
 					</div>
@@ -104,7 +104,7 @@ export default {
 				})
 		},
 		//选择货主
-		chooseOwner(sid, shipName){
+		chooseOwner(sid, shipName, notPayAmount){
 
 			// Cookies.set('trainTid',tid);
 			// Cookies.set('trainsNum',trainsNum);
@@ -115,7 +115,8 @@ export default {
             	name: 'ownerLoan',
 				params: {
 					sid:sid,
-					shipName:shipName
+					shipName:shipName,
+					notPayAmount:notPayAmount
 				}
             });
          

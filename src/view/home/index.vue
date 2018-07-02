@@ -215,6 +215,9 @@
             Cookies.remove('trainTid');
             Cookies.remove('trainsNum');
             Cookies.remove('plateNum');
+            //  删除费用类型cookie
+            Cookies.remove('eid');
+            Cookies.remove('expendName');
         },
         methods: {
             //获取头像

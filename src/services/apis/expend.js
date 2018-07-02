@@ -28,4 +28,12 @@ export const expend = {
             data: serverMoudle(params) || {}
         });
     },
+    //获取费用类型
+    selemanType(params) {
+        return axios({
+            url: 'rest/CHENGFENG_GET_SELEMAN_TYPE',
+            method: 'post',
+            data: serverMoudle(params) || {}
+        });
+    },
 };
