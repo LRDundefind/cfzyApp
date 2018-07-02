@@ -9,6 +9,7 @@ const orderClearing = resolve => require([ '@/view/credit/orderClearing'],resolv
 const knot = resolve => require([ '@/view/credit/knot'],resolve);
 const orderKnot = resolve => require([ '@/view/credit/orderKnot'],resolve);
 const creditKnot = resolve => require([ '@/view/credit/creditKnot'],resolve);
+const print = resolve => require([ '@/view/credit/print'],resolve);
 
 export default [
     {
@@ -83,6 +84,15 @@ export default [
                 showFooter: false
             }
         }]
+    },{
+        path: 'print/:oid',
+        name: 'print',
+        components: {
+            mainView: print
+        },
+        meta: {
+            showFooter: false
+        }
     },
 
 ]

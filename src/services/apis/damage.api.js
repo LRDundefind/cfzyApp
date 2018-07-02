@@ -101,6 +101,15 @@ export const damage = {
             data: serverMoudle(params) || {}
         });
     },
+    //打印订单的结算单
+    printClearing(params) {
+        return axios({
+            url: 'rest/CHENGFENG_SET_SELEMAN_KNOT_DOC',
+            method: 'post',
+            data: serverMoudle(params) || {}
+        });
+    },
+
 
 
 };

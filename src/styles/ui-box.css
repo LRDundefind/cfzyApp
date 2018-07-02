@@ -111,6 +111,14 @@
 	-moz-box-flex: 4;
 	width: 0;
 }
+.ub-f13{
+	position: relative;
+	-webkit-box-flex: 13;
+	box-flex: 13;
+	-ms-flex: 13;
+	-moz-box-flex: 13;
+	width: 0;
+}
 
 .ub-img {
 	-webkit-background-size: contain;
