@@ -192,7 +192,7 @@
                 });
             },
             print(oid){
-                this.$router.push({name: 'print', params: {oid:oid}});
+                this.$router.push({name: 'print', params: {oid:oid,come:'knot'}});
             },
         },
     }

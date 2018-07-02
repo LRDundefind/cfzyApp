@@ -1,9 +1,7 @@
 <template>
     <div class="page-content">
         <mt-header fixed title="订单结算">
-            <router-link to="/cashAccount" slot="left">
-                <mt-button icon="back"></mt-button>
-            </router-link>
+            <mt-button icon="back" @click="backPrint" slot="left"></mt-button>
         </mt-header>
         <!--车次结算列表-->
         <div class="page-main page-loadmore-wrappe topScroll">
@@ -105,12 +103,14 @@
                     company_info:{}
                 },
                 oid:'',//订单id
+                come:'',
                 trainList: [],
             }
         },
 
         mounted () {
             this.oid = this.$route.params.oid;
+            this.come = this.$route.params.come || false;
             this.getList();
         },
 
@@ -133,6 +133,17 @@
             print(){
                 if (typeof XDYApp !== 'undefined') {
                     XDYApp.printer(this.listData);
+                }
+            },
+            backPrint(){
+                if(this.come){
+                    this.$router.push({
+                        name: 'orderKnot',
+                    });
+                }else {
+                    this.$router.push({
+                        name: 'cashAccount',
+                    });
                 }
             },
 
