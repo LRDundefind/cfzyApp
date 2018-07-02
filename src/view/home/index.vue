@@ -112,7 +112,7 @@
             <!--货品——财务兼卖手与财务-->
             <div class="goods" v-show="roleId != 'role_sel'">
                 <div class="ub">
-                    <div class="ub-f1" :class= "[ this.roleId=='role_finance_sell'? 'left-finance' : 'order-left'] " >
+                    <div class="ub-f1" :class= "[ this.roleId=='role_finance_sell' || 'role_owner' ? 'left-finance' : 'order-left'] " >
                         <div class="bd-b" @click="goStorage">
                             <div>
                                 <img class="goods-image left-imge" src="../../assets/index/goods_storage.png"/>
@@ -349,6 +349,8 @@
             font-size: 0.42rem;
             color: #33d57c;
             min-height: 0.48rem;
+            word-break:break-all;
+            word-wrap:break-word;
         }
         .words {
             font-size: 0.24rem;

@@ -35,7 +35,7 @@
                                     <div>到达时间&nbsp;&nbsp;{{item.putStorageTime | capitalize}}</div>
                                 </div>
                                 <div class="btn" @click="settlementDetail(item)">编辑</div>
-                                <div v-show="item.settleStatus == 'status_not_selling'" class="btn1" @click="deleteTrain(item)">删除</div>
+                                <div v-show="item.settleStatus == 'status_not_selling'" class="btn1" @click="deleteTrain(item.tid)">删除</div>
                                 <div v-show="item.settleStatus == 'status_selling'" class="btn" @click="sold(item)">
                                     <span v-show="roleId == 'role_sel'">申请结算</span>
                                     <span v-show="roleId != 'role_sel'">售完结算</span>
@@ -53,7 +53,7 @@
 <script>
     import {damage} from '@/services/apis/damage.api'
     import noDate from '@/components/noData/noDate'
-    import { Loadmore , Indicator,MessageBox} from 'mint-ui'
+    import { Loadmore ,Toast, Indicator,MessageBox} from 'mint-ui'
     import Cookies from 'js-cookie'
 
     export default {
@@ -137,34 +137,85 @@
 
             },
             //删除车次管理
-            deleteTrain(){
+            deleteTrain(tid){
                 MessageBox.confirm('确认删除？', '').then(() => {
-                    alert("确认删除");
+                    let data = {
+                        tid: tid
+                    };
+                    damage.deleteTrain(data).then(response => {
+                        if (response.data.status == 'Y') {
+                            Toast({
+                                message: '删除操作成功',
+                                position: 'middle',
+                                duration: 1500
+                            });
+                            this.listStore = [];
+                            this.params.current_page = 1;
+                            this.getList();
+                            this.$refs.loadmore.onTopLoaded();// 固定方法，查询完要调用一次，用于重新定位
+                            this.allLoaded = false;//下拉刷新时解除上拉加载的禁用
+                        } else {
+                            Toast({
+                                message: response.data.error_msg,
+                                position: 'middle',
+                                duration: 1000
+                            });
+                        }
+                    });
+
                 }, () => {
-                    alert("取消删除");
+                    Toast({
+                        message: '取消删除',
+                        position: 'middle',
+                        duration: 1500
+                    });
                 });
             },
             //售完结算
+
             sold(item){
-                let data={};
-                data.trainsNum = item.trainsNum;
-                data.plateNum = item.plateNum;
-                data.putStorageTime = item.putStorageTime;
-                data.tid = item.tid;
-
-                if(this.roleId == 'role_sel'){
-                    this.$router.push({
-                        name: 'settlementList/detail',
-                        params: {
-                            id: item.tid, item: data,
+                let data = {
+                    tid: item.tid,
+                };
+                damage.testClearing(data)
+                    .then(response => {
+                        if (response.data.status == 'Y') {
+                            if(response.data.results.status == 'Y'){
+                                let data={};
+                                data.trainsNum = item.trainsNum;
+                                data.plateNum = item.plateNum;
+                                data.putStorageTime = item.putStorageTime;
+                                data.tid = item.tid;
+                                if(this.roleId == 'role_sel'){
+                                    this.$router.push({
+                                        name: 'settlementList/detail',
+                                        params: {
+                                            id: item.tid, item: data,
+                                        }
+                                    });
+                                }else {
+                                    this.$router.push({
+                                        name: 'carClearing',
+                                        params: {
+                                            tid: item.tid,
+                                        }
+                                    });
+                                }
+                            }else {
+                                Toast({
+                                    message:  '当前车次含有暂存订单/未支付订单',
+                                    position: 'middle',
+                                    duration: 1500
+                                });
+                            }
+                        } else {
+                            Toast({
+                                message:  response.data.error_msg,
+                                position: 'middle',
+                                duration: 1500
+                            });
                         }
-                    });
-                }else {
-                    this.$router.push({
-                        name: 'carClearing',
-                    });
-                }
-
+                    })
             },
 
         }

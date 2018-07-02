@@ -1,7 +1,5 @@
 <template>
     <div class="page-content storage">
-
-
         <mt-header fixed title="货品入库" v-if="selected">
             <mt-button icon="back" slot="left" @click="goHome"></mt-button>
             <mt-button slot="right" style="font-size: 0.32rem" @click="confirmStorage" :disabled="confirmDisabled">
@@ -48,14 +46,13 @@
                                 <span class="name" v-show="status == 'status_not_selling'">未开卖</span>
                             </p>
                         </div>
-
-                        <div class="basic-list" @click="gologistics" v-show="tid ==''">
+                        <div class="basic-list" @click="gologistics" v-show="tid == ''">
                             <p class="clearfix">物流
                                 <span class="name">{{trainShow}}<img class="right-icon"
                                                                      src="../../assets/index/gray-right-icon.png"/></span>
                             </p>
                         </div>
-                        <div class="basic-list" @click="goList" v-show="tid ==''">
+                        <div class="basic-list" @click="goList" v-show="tid == ''">
                             <p class="clearfix">货主
                                 <span class="name">{{stall.name}}<img class="right-icon"
                                                                       src="../../assets/index/gray-right-icon.png"/></span>
@@ -132,25 +129,18 @@
                 </div>
                 <!--货品信息-->
                 <div v-if="selected == 'goods'">
-                    <div v-for="item in goods" :key='item.goodId' class="goods-list" v-show="status!='status_selling'">
+                    <div v-for="item in goods" :key='item.goodId' class="goods-list">
                         <p @click="editGoods(item)" class="clearfix">{{item.goodName}}
                             <span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
                             <span>{{item.goodNum}} {{item.numUnit | sellNnit}}</span>
                         </p>
                     </div>
-
-                    <div v-for="item in goods" :key='item.goodId' class="goods-list" v-show="status =='status_selling'">
-                        <p class="clearfix">{{item.goodName}}
-                            <span><img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
-                            <span>{{item.goodNum}} {{item.numUnit | sellNnit}}</span>
-                        </p>
-                    </div>
-
                     <div class="login_pass" v-show="selected == 'goods'">
                         <div v-show="status !='status_selling'" @click="createGoods" class="loginbtn">添加货品</div>
                     </div>
 
                 </div>
+
 
                 <!--货主列表-->
                 <div v-if="ownerList">
@@ -179,7 +169,7 @@
     export default {
         data () {
             return {
-                confirmDisabled: false,
+                confirmDisabled:false,
 //                wrapperHeight: 0,//容器高度
 
                 trainShow: '请选择',
@@ -224,6 +214,7 @@
             'goods-details': goodsDetails,
         },
         mounted () {
+//            this.wrapperHeight = document.documentElement.clientHeight - 40;
             this.tid = this.$route.params.tid || false;
             this.status = this.$route.params.status || false;
 
@@ -233,7 +224,6 @@
                 console.log(this.status);
                 console.log(12345)
             }
-//            this.wrapperHeight = document.documentElement.clientHeight - 40;
 
             console.log(this.item);
             if (this.$route.params.item) {
@@ -303,7 +293,6 @@
                         console.log(response);
                     });
             },
-
             //货主列表返回
             ownerBack(){
                 this.ownerList = false;
@@ -353,10 +342,17 @@
             },
             //编辑货品
             editGoods(item){
-//                console.log(item);
-                this.editItem = item;
-                this.selected = false;
-                this.goodsDetails = true;
+                if(this.status =='status_selling'){
+                    Toast({
+                        message: '商品售卖中！',
+                        position: 'middle',
+                        duration: 2000
+                    });
+                }else {
+                    this.editItem = item;
+                    this.selected = false;
+                    this.goodsDetails = true;
+                }
             },
 
             //显示货主列表
@@ -366,14 +362,7 @@
             },
             //跳转到车次
             gologistics(){
-                if (this.trainsNum && this.status) {
-                    this.$router.push({
-                        name: 'logistics/fromc',
-                        params: {fromc: 'order', trainsNum: this.trainsNum, status: this.status}
-                    });
-                } else {
-                    this.$router.push({name: 'logistics/fromc', params: {fromc: 'order'}});
-                }
+                this.$router.push({name: 'logistics/fromc', params: {fromc: 'order'}});
             },
 
             //跳转到订单详情
@@ -536,10 +525,7 @@
                         tid:this.tid,
                         logistics_info:this.stall,
                         goods_info:this.goods,
-                    }
-
-                    console.log(data);
-                    console.log(123456);
+                    };
 
                     damage.editTrain(data).then(response => {
                         if (response.data.status == 'Y') {
@@ -565,7 +551,6 @@
                 }
 
             },
-
 
             upload1 (e, ty) {
                 if (ty == 'source') {
@@ -631,7 +616,7 @@
                 this.detect = '';
                 this.ship = '';
             },
-            rotateImg (img, direction, canvas) {
+            rotateImg (img, direction,canvas) {
                 //最小与最大旋转方向，图片旋转4次后回到原方向
                 const min_step = 0;
                 const max_step = 3;
@@ -756,17 +741,15 @@
     }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
-    .topScroll {
+    .topScroll{
         height: calc(100vh - 50px);
         top: 40px;
         bottom: 0rem;
     }
-
-    .page-loadmore-wrappe {
+    .page-loadmore-wrappe{
         overflow: scroll;
-        -webkit-overflow-scrolling: touch;
+        -webkit-overflow-scrolling : touch;
     }
-
     .storage {
         input:disabled, textarea:disabled {
             background-color: white !important;

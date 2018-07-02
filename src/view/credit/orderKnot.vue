@@ -265,7 +265,6 @@
                     color: #49c98b;
                     font-weight: bold;
                     font-size: 0.3rem;
-                    border-bottom: 1px solid #dedede;
                 }
                 .money-btn {
                     float: right;

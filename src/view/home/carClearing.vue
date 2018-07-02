@@ -34,7 +34,7 @@
                     <p class="clearfix">备注</p>
                     <div class="remark">
                     <textarea maxlength="420" name="" id="" cols="30" rows="3" placeholder="货主备注信息"
-                              v-model="ownerInfo.remark"></textarea>
+                              v-model="ownerInfo.remark" readonly></textarea>
                     </div>
                 </div>
 
@@ -49,13 +49,13 @@
                     <p class="clearfix">回扣
                         <span class="name">{{rebates}}</span>
                     </p>
-                    <p class="clearfix">车费
-                        <span class="name">测试1000.00</span>
+
+                    <p class="clearfix" v-for="item in storage" :key='item.tid' v-show="storage != ''">{{item.expendName}}
+                        <span class="name">{{item.amount}}</span>
                     </p>
-                    <p class="clearfix">卸车费
-                        <span class="name">测试1000.00</span>
-                    </p>
-                    <p class="clearfix">固定代销费<input type="text" maxlength="12" placeholder="请输入固定代销费" v-model="marketingCost"></p>
+
+
+                    <p class="clearfix">固定代销费<input type="number" maxlength="12" placeholder="请输入固定代销费" v-model="marketingCost"></p>
 
                 </div>
 
@@ -66,7 +66,8 @@
                 <div class="basic-list">
 
                     <p class="clearfix">结算金额
-                        <span class="money">测试￥0.00</span>
+                        <span class="money" v-show="amountClearing ==''">￥0.00</span>
+                        <span class="money" v-show="amountClearing !=''">￥{{amountClearing}}</span>
                     </p>
 
                 </div>
@@ -79,9 +80,9 @@
                     </div>
                 </div>
 
-                <div class="login_pass ub">
-                    <div class="loginbtn1" @click="goTrain">取消</div>
-                    <div class="loginbtn " @click="settlement('clearing')">确认结算信息</div>
+                <div class='update clearfix ub'>
+                    <mt-button type="primary" size="large" class='btn1 ub-f1' @click="goTrain">取消</mt-button>
+                    <mt-button type="primary" size="large" class='btn2 ub-f1' @click="settlement('clearing')" :disabled="confirmDisabled">确认结算信息</mt-button>
                 </div>
 
             </div>
@@ -98,35 +99,20 @@
     export default {
         data () {
             return {
+                storage:[],
+                tid:'',
+                confirmDisabled:false,
+                amountClearing:'',//结算金额
                 ownerInfo: {},//货主信息
                 goodCost: '',//货款总金额
                 commission :'',//提成费用合计总额
                 rebates: '',//回扣
                 marketingCost: '',//固定代销费
                 remark:'',//结算备注
-
-                stall: {
-                    name: '请选择',
-                    good_sid: '',//货主id
-                    driverName: '',//司机姓名
-                    driverPhone: '',//司机电话
-                    plateNum: '',//车牌号
-                    startAddress: '',//发货地点
-                    origin: '',//产地
-
-                    originProve: '',//产地证明图片地址
-
-                    checkProve: '',//检验证明图片地址
-
-                    carrierContract: '',//承运合同图片地址
-
-                    remark: '',//备注
-                    goods: '',//货品信息
-                },
-
             }
         },
         mounted () {
+            this.tid = this.$route.params.tid || false;
             this.testClearing();
         },
 
@@ -136,22 +122,6 @@
                 let data = {
                     tid: this.tid,
                 };
-
-                this.ownerInfo = {
-                    shipName:'测试货主姓名',
-                    phone:'18236911783',//货主手机号
-                    supplierName:'供应商名称',
-                    acount:'账户信息',
-                    address:'北京地址',
-                    remark:'测测试备注',
-                };
-
-                this.goodCost = '货款总金额123';//货款总金额
-                this.commission = '提成费用合计总额123';//提成费用合计总额
-                this.rebates = '回扣132';//回扣
-                this.marketingCost = '固定代销费132';//固定代销费
-                return false;
-
                 damage.testClearing(data)
                     .then(response => {
                         if (response.data.status == 'Y') {
@@ -159,7 +129,7 @@
                             this.goodCost = response.data.results.goodCost;//货款总金额
                             this.commission = response.data.results.commission;//提成费用合计总额
                             this.rebates = response.data.results.rebates;//回扣
-                            this.marketingCost = response.data.results.marketingCost;//固定代销费
+                            this.storage = response.data.results.storage;//
                         } else {
                             Toast({
                                 message: response.data.error_msg,
@@ -168,40 +138,74 @@
                             });
                         }
                     })
-                    .catch(function (response) {
-                        console.log(response);
-                    });
             },
 
             //计算结算费用与提交车次申请
             settlement(apply){
-                let data = {
-                    tid: this.tid,
-                    marketingCost:this.marketingCost,
-                    remark:this.remark,
-                };
-                if(apply == 'compute'){
-                    data.computer ='Y'
-                }else {
-                    data.computer ='N'
-                }
-                console.log(data);
-                return false;
-                damage.submitBus(data)
-                    .then(response => {
-                        if (response.data.status == 'Y') {
-                            this.$router.push({name: 'settlementList'});
-                        } else {
-                            Toast({
-                                message: response.data.error_msg,
-                                position: 'middle',
-                                duration: 2000
-                            });
-                        }
-                    })
-                    .catch(function (response) {
-                        console.log(response);
+                if (!(new RegExp(/^\d+(?:.\d{1,2})?$/).test(this.marketingCost))) {
+                    Toast({
+                        message: '请输入正确的数字',
+                        position: 'middle',
+                        duration: 1000
                     });
+                }else {
+                    let data = {
+                        tid: this.tid,
+                        marketingCost:this.marketingCost,
+                        remark:this.remark,
+                    };
+                    if(apply == 'compute'){
+                        data.computer ='Y'
+                    }else {
+                        if(this.amountClearing == ''){
+                            Toast({
+                                message: '请先计算最终结算费用！',
+                                position: 'middle',
+                                duration: 1000
+                            });
+                            return false;
+                        }else {
+                            data.computer ='N';
+                            this.confirmDisabled = true;
+                        }
+
+                    }
+                    console.log(data);
+                    damage.countTrain(data)
+                        .then(response => {
+                            if (response.data.status == 'Y') {
+                                if(apply == 'compute'){
+                                    this.amountClearing = response.data.results.payAmount
+                                }else {
+                                    Toast({
+                                        message: '结算操作成功！',
+                                        position: 'middle',
+                                        duration: 1000
+                                    });
+                                    setTimeout(() => {
+                                        this.confirmDisabled = false;
+                                        this.$router.push({name: 'trainManagement'});
+                                    }, 1000)
+                                }
+                            } else {
+                                this.confirmDisabled = false;
+                                if(response.data.error_msg){
+                                    Toast({
+                                        message: response.data.error_msg,
+                                        position: 'middle',
+                                        duration: 2000
+                                    });
+                                }else if(response.data.results){
+                                    Toast({
+                                        message: response.data.results,
+                                        position: 'middle',
+                                        duration: 2000
+                                    });
+                                }
+
+                            }
+                        })
+                }
             },
 
             goTrain(){
@@ -227,6 +231,30 @@
     .storage {
         input:disabled, textarea:disabled {
             background-color: white !important;
+        }
+
+        .update {
+            left: -0.1rem;
+            padding: 0.3rem 0.2rem;
+            .btn1 {
+                background: url(../../assets/kehu_chakanxiaofeijilu_btn@2x.png) no-repeat center;
+                background-size: 100% 100%;
+                width: 100%;
+                color: #33d57c;
+                margin: 0 3%;
+                font-size: 0.3rem !important;
+            }
+            .btn2 {
+                background: url(../../assets/kehu_gengxinziliao_btn@2x.png) no-repeat center;
+                background-size: 100% 95%;
+                width: 100%;
+                font-size: 0.3rem !important;
+            }
+            button {
+                margin: 0 auto;
+                height: 1rem;
+            }
+
         }
 
         .pay {
@@ -296,26 +324,6 @@
                     font-size: 0.26rem;
                     color: #4c4c4c;
                 }
-            }
-        }
-
-        .login_pass {
-            margin: 0.4rem auto 0.2rem;
-            padding-left: 5%;
-            .loginbtn1{
-                width: 47.5%!important;
-                color: #0f0!important;
-                @include login_btn;
-                background: url(../../assets/kehu_chakanxiaofeijilu_btn@2x.png) no-repeat center;
-                margin: 0 !important;
-                margin-right: 2%!important;
-            }
-
-            .loginbtn {
-                @include login_btn;
-                width: 47.5%!important;
-                background-image: url(../../assets/login/dengluzhuce_denglu_img@2x.png);
-                margin: 0 !important;
             }
         }
 
