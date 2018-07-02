@@ -1,7 +1,7 @@
 <template>
     <div class="page-content">
         <mt-header fixed title="订单结算">
-            <router-link to="/home" slot="left">
+            <router-link to="/cashAccount" slot="left">
                 <mt-button icon="back"></mt-button>
             </router-link>
         </mt-header>
