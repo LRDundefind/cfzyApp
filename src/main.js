@@ -22,6 +22,9 @@ import '@/assets/rem.js'
 
 //过滤器
 import * as filters from '@/filters'; // 全局vue filter
+//表单校验
+import { validate } from '@/util/validate';
+Vue.prototype.validateG = validate//挂载到Vue实例上面
 
 //rem转换为px
 Vue.prototype.REM = 100 * (document.documentElement.clientWidth / 750);
