@@ -71,18 +71,14 @@ export default [
             components: {
                 orderRouteView: orderKnot
             },
-            meta: {
-                showFooter: false
-            }
+
         },{
             path:'creditKnot',
             name:'creditKnot',
             components: {
                 orderRouteView: creditKnot
             },
-            meta: {
-                showFooter: false
-            }
+
         }]
     },{
         path: 'print/:oid',

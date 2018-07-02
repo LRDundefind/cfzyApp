@@ -156,9 +156,9 @@
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
     .page-main{
+        height: calc(100vh - 150px);
         top: 100px;
-        bottom: 0;
-        height: calc(100vh - 90px);
+        bottom: 1.1rem;
     }
     .page-loadmore-wrapper {
         overflow: auto;
