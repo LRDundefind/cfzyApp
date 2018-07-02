@@ -9,7 +9,7 @@
                 <div id="print" style="margin-top: 0.2rem">
                     <div id="orderSettlementSheet-print"  class="b-c-f printLayout p-10">
                         <div class="textCenter f-s-15 title">{{listData.company_info.compayName}}</div>
-                        <div class="textCenter">{{listData.company_info.markName}}</div>
+                        <div class="textCenter c-3">{{listData.company_info.markName}}</div>
                         <div>
                             <div>客户：{{listData.customer_info.nickname}}</div>
                             <div class="space">车次：{{listData.order_info.trainsNum}}</div>
@@ -45,30 +45,30 @@
 
                         </ul>
 
-                        <div class="ub space" >
+                        <div class="ub space f-s-14" >
                             <div class="ub-f1">过磅费：{{listData.order_info.weighCost|format}}</div>
                             <div class="ub-f1 ">三轮车费：{{listData.order_info.deliveryCost|format}}</div>
                             <!--<div class="ub-f1 textRight">包装费：{{listData.order_info.packCost}}</div>-->
                         </div>
-                        <div class="ub p-b-10" style="border-bottom: 1px #666 solid;">
+                        <div class="ub p-b-10 f-s-14" style="border-bottom: 1px #666 solid;">
                             <div class="ub-f1 ">应付：{{listData.order_info.salesAmount|format}}</div>
                             <div class="ub-f1 ">实付：{{listData.order_info.actualAmount|format}}</div>
                         </div>
 
-                        <div class="ub space" >
+                        <div class="ub space f-s-14" >
                             <div class="ub-f1">产地：{{listData.order_info.origin}}</div>
                             <div class="ub-f1 ">档位前欠：{{listData.customer_info.frontArrears| format}}</div>
 
                         </div>
 
-                        <div class="ub   space" >
+                        <div class="ub   space f-s-14" >
                             <div class="ub-f1">销售员：{{listData.order_info.selName}}</div>
                             <div class="ub-f1 ">档位累欠：{{listData.customer_info.totalArrears| format}}</div>
 
                         </div>
 
-                        <div class="textCenter space">地址：{{listData.company_info.address}}</div>
-                        <div class="textCenter space">联系电话：{{listData.company_info.phone}}</div>
+                        <div class="textCenter space f-s-14">地址：{{listData.company_info.address}}</div>
+                        <div class="textCenter space f-s-14">联系电话：{{listData.company_info.phone}}</div>
 
                         <div class="clearfix">
                             <div class="money-btn ub ub-ae" >
@@ -170,9 +170,7 @@
             .title{
                 font-weight: 700;
                 padding-bottom: 0.1rem;
-
             }
-
         }
 
     }
