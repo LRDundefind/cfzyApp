@@ -127,7 +127,7 @@
                             });
                             setTimeout(() => {
                                 this.confirmDisabled = false;
-                                this.$router.push({name: 'cashAccount'});
+                                this.$router.push({name: 'print', params: {oid: this.oid}});
                             }, 1000)
                         } else {
                             this.confirmDisabled = false;

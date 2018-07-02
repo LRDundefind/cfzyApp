@@ -37,6 +37,11 @@
                         </div>
                     </li>
 
+                    <li class="clearfix" v-show="item.status=='status_complete'" style="border-top:1px solid #dedede">
+                        <div class="money-btn ub ub-ae">
+                            <div class="btn" @click="print(item.oid)">打印</div>
+                        </div>
+                    </li>
 
                     <li class="clearfix" v-show="item.status=='status_topay'" style="border-top:1px solid #dedede">
                         <div class="money-btn ub ub-ae">
@@ -185,7 +190,10 @@
                         oid:oid
                     }
                 });
-            }
+            },
+            print(oid){
+                this.$router.push({name: 'print', params: {oid:oid,come:'knot'}});
+            },
         },
     }
 </script>

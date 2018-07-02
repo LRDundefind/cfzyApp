@@ -36,6 +36,12 @@
                         </div>
                     </li>
 
+                    <li class="clearfix" style="border-top:1px solid #dedede">
+                        <div class="money-btn ub ub-ae">
+                            <div class="btn" @click="print(item.oid)">打印</div>
+                        </div>
+                    </li>
+
                 </ul>
             </div>
             <div v-if="allLoaded" class="m-t-10" style="text-align:center;font-size: 0.18rem;display: none">
@@ -139,7 +145,11 @@
                         oid:oid
                     }
                 });
-            }
+            },
+            //打印
+            print(oid){
+                this.$router.push({name: 'print', params: {oid:oid,come:'knot'}});
+            },
 
         },
     }
@@ -224,6 +234,22 @@
 
             }
         }
+
+        .money-btn {
+            float: right;
+            padding:0.3rem 0;
+            text-align: right;
+            .btn {
+                font-size: 0.3rem;
+                width: 1.88rem;
+                line-height: 0.68rem;
+                text-align: center;
+                color: #fff;
+                background: -webkit-linear-gradient(left, #30b03e 0%, #33d57c 100%);
+                border-radius: 1rem;
+            }
+        }
+
     }
 
 
