@@ -7,16 +7,15 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 let Base64 = require('js-base64').Base64;
 
-//注册mint组件
-// import {components} from './util/frameComponents.js';
-// components.init(Vue);
-
-import Mint from 'mint-ui'
-import 'mint-ui/lib/style.css'
-Vue.use(Mint);
+//注册部分mint组件
+import {components} from './util/frameComponents.js';
+components.init(Vue);
+//引入整个mint
+//import Mint from 'mint-ui'
+//import 'mint-ui/lib/style.css'
+//Vue.use(Mint);
 
 import 'animate.css'
-// import '@/styles/globalScssVarables.scss';
 // 使用rem布局，rem函数便于移动端快速开发布局
 import '@/assets/rem.js'
 
@@ -28,7 +27,6 @@ Vue.prototype.validateG = validate//挂载到Vue实例上面
 
 //rem转换为px
 Vue.prototype.REM = 100 * (document.documentElement.clientWidth / 750);
-
 
 //Vue.prototype.$http = axios
 //定义全局返回上一页方法
@@ -47,11 +45,8 @@ Object.keys(filters).forEach(key => {
 
 //引入公共样式 公共部门放入入口不要和其它组件耦合在一起
 import '@/styles/ui-box.css';
-// import '@/styles/common.scss';
 import '@/styles/reset.css';
 import '@/styles/const.scss';
-
-
 
 /* eslint-disable no-new */
 new Vue({
