@@ -9,7 +9,8 @@
             <div class="order-detail">
                 <div class="ub term no-border">
                     <div class="ub-f1">卖手</div>
-                    <div>{{detail.nickname}}</div>
+                    <div v-show="detail.nickname !='' ">{{detail.nickname}}</div>
+                    <div v-show="detail.nickname =='' && detail.phone == ''">临时客户</div>
                 </div>
             </div>
             <!--信息二-->
@@ -87,6 +88,7 @@
                     weighCost:'',
                     deliveryCost:'',
                     goodCast:'',
+                    phone:'',
 
 
                 },//订单详情数据
