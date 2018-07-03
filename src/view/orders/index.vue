@@ -1,10 +1,10 @@
 <template>
 	<div class="page-content">
 		<mt-header fixed  title="订单">
-			<router-link to="/ownerChoice" slot="left">
+<!-- 			<router-link to="/ownerChoice" slot="left">
                 <span class="c-3 f-s-16">{{gearName}}</span>
                 <img class="header_img" src="../../assets/index/down_icon.png"/>
-           </router-link>
+           </router-link> -->
 		</mt-header>
 		<div class="maintop">
 			<search-box ref="search" @getSmeage="searchHandler" :message='placeMessage'/>
