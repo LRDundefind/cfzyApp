@@ -19,7 +19,8 @@
 				</div>
 				<div class="ub term no-border">
 					<div class="ub-f1">卖手</div>
-					<div>{{detail.selName}}</div>
+					<div v-show="detail.selName != ''">{{detail.selName}}</div>
+					<div v-show="detail.selName == '' && detail.phone =='' ">临时客户</div>
 				</div>
 			</div>
 			<!--信息二-->
