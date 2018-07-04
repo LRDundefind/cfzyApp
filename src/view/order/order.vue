@@ -964,6 +964,7 @@ i{
 		font-size: 0.26rem;
 		color: #4c4c4c;
 		li{
+			padding: 0.2rem 0;
 			overflow: hidden;
 			span{
 				width: 16%;
@@ -972,10 +973,16 @@ i{
 			}
 			span:first-child{
 				padding-left: 0.25rem;
-				text-overflow:ellipsis;
+				word-wrap: break-word;
+				/*text-overflow:ellipsis;
 				overflow:hidden;
-				white-space:nowrap; 
-				display:block;
+				white-space:nowrap;*/ 
+				word-break: break-all;
+			    text-overflow: ellipsis;
+			    display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
+			    -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
+			    -webkit-line-clamp: 2; /** 显示的行数 **/
+			    overflow: hidden;  /** 隐藏超出的内容 **/
 			}
 		}
 		.title{
@@ -984,12 +991,12 @@ i{
 			background: #f2f2f2;
 		}
 		.con{
-			height: 0.7rem;
-			line-height: 0.7rem;
+			/*height: 0.7rem;*/
+			/*line-height: 0.7rem;*/
 			border-bottom: 1px solid #dedede;
-			span{
-				height: 0.7rem;
-			}
+			display: flex;
+		    
+		    align-items: Center;
 		}
 		li:last-child{
 			border-bottom: none;

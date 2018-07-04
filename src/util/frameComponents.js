@@ -7,7 +7,8 @@ import {
 	TabItem,
 	TabContainer,
 	TabContainerItem,
-	Loadmore  
+	Loadmore,
+	Field   
 } from 'mint-ui';
 
 export let components = {
@@ -21,5 +22,6 @@ export let components = {
 		Vue.component(TabContainer.name, TabContainer);
 		Vue.component(TabContainerItem.name, TabContainerItem);
 		Vue.component(Loadmore.name, Loadmore);
+		Vue.component(Field.name, Field);
 	}
 }
