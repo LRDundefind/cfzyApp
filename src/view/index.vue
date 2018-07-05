@@ -134,7 +134,7 @@ export default {
             deep:true
         },
         '$route' (to, from) {
-            if (this.$route.name == 'orderKnot' || 'creditKnot') {
+            if (this.$route.name == 'orderKnot' || this.$route.name == 'creditKnot') {
                 this.selected == 'knot'
             }else{
                 this.selected=this.$route.name

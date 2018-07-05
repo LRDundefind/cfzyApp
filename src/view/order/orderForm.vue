@@ -158,7 +158,7 @@ export default {
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.form.goodNum)) || this.form.goodNum > 9999.99){
+    		}else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.form.goodNum)) || this.form.goodNum > 99999999.99){
     			Toast({
 					message: '请正确输入件数',
 					position: 'middle',
@@ -170,7 +170,7 @@ export default {
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.form.weight)) || this.form.weight > 9999.99){
+    		}else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.form.weight)) || this.form.weight > 99999999.99){
     			Toast({
 					message: '请正确输入重量',
 					position: 'middle',
@@ -182,7 +182,7 @@ export default {
 					position: 'middle',
 					duration: 1000
     			});
-    		}else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.form.slabWeight)) || this.form.slabWeight > 9999.99){
+    		}else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.form.slabWeight)) || this.form.slabWeight > 99999999.99){
     			Toast({
 					message: '请正确输入平板重',
 					position: 'middle',
