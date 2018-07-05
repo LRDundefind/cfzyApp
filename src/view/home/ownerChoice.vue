@@ -58,8 +58,8 @@
 	        	Cookies.remove('plateNum');
 	        	Cookies.remove('customerName'); 
 	        	Cookies.remove('customerId');
-                window.location.href = 'wechat/home'
-
+                window.location.href = 'wechat'
+                //console.log(window.location.host)
 //              this.$router.push({name: 'home'});
             },
 
