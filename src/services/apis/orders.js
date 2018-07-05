@@ -22,6 +22,14 @@ export const orders = {
     //订单详情
     getOrdersDetail(data) {
         return axios({
+            url: '/rest/CHENGFENG_GET_SELEMAN_ORDERINFO',
+            method: 'post',
+            data: serverMoudle(data)
+        });
+    },
+    //现结订单详情
+    getOrdersDetailKnot(data) {
+        return axios({
             url: '/rest/CHENGFENG_SET_SELEMAN_KNOTINFO',
             method: 'post',
             data: serverMoudle(data)

@@ -93,8 +93,7 @@
 				<div class="order-detail" v-if="otherInfo" id="orderTypes">
 					<div class="ub ub-ac term no-border right-icon input-choose">
 						<input id="xj" type="radio" name="choosetype" value="order_knot" v-model="orderType">
-						<label for="xj" class="individual"><div class="f-r">现结</div></label>
-											
+						<label for="xj" class="individual"><div class="f-r">现结</div></label>					
 					</div>
 					<div class="ub ub-ac term border-top input-choose" v-if="customerType == 'Nottemporary'"> <!--临时客户不可以赊账-->
 						<input id="sz" type="radio" name="choosetype" value="order_credit" v-model="orderType">
@@ -125,51 +124,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- 设置价格模态框 -->
-		<div class="dialoag" v-if="dialoags">
-			<div class="dialoag_cont goods">
-				<div @click="closeInfo" class="closeInfo">关闭</div>
-				<div class="goods-name ub ub-pc">{{goodName}}</div>
-				<div class="goods-info">
-					<div class="goods-item ub ub-ac">
-						<div>单价</div>
-						<input placeholder="请输入" type="number" v-model="goodsunit" />
-						<div>元 / {{goodsUnit}}</div>
-					</div>
-					<div class="goods-item ub ub-ac">
-						<div>件数</div>
-						<input :placeholder="surplusPiece || '请输入'" type="number" v-model="goodsnum" />
-						<div>件</div><!--{{goodsUnit}}-->
-					</div>
-					<div class="goods-item ub ub-ac">
-						<div>重量</div>
-						<input :placeholder="surplusHeavy || '请输入'" type="number" v-model="goodsweight" />
-						<div v-if="sellUnit != 'unit_pie'">{{goodsUnit}}</div>
-						<select v-if="sellUnit == 'unit_pie' " v-model="sellUnitPie">
-							<option>斤</option>
-							<option>公斤</option>
-						</select>
-					</div>
-					<div class="goods-item ub ub-ac">
-						<div>平板重</div>
-						<input placeholder="请输入" type="number" v-model="pbweight" /> <!--@focus="onfocus"-->
-						<div v-if="sellUnit != 'unit_pie'">{{goodsUnit}}</div>
-						<div v-if="sellUnit == 'unit_pie' ">{{sellUnitPie}}</div>
-						<!--平板重单位跟随重量 不单独设置-->
-						<!--<select v-if="sellUnit == 'unit_pie' "  v-model="sellUnitPie">
-							<option>斤</option>
-							<option>公斤</option>
-						</select>-->
-					</div>
-					<div class="goods-item ub ub-ac">
-						<div>减水重</div>
-						<input readonly="readonly" v-model="slushing" />
-						<div>斤 / 件</div>
-					</div>
-				</div>
-				<mt-button type="primary" size="large" class="submit-btn" @click="submitGoodsInfo">确定</mt-button>
-			</div>
-		</div>
+		
 		<!-- 设置三轮费模态框 -->
 		<div class="setSanlunfei" v-if="sanlunfei">
 			<div class="dialoag_cont">
@@ -313,21 +268,7 @@ export default {
 		}
 	},
     methods: {
-		//重置单件货品下单件数和其他数据
-		resetPriceNum(){
-			this.goodsunit = '';
-			this.goodsnum = '';
-			this.goodsweight = '';
-			this.pbweight = '0'; //需求：平板重默认为0
-		},
-		//重置各项费用总和-关闭弹框调取单项货品接口计算价格时使用
-		resetTotalCost(){
-			this.totalCost.totalAmount = 0;
-			this.totalCost.totalPack = 0;
-			this.totalCost.totalWeigh = 0;
-			this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost; //合计费用
-		},
-		
+
 		//赊账规则
 		szRulesDialoags(){
 			this.showRules = true;
@@ -406,10 +347,7 @@ export default {
 					console.log(response);
 				});
 		},
-		//获取焦点-填写货品信息
-		onfocus(){
-			
-		},
+
 		//设置货品重量件数信息的弹框
         goodsInfoSet(i, goods){
         	
@@ -429,231 +367,12 @@ export default {
 	        			}
 	        		} 
         		}
-        		
-
         		this.showOrderForm = true;
         		this.post = goods;
         		this.numberNum = i;
         	}
-   //      	this.dialoags = true;
-   //      	this.goodId = goodid;//货品id 提交订单传参所需
-   //      	this.id = id;//货品id 提交订单传参所需
-   //      	this.goodName = name;
-   //      	this.sellUnit = sellunit;//提交订单传参所需 售卖单位
-   //      	this.numUnit = numUnit;//提交订单传参所需  重量单位
-   //      	this.slushing = slushing;//减水重 只作展示，
-   //      	if(numUnit == 'unit_pie'){
-   //      		this.surplusHeavy = '';
-   //      		this.surplusPiece = surplusNum; // 入库单位为件时，在件数位置-显示货品剩余量
-   //      	}else{
-   //      		this.surplusPiece = '';
-   //      		this.surplusHeavy = surplusNum; // 入库单位为斤/公斤时，在重量位置-显示货品剩余量
-   //      	}
-
-			// if(this.sellUnit == 'unit_jin'){
-			// 	this.goodsUnit = '斤';
-			// }else if(this.sellUnit == 'unit_kg'){
-			// 	this.goodsUnit = '公斤';
-			// }else{
-			// 	//unit_pie 件
-			// 	this.goodsUnit = '件';
-			// 	this.goodsweight = '0'; //入库单位为件时，重量默认输入0  //不需要在resetPriceNum中设置
-			// };
-			
-			// //编辑弹框的值  price 单价 、goodNum 件数、weight 重量、slabWeight 平板重
-			// if(this.goodsInfo[i].goodNum != null){
-			// 	this.goodsunit = this.goodsInfo[i].price;
-			// 	this.goodsnum = this.goodsInfo[i].goodNum;
-			// 	this.goodsweight = this.goodsInfo[i].weight;
-			// 	this.pbweight = this.goodsInfo[i].slabWeight;
-			// 	this.slushing = this.goodsInfo[i].slushing;
-				
-			// }
 		},
         
-    	//单件货品信息录入验证和提交
-    	submitGoodsInfo(){
-    		if(this.goodsnum == '' ){
-    			Toast({
-					message: '请完善购买信息（件数）',
-					position: 'middle',
-					duration: 1000
-    			});
-    		}else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.goodsnum)) || this.goodsnum > 9999.99){
-    			Toast({
-					message: '请正确输入件数',
-					position: 'middle',
-					duration: 1000
-    			});
-    		}else if(this.goodsweight == ''){
-    			Toast({
-					message: '请完善购买信息（重量）',
-					position: 'middle',
-					duration: 1000
-    			});
-    		}else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.goodsweight)) || this.goodsweight > 9999.99){
-    			Toast({
-					message: '请正确输入重量',
-					position: 'middle',
-					duration: 1000
-    			});
-    		}else if(this.pbweight == ''){
-    			Toast({
-					message: '请完善购买信息（平板重）',
-					position: 'middle',
-					duration: 1000
-    			});
-    		}else if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.pbweight)) || this.pbweight > 9999.99){
-    			Toast({
-					message: '请正确输入平板重',
-					position: 'middle',
-					duration: 1000
-    			});
-    		}else{
-    			if(this.goodsunit != ''){
-	    			if(!(new RegExp(/^[0-9]+(.[0-9]{1,2})?$/).test(this.goodsunit))|| this.goodsunit > 9999.99){
-		    			Toast({
-							message: '请正确输入单价',
-							position: 'middle',
-							duration: 1000
-		    			});
-	    			}else{
-						this.dialoags = false;
-	    				this.getGoodsInformation();
-	    			}
-	    		}else{
-	    			this.dialoags = false;
-    				this.getGoodsInformation();
-	    		}
-    			
-    		}
-    	},
-        
-        //单件货品信息录入提交 
-        getGoodsInformation(){
-        	//通过是否写入单价的情况 判断是否显示总货款、包装、过磅、合计金额费用
-			this.have_goodsunit = true;
-			
-			//售卖单位为件时，设置重量单位和平板重单位
-			if(this.sellUnit == 'unit_pie'){
-				if(this.sellUnitPie == '斤'){
-					this.set_weight_util = 'unit_jin';
-				}else if(this.sellUnitPie == '公斤'){
-					this.set_weight_util = 'unit_kg';
-				}
-			}else{
-				this.set_weight_util = this.sellUnit;
-			}
-			
-			//未填写单价，不计算当前所设置货品的货款包装过磅费，不计算合计金额
-			if(this.goodsunit == '' ){ 
-				this.have_goodsunit = false;
-				//未填写单价则不调6.3接口（计算总货款费用 和 合计费用的）,但是还是要set 
-				this.$set(this.goodsInfo,this.numberNum,
-					    {	goodName:this.goodName,
-					     	goodId:this.goodId, //提交订单所需，列表不展示
-					     	id:this.id, //提交订单所需，列表不展示
-					     	price:this.goodsunit,
-					     	goodNum:this.goodsnum,
-					     	weight:this.goodsweight,
-					     	goodAmount: null, //货品金额
-					     	netWeight: null, //净重
-					     	slushing: this.slushing, //减水重
-					     	packCost: null, //货品打包费
-					     	weighCost: null, //货品过磅费 下方列表展示
-					     	slabWeight:this.pbweight, //提交订单所需，列表不展示
-					     	weight_util:this.set_weight_util,  //重量单位，提交订单所需，列表不展示
-					     	sellUnit:this.sellUnit,  //售卖单位，提交订单所需，列表不展示
-					     	numUnit:this.numUnit,  //入库单位，列表不展示
-					    });
-					    //console.log(this.goodsInfo)
-				//重置弹框数据
-			    this.resetPriceNum(); 
-			    //重置各项价格总和
-			    this.resetTotalCost();
-			}else{
-	        	//填写单价，计算当前所设置货品的货款包装过磅费， 
-				var params = {
-					goodId: this.goodId,//单个货品id
-					id: this.id,//单个货品id
-					price: this.goodsunit,//单价
-					goodNum: this.goodsnum,//件数
-					weight: this.goodsweight,//重量
-					weight_util: this.set_weight_util,//重量单位 
-					sellUnit: this.sellUnit,//售卖单位 
-					slabWeight: this.pbweight,//平板重
-				};
-				order.goodsCost(params)
-					.then(response => {
-						
-						//重置各项价格总和
-						this.resetTotalCost();
-						
-						//货品价格计算返回数据
-						this.goodsCosts = response.data.results;
-						//console.log('包装费：'+this.goodsCosts.packCost+'， '+'金额：'+this.goodsCosts.goodAmount+'， '+' 过磅费：' + this.goodsCosts.weighCost);
-						
-						//		this.goodsInfo中下单所需货品参数对照表  勿删，，， 左：获取 ，右： 传参名
-						//		this.goodId  货品id  goodId
-						//		this.id  货品id  id
-						//		this.goodName 货品名称 goodName 
-						//		this.goodsunit 货品单价 price
-						//		this.goodsnum 货品件数 goodNum
-						//		this.goodsweight 货品重量 Weight
-						//		this.numUnit  重量单位 weight_util
-						//		this.sellUnit  售卖单位  sellUnit
-						//		this.pbweight 平板重  slabWeight						
-						
-						this.$set(this.goodsInfo,this.numberNum,
-							    {	goodName:this.goodName,
-							     	goodId:this.goodId, //提交订单所需，列表不展示
-							     	id:this.id, //提交订单所需，列表不展示
-							    	price:this.goodsunit,
-							     	goodNum:this.goodsnum,
-							     	weight:this.goodsweight,
-							     	goodAmount:response.data.results.goodAmount, //货品金额
-							     	netWeight:response.data.results.netWeight, //净重
-					     			slushing: this.slushing, //减水重
-							     	packCost:response.data.results.packCost, //货品打包费
-							     	weighCost:response.data.results.weighCost, //货品过磅费 下方列表展示
-							     	slabWeight:this.pbweight, //提交订单所需，列表不展示
-							     	weight_util:this.set_weight_util,  //重量单位，提交订单所需，列表不展示
-							     	sellUnit:this.sellUnit,  //售卖单位，提交订单所需，列表不展示
-							     	numUnit:this.numUnit,  //入库单位，列表不展示
-							    });
-		    			//根据返回数据计算总和
-	                    for(var i=0,len = this.goodsInfo.length; i<this.goodsInfo.length;i++){
-							this.totalCost.totalAmount += this.goodsInfo[i]['goodAmount']; //总货款费用
-							this.totalCost.totalPack += this.goodsInfo[i]['packCost']; //总包装费
-							this.totalCost.totalWeigh += this.goodsInfo[i]['weighCost']; //总过磅费
-							this.totalCost.tatol = this.totalCost.totalAmount + this.totalCost.totalPack + this.totalCost.totalWeigh + this.totalCost.deliveryCost;
-	                    }
-						
-	                    //重置弹框数据
-						this.resetPriceNum();
-	                    
-	                    //判断是否展示合计金额等项
-		                for(var i = 0, len = this.goodsInfo.length; i < this.goodsInfo.length; i ++){
-		                	if(this.goodsInfo[i].weight != '' && this.goodsInfo[i].price == ''){
-								this.have_goodsunit = false;
-		                	}else{
-		                		this.have_goodsunit = true;
-		                	}
-		                }
-
-					})
-					.catch(function (response) {
-						console.log(response);
-					});
-			}
-			
-        },
-        //关闭输入信息的按钮
-        closeInfo(){
-        	//重置弹框数据
-			this.resetPriceNum();
-        	this.dialoags = false;
-        },
         //设置三轮费-确定按钮
         setSanlunfei(){
         	if(!(new RegExp(/^(0|[1-9][0-9]*)$/).test(this.deliveryCost)) || this.deliveryCost > 9999){

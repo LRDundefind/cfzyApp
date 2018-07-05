@@ -82,8 +82,7 @@
 
 <script>
 import {order} from '@/services/apis/order.js'
-import { Field } from 'mint-ui'
-import { Toast } from 'mint-ui'
+import { Field, Toast, Indicator } from 'mint-ui';
 export default {
 	name:'order-form',
     data () {
@@ -245,6 +244,10 @@ export default {
     		}
 		},
 		getGoodsInformation(){
+            Indicator.open({
+              text: '加载中...',
+              spinnerType: 'fading-circle'
+            });
 			this.$parent.totalCost.totalAmount = 0; //总货款费用
 			this.$parent.totalCost.totalPack = 0; //总包装费
 			this.$parent.totalCost.totalWeigh = 0; //总过磅费
@@ -255,7 +258,7 @@ export default {
 				//通过是否写入单价的情况 判断是否显示总货款、包装、过磅、合计金额费用
 				this.$parent.have_goodsunit = true;
 				this.$parent.showOrderForm = false;
-				
+				Indicator.close();
                 var parent = this.$parent.goodsInfo[this.$parent.numberNum];
             	for (var n = 0; n < this.$parent.dataArray.length; n++) {
                 	if (this.$parent.dataArray[n].id == this.form.id) {
