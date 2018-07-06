@@ -126,17 +126,12 @@
                 })
             },
             setting(){
-                alert('未进入设置');
                 if (typeof XDYApp !== 'undefined') {
-                    alert('进入设置')
                     XDYApp.printerSetting();
                 }
             },
             print(){
-                alert('未进入打印');
                 if (typeof XDYApp !== 'undefined') {
-                    alert('进入打印');
-//                    XDYApp.printer(this.listData);
                     XDYApp.printer(JSON.stringify(this.listData));
                 }
             },
