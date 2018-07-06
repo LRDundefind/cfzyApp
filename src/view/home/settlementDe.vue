@@ -93,15 +93,17 @@
                 let data = {
                     tid: this.tid
                 };
-                damage.testClearing(data)
+                damage.submitBus(data)
                     .then(response => {
                         if (response.data.status == 'Y') {
-                            this.$router.push({
-                                name: 'carClearing',
-                                params: {
-                                    tid: this.tid,
-                                }
+                            Toast({
+                                message: '已完结算操作',
+                                position: 'middle',
+                                duration: 1000
                             });
+                            setTimeout(() => {
+                                this.$router.push({name: 'trainManagement'});
+                            }, 1000)
                         } else {
                             Toast({
                                 message: response.data.error_msg,
@@ -109,14 +111,8 @@
                                 duration: 1000
                             });
                         }
-
-                        console.log(response);
                     })
-                    .catch(function (response) {
-                        console.log(response);
-                    });
-            }
-
+            },
         }
     }
 </script>
