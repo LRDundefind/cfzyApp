@@ -92,13 +92,10 @@
             },
 
                 searchBlack(msg){
-                    Indicator.open({
-                        text: 'Loading...',
-                        spinnerType: 'fading-circle'
-                    });
-                    this.params.current_page = 1;
                     this.params.search=msg;
                     this.listStore = [];
+                    this.params.current_page = 1;
+                    this.noWdata = false;
                     this.getList();
                 },
 
