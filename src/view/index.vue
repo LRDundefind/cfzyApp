@@ -134,7 +134,8 @@ export default {
             deep:true
         },
         '$route' (to, from) {
-            if (this.$route.name == 'orderKnot' || this.$route.name == 'creditKnot') {
+            let path = this.$route.path;
+            if (path.indexOf('knot')){
                 this.selected == 'knot'
             }else{
                 this.selected=this.$route.name
