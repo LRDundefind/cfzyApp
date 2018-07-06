@@ -3,7 +3,7 @@
         <mt-header fixed title="现结收账">
             <mt-button icon="back" @click="goMy()" slot="left"></mt-button>
         </mt-header>
-        <!--<search-box @getSmeage="searchBlack" :message='placeMessage' ref="search"/>-->
+        <search-box @getSmeage="searchBlack" :message='placeMessage' ref="search"/>
 
         <div class="page-main page-loadmore-wrapper topScroll">
             <noDate v-if="noWdata"></noDate>
@@ -80,7 +80,7 @@
     export default {
         data () {
             return {
-                //placeMessage: '请输入客户名称',
+                placeMessage: '请输入客户名称',
                 msg: '',
                 black: '',
                 allLoaded: false,
@@ -89,7 +89,7 @@
                 params: {
                     current_page: 1,
                     page_size: 10,
-                    //search: ''
+                    search: ''
                 },
                 listStore: [],
                 listdata: null,
@@ -116,16 +116,16 @@
                 this.$router.push({name: 'home'});
             },
             //按客户名称搜索
-//            searchBlack(msg){
-//                Indicator.open({
-//                    text: 'Loading...',
-//                    spinnerType: 'fading-circle'
-//                });
-//                this.params.current_page = 1;
-//                this.params.search = msg;
-//                this.listStore = [];
-//                this.getList();
-//            },
+            searchBlack(msg){
+                Indicator.open({
+                    text: 'Loading...',
+                    spinnerType: 'fading-circle'
+                });
+                this.params.current_page = 1;
+                this.params.search = msg;
+                this.listStore = [];
+                this.getList();
+            },
 
             loadTop(){
                 Indicator.open({
@@ -230,8 +230,8 @@
 <style scoped lang="scss">
 
     .topScroll {
-        height: calc(100vh - 40px);
-        top: 40px;
+        height: calc(100vh - 100px);
+        top: 100px;
         bottom: 0rem;
     }
 
