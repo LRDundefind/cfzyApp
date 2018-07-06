@@ -30,7 +30,7 @@
                             <div class="total">
                                 <div class=" ub">
                                     <div class="ub-f1 account">总赊账</div>
-                                    <div class="ub-f1 account-number">{{item.notPayAmount}}</div>
+                                    <div class="ub-f1 account-number">￥{{item.notPayAmount}}</div>
                                 </div>
                                 <div class=" ub">
                                     <div class="ub-f1 account account-top">承账方</div>

@@ -31,7 +31,8 @@
                         </li>
                         <li @click="ordersDetail(item.oid)">
                             <div class="customer">
-                                <span class="nickName">姓名</span>{{item.nickname}}
+                                <span class="nickName" v-show="item.nickname!=''">姓名</span>{{item.nickname}}
+                                <span class="nickName" v-show="item.nickname =='' && item.phone ==''">姓名  <span class="snap">临时客户</span></span>
                             </div>
                             <div class="sort">
                                 {{item.goodName}}
@@ -279,6 +280,9 @@
                         font-size: 0.28rem;
                         color: #666;
                         padding-right: 0.2rem;
+                        .snap{
+                            padding-left: 0.1rem;
+                        }
                     }
                 }
                 .sort {
