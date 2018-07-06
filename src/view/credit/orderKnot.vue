@@ -34,9 +34,18 @@
                         <div class="sort">
                             {{item.goodName}}
                         </div>
-                        <div class="money">
-                            ￥{{item.salesAmount}}
+                        <div class="ub">
+                            <div class="time ub-f2">
+                                {{item.placeOrderTime}}
+                            </div>
+
+                            <div class="money ub-f1">
+                                ￥{{item.salesAmount}}
+                            </div>
+
                         </div>
+
+
                     </li>
 
                     <li class="clearfix" v-show="item.status=='status_complete'" style="border-top:1px solid #dedede">
@@ -276,6 +285,12 @@
                     font-weight: bold;
                     font-size: 0.3rem;
                 }
+                .time{
+                    padding: 0.2rem 0;
+                    color: #666;
+                    font-size: 0.3rem;
+                }
+
                 .money-btn {
                     float: right;
                     padding:0.3rem 0;

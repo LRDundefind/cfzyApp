@@ -33,8 +33,14 @@
                         <div class="sort">
                             {{item.goodName}}
                         </div>
-                        <div class="money">
-                            ￥{{item.salesAmount}}
+                        <div class="ub">
+                            <div class="time ub-f2">
+                                {{item.placeOrderTime}}
+                            </div>
+
+                            <div class="money ub-f1">
+                                ￥{{item.salesAmount}}
+                            </div>
                         </div>
                     </li>
 
@@ -231,6 +237,11 @@
                     text-align: right;
                     color: #49c98b;
                     font-weight: bold;
+                    font-size: 0.3rem;
+                }
+                .time{
+                    padding: 0.2rem 0;
+                    color: #666;
                     font-size: 0.3rem;
                 }
 
