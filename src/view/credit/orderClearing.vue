@@ -217,7 +217,7 @@
 
     .update{
         margin:0 auto;
-        padding:0.5rem 0;
+        padding:3.5rem 0 0.5rem;
         .mint-button--primary{
             background: url(../../assets/login/dengluzhuce_denglu_img@2x.png) no-repeat center;
             background-size:contain;
