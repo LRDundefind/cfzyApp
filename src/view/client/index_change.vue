@@ -596,6 +596,19 @@
                             position: 'middle',
                             duration: 3000
                         });
+                    } else if (this.phone == '') {
+                        Toast({
+                            message: '请输入手机号',
+                            position: 'middle',
+                            duration: 3000
+                        });
+                    } else if (!this.validateG.checkPhone(this.phone)) {
+
+                        Toast({
+                            message: '手机号格式输入有误',
+                            position: 'middle',
+                            duration: 3000
+                        });
                     } else {
                         // 修改信息
                         this.addover = true;

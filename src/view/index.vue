@@ -139,9 +139,9 @@ export default {
             }else{
                 this.selected=this.$route.name
             }
-            if(to.name == 'home' && from.name == 'ownerChoice'){
-                window.location.reload();
-            }
+//            if(to.name == 'home' && from.name == 'ownerChoice'){
+//                window.location.reload();
+//            }
 			this.fetchDate()
 		}
 }
