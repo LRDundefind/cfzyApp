@@ -2,19 +2,19 @@
     <div class="page-content" style="top:0;">
         <mt-header title="客户">
             <router-link to="/client" slot="left">
-                <mt-button icon="back"> </mt-button>
+                <mt-button icon="back"></mt-button>
             </router-link>
             <mt-button @click="handleSave" slot="right" style="color:#333;" :disable="ONbtn">保存</mt-button>
         </mt-header>
 
-        <div class="page-main wrapper"  :style="{ height: wrapperHeight + 'px' }">
+        <div class="page-main wrapper" :style="{ height: wrapperHeight + 'px' }">
             <div class="main-list">
                 <div class="">
                     <div class="sc">
                         <div style="opacity: 0" class="picture"
-                                :style="'backgroundImage:url('+headerImage+')'"></div>
+                             :style="'backgroundImage:url('+headerImage+')'"></div>
                         <input type="file" id="upload" accept="image" @change="upload1" style="opacity: 0">
-                        
+
                         <!-- 默认展示无图片 -->
                         <div>
                             <img class="header-img" :src="personalData.headImg"/>
@@ -23,29 +23,36 @@
                     </div>
                 </div>
                 <div>
-                     <!-- 接口无数据可编辑 -->
-                    <p class="clearfix" v-if="listdata.cusName=='' && xiTdata==''">姓名 <input type="text" v-model="nameRead" placeholder="请输入" maxlength="10"> </p>
+                    <!-- 接口无数据可编辑 -->
+                    <p class="clearfix" v-if="listdata.cusName=='' && xiTdata==''">姓名 <input type="text"
+                                                                                             v-model="nameRead"
+                                                                                             placeholder="请输入"
+                                                                                             maxlength="10"></p>
                     <!-- 接口有数据不可编辑（修改时有此可能） -->
-                    <p class="clearfix"  v-else>姓名  <span class="Unchange">{{ nameRead }}</span></p>
+                    <p class="clearfix" v-else>姓名  <span class="Unchange">{{ nameRead }}</span></p>
                 </div>
-               
+
 
                 <p class="clearfix">昵称<input type="text" v-model="nicheng" placeholder="请输入" maxlength="10"></p>
 
-               <div>
-                   <!-- 增加时电话不可编辑 -->
-                   <p class="clearfix" v-if="phoneAdd==''">电话<input type="number" v-model="phone" placeholder="请输入" maxlength="11"></p>
-                   <!-- 修改时可以 -->
-                   <p class="clearfix" v-else>电话<span class="Unchange" @click="chengePhone">{{phone}}</span></p>
-               </div>
-                
-                
-                 <div style="border-top:1px #f0f0f0 solid">
+                <div>
+                    <!-- 增加时电话不可编辑 -->
+                    <p class="clearfix" v-if="phoneAdd==''">电话<input type="number" v-model="phone" placeholder="请输入"
+                                                                     maxlength="11"></p>
+                    <!-- 修改时可以 -->
+                    <p class="clearfix" v-else>电话<span class="Unchange" @click="chengePhone">{{phone}}</span></p>
+                </div>
+
+
+                <div style="border-top:1px #f0f0f0 solid">
                     <!-- 接口无数据可编辑 -->
-                    <p class="clearfix"  v-if="listdata.idCard=='' && xiTdata==''">身份证号 <input type="text" v-model="IdcardRead" placeholder="请输入" maxlength="18"> </p>
+                    <p class="clearfix" v-if="listdata.idCard=='' && xiTdata==''">身份证号 <input type="text"
+                                                                                              v-model="IdcardRead"
+                                                                                              placeholder="请输入"
+                                                                                              maxlength="18"></p>
                     <!-- 接口有数据不可编辑（修改时有此可能） -->
                     <p class="clearfix" v-else>身份证号  <span class="Unchange">{{IdcardRead}}</span></p>
-                
+
                 </div>
                 <p style="border:none;text-align: right;line-height: 0.3rem;font-size:0.22rem;color:#808080;">
                     "身份证号"首次编辑后将无法修改</p>
@@ -59,7 +66,8 @@
             <div class="main-list">
                 <p class="clearfix">备注</p>
                 <div class="remark">
-                    <textarea name="" id="" cols="30" rows="3" placeholder="备注信息" v-model="message" maxlength="420"></textarea>
+                    <textarea name="" id="" cols="30" rows="3" placeholder="备注信息" v-model="message"
+                              maxlength="420"></textarea>
                 </div>
             </div>
         </div>
@@ -89,7 +97,7 @@
                 <div @click="showa">确定</div>
             </div>
         </div>
-         <!-- 保存时候的遮罩 -->
+        <!-- 保存时候的遮罩 -->
         <div class="dialoag" v-show="addover">
             <h5 class="wenzi">{{tiopmessage}}</h5>
         </div>
@@ -98,20 +106,20 @@
 
 <script>
 
-    import { MessageBox , Toast } from 'mint-ui';
-    import { client } from '@/services/apis/client'
+    import {MessageBox, Toast} from 'mint-ui';
+    import {client} from '@/services/apis/client'
     import Cookies from 'js-cookie'
-     import Exif from 'exif-js';
+    import Exif from 'exif-js';
     export default {
         data () {
             return {
-                ONbtn:false,
-                tiopmessage:'保存中，请稍后',
-                 wrapperHeight: 0,//容器高度
+                ONbtn: false,
+                tiopmessage: '保存中，请稍后',
+                wrapperHeight: 0,//容器高度
                 headerImage: '',     //   头 像
                 headerImageUP: '',     //   头 像
-                addPerson:false,
-                addover:false,
+                addPerson: false,
+                addover: false,
                 value: '',
                 nameRead: '',
                 nameWrite: '',
@@ -127,15 +135,15 @@
                 dialoags: false,
                 cid: '',    //需要的cid修改信息时使用
                 typeW: '',
-                phoneAdd:'', //新增客户的时候填写的手机号
-                listdata:{
-                    cusName:'',
-                    idCard:''
+                phoneAdd: '', //新增客户的时候填写的手机号
+                listdata: {
+                    cusName: '',
+                    idCard: ''
                 }, //接口获取的数据
-                xiTdata:'',
-                doMain:process.env.BASE_PATH,
-                personalData:{
-                    headImg:require('../../assets/my/my_head.png')
+                xiTdata: '',
+                doMain: process.env.BASE_PATH,
+                personalData: {
+                    headImg: require('../../assets/my/my_head.png')
                 }  //图片存放
             }
         },
@@ -144,42 +152,42 @@
             //create添加  update是修改
             this.typeW = this.$route.params.type || false;
             this.cid = this.$route.params.id || false;
-            if (this.typeW=='create') {
-                    //  let defaultImg = require('../../assets/my/my_head.png');
-                    //  this.personalData.headImg = defaultImg;
-                    // 根据手机号调取资源池数据，新增客户    
-                    this.addPerson=true;
+            if (this.typeW == 'create') {
+                //  let defaultImg = require('../../assets/my/my_head.png');
+                //  this.personalData.headImg = defaultImg;
+                // 根据手机号调取资源池数据，新增客户
+                this.addPerson = true;
 
             }
-            else{
-                 // 根据客户ID修改
-                    this.getData();
+            else {
+                // 根据客户ID修改
+                this.getData();
                 //  获取客户头像
-                    this.getpicmessage();
-                    this.addPerson=false;
+                this.getpicmessage();
+                this.addPerson = false;
             }
 
         },
         methods: {
-           getpicmessage(){
+            getpicmessage(){
                 let defaultImg = require('../../assets/my/my_head.png');
-              
-                 let params = {
-                    cid:this.cid
+
+                let params = {
+                    cid: this.cid
                 };
                 client.Listmessage(params)
                     .then(response => {
-                        this.personalData=response.data.results;
-                         //返回头像的处理
+                        this.personalData = response.data.results;
+                        //返回头像的处理
                         if (this.personalData.headImg == '') {
                             this.personalData.headImg = defaultImg;
                         } else {
                             this.personalData.headImg = this.doMain + response.data.results.headImg;
                         }
                     })
-                
-               
-           },
+
+
+            },
 
             upload1 (e) {
                 let files = e.target.files || e.dataTransfer.files;
@@ -229,7 +237,7 @@
             postImg(){
                 // console.log(this.headerImage)
             },
-            rotateImg (img, direction,canvas) {
+            rotateImg (img, direction, canvas) {
                 //最小与最大旋转方向，图片旋转4次后回到原方向
                 const min_step = 0;
                 const max_step = 3;
@@ -239,43 +247,43 @@
                 let width = img.width;
                 let step = 2;
                 if (step == null) {
-                step = min_step;
+                    step = min_step;
                 }
                 if (direction == 'right') {
-                step++;
-                //旋转到原位置，即超过最大值
-                step > max_step && (step = min_step);
+                    step++;
+                    //旋转到原位置，即超过最大值
+                    step > max_step && (step = min_step);
                 } else {
-                step--;
-                step < min_step && (step = max_step);
+                    step--;
+                    step < min_step && (step = max_step);
                 }
                 //旋转角度以弧度值为参数
                 let degree = step * 90 * Math.PI / 180;
                 let ctx = canvas.getContext('2d');
                 switch (step) {
-                case 0:
-                    canvas.width = width;
-                    canvas.height = height;
-                    ctx.drawImage(img, 0, 0);
-                    break;
-                case 1:
-                    canvas.width = height;
-                    canvas.height = width;
-                    ctx.rotate(degree);
-                    ctx.drawImage(img, 0, -height);
-                    break;
-                case 2:
-                    canvas.width = width;
-                    canvas.height = height;
-                    ctx.rotate(degree);
-                    ctx.drawImage(img, -width, -height);
-                    break;
-                case 3:
-                    canvas.width = height;
-                    canvas.height = width;
-                    ctx.rotate(degree);
-                    ctx.drawImage(img, -width, 0);
-                    break;
+                    case 0:
+                        canvas.width = width;
+                        canvas.height = height;
+                        ctx.drawImage(img, 0, 0);
+                        break;
+                    case 1:
+                        canvas.width = height;
+                        canvas.height = width;
+                        ctx.rotate(degree);
+                        ctx.drawImage(img, 0, -height);
+                        break;
+                    case 2:
+                        canvas.width = width;
+                        canvas.height = height;
+                        ctx.rotate(degree);
+                        ctx.drawImage(img, -width, -height);
+                        break;
+                    case 3:
+                        canvas.width = height;
+                        canvas.height = width;
+                        ctx.rotate(degree);
+                        ctx.drawImage(img, -width, 0);
+                        break;
                 }
             },
             compress(img, Orientation) {
@@ -343,7 +351,7 @@
                 console.log('压缩率：' + ~~(100 * (initSize - ndata.length) / initSize) + "%");
                 tCanvas.width = tCanvas.height = canvas.width = canvas.height = 0;
                 return ndata;
-                
+
             },
 
 
@@ -356,7 +364,7 @@
             tipsQX(){
                 // 新增的取消按钮
                 // if(this.phoneAdd==''){
-				// 	Toast({
+                // 	Toast({
                 //         message: '请输入手机号',
                 //         position: 'middle',
                 //         duration: 3000
@@ -376,248 +384,252 @@
             },
             showa(){
                 //新增的确定按钮
-                if(this.phoneAdd==''){
-					Toast({
+                if (this.phoneAdd == '') {
+                    Toast({
                         message: '请输入手机号',
                         position: 'middle',
                         duration: 3000
-                        });
+                    });
                 }
-                else if(!this.validateG.checkPhone(this.phoneAdd)){
+                else if (!this.validateG.checkPhone(this.phoneAdd)) {
 
                     Toast({
                         message: '手机号格式输入有误',
                         position: 'middle',
                         duration: 3000
-                        });
+                    });
                 }
-                else{
+                else {
                     this.getList();
                     this.addPerson = false;
                 }
-                
-                
+
+
             },
             getData(){
                 let params = {
-                    cid:this.cid
+                    cid: this.cid
                 };
                 // 获取个人信息需要cid
                 client.Listmessage(params)
                     .then(response => {
-                        let s=response.data.results
-                        this.listdata=response.data.results;
+                        let s = response.data.results
+                        this.listdata = response.data.results;
 
 
-                        this.nameRead=s.cusName;//姓名
-                        this.IdcardRead=s.idCard;//身份证号
+                        this.nameRead = s.cusName;//姓名
+                        this.IdcardRead = s.idCard;//身份证号
 
 
-                        this.message=this.listdata.remark;//备注
-                        this.address=this.listdata.address;//地址
-                        this.gongsi=this.listdata.company;//公司
-                        this.phone=this.listdata.phone;//手机号
-                        this.nicheng=this.listdata.nickname;//昵称
+                        this.message = this.listdata.remark;//备注
+                        this.address = this.listdata.address;//地址
+                        this.gongsi = this.listdata.company;//公司
+                        this.phone = this.listdata.phone;//手机号
+                        this.nicheng = this.listdata.nickname;//昵称
 
-                       
+
                     })
-                 
+
             },
             getList(){
-                 let params = {
-                    phone:this.phoneAdd
+                let params = {
+                    phone: this.phoneAdd
                 };
                 //获取系统客户详情 只需要手机号
                 client.getXTmessage(params)
                     .then(response => {
 
-                        let s=response.data.results
-                        
-                        if(s==''){
-                            this.phone=this.phoneAdd;
+                        let s = response.data.results
+
+                        if (s == '') {
+                            this.phone = this.phoneAdd;
                         }
-                        else{
+                        else {
                             // this.xiTdata=response.data.results;
-                            this.cid=s.cid;//cid
-                            this.nameRead=s.cusName;//姓名
-                            this.IdcardRead=s.idCard;//身份证号
-                            this.address=s.address;//地址
-                            this.gongsi=s.company;//公司
-                            this.phone=s.phone;//手机号
+                            this.cid = s.cid;//cid
+                            this.nameRead = s.cusName;//姓名
+                            this.IdcardRead = s.idCard;//身份证号
+                            this.address = s.address;//地址
+                            this.gongsi = s.company;//公司
+                            this.phone = s.phone;//手机号
                         }
-                        
+
                     })
             },
             handleSave(){
-                
-                if (this.typeW=='create') {
-                    
-                        // 新增客户   
-                    if(this.nicheng==''){
-                         Toast({
+
+                if (this.typeW == 'create') {
+
+                    // 新增客户
+                    if (this.nicheng == '') {
+                        Toast({
                             message: '请填写昵称',
                             position: 'middle',
                             duration: 3000
-                            });
+                        });
                     }
-                    else if(this.phone==''){
+                    else if (this.phone == '') {
                         Toast({
                             message: '请输入手机号',
                             position: 'middle',
                             duration: 3000
-                            });
+                        });
                     }
-                    else if(this.IdcardRead!=''){
-                        if(!new RegExp(/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/).test(this.IdcardRead)){
-                             Toast({
-                            message: '身份证格式输入有误',
-                            position: 'middle',
-                            duration: 3000
+                    else if (this.IdcardRead != '') {
+                        if (!new RegExp(/^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/).test(this.IdcardRead)) {
+                            Toast({
+                                message: '身份证格式输入有误',
+                                position: 'middle',
+                                duration: 3000
                             });
-                            
+
                         }
-                        else{
-                        this.ONbtn=true;
-                        this.addover=true;
-                        let params = {
-                            cusName:this.nameRead,
-                            nickname:this.nicheng,
-                            phone:this.phone,
-                            idCard:this.IdcardRead,
-                            company:this.gongsi,
-                            address:this.address,
-                            remark:this.message,
-                            cid:this.cid,
-                            headImg:this.headerImage
-                        };
-                        
-                        client.addC(params)
-                            .then(response => {
-                                // this.xiTdata=response.data.results;
-                                if(response.data.status=='Y'){
-                                   
-                                    //  Toast({
-                                    //     message: '客户添加成功',
-                                    //     position: 'middle',
-                                    //     duration: 3000
-                                    //     });
-                                        this.tiopmessage='客户添加成功'
+                        else {
+                            this.ONbtn = true;
+                            this.addover = true;
+                            let params = {
+                                cusName: this.nameRead,
+                                nickname: this.nicheng,
+                                phone: this.phone,
+                                idCard: this.IdcardRead,
+                                company: this.gongsi,
+                                address: this.address,
+                                remark: this.message,
+                                cid: this.cid,
+                                headImg: this.headerImage
+                            };
+
+                            client.addC(params)
+                                .then(response => {
+                                    // this.xiTdata=response.data.results;
+                                    if (response.data.status == 'Y') {
+
+                                        //  Toast({
+                                        //     message: '客户添加成功',
+                                        //     position: 'middle',
+                                        //     duration: 3000
+                                        //     });
+                                        this.tiopmessage = '客户添加成功'
                                         setTimeout(() => {
-                                            if(Cookies.get('froms')=='Y'){
-                                               this.$router.push({name: 'client'});
+                                            if (Cookies.get('froms') == 'Y') {
+                                                this.$router.push({name: 'client'});
                                                 // Cookies.remove('froms');
                                             }
-                                            else{
+                                            else {
                                                 this.$router.push({name: 'client'});
                                             }
-                                            
+
                                             // this.addover=false;
                                         }, 3000)
-                                    
-                                }
-                                else{
-                                    //  Toast({
-                                    //     message: ,
-                                    //     position: 'middle',
-                                    //     duration: 3000
-                                    //     });
-                                    this.tiopmessage=response.data.error_msg;
-                                    setTimeout(() => {
+
+                                    }
+                                    else {
+                                        //  Toast({
+                                        //     message: ,
+                                        //     position: 'middle',
+                                        //     duration: 3000
+                                        //     });
+                                        this.tiopmessage = response.data.error_msg;
+                                        setTimeout(() => {
                                             this.$router.push({name: 'client'});
                                         }, 3000)
-                                }
-                            })
+                                    }
+                                })
                         }
                     }
-                    else{
-                        this.addover=true;
-                        this.ONbtn=true;
+                    else {
+                        this.addover = true;
+                        this.ONbtn = true;
                         let params = {
-                            cusName:this.nameRead,
-                            nickname:this.nicheng,
-                            phone:this.phone,
-                            idCard:this.IdcardRead,
-                            company:this.gongsi,
-                            address:this.address,
-                            remark:this.message,
-                            cid:this.cid,
-                            headImg:this.headerImage
+                            cusName: this.nameRead,
+                            nickname: this.nicheng,
+                            phone: this.phone,
+                            idCard: this.IdcardRead,
+                            company: this.gongsi,
+                            address: this.address,
+                            remark: this.message,
+                            cid: this.cid,
+                            headImg: this.headerImage
                         };
                         client.addC(params)
                             .then(response => {
                                 // this.xiTdata=response.data.results;
-                                if(response.data.status=='Y'){
-                                   
+                                if (response.data.status == 'Y') {
+
                                     //  Toast({
                                     //     message: '客户添加成功',
                                     //     position: 'middle',
                                     //     duration: 3000
                                     //     });
-                                         this.tiopmessage='客户添加成功'
-                                        setTimeout(() => {
-                                            if(Cookies.get('froms')=='Y'){
-                                                 this.$router.push({name: 'client'});
-                                                // Cookies.remove('froms');
-                                            }
-                                            else{
-                                                this.$router.push({name: 'client'});
-                                            }
-                                             this.addover=false;
-                                        }, 3000)
-                                    
+                                    this.tiopmessage = '客户添加成功'
+                                    setTimeout(() => {
+                                        if (Cookies.get('froms') == 'Y') {
+                                            this.$router.push({name: 'client'});
+                                            // Cookies.remove('froms');
+                                        }
+                                        else {
+                                            this.$router.push({name: 'client'});
+                                        }
+                                        this.addover = false;
+                                    }, 3000)
+
                                 }
-                                else{
+                                else {
                                     //  Toast({
                                     //     message: response.data.error_msg,
                                     //     position: 'middle',
                                     //     duration: 3000
                                     //     });
-                                    this.tiopmessage=response.data.error_msg;
+                                    this.tiopmessage = response.data.error_msg;
                                     setTimeout(() => {
-                                            this.$router.push({name: 'client'});
-                                        }, 3000)
+                                        this.$router.push({name: 'client'});
+                                    }, 3000)
                                 }
                             })
-                        }
-                    
-                }
-                else{
-                    // 修改信息
-                   this.addover=true;
-                   let params = {
-                        cid:this.cid,    //客户id
-                        cusName:this.nameRead, //姓名
-                        nickname:this.nicheng,
-                        phone:this.phone,
-                        idCard:this.IdcardRead,
-                        company:this.gongsi,
-                        address:this.address,
-                        remark:this.message,
-                        headImg:this.headerImage
-                    };
-                    client.Cgemessage(params)
-                        .then(response => {
-                            if(response.data.status=='Y'){
-                                // Toast({
-                                //         message: '更新成功',
-                                //         position: 'middle',
-                                //         duration: 3000
-                                //         });
-                                this.tiopmessage='更新成功'
-                                setTimeout(() => {
-                                    this.addover=false;
-                                    this.$router.push({name: 'client'});
-                                }, 3000)
-                                
-                            }
-                        })
-                
                     }
-                     
-                
+
+                }
+                else {
+                    if (this.nicheng == '') {
+                        Toast({
+                            message: '请填写昵称',
+                            position: 'middle',
+                            duration: 3000
+                        });
+                    } else {
+                        // 修改信息
+                        this.addover = true;
+                        let params = {
+                            cid: this.cid,    //客户id
+                            cusName: this.nameRead, //姓名
+                            nickname: this.nicheng,
+                            phone: this.phone,
+                            idCard: this.IdcardRead,
+                            company: this.gongsi,
+                            address: this.address,
+                            remark: this.message,
+                            headImg: this.headerImage
+                        };
+                        client.Cgemessage(params)
+                            .then(response => {
+                                if (response.data.status == 'Y') {
+                                    // Toast({
+                                    //         message: '更新成功',
+                                    //         position: 'middle',
+                                    //         duration: 3000
+                                    //         });
+                                    this.tiopmessage = '更新成功'
+                                    setTimeout(() => {
+                                        this.addover = false;
+                                        this.$router.push({name: 'client'});
+                                    }, 3000)
+                                }
+                            })
+                    }
+                }
             },
             send(){
-                
+
             },
             badList(){
                 MessageBox({
@@ -625,7 +637,7 @@
                     message: '即将推出，敬请期待',
                     showCancelButton: true
                 }).then(action => {
-                   
+
                 });
             }
 
@@ -633,7 +645,7 @@
     }
 </script>
 <style scoped rel="stylesheet/scss" lang="scss">
-.sc {
+    .sc {
         position: relative;
     }
 
@@ -664,18 +676,19 @@
             width: 1.24rem;
             height: 1.24rem;
             border-radius: 50%;
-            margin:0 auto;
+            margin: 0 auto;
             display: block;
         }
     }
 
-    .wenzi{
+    .wenzi {
         text-align: center;
         color: #fff;
         line-height: 10rem;
         font-size: 0.4rem;
     }
-    .phonemobil{
+
+    .phonemobil {
         border: 1px solid #dedede;
         color: #4c4c4c;
         padding: 0.2rem 0;
@@ -685,12 +698,14 @@
         padding-left: 2px;
         box-sizing: border-box;
     }
-    .Unchange{
+
+    .Unchange {
         display: block;
         float: right;
         padding-right: 0.2rem;
-        color:  #999;
+        color: #999;
     }
+
     .main-list {
         background: #fff;
         margin-top: 0.2rem;
@@ -699,9 +714,9 @@
         font-size: 0.28rem;
         line-height: 1rem;
         div {
-            p{
-                input{
-                     float: right;
+            p {
+                input {
+                    float: right;
                     color: #4c4c4c;
                     text-align: right;
                     line-height: 0.4rem;
