@@ -37,9 +37,18 @@
                             <div class="sort">
                                 {{item.goodName}}
                             </div>
-                            <div class="money">
-                                ￥{{item.salesAmount}}
+
+                            <div class="ub line">
+                                <div class="time ub-f2">
+                                    {{item.placeOrderTime}}
+                                </div>
+
+                                <div class="money ub-f1">
+                                    ￥{{item.salesAmount}}
+                                </div>
+
                             </div>
+
                         </li>
 
 
@@ -294,14 +303,22 @@
                     overflow:hidden;
                     background-color: #f5f5f5;
                 }
+                .line{
+                    border-bottom: 1px solid #dedede;
+                }
                 .money {
                     padding: 0.2rem 0;
                     text-align: right;
                     color: #49c98b;
                     font-weight: bold;
                     font-size: 0.3rem;
-                    border-bottom: 1px solid #dedede;
                 }
+                .time{
+                    padding: 0.2rem 0;
+                    color: #666;
+                    font-size: 0.3rem;
+                }
+
                 .money-btn {
                     float: right;
                     padding:0.3rem 0;
