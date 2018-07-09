@@ -24,15 +24,15 @@
 
             <!--当日入库-->
             <div class="ub today" v-show="roleId == 'role_sel'">
-                <div class="ub-f1 ">
+                <div class="ub-f1  bd-r">
                     <div class="number1">{{storageData.trainNum}}</div>
                     <div class="words">当日入库</div>
                 </div>
-                <div class="ub-f1 ">
+                <div class="ub-f1  bd-r">
                     <div class="number1">{{storageData.order_quantity}}</div>
                     <div class="words">当日下单</div>
                 </div>
-                <div class="ub-f1">
+                <div class="ub-f1 ">
                     <div class="number1">{{storageData.deposit}}</div>
                     <div class="words">暂存下单</div>
                 </div>
