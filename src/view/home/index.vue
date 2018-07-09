@@ -218,6 +218,9 @@
             //  删除费用类型cookie
             Cookies.remove('eid');
             Cookies.remove('expendName');
+            //  删除卖手cookie
+            Cookies.remove('selName'); 
+            Cookies.remove('sellId'); 
         },
         methods: {
             //获取头像

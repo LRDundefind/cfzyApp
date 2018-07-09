@@ -10,6 +10,7 @@
 
 const order = resolve => require([ '@/view/order/order'],resolve)
 const trainList = resolve => require([ '@/view/order/trainList'],resolve)
+const sellList = resolve => require([ '@/view/order/sellList'],resolve)
 const goodsInformation = resolve => require([ '@/view/order/goodsInformation'],resolve)
 const creditRules = resolve => require([ '@/view/order/creditRules'],resolve)
 
@@ -28,6 +29,15 @@ export default [
 		name:'trainList',
 		components: {
 			mainView: trainList
+		},
+		meta: {
+			showFooter: false
+		}
+	},{
+		path:'sellList',
+		name:'sellList',
+		components: {
+			mainView: sellList
 		},
 		meta: {
 			showFooter: false

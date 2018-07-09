@@ -23,6 +23,13 @@
 						<img src="../../assets/my/icon_right.png" class="icon">
 					</div>
 				</div>
+				<div class="order-detail" v-if=" roleId == 'role_finance_sell'">
+					<div class="ub ub-ac term no-border right-icon" @click="chooseSell()">
+						<div class="ub-f1">卖手</div>
+						<span class="c-3 F26C4c">{{selName}}</span>
+						<img src="../../assets/my/icon_right.png" class="icon">
+					</div>
+				</div>
 				<div class="order-detail" v-if="trainInfo" id="chooseCustomer">
 					<div class="ub ub-ac term right-icon input-choose">
 						<input id="kh" type="radio" name="choose" value="Nottemporary" v-model="customerType">
@@ -210,6 +217,7 @@ export default {
 	components: { Autograph, orderForm},
     data () {
         return {
+        	roleId: Cookies.get('roleId'),
         	showOrderForm:false,
         	post:{},  //传递到表单的数据
         	dataArray:[],  //保存修改过数据
@@ -275,7 +283,11 @@ export default {
 				deliveryCost: 0, //三轮费--手动输入 需求：默认为0
 				tatol: 0,  //合计金额
 			},
-			
+
+			//选择卖手
+			sellId:'',
+			selName:'',
+
 			//选择客户
 			customerType: 'Nottemporary', //客户类型  默认为非临时客户
 			customerId: null, //客户id 
@@ -348,6 +360,12 @@ export default {
         	Cookies.remove('plateNum');//----------------------待修改
             this.$router.push({name: 'trainList'});
         },
+        //选择卖手
+        chooseSell(){
+        	this.$router.push({name: 'sellList'});
+        	Cookies.remove('selName'); //----------------------待修改
+			Cookies.remove('sellId'); //-----------------------待修改
+        },
 		//选择客户
         chooseCustomer(){
         	Cookies.remove('customerName'); //----------------------待修改
@@ -367,6 +385,9 @@ export default {
         	}else{
         		console.log('没有选择车次')
         	}
+        	//获取卖手信息
+        	this.sellId = Cookies.get('sellId')
+        	this.selName = Cookies.get('selName') || '点击选择卖手'
         	//获取客户信息
         	this.customerName = Cookies.get('customerName')  || '选择客户';
         	this.customerId = Cookies.get('customerId');
@@ -763,6 +784,7 @@ export default {
         	}
         	if (this.permit == false) return false; //this.permit控制是否下单的变量，防止连续下单
         	var params = {
+        		sellId: this.sellId, //卖手id
     			tid: this.tid,//车次if
     			cid: this.customerId,//客户id
     			deliveryCost: this.totalCost.deliveryCost,//三轮车费

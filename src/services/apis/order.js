@@ -11,6 +11,14 @@ export const order = {
             data: serverMoudle(data)
         });
     },
+    //卖手列表
+    getSellList(data) {
+        return axios({
+            url: '/rest/CHENGFENG_GET_SELLING_HAND',
+            method: 'post',
+            data: serverMoudle(data)
+        });
+    },
     //车次-货品详细信息 / 订单价格数量设置
     getTrainInfo(data) {
         return axios({
