@@ -405,7 +405,7 @@
                         position: 'middle',
                         duration: 2000
                     });
-                } else if (!(new RegExp(/^1[3|4|5|6|7|8|9][0-9]{9}$/).test(data.driverPhone))) {
+                } else if (data.driverPhone !='' && !(new RegExp(/^1[3|4|5|6|7|8|9][0-9]{9}$/).test(data.driverPhone))) {
                     Toast({
                         message: '司机电话输入有误',
                         position: 'middle',
