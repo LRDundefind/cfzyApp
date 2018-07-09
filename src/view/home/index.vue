@@ -24,37 +24,37 @@
 
             <!--当日入库-->
             <div class="ub today" v-show="roleId == 'role_sel'">
-                <div class="ub-f1 ">
-                    <div class="number">{{storageData.trainNum}}</div>
+                <div class="ub-f1  bd-r">
+                    <div class="number1">{{storageData.trainNum}}</div>
                     <div class="words">当日入库</div>
                 </div>
-                <div class="ub-f1 ">
-                    <div class="number">{{storageData.order_quantity}}</div>
+                <div class="ub-f1  bd-r">
+                    <div class="number1">{{storageData.order_quantity}}</div>
                     <div class="words">当日下单</div>
                 </div>
-                <div class="ub-f1">
-                    <div class="number">{{storageData.deposit}}</div>
+                <div class="ub-f1 ">
+                    <div class="number1">{{storageData.deposit}}</div>
                     <div class="words">暂存下单</div>
                 </div>
             </div>
 
             <div class="ub today" v-show="roleId != 'role_sel'">
                 <div class="ub-f1 bd-r">
-                    <div class="number">{{storageData.day_income}}</div>
+                    <div class="number">{{storageData.day_income | format}}</div>
                     <div class="words">
                         <div>当日</div>
                         <div>收入(元)</div>
                     </div>
                 </div>
                 <div class="ub-f1 bd-r">
-                    <div class="number">{{storageData.day_espenditure}}</div>
+                    <div class="number">{{storageData.day_espenditure | format}}</div>
                     <div class="words">
                         <div>当日</div>
                         <div>支出(元)</div>
                     </div>
                 </div>
                 <div class="ub-f1 bd-r">
-                    <div class="number">{{storageData.day_credit}}</div>
+                    <div class="number">{{storageData.day_credit | format}}</div>
                     <div class="words">
                         <div>当日赊账</div>
                         <div>金额(元)</div>
@@ -62,7 +62,7 @@
                 </div>
 
                 <div class="ub-f1">
-                    <div class="number">{{storageData.day_repayment}}</div>
+                    <div class="number">{{storageData.day_repayment | format}}</div>
                     <div class="words">
                         <div>当日</div>
                         <div>收赊账(元)</div>
@@ -112,8 +112,8 @@
             <!--货品——财务兼卖手与财务-->
             <div class="goods" v-show="roleId != 'role_sel'">
                 <div class="ub">
-                    <div class="ub-f1" :class= "[ this.roleId=='role_finance_sell' || 'role_owner' ? 'left-finance' : 'order-left'] " >
-                        <div class="bd-b" @click="goStorage">
+                    <div class="ub-f1" :class= "[ this.roleId=='role_finance' ? 'order-left' : 'left-finance'] " >
+                        <div class="bd-b" @click="goStorage" v-show="this.roleId != 'role_finance'">
                             <div>
                                 <img class="goods-image left-imge" src="../../assets/index/goods_storage.png"/>
                             </div>
@@ -134,7 +134,7 @@
                             <div class="name">支出</div>
                         </div>
 
-                        <div class="" @click="goDamage">
+                        <div class="" @click="goDamage" v-show="this.roleId != 'role_finance'">
                             <div>
                                 <img class="goods-image right-img" src="../../assets/index/goods_damaged.png"/>
                             </div>
@@ -142,7 +142,7 @@
                         </div>
                     </div>
                     <div class="ub-f1">
-                        <div class="bd-b" @click="goTemporaryOrderList">
+                        <div class="bd-b" @click="goTemporaryOrderList" v-show="this.roleId != 'role_finance'">
                             <div class="">
                                 <img class="goods-image right-img" src="../../assets/index/goods_damaged.png"/>
                             </div>
@@ -347,13 +347,22 @@
         margin: 0.22rem 0;
         padding: 0.32rem 0;
         text-align: center;
-
-        .number {
+        .number1{
             font-size: 0.42rem;
             color: #33d57c;
             min-height: 0.48rem;
-            word-break:break-all;
-            word-wrap:break-word;
+            word-break: break-all;
+            word-wrap: break-word;
+        }
+
+        .number {
+            display: inline-block;
+            vertical-align: middle;
+            font-size: 0.42rem;
+            color: #33d57c;
+            max-height: 0.96rem;
+            word-break: break-all;
+            word-wrap: break-word;
         }
         .words {
             font-size: 0.24rem;

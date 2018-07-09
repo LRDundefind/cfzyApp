@@ -22,7 +22,7 @@
 
                         <li class=" ub">
                             <div class="name ub-f1">
-                                <span class="customer">客户</span>{{item.cusName}}
+                                <span class="customer">客户</span>{{item.nickname}}
                             </div>
                             <div class="pay ub-f1">待还款￥{{item.notPayAmount}}</div>
                         </li>
@@ -103,13 +103,10 @@
             },
             //按客户名称搜索
             searchBlack(msg){
-                Indicator.open({
-                    text: 'Loading...',
-                    spinnerType: 'fading-circle'
-                });
-                this.params.current_page = 1;
                 this.params.search = msg;
                 this.listStore = [];
+                this.params.current_page = 1;
+                this.noWdata = false;
                 this.getList();
             },
 

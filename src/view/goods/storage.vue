@@ -405,7 +405,7 @@
                         position: 'middle',
                         duration: 2000
                     });
-                } else if (!(new RegExp(/^1[3|4|5|6|7|8|9][0-9]{9}$/).test(data.driverPhone))) {
+                } else if (data.driverPhone !='' && !(new RegExp(/^1[3|4|5|6|7|8|9][0-9]{9}$/).test(data.driverPhone))) {
                     Toast({
                         message: '司机电话输入有误',
                         position: 'middle',
@@ -453,33 +453,9 @@
             //编辑修改
             editSubmit(){
 
-                if (this.stall.driverName == '') {
-                    Toast({
-                        message: '司机姓名不可为空',
-                        position: 'middle',
-                        duration: 2000
-                    });
-                } else if (this.stall.driverPhone == '') {
-                    Toast({
-                        message: '司机电话不可为空',
-                        position: 'middle',
-                        duration: 2000
-                    });
-                } else if (!(new RegExp(/^1[3|4|5|6|7|8|9][0-9]{9}$/).test(this.stall.driverPhone))) {
+                if (this.stall.driverPhone != '' && !(new RegExp(/^1[3|4|5|6|7|8|9][0-9]{9}$/).test(this.stall.driverPhone))) {
                     Toast({
                         message: '司机电话输入有误',
-                        position: 'middle',
-                        duration: 2000
-                    });
-                } else if (this.stall.plateNum == '') {
-                    Toast({
-                        message: '车牌号不能为空',
-                        position: 'middle',
-                        duration: 2000
-                    });
-                } else if (this.stall.startAddress == '') {
-                    Toast({
-                        message: '发货地点不能为空',
                         position: 'middle',
                         duration: 2000
                     });
