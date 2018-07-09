@@ -141,7 +141,7 @@ export default {
                 this.selected=this.$route.name
             }
             if(to.name == 'home' && from.name == 'ownerChoice'){
-                window.location.reload();
+                //window.location.reload();
             }
 			this.fetchDate()
 		}

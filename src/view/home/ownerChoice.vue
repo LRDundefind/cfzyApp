@@ -58,6 +58,7 @@
 	        	Cookies.remove('plateNum');
 	        	Cookies.remove('customerName'); 
 	        	Cookies.remove('customerId');
+                this.$parent.$parent.roleId = temp.roleId;
                 window.history.go(-1)
                 //console.log(window.location.host)
                 
