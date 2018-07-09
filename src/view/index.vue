@@ -134,14 +134,15 @@ export default {
             deep:true
         },
         '$route' (to, from) {
-            let path = this.$route.path;
-            if (path.indexOf('knot')){
+            if (this.$route.name == 'orderKnot' || this.$route.name == 'creditKnot') {
+                this.selected == 'knot'
+            }else if (this.$route.path.indexOf('knot')){
                 this.selected == 'knot'
             }else{
                 this.selected=this.$route.name
             }
-            if(to.name == 'home' && from.name == 'ownerChoice'){
-                //window.location.reload();
+            if(to.name == 'home' && from.name == 'order'){
+                this.selected='home';
             }
 			this.fetchDate()
 		}
