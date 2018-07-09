@@ -22,7 +22,7 @@
 
                         <li class=" ub">
                             <div class="name ub-f1">
-                                <span class="customer">客户</span>{{item.cusName}}
+                                <span class="customer">客户</span>{{item.nickname}}
                             </div>
                             <div class="pay ub-f1">待还款￥{{item.notPayAmount}}</div>
                         </li>
