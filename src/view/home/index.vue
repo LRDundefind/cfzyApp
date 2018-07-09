@@ -25,15 +25,15 @@
             <!--当日入库-->
             <div class="ub today" v-show="roleId == 'role_sel'">
                 <div class="ub-f1 ">
-                    <div class="number">{{storageData.trainNum}}</div>
+                    <div class="number1">{{storageData.trainNum}}</div>
                     <div class="words">当日入库</div>
                 </div>
                 <div class="ub-f1 ">
-                    <div class="number">{{storageData.order_quantity}}</div>
+                    <div class="number1">{{storageData.order_quantity}}</div>
                     <div class="words">当日下单</div>
                 </div>
                 <div class="ub-f1">
-                    <div class="number">{{storageData.deposit}}</div>
+                    <div class="number1">{{storageData.deposit}}</div>
                     <div class="words">暂存下单</div>
                 </div>
             </div>
@@ -344,13 +344,22 @@
         margin: 0.22rem 0;
         padding: 0.32rem 0;
         text-align: center;
-
-        .number {
+        .number1{
             font-size: 0.42rem;
             color: #33d57c;
             min-height: 0.48rem;
-            word-break:break-all;
-            word-wrap:break-word;
+            word-break: break-all;
+            word-wrap: break-word;
+        }
+
+        .number {
+            display: inline-block;
+            vertical-align: middle;
+            font-size: 0.42rem;
+            color: #33d57c;
+            max-height: 0.96rem;
+            word-break: break-all;
+            word-wrap: break-word;
         }
         .words {
             font-size: 0.24rem;
