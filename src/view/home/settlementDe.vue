@@ -39,7 +39,7 @@
                 </table>
             </div>
             <div class="login_cont">
-                <div @click="settlement" class="loginbtn">申请结算</div>
+                <div @click="settlement" class="loginbtn" v-show="sold != 'sold'">申请结算</div>
             </div>
         </div>
     </div>
@@ -61,12 +61,14 @@
                 plateNum: '',//车牌号
                 putStorageTime: '',//入库时间
                 goodsList: '',
+                sold:'',//是否展示结算按钮
             }
         },
         mounted () {
             this.roleId = Cookies.get('roleId');
             this.wrapperHeight = document.documentElement.clientHeight - 60;
             this.item = this.$route.params.item;
+            this.sold = this.$route.params.sold;
             this.tid = this.item.tid;
             this.trainsNum = this.item.trainsNum;
             this.plateNum = this.item.plateNum;
