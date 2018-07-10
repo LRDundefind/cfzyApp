@@ -13,7 +13,8 @@
                         <div>
                             <div>客户：{{listData.customer_info.nickname}}</div>
                             <div class="space">车次：{{listData.order_info.trainsNum}}</div>
-                            <div class="space">时间：{{listData.order_info.settleTime}}</div>
+                            <div class="space" v-show="listData.order_info.settleTime !=''">时间：{{listData.order_info.settleTime}}</div>
+                            <div class="space" v-show="listData.order_info.settleTime ==''">时间：{{listData.order_info.placeOrderTime}}</div>
                             <div class="space">订单编号：{{listData.order_info.orderNo}}</div>
                         </div>
 
