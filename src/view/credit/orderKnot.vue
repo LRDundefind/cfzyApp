@@ -27,7 +27,7 @@
                     </li>
                     <li @click="ordersDetail(item.oid)">
                         <div class="customer">
-                            <span class="nickName">姓名</span>
+                            <span class="nickName">客户</span>
                             <span v-show="item.nickname !=''">{{item.nickname}}</span>
                             <span v-show="item.nickname =='' && item.phone ==''">临时客户</span>
                         </div>
