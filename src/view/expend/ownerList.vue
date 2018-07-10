@@ -54,6 +54,7 @@ export default {
         	counts: false,
         	count: false,
         	params:{
+        		isToRemit:'Y', // Y：待汇款
         		current_page: 1,
 				page_size: 10
 			}

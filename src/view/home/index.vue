@@ -221,6 +221,8 @@
             //  删除卖手cookie
             Cookies.remove('selName'); 
             Cookies.remove('sellId'); 
+            //是否垫付
+            Cookies.remove('tfAdvances');
         },
         methods: {
             //获取头像
