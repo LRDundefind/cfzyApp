@@ -1,6 +1,6 @@
 <template>
 	<div class="page-content">
-		<mt-header fixed  title="车次">
+		<mt-header fixed  title="卖手">
 		    <mt-button icon="back" @click="goBack()" slot="left"></mt-button>
 		</mt-header>
 		<!--车次列表-->
