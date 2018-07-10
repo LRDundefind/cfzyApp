@@ -2,7 +2,7 @@
 
 	<div class="page-main page-loadmore-wrapper">
         <div class="basic-list" >
-            <p class="clearfix pos-r payment" @click="form.tfAdvances = !form.tfAdvances">
+            <p class="clearfix pos-r payment" @click="changeTfAdvances">
             <img v-if="form.tfAdvances == 'Y'" src="../../assets/xiadan_xuanzhong_btn@2x.png" class="radioSelect pos-a">
             <img v-else src="../../assets/xiadan_weixuanzhong_btn@2x.png" class="radioSelect pos-a">
              该费用为货主垫付</p>
@@ -56,7 +56,7 @@
             return {
             	form:{
             		roleId:'', //角色id
-					tfAdvances:'Y', //是否为垫付
+					tfAdvances: Cookies.get('tfAdvances') || 'Y', //是否为垫付
 					eid:'', //费用类型
 					tid:'', //车次id
 					expendType:'type_alipay', //支付方式
@@ -95,6 +95,12 @@
         },
 
         methods: {
+            //是否垫付
+            changeTfAdvances(){
+                if (this.form.tfAdvances == 'Y') this.form.tfAdvances = 'N'
+                else this.form.tfAdvances = 'Y'
+                Cookies.set('tfAdvances',this.form.tfAdvances)
+            },
         	//选择车次
 	        choosetrainNumber(){
 	        	Cookies.remove('trainTid');
@@ -120,7 +126,7 @@
 						position: 'middle',
 						duration: 1000
 	    			});
-        		}else if(this.form.tid == '' && this.form.tfAdvances) {
+        		}else if(this.form.tid == '' && (this.form.tfAdvances == 'Y')) {
         			Toast({
 						message: '请选择车次',
 						position: 'middle',
@@ -144,7 +150,13 @@
 						position: 'middle',
 						duration: 1000
 	    			});
-        		}else if(this.form.tieName == ''){
+        		}else if(this.form.amount>99999999.99){
+                    Toast({
+                        message: '输入金额应小于99999999.99',
+                        position: 'middle',
+                        duration: 1000
+                    });
+                }else if(this.form.tieName == ''){
         			Toast({
 						message: '请输入结款人名称',
 						position: 'middle',
