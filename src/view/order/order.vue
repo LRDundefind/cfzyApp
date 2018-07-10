@@ -285,8 +285,8 @@ export default {
 			},
 
 			//选择卖手
-			sellId:'',
-			selName:'',
+			sellId: '',
+			selName: '',
 
 			//选择客户
 			customerType: 'Nottemporary', //客户类型  默认为非临时客户
@@ -386,8 +386,8 @@ export default {
         		console.log('没有选择车次')
         	}
         	//获取卖手信息
-        	this.sellId = Cookies.get('sellId')
-        	this.selName = Cookies.get('selName') || '点击选择卖手'
+        	this.sellId = Cookies.get('sellId') || Cookies.get('uid')
+        	this.selName = Cookies.get('selName') || Cookies.get('userName')
         	//获取客户信息
         	this.customerName = Cookies.get('customerName')  || '选择客户';
         	this.customerId = Cookies.get('customerId');
@@ -993,8 +993,7 @@ i{
 				display: block;
 				float: left;
 			}
-			span:first-child{
-				padding-left: 0.25rem;
+			span{
 				word-wrap: break-word;
 				/*text-overflow:ellipsis;
 				overflow:hidden;
@@ -1005,6 +1004,9 @@ i{
 			    -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
 			    -webkit-line-clamp: 2; /** 显示的行数 **/
 			    overflow: hidden;  /** 隐藏超出的内容 **/
+			}
+			span:first-child{
+				padding-left: 0.25rem;
 			}
 		}
 		.title{
