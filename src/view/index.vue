@@ -141,9 +141,14 @@ export default {
             }else{
                 this.selected=this.$route.name
             }
-            if(to.name == 'home' && from.name == 'order' || 'trainManagement'){
+            if(to.name == 'home' && from.name == 'order'){
                 this.selected='home';
             }
+
+            if(to.name == 'home' && from.name == 'trainManagement'){
+                this.selected='home';
+            }
+
 			this.fetchDate()
 		}
 }
