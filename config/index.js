@@ -47,6 +47,7 @@ module.exports = {
 
   build: {
     testEnv: require('./test.env'),
+    test9080Env: require('./test9080.env'),
     prodEnv: require('./prod.env'),
     // Template for index.html
     index: path.resolve(__dirname, '../dist/index.html'),
