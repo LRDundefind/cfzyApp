@@ -17,7 +17,7 @@
                     ref="loadmore">
                 <ul class="settlement-list">
                     <li v-for="item in listStore" :key='item.tid' >
-                        <div class="ub list-top">
+                        <div class="ub list-top" @click="sold(item,'sold')">
                             <div class="ub-f3 trainsNum">{{item.trainsNum}}</div>
                             <div class="sale ub-f2" v-show="item.settleStatus == 'status_toremit'">待汇款</div>
                             <div class="sale ub-f2" v-show="item.settleStatus == 'status_selling'">售卖中</div>
@@ -25,7 +25,7 @@
                             <div class="sale ub-f2" v-show="item.settleStatus == 'status_complete'">已完成</div>
                             <div class="sale ub-f2" v-show="item.settleStatus == 'status_not_selling'">未开卖</div>
                         </div>
-                        <div class="ub list-top">
+                        <div class="ub list-top" @click="sold(item,'sold')">
                             <div class="numberPlate ub-f2"><span class="">车牌号&nbsp;&nbsp;</span>{{item.plateNum}}</div>
                         </div>
                         <div class="list-bottom  ">
@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="btn" @click="settlementDetail(item)">编辑</div>
                                 <div v-show="item.settleStatus == 'status_not_selling'" class="btn1" @click="deleteTrain(item.tid)">删除</div>
-                                <div v-show="item.settleStatus == 'status_selling'" class="btn" @click="sold(item)">
+                                <div v-show="item.settleStatus == 'status_selling'" class="btn" @click="sold(item,'noSold')">
                                     <span v-show="roleId == 'role_sel'">申请结算</span>
                                     <span v-show="roleId != 'role_sel'">售完结算</span>
                                 </div>
@@ -171,53 +171,74 @@
                     });
                 });
             },
-            //售完结算
 
-            sold(item){
-                let data = {
-                    tid: item.tid,
-                };
-                damage.testClearing(data)
-                    .then(response => {
-                        if (response.data.status == 'Y') {
-                            if(response.data.results.status == 'Y'){
-                                let data={};
-                                data.trainsNum = item.trainsNum;
-                                data.plateNum = item.plateNum;
-                                data.putStorageTime = item.putStorageTime;
-                                data.tid = item.tid;
-                                if(this.roleId == 'role_sel'){
-                                    this.$router.push({
-                                        name: 'settlementList/detail',
-                                        params: {
-                                            id: item.tid, item: data,
-                                        }
-                                    });
-                                }else {
-                                    this.$router.push({
-                                        name: 'carClearing',
-                                        params: {
-                                            tid: item.tid,
-                                        }
-                                    });
-                                }
-                            }else {
-                                Toast({
-                                    message:  '当前车次含有暂存订单/未支付订单',
-                                    position: 'middle',
-                                    duration: 1500
-                                });
-                            }
-                        } else {
-                            Toast({
-                                message:  response.data.error_msg,
-                                position: 'middle',
-                                duration: 1500
-                            });
+            //售完结算与跳转到车次详情
+            sold(item,sold){
+                let data={};
+                data.trainsNum = item.trainsNum;
+                data.plateNum = item.plateNum;
+                data.putStorageTime = item.putStorageTime;
+                data.tid = item.tid;
+
+                if(sold=='sold'){
+                    this.$router.push({
+                        name: 'settlementList/detail',
+                        params: {
+                            id: item.tid, item: data,sold:'sold',
                         }
-                    })
+                    });
+                }
+                this.$router.push({
+                    name: 'settlementList/detail',
+                    params: {
+                        id: item.tid, item: data,
+                    }
+                });
             },
-
+//            sold(item){
+//                let data = {
+//                    tid: item.tid,
+//                };
+//                damage.testClearing(data)
+//                    .then(response => {
+//                        if (response.data.status == 'Y') {
+//                            if(response.data.results.status == 'Y'){
+//                                let data={};
+//                                data.trainsNum = item.trainsNum;
+//                                data.plateNum = item.plateNum;
+//                                data.putStorageTime = item.putStorageTime;
+//                                data.tid = item.tid;
+//                                if(this.roleId == 'role_sel'){
+//                                    this.$router.push({
+//                                        name: 'settlementList/detail',
+//                                        params: {
+//                                            id: item.tid, item: data,
+//                                        }
+//                                    });
+//                                }else {
+//                                    this.$router.push({
+//                                        name: 'carClearing',
+//                                        params: {
+//                                            tid: item.tid,
+//                                        }
+//                                    });
+//                                }
+//                            }else {
+//                                Toast({
+//                                    message:  '当前车次含有暂存订单/未支付订单',
+//                                    position: 'middle',
+//                                    duration: 1500
+//                                });
+//                            }
+//                        } else {
+//                            Toast({
+//                                message:  response.data.error_msg,
+//                                position: 'middle',
+//                                duration: 1500
+//                            });
+//                        }
+//                    })
+//            },
         }
     }
 </script>

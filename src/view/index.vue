@@ -144,6 +144,11 @@ export default {
             if(to.name == 'home' && from.name == 'order'){
                 this.selected='home';
             }
+
+            if(to.name == 'home' && from.name == 'trainManagement'){
+                this.selected='home';
+            }
+
 			this.fetchDate()
 		}
 }
