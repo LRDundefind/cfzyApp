@@ -48,12 +48,14 @@
 <script>
     import {Toast} from 'mint-ui';
     import {damage} from '@/services/apis/damage.api'
+    import Cookies from 'js-cookie'
 
     export default {
         data () {
             return {
+                roleId:'',
                 wrapperHeight: 0,//容器高度
-                item: "",
+                item: {},
                 tid: '',//车次id
                 trainsNum: '', //车次信息
                 plateNum: '',//车牌号
@@ -62,6 +64,7 @@
             }
         },
         mounted () {
+            this.roleId = Cookies.get('roleId');
             this.wrapperHeight = document.documentElement.clientHeight - 60;
             this.item = this.$route.params.item;
             this.tid = this.item.tid;
@@ -93,25 +96,55 @@
                 let data = {
                     tid: this.tid
                 };
-                damage.submitBus(data)
-                    .then(response => {
-                        if (response.data.status == 'Y') {
-                            Toast({
-                                message: '已完结算操作',
-                                position: 'middle',
-                                duration: 1000
-                            });
-                            setTimeout(() => {
-                                this.$router.push({name: 'trainManagement'});
-                            }, 1000)
-                        } else {
-                            Toast({
-                                message: response.data.error_msg,
-                                position: 'middle',
-                                duration: 1000
-                            });
-                        }
-                    })
+                if(this.roleId == 'role_sel'){
+                    damage.submitBus(data)
+                        .then(response => {
+                            if (response.data.status == 'Y') {
+                                Toast({
+                                    message: '已完结算操作',
+                                    position: 'middle',
+                                    duration: 1000
+                                });
+                                setTimeout(() => {
+                                    this.$router.push({name: 'trainManagement'});
+                                }, 1000)
+                            } else {
+                                Toast({
+                                    message: response.data.error_msg,
+                                    position: 'middle',
+                                    duration: 1000
+                                });
+                            }
+                        })
+                }else {
+                    damage.testClearing(data)
+                        .then(response => {
+                            if (response.data.status == 'Y') {
+                                if(response.data.results.status == 'Y'){
+                                    this.$router.push({
+                                        name: 'carClearing',
+                                        params: {
+                                            tid: this.tid,
+                                        }
+                                    });
+
+                                }else {
+                                    Toast({
+                                        message:  '当前车次含有暂存订单/未支付订单',
+                                        position: 'middle',
+                                        duration: 1500
+                                    });
+                                }
+                            } else {
+                                Toast({
+                                    message:  response.data.error_msg,
+                                    position: 'middle',
+                                    duration: 1500
+                                });
+                            }
+                        })
+                }
+
             },
         }
     }
