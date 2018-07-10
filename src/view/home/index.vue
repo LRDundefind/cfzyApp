@@ -153,7 +153,7 @@
                             <div>
                                 <img class="goods-image right-img" src="../../assets/index/trips_computing.png"/>
                             </div>
-                            <div class="name">赊账还款</div>
+                            <div class="name">赊账收账</div>
                         </div>
 
                         <div class=" bd-b bb" @click="goTrainManagement">
