@@ -61,6 +61,10 @@
 	        	Cookies.remove('customerId');
                 this.$parent.$parent.roleId = temp.roleId;
                 window.history.go(-1)
+                //  删除车次cookie
+                Cookies.remove('trainTid');
+                Cookies.remove('trainsNum');
+                Cookies.remove('plateNum');
                 //console.log(window.location.host)
                 
             },
