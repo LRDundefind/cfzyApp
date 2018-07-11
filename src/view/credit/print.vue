@@ -11,7 +11,9 @@
                         <div class="textCenter f-s-15 title">{{listData.company_info.compayName}}</div>
                         <div class="textCenter c-3">{{listData.company_info.markName}}</div>
                         <div>
-                            <div>客户：{{listData.customer_info.nickname}}</div>
+                            <div v-show="listData.customer_info.nickname !=''">客户：{{listData.customer_info.nickname}}</div>
+                            <div v-show="listData.customer_info.nickname =='' && listData.customer_info.phone ==''">客户：临时客户</div>
+
                             <div class="space">车次：{{listData.order_info.trainsNum}}</div>
                             <div class="space" v-show="listData.order_info.settleTime !=''">时间：{{listData.order_info.settleTime}}</div>
                             <div class="space" v-show="listData.order_info.settleTime ==''">时间：{{listData.order_info.placeOrderTime}}</div>
