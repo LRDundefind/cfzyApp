@@ -161,7 +161,7 @@
                     key: "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJRqAC45zJt7CFWUuRQgA+mm", //加密的key
                     randomKey: '' //生成签名的key
                 },
-                selName:this.$route.params.selName,
+                userName:this.$route.params.userName,
                 headImg:this.$route.params.headImg,
             }
         },
@@ -175,7 +175,7 @@
         },
         methods: {
             goPersonal(){
-                this.$router.push({name: 'personDetails', params: {selName: this.selName, headImg: this.headImg}});
+                this.$router.push({name: 'personDetails', params: {userName: this.userName, headImg: this.headImg}});
             },
 
             hideKeyboard() {
@@ -245,7 +245,7 @@
                         this.zhuce(yanNumber);
                     }
                     else if(this.logintime == 'Info'){
-                        this.$router.push({name:'personDetails',params: { phone: this.phoneNumber,yanNumber:yanNumber,selName:this.selName,headImg:this.headImg }});
+                        this.$router.push({name:'personDetails',params: { phone: this.phoneNumber,yanNumber:yanNumber,userName:this.userName,headImg:this.headImg }});
                     }else {
                         // 修改密码
                         this.change(yanNumber);

@@ -78,7 +78,7 @@
         data () {
             return {
                 phoneNumber: '',
-                selName: this.$route.params.selName,
+                userName: this.$route.params.userName,
                 headImg: this.$route.params.headImg,
             }
         },
@@ -89,7 +89,7 @@
         methods: {
             //返回到个人中心
             goPersonal(){
-                this.$router.push({name: 'personDetails', params: {selName: this.selName, headImg: this.headImg}});
+                this.$router.push({name: 'personDetails', params: {userName: this.userName, headImg: this.headImg}});
             },
             //跳转到获取验证码页面
             loginBtn(){
