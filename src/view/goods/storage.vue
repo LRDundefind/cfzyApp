@@ -214,7 +214,6 @@
             'goods-details': goodsDetails,
         },
         mounted () {
-//            this.wrapperHeight = document.documentElement.clientHeight - 40;
             this.tid = this.$route.params.tid || false;
             this.status = this.$route.params.status || false;
 
@@ -224,8 +223,7 @@
                 console.log(this.status);
                 console.log(12345)
             }
-
-            console.log(this.item);
+            //物流列表传参
             if (this.$route.params.item) {
                 this.item = this.$route.params.item;
                 if (this.item.orderId) {
@@ -503,7 +501,7 @@
                 }
 
             },
-
+            //图片上传
             upload1 (e, ty) {
                 if (ty == 'source') {
                     this.source = 'source';

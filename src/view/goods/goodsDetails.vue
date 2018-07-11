@@ -92,7 +92,7 @@
                 Unit: '',
                 deleteDisabled: '',
                 goods: {
-                    goodId: '',
+                    goodId: '',//货品id
                     goodName: '',//货品名称
                     numUnit: '',//货品入库单位
                     goodNum: '',//入库量
@@ -113,7 +113,7 @@
         components: {
             'goods-list': goodsList,
         },
-
+        //判断编辑还是删除货品
         created(){
             if (typeof(this.edit.goodId) != "undefined" && this.edit.goodId != '') {
                 this.goods = this.edit;
@@ -129,6 +129,7 @@
             this.getlist()
         },
         methods: {
+            //选择货品分类
             oNchoiceGoods(item){
                 this.showList = false;
                 this.Unit = item.sellUnit;
@@ -144,6 +145,7 @@
 //                    this.storageData = response.data.results;
                 })
             },
+            //显示货品分类列表
             showType(){
                 this.showList = true;
             },
