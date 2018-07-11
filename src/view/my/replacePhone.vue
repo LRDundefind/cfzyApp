@@ -87,10 +87,11 @@
             //console.log(this.headImg);
         },
         methods: {
+            //返回到个人中心
             goPersonal(){
                 this.$router.push({name: 'personDetails', params: {selName: this.selName, headImg: this.headImg}});
             },
-
+            //跳转到获取验证码页面
             loginBtn(){
                 if (this.phoneNumber == '') {
                     Toast({

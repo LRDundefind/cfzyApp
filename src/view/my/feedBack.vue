@@ -91,6 +91,7 @@
 
         },
         methods: {
+            //提交意见反馈
             submit(){
                 let data = {
                     ideaInfo: this.ideaInfo,

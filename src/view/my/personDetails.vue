@@ -61,9 +61,11 @@
             }
         },
         created () {
+            //判断参数是否有手机号
             if (this.$route.params.phone) {
                 this.phone = this.$route.params.phone;
             }
+            //判断参数是否有验证码
             if (this.$route.params.yanNumber) {
                 this.yanNumber = this.$route.params.yanNumber;
             }
@@ -73,6 +75,7 @@
             goMy(){
                 this.$router.push({name: 'my'});
             },
+            //获取个人信息
             info(){
                 let params = {};
                 my.getInfo(params).then(response => {
@@ -105,6 +108,7 @@
                     }
                 })
             },
+            //图片上传功能
             upload1 (e) {
                 let files = e.target.files || e.dataTransfer.files;
                 if (!files.length) return;
