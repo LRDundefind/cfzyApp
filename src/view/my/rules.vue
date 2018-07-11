@@ -44,6 +44,7 @@
     }
 </style>
 <script>
+    //此页面作废，设置规则在下单页面
     export default {
         name: 'rules',
         data () {

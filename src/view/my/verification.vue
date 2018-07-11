@@ -89,6 +89,7 @@
         mounted () {
 
         },
+        //此获取验证码页面作废，新的获取验证码——login文件夹下面的yanzheng.vue页面
         created() {
             this.getRouterPar();
             this.daojishi();
