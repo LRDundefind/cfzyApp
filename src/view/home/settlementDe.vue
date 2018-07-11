@@ -15,8 +15,6 @@
             <div class="detail-top ub ub-ac">
                 <div class="ub-f1 time">入库时间</div>
                 <div class="number">{{putStorageTime}}</div>
-
-
             </div>
             <div class="table-list">
                 <table>
@@ -65,6 +63,7 @@
             }
         },
         mounted () {
+            //路由传参
             this.roleId = Cookies.get('roleId');
             this.wrapperHeight = document.documentElement.clientHeight - 60;
             this.item = this.$route.params.item;
@@ -78,6 +77,7 @@
             }
         },
         methods: {
+            //获取货品信息
             getList(){
                 let data = {
                     tid: this.tid
@@ -85,8 +85,7 @@
                 damage.damageDetails(data)
                     .then(response => {
                         this.goodsList = response.data.results;
-                        console.log(this.goodsList);
-                        console.log(1111);
+                        //console.log(this.goodsList);
                     })
                     .catch(function (response) {
                         console.log(response);
