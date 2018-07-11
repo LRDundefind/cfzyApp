@@ -14,7 +14,7 @@
                     </div>
                     <div class="ub ub-pc">
                         <div class="name  ">
-                            <span>{{personalData.selName}}</span>
+                            <span>{{personalData.userName}}</span>
                         </div>
                     </div>
                 </div>

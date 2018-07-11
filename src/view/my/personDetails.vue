@@ -100,7 +100,7 @@
                             this.personalData.userName = this.userName;
                         }
                         if (this.headImg) {
-                            this.personalData.headImg = this.doMain + this.headImg;
+                            this.personalData.headImg = this.headImg;
                         }
 
                     } else {
