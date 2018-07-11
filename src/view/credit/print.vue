@@ -11,7 +11,9 @@
                         <div class="textCenter f-s-15 title">{{listData.company_info.compayName}}</div>
                         <div class="textCenter c-3">{{listData.company_info.markName}}</div>
                         <div>
-                            <div>客户：{{listData.customer_info.nickname}}</div>
+                            <div v-show="listData.customer_info.nickname !=''">客户：{{listData.customer_info.nickname}}</div>
+                            <div v-show="listData.customer_info.nickname =='' && listData.customer_info.phone ==''">客户：临时客户</div>
+
                             <div class="space">车次：{{listData.order_info.trainsNum}}</div>
                             <div class="space" v-show="listData.order_info.settleTime !=''">时间：{{listData.order_info.settleTime}}</div>
                             <div class="space" v-show="listData.order_info.settleTime ==''">时间：{{listData.order_info.placeOrderTime}}</div>
@@ -110,12 +112,14 @@
         },
 
         mounted () {
+            //路由传参
             this.oid = this.$route.params.oid;
             this.come = this.$route.params.come || false;
             this.getList();
         },
 
         methods: {
+            //获取打印订单的结算单
             getList(){
                 let data = {
                     oid:this.oid
@@ -126,16 +130,19 @@
                     console.log(123456);
                 })
             },
+            //设置功能
             setting(){
                 if (typeof XDYApp !== 'undefined') {
                     XDYApp.printerSetting();
                 }
             },
+            //打印功能
             print(){
                 if (typeof XDYApp !== 'undefined') {
                     XDYApp.printer(JSON.stringify(this.listData));
                 }
             },
+            //返回上一个页面
             backPrint(){
                 if(this.come){
                     this.$router.push({

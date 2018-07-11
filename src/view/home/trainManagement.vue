@@ -78,6 +78,7 @@
             this.getList();
             app.Vwaiting();
         },
+        //到达时间过滤器
         filters: {
             capitalize: function (value) {
                 return value.slice(-6);
@@ -85,6 +86,7 @@
         },
 
         methods: {
+            //获取车次管理列表
             getList(){
                 damage.damageList(this.params).then(response => {
                     this.trainList = response.data.results;

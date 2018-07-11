@@ -38,6 +38,7 @@
 
         },
         watch:{
+            //选中状态
             selected:{
                 handler(val,oldval){
                     //console.log(oldval+'->'+val)

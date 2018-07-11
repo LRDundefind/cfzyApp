@@ -83,6 +83,7 @@
         },
 
         methods: {
+            //跳转到平台黑名单
             goMy(){
                 if (this.black == 'nostall') {
                     this.$router.push({name: 'noStalls'})
@@ -90,7 +91,7 @@
                     this.$router.push({name: 'home'});
                 }
             },
-
+            //搜索功能
                 searchBlack(msg){
                     this.params.search=msg;
                     this.listStore = [];
@@ -118,6 +119,7 @@
                 this.getList();
                 this.$refs.loadmore.onBottomLoaded();
             },
+            //获取平台黑名单列表
             getList(){
                 home.blacklist(this.params).then(response => {
                     this.listdata = response.data.results;
@@ -144,7 +146,7 @@
                     Indicator.close();
                 })
             },
-
+            //跳转到黑名单详情
             goDetail(cid){
                 if (this.black == 'nostall') {
                     Toast({

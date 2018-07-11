@@ -14,7 +14,7 @@
                     </div>
                     <div class="ub ub-pc">
                         <div class="name  ">
-                            <span>{{personalData.selName}}</span>
+                            <span>{{personalData.userName}}</span>
                         </div>
                     </div>
                 </div>
@@ -199,24 +199,25 @@
         data () {
             return {
                 black:'',
-                phone: '',
+                phone: '',//手机号
                 userName: '',
                 personalData: {
                     headImg:'',
-                },
+                },//头像
             }
         },
         created(){
-            this.black = this.$route.params.black || false;
+            this.black = this.$route.params.black || false;//路由传参(无档位)
         },
         mounted () {
+            //获取姓名
             if (JSON.parse(Cookies.get('gidOwnID_lists')).userName) {
                 this.userName = JSON.parse(Cookies.get('gidOwnID_lists')).userName;
             }
             this.info();
         },
         methods: {
-
+            //获取客户头像
             info(){
                 let params = {};
                 my.getInfo(params).then(response => {

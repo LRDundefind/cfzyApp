@@ -42,10 +42,7 @@
                             <div class="money ub-f1">
                                 ￥{{item.salesAmount}}
                             </div>
-
                         </div>
-
-
                     </li>
 
                     <li class="clearfix" v-show="item.status=='status_complete'" style="border-top:1px solid #dedede">
@@ -127,6 +124,7 @@
                 this.getList();
                 this.$refs.loadmore.onBottomLoaded();
             },
+            //获取车次列表
             getList(){
                 creditOrder.getOrderList(this.params).then(response => {
                     this.listdata = response.data.results;
@@ -202,6 +200,7 @@
                     }
                 });
             },
+            //跳转到打印页面
             print(oid){
                 this.$router.push({name: 'print', params: {oid:oid,come:'knot'}});
             },

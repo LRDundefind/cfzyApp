@@ -41,6 +41,7 @@
             this.info();
         },
         methods: {
+            //获取关于及使用协议
             info(){
                 let params = {};
                 my.abouts(params).then(response => {

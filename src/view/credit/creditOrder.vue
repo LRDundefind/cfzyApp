@@ -68,9 +68,9 @@
             return {
                 placeMessage: '请输入客户名称',
                 msg: '',
-                black: '',
+                //black: '',
                 allLoaded: false,
-                wrapperHeight: 0,//容器高度
+                //wrapperHeight: 0,//容器高度
                 noData: false,
                 params: {
                     current_page: 1,
@@ -88,8 +88,8 @@
             searchBox
         },
         created(){
-            this.black = this.$route.params.black || false;
-            this.wrapperHeight = document.documentElement.clientHeight - 100;
+            //this.black = this.$route.params.black || false;
+            //this.wrapperHeight = document.documentElement.clientHeight - 100;
             this.getList();
             app.Vwaiting();
         },
@@ -129,6 +129,7 @@
                 this.getList();
                 this.$refs.loadmore.onBottomLoaded();
             },
+            //获取赊账收账列表
             getList(){
                 creditOrder.getList(this.params).then(response => {
                     this.listdata = response.data.results.list;

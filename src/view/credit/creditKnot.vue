@@ -56,8 +56,6 @@
                 没有更多数据了
             </div>
         </mt-loadmore>
-
-
     </div>
 
 </template>
@@ -80,7 +78,7 @@
                     current_page: 1,
                     page_size: 10,
                     orderType:'order_credit'
-                },
+                },//订单列表参数
                 listStore: [],
                 listdata: null,
                 noWdata: false,
@@ -118,6 +116,7 @@
                 this.getList();
                 this.$refs.loadmore.onBottomLoaded();
             },
+            //获取订单列表
             getList(){
                 creditOrder.getOrderList(this.params).then(response => {
                     this.listdata = response.data.results;

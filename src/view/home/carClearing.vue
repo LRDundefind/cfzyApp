@@ -207,7 +207,7 @@
                         })
                 }
             },
-
+            //跳转到车次管理列表
             goTrain(){
                 this.$router.push({
                     name: 'trainManagement',

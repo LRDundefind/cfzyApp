@@ -61,6 +61,7 @@
             this.getList();
         },
         methods: {
+            //获取货品列表
             getList(){
                 let data = {
                     tid: this.tid
@@ -74,6 +75,7 @@
                         console.log(response);
                     });
             },
+            //跳转到货品损坏编辑页面
             goRecordUpdate(item){
                 this.$router.push({name: 'damageRecord/update', params: {id:item.id,tid: item.tid,type:'edit',trainsNum:this.trainsNum,item:item}})
             },

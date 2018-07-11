@@ -37,10 +37,7 @@
                 <div v-if="allLoaded" class="m-t-10" style="text-align:center;font-size: 0.18rem;display: none">没有更多数据了</div>
 
             </mt-loadmore>
-
         </div>
-
-
     </div>
 </template>
 
@@ -78,6 +75,7 @@
             app.Vwaiting();
         },
         methods: {
+            //获取列表
             getList(){
                 damage.damageList(this.params).then(response => {
                     this.trainList = response.data.results;
@@ -104,6 +102,7 @@
                     Indicator.close();
                 })
             },
+            //跳转到货品损坏报告
             goReport(item){
                 this.$router.push({name: 'damageReport', params: {tid: item.tid, trainsNum: item.trainsNum}});
             },

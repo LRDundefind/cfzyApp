@@ -33,6 +33,7 @@
             this.getList();
         },
         methods: {
+            //获取档位列表
             getList(){
                 let params = {
                     tfCheck:'N'

@@ -26,7 +26,7 @@
             </div>
             <div class="main-list">
                 <p class="clearfix">姓名
-                    <input type="text" v-model="personalData.selName">
+                    <input type="text" v-model="personalData.userName">
                     <!--<input type="text" v-model="nameWrite" v-else>-->
                 </p>
                 <p class="clearfix" @click="goPhone()">手机号<input type="text" v-model="personalData.phone" readonly></p>
@@ -55,15 +55,17 @@
                 yanNumber: this.$route.params.yanNumber,
                 headerImage: '',
                 picValue: '',
-                selName: this.$route.params.selName,
+                userName: this.$route.params.userName,
                 headImg: this.$route.params.headImg,
                 doMain:process.env.BASE_PATH,
             }
         },
         created () {
+            //判断参数是否有手机号
             if (this.$route.params.phone) {
                 this.phone = this.$route.params.phone;
             }
+            //判断参数是否有验证码
             if (this.$route.params.yanNumber) {
                 this.yanNumber = this.$route.params.yanNumber;
             }
@@ -73,6 +75,7 @@
             goMy(){
                 this.$router.push({name: 'my'});
             },
+            //获取个人信息
             info(){
                 let params = {};
                 my.getInfo(params).then(response => {
@@ -93,8 +96,8 @@
                         if (this.phone) {
                             this.personalData.phone = this.phone;
                         }
-                        if (this.selName) {
-                            this.personalData.selName = this.selName;
+                        if (this.userName) {
+                            this.personalData.userName = this.userName;
                         }
                         if (this.headImg) {
                             this.personalData.headImg = this.headImg;
@@ -105,6 +108,7 @@
                     }
                 })
             },
+            //图片上传功能
             upload1 (e) {
                 let files = e.target.files || e.dataTransfer.files;
                 if (!files.length) return;
@@ -275,14 +279,14 @@
             goPhone(){
                 this.$router.push({
                     name: 'replacePhone',
-                    params: {selName: this.personalData.selName, headImg: this.personalData.headImg}
+                    params: {userName: this.personalData.userName, headImg: this.personalData.headImg}
                 });
             },
             //保存用户资料
             savePersonal(){
                 let data ={
                     phone:this.personalData.phone,
-                    selName:this.personalData.selName,
+                    selName:this.personalData.userName,
                     headImg:this.headerImage,
                 };
                 if (this.yanNumber) {

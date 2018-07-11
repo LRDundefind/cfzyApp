@@ -148,6 +148,9 @@ export default {
             if(to.name == 'home' && from.name == 'trainManagement'){
                 this.selected='home';
             }
+            if(to.name == 'home'){
+                this.selected='home';
+            }
 
 			this.fetchDate()
 		}

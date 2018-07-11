@@ -109,6 +109,7 @@
 
         },
         methods: {
+            //修改密码
             alterPass(){
                 if (this.params.old_password && this.params.password && this.params.confirmPassword) {
                     if (!(new RegExp(/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/).test(this.params.old_password))) {
