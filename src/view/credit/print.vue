@@ -110,12 +110,14 @@
         },
 
         mounted () {
+            //路由传参
             this.oid = this.$route.params.oid;
             this.come = this.$route.params.come || false;
             this.getList();
         },
 
         methods: {
+            //获取打印订单的结算单
             getList(){
                 let data = {
                     oid:this.oid
@@ -126,16 +128,19 @@
                     console.log(123456);
                 })
             },
+            //设置功能
             setting(){
                 if (typeof XDYApp !== 'undefined') {
                     XDYApp.printerSetting();
                 }
             },
+            //打印功能
             print(){
                 if (typeof XDYApp !== 'undefined') {
                     XDYApp.printer(JSON.stringify(this.listData));
                 }
             },
+            //返回上一个页面
             backPrint(){
                 if(this.come){
                     this.$router.push({
