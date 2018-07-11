@@ -46,11 +46,8 @@
                                 <div class="money ub-f1">
                                     ￥{{item.salesAmount}}
                                 </div>
-
                             </div>
-
                         </li>
-
 
                         <li class="clearfix">
                             <div class="money-btn ub ub-ae">
@@ -58,15 +55,12 @@
                                 <div class="btn" @click="clearing(item.oid)">结算</div>
                             </div>
                         </li>
-
                     </ul>
                 </div>
                 <div v-if="allLoaded" class="m-t-10" style="text-align:center;font-size: 0.18rem;display: none">
                     没有更多数据了
                 </div>
             </mt-loadmore>
-
-
         </div>
     </div>
 </template>
@@ -82,9 +76,9 @@
             return {
                 placeMessage: '请输入客户名称',
                 msg: '',
-                black: '',
+                //black: '',
                 allLoaded: false,
-                wrapperHeight: 0,//容器高度
+                //wrapperHeight: 0,//容器高度
                 noData: false,
                 params: {
                     current_page: 1,
@@ -94,7 +88,6 @@
                 listStore: [],
                 listdata: null,
                 noWdata: false,
-
             }
         },
         components: {
@@ -102,8 +95,8 @@
             searchBox
         },
         created(){
-            this.black = this.$route.params.black || false;
-            this.wrapperHeight = document.documentElement.clientHeight - 100;
+            //this.black = this.$route.params.black || false;
+            //this.wrapperHeight = document.documentElement.clientHeight - 100;
             this.getList();
             app.Vwaiting();
         },
@@ -143,6 +136,7 @@
                 this.getList();
                 this.$refs.loadmore.onBottomLoaded();
             },
+            //获取现结收账列表
             getList(){
                 creditOrder.getKnot(this.params).then(response => {
                     this.listdata = response.data.results;
@@ -219,8 +213,6 @@
                     }
                 });
             }
-
-
         }
     }
 </script>
