@@ -193,6 +193,7 @@
             }
         },
         created () {
+            //Token判断与档位列表是否为空
             if (typeof Cookies.get('Token') == 'undefined') {
                 this.$router.push({name: 'login'});
             }else{
