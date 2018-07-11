@@ -814,11 +814,20 @@ export default {
 						position: 'middle',
 						duration: 2000
 	    			});
-					//下单成功跳转至首页
-		            this.$router.push({
-		            	name: 'home',
-						params: {type: 'home'}
-		            });
+	    			if((this.roleId == 'role_finance_sell' || this.roleId == 'role_owner') && params.orderType == 'order_knot'){
+	    				//现结下单成功跳转至结算
+			            this.$router.push({
+			            	name: 'ordersList/ordersDetail',
+							params: {oid: response.data.results.oid}
+			            });
+	    			}else{
+	    				//下单成功跳转至首页
+			            this.$router.push({
+			            	name: 'home',
+							params: {type: 'home'}
+			            });
+	    			}
+					
         		})
         }
         

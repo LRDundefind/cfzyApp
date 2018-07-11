@@ -212,9 +212,9 @@
             this.getlist();
             app.Vwaiting();
             //  删除车次cookie
-            Cookies.remove('trainTid');
-            Cookies.remove('trainsNum');
-            Cookies.remove('plateNum');
+            // Cookies.remove('trainTid');
+            // Cookies.remove('trainsNum');
+            // Cookies.remove('plateNum');
             //  删除费用类型cookie
             Cookies.remove('eid');
             Cookies.remove('expendName');
