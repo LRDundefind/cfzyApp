@@ -127,6 +127,7 @@
             }
         },
         mounted () {
+            //路由传参
             this.cid = this.$route.params.cid;
             this.item = this.$route.params.item;
 

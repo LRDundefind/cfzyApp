@@ -62,6 +62,7 @@
         created(){
         },
         mounted () {
+            //路由传参
             this.item = this.$route.params.item;
             this.cid = this.$route.params.item.cid;
             this.refundAmount = this.$route.params.item.refundAmount;
@@ -73,11 +74,10 @@
             //跳转到首页
             goMy(){
                 let data = this.item;
-                console.log(data);
-
+                //console.log(data);
                 this.$router.push({name: 'repayment', params: {cid: this.cid,item:data}});
             },
-
+            //获取还款订单列表
             getList(){
                 let data = {
                     cid: this.cid,
@@ -88,8 +88,6 @@
                     this.listStore = response.data.results;
                 })
             },
-
-
         }
     }
 </script>
