@@ -378,7 +378,11 @@ export default {
         	//获取车次信息
     		this.tid = Cookies.get('trainTid');
     		this.trainsNum = Cookies.get('trainsNum') || '点击选择车次';
-    		this.plateNum = Cookies.get('plateNum') || '获取车牌号';
+    		if (Cookies.get('plateNum') == '') {
+    			this.plateNum = ''
+    		}else{
+    			this.plateNum = Cookies.get('plateNum') || '获取车牌号';
+    		}
         	if(this.tid){
         		this.otherInfo = true;//其他信息展示
 				this.getTrain(this.tid);
