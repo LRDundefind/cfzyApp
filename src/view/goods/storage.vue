@@ -38,7 +38,7 @@
                 <div v-if="selected == 'basic'">
                     <div class="">
                         <div class="basic-list" @click="gologistics" v-show="tid">
-                            <p class="clearfix">{{stall.trainsNum}}
+                            <p class="clearfix"><span class="f-l">{{stall.trainsNum}}</span>
                                 <span class="name" v-show="status == 'status_toremit'">待汇款</span>
                                 <span class="name" v-show="status == 'status_selling'">售卖中</span>
                                 <span class="name" v-show="status == 'status_topay'">待结算</span>
