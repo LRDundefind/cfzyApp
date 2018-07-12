@@ -135,7 +135,7 @@
                 this.Unit = item.sellUnit;
                 this.goods.goodId = item.goodId;
                 this.goods.goodName = item.goodName;
-                this.goods.numUnit = item.sellUnit;
+                this.goods.numUnit = 'unit_pie';
             },
 
             //初始化数据--获取档位货品列表
