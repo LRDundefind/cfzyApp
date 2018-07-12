@@ -44,11 +44,11 @@
                         </div>
                     </li>
 
-                    <li class="clearfix" style="border-top:1px solid #dedede">
-                        <div class="money-btn ub ub-ae">
-                            <div class="btn" @click="print(item.oid)">打印</div>
-                        </div>
-                    </li>
+                    <!--<li class="clearfix" style="border-top:1px solid #dedede">-->
+                        <!--<div class="money-btn ub ub-ae">-->
+                            <!--<div class="btn" @click="print(item.oid)">打印</div>-->
+                        <!--</div>-->
+                    <!--</li>-->
 
                 </ul>
             </div>
