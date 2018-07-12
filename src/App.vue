@@ -50,6 +50,10 @@ export default {
             Cookies.set('gidOwnID_lists', loginMessage.gidOwnID_lists);
             Cookies.set('owner_id', loginMessage.owner_id);
             Cookies.set('haveTrainInfo', loginMessage.haveTrainInfo);
+            //  删除车次cookie
+            Cookies.remove('trainTid');
+            Cookies.remove('trainsNum');
+            Cookies.remove('plateNum');
             
           }
         }
