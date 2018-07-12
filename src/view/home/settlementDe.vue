@@ -37,7 +37,10 @@
                 </table>
             </div>
             <div class="login_cont">
-                <div @click="settlement" class="loginbtn" v-show="sold != 'sold'">申请结算</div>
+                <div @click="settlement" class="loginbtn" v-show="sold != 'sold'">
+                    <span v-show="roleId == 'role_sel'">申请结算</span>
+                    <span v-show="roleId != 'role_sel'">售完结算</span>
+                </div>
             </div>
         </div>
     </div>
