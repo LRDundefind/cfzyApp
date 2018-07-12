@@ -342,7 +342,7 @@
             },
             //编辑货品
             editGoods(item){
-                if(this.status =='status_selling'){
+                if(this.status =='status_selling' || this.status== 'status_topay'){
                     Toast({
                         message: '商品售卖中！',
                         position: 'middle',
