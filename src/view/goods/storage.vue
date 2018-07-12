@@ -136,7 +136,9 @@
                         </p>
                     </div>
                     <div class="login_pass" v-show="selected == 'goods'">
-                        <div v-show="status !='status_selling'" @click="createGoods" class="loginbtn">添加货品</div>
+                        <div v-show="status !='status_topay'">
+                            <div v-show="status !='status_selling'" @click="createGoods" class="loginbtn">添加货品</div>
+                        </div>
                     </div>
 
                 </div>

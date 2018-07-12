@@ -62,7 +62,7 @@
 </template>
 
 <script>
-    import {Toast} from 'mint-ui'
+    import {Toast,MessageBox} from 'mint-ui'
     import {orders} from '@/services/apis/orders.js';
     import {creditOrder} from '@/services/apis/creditOrder'
 
@@ -119,33 +119,38 @@
             },
             //结算订单
             settlement(){
-                let data = {
-                    oid: this.oid,//订单id
-                    payType: this.payType,//结算方式
-                };
-                this.confirmDisabled = true;
-                creditOrder.clearingKnot(data)
-                    .then(response => {
-                        if (response.data.status == 'Y') {
-                            Toast({
-                                message: '已完成结算操作',
-                                position: 'middle',
-                                duration: 1000
-                            });
-                            setTimeout(() => {
+                MessageBox.confirm('您确认结算吗？', '').then(() => {
+                    let data = {
+                        oid: this.oid,//订单id
+                        payType: this.payType,//结算方式
+                    };
+                    this.confirmDisabled = true;
+                    creditOrder.clearingKnot(data)
+                        .then(response => {
+                            if (response.data.status == 'Y') {
+                                Toast({
+                                    message: '已完成结算操作',
+                                    position: 'middle',
+                                    duration: 1000
+                                });
+                                setTimeout(() => {
+                                    this.confirmDisabled = false;
+                                    this.$router.push({name: 'print', params: {oid: this.oid}});
+                                }, 1000)
+                            } else {
                                 this.confirmDisabled = false;
-                                this.$router.push({name: 'print', params: {oid: this.oid}});
-                            }, 1000)
-                        } else {
-                            this.confirmDisabled = false;
-                            Toast({
-                                message: response.data.results,
-                                position: 'middle',
-                                duration: 1000
-                            });
-                        }
-                    })
+                                Toast({
+                                    message: response.data.results,
+                                    position: 'middle',
+                                    duration: 1000
+                                });
+                            }
+                        })
+                }, () => {
+
+                });
             },
+
         }
     }
 </script>
