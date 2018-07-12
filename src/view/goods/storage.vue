@@ -344,7 +344,7 @@
             editGoods(item){
                 if(this.status =='status_selling' || this.status== 'status_topay'){
                     Toast({
-                        message: '商品售卖中！',
+                        message: '商品不可修改！',
                         position: 'middle',
                         duration: 2000
                     });
