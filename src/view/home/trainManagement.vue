@@ -5,6 +5,22 @@
                 <mt-button icon="back"></mt-button>
             </router-link>
         </mt-header>
+        <div class="order-detail">
+            <div class="term clearfix no-border">车次状态
+                <div class="choice">
+                    <select v-model="status" @change="payWay(status)">
+                        <option value="">全部</option>
+                        <option value="status_not_selling">未开卖</option>
+                        <option value="status_selling">售卖中</option>
+                        <option value="status_topay">待结算</option>
+                        <option value="status_toremit">待汇款</option>
+                        <option value="status_complete">已完成</option>
+                    </select>
+                    <img class="jin-right"
+                         src="../../assets/index/gray-right-icon.png"/></div>
+
+            </div>
+        </div>
         <!--车次结算列表-->
         <div class="page-main page-loadmore-wrappe topScroll">
             <noDate v-if="noWdata"></noDate>
@@ -34,10 +50,17 @@
                                     <!--<div>货品结算金额&nbsp;&nbsp;{{item.putStorageTime | capitalize}}</div>-->
                                     <div>到达时间&nbsp;&nbsp;{{item.putStorageTime | capitalize}}</div>
                                 </div>
-                                <div class="btn" @click="settlementDetail(item)">编辑</div>
+                                <div v-show="item.settleStatus != 'status_complete'&& item.settleStatus != 'status_toremit'&&roleId != 'role_sel'  " class="btn" @click="settlementDetail(item)">编辑</div>
+                                <div v-show="item.settleStatus == 'status_selling'&&roleId == 'role_sel' " class="btn" @click="settlementDetail(item)">编辑</div>
+
+                                <div style="text-align: right">
+                                    <div v-show="item.settleStatus == 'status_topay'&&roleId == 'role_sel' " class="btn" @click="settlementDetail(item)">编辑</div>
+
+                                </div>
+
                                 <div v-show="item.settleStatus == 'status_not_selling'" class="btn1" @click="deleteTrain(item.tid)">删除</div>
-                                <div v-show="item.settleStatus == 'status_selling'" class="btn" @click="sold(item,'noSold')">
-                                    <span v-show="roleId == 'role_sel'">申请结算</span>
+                                <div v-show="item.settleStatus == 'status_topay' || item.settleStatus == 'status_selling'" class="btn" @click="sold(item,'noSold')">
+                                    <span v-if="roleId == 'role_sel' && item.settleStatus != 'status_topay' ">申请结算</span>
                                     <span v-show="roleId != 'role_sel'">售完结算</span>
                                 </div>
                             </div>
@@ -64,10 +87,13 @@
                 listStore: [],
                 trainList: [],
                 params:{
+                    status:'',
+                    isOrder:'N',
                     current_page: 1,
                     page_size: 10
                 },
                 noWdata:false,
+                status:'',//车次状态
             }
         },
         components:{
@@ -86,6 +112,15 @@
         },
 
         methods: {
+            //切换车次状态
+            payWay(status){
+                this.params.status = status;
+                this.listStore = [];
+                this.params.current_page = 1;
+                this.noWdata = false;
+                this.getList();
+            },
+
             //获取车次管理列表
             getList(){
                 damage.damageList(this.params).then(response => {
@@ -249,14 +284,59 @@
         font-style: normal;
     }
     .topScroll{
-        height: calc(100vh - 50px);
-        top: 40px;
+        height: calc(100vh - 100px);
+        top: 100px;
         bottom: 0rem;
     }
     .page-loadmore-wrappe{
         overflow: auto;
         -webkit-overflow-scrolling : touch;
     }
+
+    .order-detail {
+        font-size: 0.28rem;
+        color: #333;
+        background: #fff;
+        padding: 0 0.3rem;
+        margin-top: 0.2rem;
+        .term {
+            line-height: 0.96rem;
+            border-bottom: 1px solid #dedede;
+
+            .choice {
+                float: right;
+                .jin-right {
+                    width: 0.18rem;
+                    padding-top: 0.3294rem;
+                }
+            }
+            select {
+                border: none;
+                line-height: 0.3rem;
+                -moz-appearance: none;
+                -webkit-appearance: none;
+                background-size: 0.9rem 0.9rem;
+                color: #666666;
+                outline: none;
+                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+                background-color: #fff;
+
+                font-size: 0.28rem;
+                position: relative;
+                margin-left: 10px;
+                width: 1.1rem;
+                height: 40px;
+            }
+
+        }
+        .term.no-border {
+            border-bottom: none;
+        }
+
+    }
+
+
+
 
     .settlement-list {
         font-size: 0.24rem;
@@ -315,6 +395,17 @@
                     border-radius: 1rem;
                     color: #33d57c;
                 }
+                .btn2 {
+                    margin-left: 0.2rem;
+                    font-size: 0.3rem;
+                    width: 1.88rem;
+                    line-height: 0.68rem;
+                    text-align: center;
+                    color: #fff;
+                    background: -webkit-linear-gradient(left, #30b03e 0%, #33d57c 100%);
+                    border-radius: 1rem;
+                }
+
             }
         }
     }
