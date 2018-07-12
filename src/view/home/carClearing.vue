@@ -157,7 +157,7 @@
                     if(apply == 'compute'){
                         data.computer ='Y'
                     }else {
-                        if(this.amountClearing == ''){
+                        if(this.amountClearing == '' && this.amountClearing !='0'){
                             Toast({
                                 message: '请先计算最终结算费用！',
                                 position: 'middle',
