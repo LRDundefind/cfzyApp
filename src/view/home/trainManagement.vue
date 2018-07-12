@@ -53,6 +53,8 @@
                                 <div v-show="item.settleStatus != 'status_complete'&& item.settleStatus != 'status_toremit'&&roleId != 'role_sel'  " class="btn" @click="settlementDetail(item)">编辑</div>
                                 <div v-show="item.settleStatus == 'status_selling'&&roleId == 'role_sel' " class="btn" @click="settlementDetail(item)">编辑</div>
 
+                                <div v-show="item.settleStatus == 'status_not_selling'&&roleId == 'role_sel' " class="btn" @click="settlementDetail(item)">编辑</div>
+
                                 <div style="text-align: right">
                                     <div v-show="item.settleStatus == 'status_topay'&&roleId == 'role_sel' " class="btn" @click="settlementDetail(item)">编辑</div>
 

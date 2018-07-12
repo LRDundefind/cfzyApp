@@ -1,9 +1,6 @@
 <template>
     <div class="page-content">
         <mt-header fixed  title="订单">
-            <router-link to="/home" slot="left">
-                <mt-button icon="back"></mt-button>
-            </router-link>
         </mt-header>
         <mt-navbar v-model="selected">
             <mt-tab-item id="orderKnot">现结订单</mt-tab-item>

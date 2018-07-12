@@ -54,6 +54,7 @@
                 listStore: [],
                 trainList: [],
                 params:{
+                    isOrder:'Y',
                     current_page: 1,
                     page_size: 10
                 },

@@ -10,7 +10,7 @@
 
             <div class="ub detail-bottom">
                 <div class="ub-f3" style="width: 1rem ;word-break: break-all">{{trainsNum}}</div>
-                <div class="number ub-f2"><span class="carNumber">车牌号</span>{{plateNum}}</div>
+                <div class="number ub-f2"><span class="carNumber" v-show="plateNum !=''">车牌号</span>{{plateNum}}</div>
             </div>
             <div class="detail-top ub ub-ac">
                 <div class="ub-f1 time">入库时间</div>
