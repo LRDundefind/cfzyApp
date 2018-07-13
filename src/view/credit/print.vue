@@ -75,7 +75,8 @@
 
                         <div class="clearfix">
                             <div class="money-btn ub ub-ae" >
-                                <div class="btn" @click="setting">设置</div>
+                                <div class="btn" @click="goOrder">继续开单</div>
+                                <div class="btn m-l-10" @click="setting">设置</div>
                                 <div class="m-l-10 btn" @click="print">打印</div>
                             </div>
                         </div>
@@ -153,6 +154,12 @@
                         name: 'cashAccount',
                     });
                 }
+            },
+            //跳转到下单页面
+            goOrder(){
+                this.$router.push({
+                    name: 'order',
+                });
             },
 
         }

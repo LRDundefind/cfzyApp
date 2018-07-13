@@ -151,6 +151,9 @@ export default {
             if(to.name == 'home'){
                 this.selected='home';
             }
+            if(to.name == 'order'){
+                this.selected='order';
+            }
 
 			this.fetchDate()
 		}
