@@ -75,7 +75,7 @@
 
                         <div class="clearfix">
                             <div class="money-btn ub ub-ae" >
-                                <div class="btn" @click="goOrder">继续开单</div>
+                                <div class="btn1" @click="goOrder">继续开单</div>
                                 <div class="btn m-l-10" @click="setting">设置</div>
                                 <div class="m-l-10 btn" @click="print">打印</div>
                             </div>
@@ -229,6 +229,16 @@
             color: #fff;
             background: -webkit-linear-gradient(left, #30b03e 0%, #33d57c 100%);
             border-radius: 1rem;
+        }
+        .btn1{
+            background: url(../../assets/kehu_chakanxiaofeijilu_btn@2x.png) no-repeat center;
+            margin-left: 0.15rem;
+            font-size: 0.3rem;
+            width: 1.88rem;
+            line-height: 0.68rem;
+            text-align: center;
+            border-radius: 1rem;
+            color: #33d57c;
         }
     }
 
