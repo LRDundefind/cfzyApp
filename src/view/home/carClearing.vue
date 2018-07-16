@@ -60,7 +60,7 @@
                 </div>
 
                 <div class="pay">
-                    <div class="cost" @click="settlement('compute')">计算最终结算费用</div>
+                    <div class="cost" @click="settlementCompute()">计算最终结算费用</div>
                 </div>
 
                 <div class="basic-list">
@@ -82,7 +82,7 @@
 
                 <div class='update clearfix ub'>
                     <mt-button type="primary" size="large" class='btn1 ub-f1' @click="goTrain">取消</mt-button>
-                    <mt-button type="primary" size="large" class='btn2 ub-f1' @click="settlement('clearing')" :disabled="confirmDisabled">确认结算信息</mt-button>
+                    <mt-button type="primary" size="large" class='btn2 ub-f1' @click="settlementClearing()" :disabled="confirmDisabled">确认结算信息</mt-button>
                 </div>
 
             </div>
@@ -108,6 +108,7 @@
                 commission :'',//提成费用合计总额
                 rebates: '',//回扣
                 marketingCost: '',//固定代销费
+                marketingCost1:'',//确认固定代销费
                 remark:'',//结算备注
             }
         },
@@ -139,9 +140,8 @@
                         }
                     })
             },
-
-            //计算结算费用与提交车次申请
-            settlement(apply){
+            //提交车次结算
+            settlementCompute(){
                 if (!(new RegExp(/^\d+(?:.\d{1,2})?$/).test(this.marketingCost))) {
                     Toast({
                         message: '请输入正确的数字',
@@ -153,42 +153,15 @@
                         tid: this.tid,
                         marketingCost:this.marketingCost,
                         remark:this.remark,
+                        computer:'Y',
                     };
-                    if(apply == 'compute'){
-                        data.computer ='Y'
-                    }else {
-                        if(this.amountClearing == '' && this.amountClearing !='0'){
-                            Toast({
-                                message: '请先计算最终结算费用！',
-                                position: 'middle',
-                                duration: 1000
-                            });
-                            return false;
-                        }else {
-                            data.computer ='N';
-                            this.confirmDisabled = true;
-                        }
 
-                    }
-                    console.log(data);
                     damage.countTrain(data)
                         .then(response => {
                             if (response.data.status == 'Y') {
-                                if(apply == 'compute'){
-                                    this.amountClearing = response.data.results.payAmount
-                                }else {
-                                    Toast({
-                                        message: '结算操作成功！',
-                                        position: 'middle',
-                                        duration: 1000
-                                    });
-                                    setTimeout(() => {
-                                        this.confirmDisabled = false;
-                                        this.$router.push({name: 'trainManagement'});
-                                    }, 1000)
-                                }
+                                this.marketingCost1 =this.marketingCost;
+                                this.amountClearing = response.data.results.payAmount
                             } else {
-                                this.confirmDisabled = false;
                                 if(response.data.error_msg){
                                     Toast({
                                         message: response.data.error_msg,
@@ -202,9 +175,77 @@
                                         duration: 2000
                                     });
                                 }
-
                             }
                         })
+                }
+            },
+
+            //计算结算费用与提交车次申请
+            settlementClearing(apply){
+                if (!(new RegExp(/^\d+(?:.\d{1,2})?$/).test(this.marketingCost))) {
+                    Toast({
+                        message: '请输入正确的数字',
+                        position: 'middle',
+                        duration: 1000
+                    });
+                }else {
+                    let data = {
+                        tid: this.tid,
+                        marketingCost:this.marketingCost,
+                        remark:this.remark,
+                        computer:'N',
+                    };
+
+                        if(this.amountClearing == '' && this.amountClearing !='0'){
+                            Toast({
+                                message: '请先计算最终结算费用！',
+                                position: 'middle',
+                                duration: 1000
+                            });
+                            return false;
+                        }else if(this.marketingCost1 != this.marketingCost){
+                            Toast({
+                                message: '请重新计算最终结算费用！',
+                                position: 'middle',
+                                duration: 1000
+                            });
+                        }else {
+                            this.confirmDisabled = true;
+                            damage.countTrain(data)
+                                .then(response => {
+                                    if (response.data.status == 'Y') {
+                                        if(apply == 'compute'){
+                                            this.amountClearing = response.data.results.payAmount
+                                        }else {
+                                            Toast({
+                                                message: '结算操作成功！',
+                                                position: 'middle',
+                                                duration: 1000
+                                            });
+                                            setTimeout(() => {
+                                                this.confirmDisabled = false;
+                                                this.$router.push({name: 'trainManagement'});
+                                            }, 1000)
+                                        }
+                                    } else {
+                                        this.confirmDisabled = false;
+                                        if(response.data.error_msg){
+                                            Toast({
+                                                message: response.data.error_msg,
+                                                position: 'middle',
+                                                duration: 2000
+                                            });
+                                        }else if(response.data.results){
+                                            Toast({
+                                                message: response.data.results,
+                                                position: 'middle',
+                                                duration: 2000
+                                            });
+                                        }
+
+                                    }
+                                })
+                        }
                 }
             },
             //跳转到车次管理列表
