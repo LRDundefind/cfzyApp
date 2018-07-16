@@ -51,7 +51,7 @@ export default {
         	counts: false,
         	count: false,
         	params:{
-        		isOrder:'Y',  //Y：下单使用 N：车次管理使用
+        		isOrder:'N',  //Y：下单使用 N：车次管理使用
         		current_page: 1,
 				page_size: 10
 			}
