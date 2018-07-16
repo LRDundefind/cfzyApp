@@ -23,7 +23,7 @@
 						<img src="../../assets/my/icon_right.png" class="icon">
 					</div>
 				</div>
-				<div class="order-detail" v-if=" roleId == 'role_finance_sell'">
+				<div class="order-detail" v-if=" roleId == 'role_finance_sell' || roleId == 'role_owner'">
 					<div class="ub ub-ac term no-border right-icon" @click="chooseSell()">
 						<div class="ub-f1">卖手</div>
 						<span class="c-3 F26C4c">{{selName}}</span>
