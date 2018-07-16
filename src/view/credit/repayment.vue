@@ -48,9 +48,9 @@
                     <div class="clearfix goods">还款方式
                         <div class="choice">
                             <select v-model="refundType" @change="payWay(refundType)">
-                                <option value="type_alipay">支付宝</option>
-                                <option value="type_wechat">微信</option>
                                 <option value="type_cash">现金</option>
+                                <option value="type_wechat">微信</option>
+                                <option value="type_alipay">支付宝</option>
                                 <option value="type_card">银行卡</option>
                             </select>
                         <img class="jin-right"

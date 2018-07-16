@@ -42,9 +42,9 @@
                     <div class="choice">
                         <select v-model="payType">
                             <!--<option v-for="item in typeOfPay" :label="item.label" :value="item.value"></option>-->
-                            <option value="type_alipay">支付宝</option>
-                            <option value="type_wechat">微信</option>
                             <option value="type_cash">现金</option>
+                            <option value="type_wechat">微信</option>
+                            <option value="type_alipay">支付宝</option>
                             <option value="type_card">银行卡</option>
 
                         </select>

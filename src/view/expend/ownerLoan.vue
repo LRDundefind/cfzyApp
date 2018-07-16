@@ -13,10 +13,10 @@
             <p class="clearfix">支付方式
                 <span class="name">
 				<select class=" m-l-10 jin-select" v-model="form.expendType">
-                     <option value="type_alipay">支付宝</option>
-                     <option value="type_wechat">微信</option>
-                     <option value="type_cash">现金</option>
-                     <option value="type_card">银行卡</option>
+                    <option value="type_cash">现金</option>
+                    <option value="type_wechat">微信</option>
+                    <option value="type_alipay">支付宝</option>
+                    <option value="type_card">银行卡</option>
 					<!--<option v-for="item in typeOfPay" :label="item.label" :value="item.value"></option>-->
 				</select>
                 <img class="right-icon" src="../../assets/index/gray-right-icon.png"/></span>
