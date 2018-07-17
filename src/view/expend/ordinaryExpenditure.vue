@@ -132,13 +132,15 @@
 						position: 'middle',
 						duration: 1000
 	    			});
-        		}else if(this.form.payeeName == ''){
-        			Toast({
-						message: '请输入收款人名称',
-						position: 'middle',
-						duration: 1000
-	    			});
-        		}else if(this.form.amount == '' || this.form.amount<=0){
+        		}
+      //           else if(this.form.payeeName == ''){
+      //   			Toast({
+						// message: '请输入收款人名称',
+						// position: 'middle',
+						// duration: 1000
+	    	// 		});
+      //   		}
+                else if(this.form.amount == '' || this.form.amount<=0){
         			Toast({
 						message: '请输入金额',
 						position: 'middle',
@@ -150,20 +152,22 @@
                         position: 'middle',
                         duration: 1000
                     });
-                }else if(this.form.tieName == ''){
-        			Toast({
-						message: '请输入结款人名称',
-						position: 'middle',
-						duration: 1000
-	    			});
-        		}else{
-                    if (this.form.expendType != 'type_cash' && this.form.payeeAccount == '') {
-                        Toast({
-                            message: '请输入收款账号',
-                            position: 'middle',
-                            duration: 1000
-                        });
-                    }else{
+                }
+      //           else if(this.form.tieName == ''){
+      //   			Toast({
+						// message: '请输入结款人名称',
+						// position: 'middle',
+						// duration: 1000
+	    	// 		});
+      //   		}
+                else{
+                    // if (this.form.expendType != 'type_cash' && this.form.payeeAccount == '') {
+                    //     Toast({
+                    //         message: '请输入收款账号',
+                    //         position: 'middle',
+                    //         duration: 1000
+                    //     });
+                    // }else{
                         expend.selemanPay(this.form).then(response => {
                             if (response.data.status == 'Y') {
                                 Toast({
@@ -176,7 +180,7 @@
                                 });
                             } 
                         })
-                    }
+                    //}
         		}
 	        }
 	    },
