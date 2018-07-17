@@ -58,8 +58,7 @@
 
                     </div>
                     <div class="clearfix goods c-3">收款账号
-                        <input v-show="refundType != 'type_card'" v-model="gatherAccount" type="number" readonly placeholder="收款账号为空">
-                        <input v-show="refundType == 'type_card'" v-model="gatherAccount" type="number" placeholder="请输入收款账号">
+                        <input v-model="gatherAccount" type="number" placeholder="请输入收款账号">
                     </div>
                 </div>
 
@@ -105,7 +104,7 @@
                 notPayAmount:'',//待还款
                 item:'',//赊账列表传参
                 refundAmount:'',//还款金额
-                refundType:'type_alipay',//还款方式
+                refundType:'type_cash',//还款方式
                 gatherAccount:'',//收款账号
                 remark:'',//备注信息
                 repayInfo:{},//客户信息
