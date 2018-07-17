@@ -58,8 +58,8 @@
 
                     </div>
                     <div class="clearfix goods c-3">收款账号
-                        <input v-show="refundType == 'type_cash'" v-model="gatherAccount" type="number" readonly placeholder="收款账号为空">
-                        <input v-show="refundType != 'type_cash'" v-model="gatherAccount" type="number" placeholder="请输入收款账号">
+                        <input v-show="refundType != 'type_card'" v-model="gatherAccount" type="number" readonly placeholder="收款账号为空">
+                        <input v-show="refundType == 'type_card'" v-model="gatherAccount" type="number" placeholder="请输入收款账号">
                     </div>
                 </div>
 
@@ -140,7 +140,7 @@
         methods: {
             //选择还款方式
             payWay(way){
-                if(way == 'type_cash'){
+                if(way != 'type_card'){
                     this.gatherAccount = '';
                 }
             },
@@ -213,7 +213,7 @@
             //提交还款信息
             confirm(){
                 if (this.refundAmount) {
-                    if(this.refundType != 'type_cash' && this.gatherAccount ==''){
+                    if(this.refundType == 'type_card' && this.gatherAccount ==''){
                         Toast({
                             message: '请完善还款信息',
                             position: 'middle',
