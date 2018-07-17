@@ -59,7 +59,7 @@
 					tfAdvances: Cookies.get('tfAdvances') || 'Y', //是否为垫付
 					eid:'', //费用类型
 					tid:'', //车次id
-					expendType:'type_alipay', //支付方式
+					expendType:'type_cash', //支付方式
 					payeePhone:'', //收款人电话
 					payeeName:'', //收款人
 					amount:'', //金额
@@ -70,14 +70,14 @@
                 expendName:'',  //费用类型
             	trainsNum:'',  // 车次
             	typeOfPay:[{
+                    value:'type_cash',
+                    label:'现金'
+                },{
+                    value:'type_wechat',
+                    label:'微信'
+                },{
             		value:'type_alipay',
             		label:'支付宝'
-            	},{
-            		value:'type_wechat',
-            		label:'微信'
-            	},{
-            		value:'type_cash',
-            		label:'现金'
             	},{
             		value:'type_card',
             		label:'银行卡'

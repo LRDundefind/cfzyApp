@@ -48,7 +48,7 @@
             return {
             	form:{
             		goodOwnerId:'', //货主id
-					expendType:'type_wechat', //支付方式
+					expendType:'type_cash', //支付方式
 					payeePhone:'', //收款人电话
 					payeeName:'', //收款人
 					amount:'', //金额
