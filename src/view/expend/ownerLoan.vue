@@ -43,6 +43,7 @@
 <script>
 	import { Toast } from 'mint-ui'
     import {expend} from '@/services/apis/expend.js'
+    import Cookies from 'js-cookie'
 	export default {
         data () {
             return {
@@ -52,7 +53,7 @@
 					payeePhone:'', //收款人电话
 					payeeName:'', //收款人
 					amount:'', //金额
-					tieName:'', //结款人
+					tieName:Cookies.get('userName'), //结款人
 					payeeAccount:'', //收款账号
 					remark:'', //备注
             	},
@@ -98,12 +99,6 @@
 	        	if (this.form.goodOwnerId == '') {
         			Toast({
 						message: '请选择货主',
-						position: 'middle',
-						duration: 1000
-	    			});
-        		}else if (!new RegExp(/^1[3|4|5|7|8|9][0-9]{9}$/).test(this.form.payeePhone) || this.form.payeePhone == '') {
-        			Toast({
-						message: '请输入正确的手机号',
 						position: 'middle',
 						duration: 1000
 	    			});

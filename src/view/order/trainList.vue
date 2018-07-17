@@ -64,18 +64,20 @@ export default {
 	    }else{
 	        this.wrapperHeight = document.documentElement.clientHeight - 40;
 	    }
+	    if (this.$route.params.to == 'toOrder') {
+			this.params.isOrder = 'Y'
+		}
+	    app.Vwaiting();
+	    this.getList();
+
     },
     created(){
-		this.getList();
-		app.Vwaiting();
 	},
     methods: {
 		
 		//获取车次列表
 		getList(){
-			if (this.$route.params.to = 'toOrder') {
-				this.params.isOrder = 'Y'
-			}
+			
 			order.getTrainList(this.params)
 				.then(response => {
 					this.trainList = response.data.results;
@@ -108,13 +110,14 @@ export default {
 			Cookies.set('trainTid',tid);
 			Cookies.set('trainsNum',trainsNum);
             Cookies.set('plateNum',plateNum);
+            //console.log(this.$route.params.to)
             if (this.$route.params.to == 'toExpend') {
 
             	this.$router.push({
 	            	name: 'expend',
 					params: {}
 	            });
-            }else{
+            }else {
             	this.$router.push({
 	            	name: 'order',
 					params: {}
