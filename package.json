@@ -8,7 +8,8 @@
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "build": "cross-env NODE_ENV=production node build/build.js",
-    "build:test": "cross-env NODE_ENV=test node build/build.js"
+    "build:test": "cross-env NODE_ENV=test node build/build.js",
+    "build:test9080": "cross-env NODE_ENV=test9080 node build/build.js"
   },
   "dependencies": {
     "animate.css": "^3.6.1",

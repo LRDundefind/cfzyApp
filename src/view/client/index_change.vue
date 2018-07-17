@@ -24,32 +24,23 @@
                 </div>
                 <div>
                     <!-- 接口无数据可编辑 -->
-                    <p class="clearfix" v-if="listdata.cusName=='' && xiTdata==''">姓名 <input type="text"
-                                                                                             v-model="nameRead"
-                                                                                             placeholder="请输入"
-                                                                                             maxlength="10"></p>
+                    <p class="clearfix" v-if="listdata.cusName=='' && xiTdata==''">姓名 <input type="text" v-model="nameRead" placeholder="请输入" maxlength="10">
                     <!-- 接口有数据不可编辑（修改时有此可能） -->
                     <p class="clearfix" v-else>姓名  <span class="Unchange">{{ nameRead }}</span></p>
                 </div>
-
 
                 <p class="clearfix">昵称<input type="text" v-model="nicheng" placeholder="请输入" maxlength="10"></p>
 
                 <div>
                     <!-- 增加时电话不可编辑 -->
-                    <p class="clearfix" v-if="phoneAdd==''">电话<input type="number" v-model="phone" placeholder="请输入"
-                                                                     maxlength="11"></p>
+                    <p class="clearfix" v-if="phoneAdd==''">电话<input type="number" v-model="phone" placeholder="请输入" maxlength="11"></p>
                     <!-- 修改时可以 -->
                     <p class="clearfix" v-else>电话<span class="Unchange" @click="chengePhone">{{phone}}</span></p>
                 </div>
 
-
                 <div style="border-top:1px #f0f0f0 solid">
                     <!-- 接口无数据可编辑 -->
-                    <p class="clearfix" v-if="listdata.idCard=='' && xiTdata==''">身份证号 <input type="text"
-                                                                                              v-model="IdcardRead"
-                                                                                              placeholder="请输入"
-                                                                                              maxlength="18"></p>
+                    <p class="clearfix" v-if="listdata.idCard=='' && xiTdata==''">身份证号 <input type="text" v-model="IdcardRead" placeholder="请输入" maxlength="18">
                     <!-- 接口有数据不可编辑（修改时有此可能） -->
                     <p class="clearfix" v-else>身份证号  <span class="Unchange">{{IdcardRead}}</span></p>
 
@@ -66,8 +57,7 @@
             <div class="main-list">
                 <p class="clearfix">备注</p>
                 <div class="remark">
-                    <textarea name="" id="" cols="30" rows="3" placeholder="备注信息" v-model="message"
-                              maxlength="420"></textarea>
+                    <textarea name="" id="" cols="30" rows="3" placeholder="备注信息" v-model="message" maxlength="420"></textarea>
                 </div>
             </div>
         </div>

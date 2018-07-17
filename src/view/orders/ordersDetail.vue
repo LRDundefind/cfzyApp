@@ -14,7 +14,8 @@
 				<div v-if="detail.cid" class="ub ub-ac term customer-head" @click="customerDetail(detail.cid)">
 					<div class="ub-f1">客户</div>
 					<!--<img src="../../assets/index/shouye_touxiang_img@2x.png" class="head">-->
-					<span>{{detail.nickname}}</span>
+					<span v-show="detail.nickname != ''">{{detail.nickname}}</span>
+					<span v-show="detail.nickname == '' && detail.phone == ''  ">临时客户</span>
 					<img src="../../assets/my/icon_right.png" class="icon">
 				</div>
 				<div class="ub term no-border">
