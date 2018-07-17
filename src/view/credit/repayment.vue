@@ -58,8 +58,7 @@
 
                     </div>
                     <div class="clearfix goods c-3">收款账号
-                        <input v-show="refundType != 'type_card'" v-model="gatherAccount" type="number" readonly placeholder="收款账号为空">
-                        <input v-show="refundType == 'type_card'" v-model="gatherAccount" type="number" placeholder="请输入收款账号">
+                        <input v-model="gatherAccount" type="number" placeholder="请输入收款账号">
                     </div>
                 </div>
 
