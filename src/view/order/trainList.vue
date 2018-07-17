@@ -73,7 +73,9 @@ export default {
 		
 		//获取车次列表
 		getList(){
-			
+			if (this.$route.params.to = 'toOrder') {
+				this.params.isOrder = 'Y'
+			}
 			order.getTrainList(this.params)
 				.then(response => {
 					this.trainList = response.data.results;

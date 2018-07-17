@@ -358,7 +358,12 @@ export default {
         	Cookies.remove('trainTid');//----------------------待修改
         	Cookies.remove('trainsNum');//----------------------待修改
         	Cookies.remove('plateNum');//----------------------待修改
-            this.$router.push({name: 'trainList'});
+            this.$router.push({
+            	name: 'trainList',
+            	params:{
+            		to:'toOrder'
+            	} 
+            });
         },
         //选择卖手
         chooseSell(){
