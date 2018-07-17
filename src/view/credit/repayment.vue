@@ -104,7 +104,7 @@
                 notPayAmount:'',//待还款
                 item:'',//赊账列表传参
                 refundAmount:'',//还款金额
-                refundType:'type_alipay',//还款方式
+                refundType:'type_cash',//还款方式
                 gatherAccount:'',//收款账号
                 remark:'',//备注信息
                 repayInfo:{},//客户信息
